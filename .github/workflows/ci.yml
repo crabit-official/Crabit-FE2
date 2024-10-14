@@ -27,7 +27,7 @@ jobs:
       - run: CI='false' yarn build
 
   Deploy-Preview:
-    needs: [Test]
+    needs: [lint, build]
     runs-on: ubuntu-latest
     steps:
 
