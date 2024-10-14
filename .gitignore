@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
+.yarn
 
 # testing
 /coverage
@@ -31,6 +32,21 @@ yarn-error.log*
 # vercel
 .vercel
 
+# local env files
+.env
+*.env
+env
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# package manager
+package-lock.json
+
+# cache
+.eslintcache
+
+# Sentry Config File
+.env.sentry-build-plugin
+

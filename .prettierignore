@@ -1,0 +1,11 @@
+# Ignore artifacts:
+.next/
+dist
+public
+
+
+# Ignore specific files:
+pnpm-lock.yaml
+package.lock.json
+yarn.lock
+README.md
