@@ -3,9 +3,8 @@ import { forwardRef } from 'react';
 import { cva } from 'class-variance-authority';
 
 import type { ColorKey } from '@/shared/models/color';
+import type { FontKey } from '@/shared/models/font';
 import cn from '@/shared/utils/style';
-
-export type FontKey = 'h0' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h5-2' | 'h6' | 'h7' | 'body0-2' | 'body0' | 'body1' | 'body2' | 'body3' | 'body4';
 
 export const TypographyVariants = cva<{
   color: Record<ColorKey, string>;

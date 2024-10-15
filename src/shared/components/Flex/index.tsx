@@ -38,6 +38,15 @@ interface IFlexProps extends VariantProps<typeof FlexVariants> {
   className?: string;
 }
 
+/**
+ * Flex 컴포넌트
+ * @param children Flex 박스 내부의 컨텐츠를 작성합니다.
+ * @param row row 주축 기준 flex를 선언합니다.
+ * @param column column 주축 기준 flex를 선언합니다.
+ * @param row-column 주축과, 반대축 모두를 기준으로 flex를 선언합니다.
+ * @param className 추가 스타일링에 대한 코드를 작성합니다.
+ * @constructor
+ */
 function Flex({ children, row, column, className }: IFlexProps) {
   return <div className={cn(FlexVariants({ row, column }), className)}>{children}</div>;
 }
