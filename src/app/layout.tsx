@@ -7,7 +7,7 @@ import localFont from 'next/font/local';
 
 import { MSWProvider } from '@/shared/components/MSWProvider';
 import { QueryProvider } from '@/shared/components/QueryProvider';
-import { isMocking } from '@/shared/constants';
+import { isMocking } from '@/shared/constants/constants';
 import { initMocking } from '@/shared/mocks';
 
 const pretendard = localFont({
