@@ -15,6 +15,7 @@ module.exports = {
         'style',
         'test',
         'deploy',
+        'ci/cd'
       ],
     ],
     'subject-case': [0]
