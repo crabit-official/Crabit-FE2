@@ -27,7 +27,6 @@ function LoginModal() {
     formState: { errors },
     reset,
   } = useForm<FieldValues>({
-    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
       password: '',
