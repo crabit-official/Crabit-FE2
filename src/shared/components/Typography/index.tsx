@@ -83,6 +83,13 @@ interface ITypographyProps extends HTMLAttributes<HTMLDivElement> {
   size: FontKey;
 }
 
+/**
+ * Typography 컴포넌트
+ * @param children 표시할 글씨를 입력합니다.
+ * @param as 태그를 변경합니다.
+ * @param color 글씨의 색상을 선택합니다.
+ * @param size 글씨의 크기, 자간, 줄간 등의 스타일을 지정합니다.
+ */
 const Typography = forwardRef<HTMLDivElement, ITypographyProps>(({ size, className, children, color, as, ...props }, ref) => {
   const Component = as || 'div';
 
