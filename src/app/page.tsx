@@ -1,10 +1,19 @@
-import { isMocking } from '@/shared/constants/constants';
+import FifthBanner from '@/features/main/components/FifthBanner';
+import FourthBanner from '@/features/main/components/FourthBanner';
+import MainBanner from '@/features/main/components/MainBanner';
+import ThirdBanner from '@/features/main/components/ThirdBanner';
+import SecondBanner from '@/features/main/SecondBanner';
+import Flex from '@/shared/components/Flex';
 
 function Home() {
   return (
-    <div className="w-full p-4">
-      <h1>{isMocking() ? 'Mocking' : 'Not Mocking'}.</h1>
-    </div>
+    <Flex column="center" className="gap-16">
+      <MainBanner />
+      <SecondBanner />
+      <ThirdBanner />
+      <FourthBanner />
+      <FifthBanner />
+    </Flex>
   );
 }
 

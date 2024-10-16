@@ -8,6 +8,7 @@ import localFont from 'next/font/local';
 import LoginModal from '@/features/main/components/LoginModal';
 import Navbar from '@/features/main/components/Navbar';
 import RegisterModal from '@/features/main/components/RegisterModal';
+import Footer from '@/shared/components/Footer';
 import { MSWProvider } from '@/shared/components/MSWProvider';
 import { QueryProvider } from '@/shared/components/QueryProvider';
 import { isMocking } from '@/shared/constants/constants';
@@ -50,6 +51,7 @@ export default async function RootLayout({
             <LoginModal />
             <RegisterModal />
           </QueryProvider>
+          <Footer />
         </MSWProvider>
       </body>
     </html>

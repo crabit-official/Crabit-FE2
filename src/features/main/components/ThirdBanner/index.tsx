@@ -1,0 +1,27 @@
+import Button from '@/shared/components/Button';
+import Flex from '@/shared/components/Flex';
+import Typography from '@/shared/components/Typography';
+
+function ThirdBanner() {
+  return (
+    <Flex className="relative w-full bg-neutral-50 p-8 sm:px-16">
+      <Flex column="center" className="z-10 w-full gap-16">
+        <Flex column="center" className="gap-2">
+          <Typography size="h5" className="text-sm font-bold text-blue-200 sm:text-base">
+            크래빗 X 한국NCS자격개발원
+          </Typography>
+          <Typography size="h2" className="whitespace-pre-wrap text-lg font-extrabold sm:text-2xl">
+            {`크래빗 추천 자격증 과정\nNCS자격개발원과 지금 시작해 보세요`}
+          </Typography>
+        </Flex>
+        <div className="w-32 sm:w-36">
+          <Button variant="outline" className="rounded-4xl bg-black text-xs font-bold text-white sm:text-base">
+            지금 수강하기
+          </Button>
+        </div>
+      </Flex>
+    </Flex>
+  );
+}
+
+export default ThirdBanner;
