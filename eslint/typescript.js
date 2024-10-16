@@ -87,13 +87,19 @@ module.exports = {
         '@typescript-eslint/no-unused-vars': 'warn',
 
         // 'as'를 사용한 타입 단언이 발생할 때마다 경고를 발생시키며, 객체 리터럴에 대해서는 타입 단언을 허용하지 않습니다.
-        '@typescript-eslint/consistent-type-assertions': [
-          'warn',
-          {
-            assertionStyle: 'as',
-            objectLiteralTypeAssertions: 'never',
-          },
-        ],
+        '@typescript-eslint/consistent-type-assertions': 'off',
+        // '@typescript-eslint/consistent-type-assertions': [
+        //   'warn',
+        //   {
+        //     assertionStyle: 'as',
+        //     objectLiteralTypeAssertions: 'never',
+        //   },
+        // ],
+
+        // 안전하지 않은 함수 호출에 대해 ESLint가 경고하지 않도록 비활성화합니다.
+        '@typescript-eslint/no-unsafe-call': 'off',
+
+        '@typescript-eslint/no-unsafe-member-access': 'off',
       },
     },
   ],
