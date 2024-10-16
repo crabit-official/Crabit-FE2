@@ -6,7 +6,7 @@ import { Roboto } from 'next/font/google';
 import localFont from 'next/font/local';
 
 import LoginModal from '@/features/main/components/LoginModal';
-import Index from '@/features/main/components/Navbar';
+import Navbar from '@/features/main/components/Navbar';
 import RegisterModal from '@/features/main/components/RegisterModal';
 import Footer from '@/shared/components/Footer';
 import { MSWProvider } from '@/shared/components/MSWProvider';
@@ -43,10 +43,10 @@ export default async function RootLayout({
 
   return (
     <html lang="ko" className={`${pretendard.variable} ${roboto.variable} antialiased`}>
-      <body className="bg-[#f5f5f7] font-pretendard">
+      <body className="bg-[#F5F5F7] font-pretendard">
         <MSWProvider>
-          <Index />
           <QueryProvider>
+            <Navbar />
             <main className="pb-20 pt-28">{children}</main>
             <LoginModal />
             <RegisterModal />
