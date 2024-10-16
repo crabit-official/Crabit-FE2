@@ -3,8 +3,9 @@
 import type React from 'react';
 import { useEffect, useState } from 'react';
 
+import { initMocking } from '../../mocks';
+
 import { isMocking } from '@/shared/constants/constants';
-import { initMocking } from '@/shared/mocks';
 
 export function MSWProvider({ children }: { children: React.ReactNode }) {
   const [isReady, setIsReady] = useState(!isMocking());

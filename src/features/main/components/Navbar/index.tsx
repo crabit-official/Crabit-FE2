@@ -6,7 +6,7 @@ import useScrollTop from '@/features/main/hooks/use-scroll-top';
 import Logo from '@/shared/components/Logo';
 import cn from '@/shared/utils/style';
 
-function Index() {
+function Navbar() {
   const scrolled = useScrollTop();
 
   return (
@@ -23,4 +23,4 @@ function Index() {
   );
 }
 
-export default Index;
+export default Navbar;

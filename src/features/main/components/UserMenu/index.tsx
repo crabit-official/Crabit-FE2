@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
 
-import Index from '@/features/main/components/MenuItem';
+import MenuItem from '@/features/main/components/MenuItem';
 import useLoginModal from '@/features/main/hooks/use-login-modal';
 import useRegisterModal from '@/features/main/hooks/use-register-modal';
 import Avatar from '@/shared/components/Avatar';
@@ -29,7 +29,7 @@ function UserMenu() {
           기관 등록하기
         </div>
         <div
-          onClick={() => router.push('/main/academy/my')}
+          onClick={() => router.push('/academy/my')}
           className="hidden cursor-pointer rounded-full px-4 py-3 text-sm font-semibold transition hover:bg-neutral-100 md:block"
         >
           내 학원
@@ -47,14 +47,14 @@ function UserMenu() {
       {isOpen && (
         <div className="absolute right-0 top-12 w-[40vw] overflow-hidden rounded-xl bg-white text-sm shadow-md md:w-3/4">
           <div className="flex cursor-pointer flex-col">
-            <Index
+            <MenuItem
               onClick={() => {
                 loginModal.onOpen();
                 setIsOpen(false);
               }}
               label="로그인"
             />
-            <Index
+            <MenuItem
               onClick={() => {
                 registerModal.onOpen();
                 setIsOpen(false);
