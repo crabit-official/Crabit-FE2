@@ -2035,8 +2035,6 @@ __metadata:
   dependencies:
     "@commitlint/cli": ^19.5.0
     "@commitlint/config-conventional": ^19.5.0
-    "@hookform/resolvers": ^3.9.0
-    "@mswjs/http-middleware": ^0.10.1
     "@tanstack/react-query": ^5.59.13
     "@tanstack/react-query-devtools": ^5.59.13
     "@tanstack/react-query-next-experimental": ^5.59.13
@@ -5758,34 +5756,6 @@ __metadata:
   version: 1.2.3
   resolution: "queue-microtask@npm:1.2.3"
   checksum: b676f8c040cdc5b12723ad2f91414d267605b26419d5c821ff03befa817ddd10e238d22b25d604920340fd73efd8ba795465a0377c4adf45a4a41e4234e42dc4
-  languageName: node
-  linkType: hard
-
-"range-parser@npm:~1.2.1":
-  version: 1.2.1
-  resolution: "range-parser@npm:1.2.1"
-  checksum: 0a268d4fea508661cf5743dfe3d5f47ce214fd6b7dec1de0da4d669dd4ef3d2144468ebe4179049eff253d9d27e719c88dae55be64f954e80135a0cada804ec9
-  languageName: node
-  linkType: hard
-
-"raw-body@npm:2.5.2":
-  version: 2.5.2
-  resolution: "raw-body@npm:2.5.2"
-  dependencies:
-    bytes: 3.1.2
-    http-errors: 2.0.0
-    iconv-lite: 0.4.24
-    unpipe: 1.0.0
-  checksum: ba1583c8d8a48e8fbb7a873fdbb2df66ea4ff83775421bfe21ee120140949ab048200668c47d9ae3880012f6e217052690628cf679ddfbd82c9fc9358d574676
-  languageName: node
-  linkType: hard
-
-"react-daum-postcode@npm:^3.1.3":
-  version: 3.1.3
-  resolution: "react-daum-postcode@npm:3.1.3"
-  peerDependencies:
-    react: ">=16.8.0"
-  checksum: 559c2463b30d023f5e21072c3dc08f3de51cf58ad8f0ea13241330e3a65158c1b2747530b6f37adfde92029d83a7d0201ad580400079155e27ec06e8c9a0591f
   languageName: node
   linkType: hard
 
