@@ -14,7 +14,6 @@ import Button from '@/shared/components/Button';
 import Heading from '@/shared/components/Heading';
 import Input from '@/shared/components/Input';
 import Modal from '@/shared/components/Modal';
-import { loginSchema } from '@/shared/utils/schema';
 
 function LoginModal() {
   const loginModal = useLoginModal();
