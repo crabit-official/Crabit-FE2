@@ -45,21 +45,21 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="ko" className={`${pretendard.variable} ${roboto.variable} antialiased`}>
+    <html lang="ko" className={`${pretendard.variable} ${roboto.variable} scroll-p-20 scroll-smooth antialiased`}>
       <body className="bg-[#F5F5F7] font-pretendard">
-        <Provider>
+      <Provider>
           <AuthProvider>
-            <MSWProvider>
-              <QueryProvider>
-                <Flex column="center" className="min-h-screen">
-                  <Navbar />
-                  <main className="flex-1 pb-20 pt-28">{children}</main>
-                  <Footer />
-                </Flex>
-                <LoginModal />
-                <RegisterModal />
-              </QueryProvider>
-            </MSWProvider>
+      <MSWProvider>
+          <QueryProvider>
+            <Flex column="center" className="min-h-screen">
+              <Navbar />
+              <main className="flex-1 pb-20 pt-28">{children}</main>
+              <Footer />
+            </Flex>
+            <LoginModal />
+            <RegisterModal />
+          </QueryProvider>
+        </MSWProvider>
           </AuthProvider>
         </Provider>
       </body>
