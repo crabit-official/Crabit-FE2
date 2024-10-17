@@ -3,7 +3,10 @@
 import type { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 import { BiWon } from 'react-icons/bi';
 
+import cn from '@/shared/utils/style';
+
 interface IInputProps {
+  className?: string;
   disabled?: boolean;
   errors: FieldErrors;
   formatPrice?: boolean;
@@ -14,9 +17,9 @@ interface IInputProps {
   type?: string;
 }
 
-function Input({ id, label, type, disabled, formatPrice, required, register, errors }: IInputProps) {
+function Input({ id, label, type, disabled, formatPrice, required, register, errors, className }: IInputProps) {
   return (
-    <div className="relative w-full">
+    <div className={cn(`relative w-full`, className)}>
       {formatPrice && <BiWon size={24} className="absolute left-2 top-5 text-neutral-700" />}
       <input
         id={id}
