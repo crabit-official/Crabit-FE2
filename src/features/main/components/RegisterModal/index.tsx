@@ -4,15 +4,18 @@ import { useState } from 'react';
 import type { FieldValues, SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import useLoginModal from '@/features/main/hooks/use-login-modal';
 import useRegisterModal from '@/features/main/hooks/use-register-modal';
 import Button from '@/shared/components/Button';
+import CheckBox from '@/shared/components/CheckBox';
 import Flex from '@/shared/components/Flex';
 import Heading from '@/shared/components/Heading';
 import Input from '@/shared/components/Input';
 import Modal from '@/shared/components/Modal';
 import Typography from '@/shared/components/Typography';
+import { signUpSchema } from '@/shared/utils/schema';
 
 function RegisterModal() {
   const registerModal = useRegisterModal();
@@ -22,12 +25,16 @@ function RegisterModal() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FieldValues>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       name: '',
       email: '',
       password: '',
+      privacyPolicyAllowed: false,
+      termsOfServiceAllowed: false,
     },
   });
 
@@ -56,6 +63,7 @@ function RegisterModal() {
       if (res.ok) {
         registerModal.onClose();
         loginModal.onOpen();
+        reset();
       }
     } catch {
       // console.error('Error:', error);
@@ -70,6 +78,8 @@ function RegisterModal() {
       <Input id="name" label="이름" disabled={isLoading} register={register} errors={errors} required />
       <Input id="email" label="이메일" disabled={isLoading} register={register} errors={errors} required />
       <Input id="password" type="password" label="비밀번호" disabled={isLoading} register={register} errors={errors} required />
+      <CheckBox label="개인정보 처리 방침 동의" id="privacyPolicyAllowed" disabled={isLoading} register={register} errors={errors} required />
+      <CheckBox label=" 서비스 약관 동의" id="termsOfServiceAllowed" disabled={isLoading} register={register} errors={errors} required />
     </div>
   );
 
