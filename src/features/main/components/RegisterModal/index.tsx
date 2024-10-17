@@ -13,6 +13,7 @@ import Heading from '@/shared/components/Heading';
 import Input from '@/shared/components/Input';
 import Modal from '@/shared/components/Modal';
 import Typography from '@/shared/components/Typography';
+import { axiosInstance } from '@/shared/libs/axios-instance';
 
 function RegisterModal() {
   const registerModal = useRegisterModal();
@@ -25,20 +26,44 @@ function RegisterModal() {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
+      name: '',
       email: '',
       password: '',
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = () => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data: FieldValues) => {
     setIsLoading(true);
     // 데이터 요청, 성공시 registerModal.onClose
     // onSettled setIsLoading(false);
+
+    try {
+      const res = await axiosInstance.post('/api/v1/auth/join', {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        socialType: 'LOCAL',
+        globalRole: 'ROLE_USER',
+        privacyPolicyAllowed: 'AGREE',
+        termsOfServiceAllowed: 'AGREE',
+      });
+
+      if (res.status === 200) {
+        registerModal.onClose();
+        loginModal.onOpen();
+      }
+    } catch {
+      // 에러 처리 수정
+      // if (axios.isAxiosError(error)) alert(error?.response?.data?.result?.joinRequest);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Heading title="Crabit에 오신 것을 환영합니다." subTitle="계정을 생성해주세요!" />
+      <Input id="name" label="이름" disabled={isLoading} register={register} errors={errors} required />
       <Input id="email" label="이메일" disabled={isLoading} register={register} errors={errors} required />
       <Input id="password" type="password" label="비밀번호" disabled={isLoading} register={register} errors={errors} required />
     </div>
