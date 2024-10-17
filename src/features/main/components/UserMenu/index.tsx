@@ -3,6 +3,7 @@
 import { useCallback, useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 import MenuItem from '@/features/main/components/MenuItem';
 import useLoginModal from '@/features/main/hooks/use-login-modal';
@@ -18,6 +19,7 @@ function UserMenu() {
 
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
+  const { data: session } = useSession();
 
   return (
     <div className="relative">
@@ -44,7 +46,7 @@ function UserMenu() {
           </div>
         </div>
       </div>
-      {isOpen && (
+      {isOpen && !session && (
         <div className="absolute right-0 top-12 w-[40vw] overflow-hidden rounded-xl bg-white text-sm shadow-md md:w-3/4">
           <div className="flex cursor-pointer flex-col">
             <MenuItem
