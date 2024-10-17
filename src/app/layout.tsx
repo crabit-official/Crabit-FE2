@@ -8,7 +8,6 @@ import localFont from 'next/font/local';
 import LoginModal from '@/features/main/components/LoginModal';
 import Navbar from '@/features/main/components/Navbar';
 import RegisterModal from '@/features/main/components/RegisterModal';
-import Flex from '@/shared/components/Flex';
 import Footer from '@/shared/components/Footer';
 import { MSWProvider } from '@/shared/components/MSWProvider';
 import { QueryProvider } from '@/shared/components/QueryProvider';
@@ -45,22 +44,21 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="ko" className={`${pretendard.variable} ${roboto.variable} scroll-p-20 scroll-smooth antialiased`}>
+    <html lang="ko" className={`${pretendard.variable} ${roboto.variable} antialiased`}>
       <body className="bg-[#F5F5F7] font-pretendard">
         <Provider>
           <AuthProvider>
-            <MSWProvider>
-              <QueryProvider>
-                  <Flex column="center" className="min-h-screen">
-
-                  <Navbar />
-                <main className="pb-20 pt-28">{children}</main>
-                <LoginModal />
-                <RegisterModal />            </Flex>
-
-              </QueryProvider>
+        <MSWProvider>
+          <QueryProvider>
+            <Flex column="center" className="min-h-screen">
+              <Navbar />
+              <main className="flex-1 pb-20 pt-28">{children}</main>
               <Footer />
-            </MSWProvider>
+            </Flex>
+            <LoginModal />
+             <RegisterModal />
+          </QueryProvider>
+        </MSWProvider>
           </AuthProvider>
         </Provider>
       </body>
