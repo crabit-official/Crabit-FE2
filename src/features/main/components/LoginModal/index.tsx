@@ -4,6 +4,7 @@ import { useState } from 'react';
 import type { FieldValues, SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn } from 'next-auth/react';
 
 import useLoginModal from '@/features/main/hooks/use-login-modal';
@@ -12,6 +13,7 @@ import Button from '@/shared/components/Button';
 import Heading from '@/shared/components/Heading';
 import Input from '@/shared/components/Input';
 import Modal from '@/shared/components/Modal';
+import { loginSchema } from '@/shared/utils/schema';
 
 function LoginModal() {
   const loginModal = useLoginModal();
@@ -23,6 +25,7 @@ function LoginModal() {
     handleSubmit,
     formState: { errors },
   } = useForm<FieldValues>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
       password: '',
