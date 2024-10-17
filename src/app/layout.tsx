@@ -51,13 +51,12 @@ export default async function RootLayout({
           <AuthProvider>
             <MSWProvider>
               <QueryProvider>
-                  <Flex column="center" className="min-h-screen">
-
+                <Flex column="center" className="min-h-screen">
                   <Navbar />
-                <main className="pb-20 pt-28">{children}</main>
-                <LoginModal />
-                <RegisterModal />            </Flex>
-
+                  <main className="pb-20 pt-28">{children}</main>
+                  <LoginModal />
+                  <RegisterModal />
+                </Flex>
               </QueryProvider>
               <Footer />
             </MSWProvider>

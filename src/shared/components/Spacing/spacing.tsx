@@ -10,7 +10,14 @@ interface ISpacing {
  * @constructor
  */
 function Spacing({ direction, size }: ISpacing) {
-  return <div className={direction === 'vertical' ? `h-[${size}px]` : `w-[${size}px]`} />;
+  return (
+    <div
+      style={{
+        height: direction === 'vertical' ? `${size}px` : 'auto',
+        width: direction === 'horizontal' ? `${size}px` : 'auto',
+      }}
+    />
+  );
 }
 
 export default Spacing;
