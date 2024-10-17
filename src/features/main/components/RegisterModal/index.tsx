@@ -25,20 +25,49 @@ function RegisterModal() {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
+      name: '',
       email: '',
       password: '',
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = () => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data: FieldValues) => {
     setIsLoading(true);
     // 데이터 요청, 성공시 registerModal.onClose
     // onSettled setIsLoading(false);
+
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/join`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          password: data.password,
+          socialType: 'LOCAL',
+          globalRole: 'ROLE_USER',
+          privacyPolicyAllowed: 'AGREE',
+          termsOfServiceAllowed: 'AGREE',
+        }),
+      });
+
+      if (res.ok) {
+        registerModal.onClose();
+        loginModal.onOpen();
+      }
+    } catch {
+      // console.error('Error:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Heading title="Crabit에 오신 것을 환영합니다." subTitle="계정을 생성해주세요!" />
+      <Input id="name" label="이름" disabled={isLoading} register={register} errors={errors} required />
       <Input id="email" label="이메일" disabled={isLoading} register={register} errors={errors} required />
       <Input id="password" type="password" label="비밀번호" disabled={isLoading} register={register} errors={errors} required />
     </div>
