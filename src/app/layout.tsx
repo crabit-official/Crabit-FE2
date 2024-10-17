@@ -12,6 +12,8 @@ import Footer from '@/shared/components/Footer';
 import { MSWProvider } from '@/shared/components/MSWProvider';
 import { QueryProvider } from '@/shared/components/QueryProvider';
 import { isMocking } from '@/shared/constants/constants';
+import AuthProvider from '@/shared/libs/next-auth/auth-provider';
+import Provider from '@/shared/libs/next-auth/session-provider';
 import { initMocking } from '@/shared/mocks';
 
 const pretendard = localFont({
@@ -44,15 +46,19 @@ export default async function RootLayout({
   return (
     <html lang="ko" className={`${pretendard.variable} ${roboto.variable} antialiased`}>
       <body className="bg-[#F5F5F7] font-pretendard">
-        <MSWProvider>
-          <QueryProvider>
-            <Navbar />
-            <main className="pb-20 pt-28">{children}</main>
-            <LoginModal />
-            <RegisterModal />
-          </QueryProvider>
-          <Footer />
-        </MSWProvider>
+        <Provider>
+          <AuthProvider>
+            <MSWProvider>
+              <QueryProvider>
+                <Navbar />
+                <main className="pb-20 pt-28">{children}</main>
+                <LoginModal />
+                <RegisterModal />
+              </QueryProvider>
+              <Footer />
+            </MSWProvider>
+          </AuthProvider>
+        </Provider>
       </body>
     </html>
   );
