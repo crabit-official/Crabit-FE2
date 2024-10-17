@@ -5,6 +5,9 @@ import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import localFont from 'next/font/local';
 
+import AuthProvider from '@/libs/next-auth/auth-provider';
+import Provider from '@/libs/next-auth/session-provider';
+
 import LoginModal from '@/features/main/components/LoginModal';
 import Navbar from '@/features/main/components/Navbar';
 import RegisterModal from '@/features/main/components/RegisterModal';
@@ -44,15 +47,19 @@ export default async function RootLayout({
   return (
     <html lang="ko" className={`${pretendard.variable} ${roboto.variable} antialiased`}>
       <body className="bg-[#F5F5F7] font-pretendard">
-        <MSWProvider>
-          <QueryProvider>
-            <Navbar />
-            <main className="pb-20 pt-28">{children}</main>
-            <LoginModal />
-            <RegisterModal />
-          </QueryProvider>
-          <Footer />
-        </MSWProvider>
+        <Provider>
+          <AuthProvider>
+            <MSWProvider>
+              <QueryProvider>
+                <Navbar />
+                <main className="pb-20 pt-28">{children}</main>
+                <LoginModal />
+                <RegisterModal />
+              </QueryProvider>
+              <Footer />
+            </MSWProvider>
+          </AuthProvider>
+        </Provider>
       </body>
     </html>
   );

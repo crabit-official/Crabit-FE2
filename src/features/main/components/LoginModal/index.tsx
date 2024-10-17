@@ -4,6 +4,7 @@ import { useState } from 'react';
 import type { FieldValues, SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
+import { signIn } from 'next-auth/react';
 
 import useLoginModal from '@/features/main/hooks/use-login-modal';
 import useRegisterModal from '@/features/main/hooks/use-register-modal';
@@ -28,11 +29,23 @@ function LoginModal() {
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = () => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data: FieldValues) => {
     setIsLoading(true);
-    registerModal.onClose();
-    // 데이터 요청, 성공시 registerModal.onClose
-    // onSettled setIsLoading(false);
+
+    const res = await signIn('credentials', {
+      email: data.email,
+      password: data.password,
+      redirect: false,
+    });
+
+    if (res?.ok) {
+      loginModal.onClose();
+    } else {
+      // 에러 처리 수정
+      // alert(res?.error);
+    }
+
+    setIsLoading(false);
   };
 
   const bodyContent = (
