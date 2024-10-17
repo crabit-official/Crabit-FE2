@@ -13,7 +13,6 @@ import Heading from '@/shared/components/Heading';
 import Input from '@/shared/components/Input';
 import Modal from '@/shared/components/Modal';
 import Typography from '@/shared/components/Typography';
-import { axiosInstance } from '@/shared/libs/axios-instance';
 
 function RegisterModal() {
   const registerModal = useRegisterModal();
@@ -38,23 +37,28 @@ function RegisterModal() {
     // onSettled setIsLoading(false);
 
     try {
-      const res = await axiosInstance.post('/api/v1/auth/join', {
-        name: data.name,
-        email: data.email,
-        password: data.password,
-        socialType: 'LOCAL',
-        globalRole: 'ROLE_USER',
-        privacyPolicyAllowed: 'AGREE',
-        termsOfServiceAllowed: 'AGREE',
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/join`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          password: data.password,
+          socialType: 'LOCAL',
+          globalRole: 'ROLE_USER',
+          privacyPolicyAllowed: 'AGREE',
+          termsOfServiceAllowed: 'AGREE',
+        }),
       });
 
-      if (res.status === 200) {
+      if (res.ok) {
         registerModal.onClose();
         loginModal.onOpen();
       }
     } catch {
-      // 에러 처리 수정
-      // if (axios.isAxiosError(error)) alert(error?.response?.data?.result?.joinRequest);
+      // console.error('Error:', error);
     } finally {
       setIsLoading(false);
     }
