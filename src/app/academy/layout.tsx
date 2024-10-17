@@ -6,7 +6,7 @@ function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <AcademyTab />
-      {children}
+      <div>{children}</div>
     </>
   );
 }
