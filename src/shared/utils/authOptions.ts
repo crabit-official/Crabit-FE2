@@ -3,9 +3,8 @@ import type { NextAuthOptions, Session, User } from 'next-auth';
 import type { JWT } from 'next-auth/jwt';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
-import type { IApiResponse, ILoginResponse } from '@/types/profile';
-
-import { axiosInstance } from '@/libs/axios-instance';
+import { axiosInstance } from '@/shared/libs/axios-instance';
+import type { IApiResponse, ILoginResponse } from '@/shared/types/profile';
 
 export const authOptions: NextAuthOptions = {
   providers: [

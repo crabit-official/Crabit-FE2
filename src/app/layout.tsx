@@ -5,9 +5,6 @@ import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import localFont from 'next/font/local';
 
-import AuthProvider from '@/libs/next-auth/auth-provider';
-import Provider from '@/libs/next-auth/session-provider';
-
 import LoginModal from '@/features/main/components/LoginModal';
 import Navbar from '@/features/main/components/Navbar';
 import RegisterModal from '@/features/main/components/RegisterModal';
@@ -15,6 +12,8 @@ import Footer from '@/shared/components/Footer';
 import { MSWProvider } from '@/shared/components/MSWProvider';
 import { QueryProvider } from '@/shared/components/QueryProvider';
 import { isMocking } from '@/shared/constants/constants';
+import AuthProvider from '@/shared/libs/next-auth/auth-provider';
+import Provider from '@/shared/libs/next-auth/session-provider';
 import { initMocking } from '@/shared/mocks';
 
 const pretendard = localFont({
