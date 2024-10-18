@@ -24,6 +24,7 @@ function LoginModal() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FieldValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -43,6 +44,7 @@ function LoginModal() {
 
     if (res?.ok) {
       loginModal.onClose();
+      reset();
     } else {
       // 에러 처리 수정
       // alert(res?.error);
