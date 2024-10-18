@@ -66,7 +66,7 @@ function SideBar() {
         {isOpen &&
           sidebarMenu.map((menu) => (
             <li key={menu.title} className="relative block md:hidden">
-              <div className="absolute top-0 w-[40vw] overflow-hidden rounded-xl bg-white text-sm shadow-md md:w-3/4">
+              <div className="absolute top-0 z-50 w-[40vw] overflow-hidden rounded-xl bg-white text-sm shadow-md md:w-3/4">
                 <Flex column="start" className="cursor-pointer">
                   {menu.list.map((item) => (
                     <MenuItem
