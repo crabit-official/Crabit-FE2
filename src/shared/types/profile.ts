@@ -18,6 +18,9 @@ export interface IProfileResponse extends IApiResponse {
 export interface ILoginResponse extends IApiResponse {
   result: {
     accessToken: string;
+    globalRole: string;
+    name: string;
+    profileImageUrl: string;
     refreshToken: string;
     socialType: string;
   };
