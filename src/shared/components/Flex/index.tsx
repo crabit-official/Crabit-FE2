@@ -7,6 +7,7 @@ import cn from '@/shared/utils/style';
 const FlexVariants = cva('flex', {
   variants: {
     row: {
+      start: 'justify-start',
       center: 'justify-center',
       between: 'justify-between',
       around: 'justify-around',
@@ -14,6 +15,7 @@ const FlexVariants = cva('flex', {
       end: 'justify-end',
     },
     column: {
+      start: 'flex-col justify-start',
       center: 'flex-col justify-center',
       between: 'flex-col justify-between',
       around: 'flex-col justify-around',

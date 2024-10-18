@@ -1,10 +1,13 @@
-import RowCard from '@/features/academy/my/components/row-card';
+import RowCard from '@/features/academy/my/components/RowCard/row-card';
 import Container from '@/features/main/components/Container';
+import Flex from '@/shared/components/Flex';
 
 function MyAcademyPage() {
   return (
-    <Container className="mt-10">
-      <RowCard />
+    <Container>
+      <Flex>
+        <RowCard />
+      </Flex>
     </Container>
   );
 }
