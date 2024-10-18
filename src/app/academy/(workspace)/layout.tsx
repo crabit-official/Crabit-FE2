@@ -7,7 +7,7 @@ function Layout({ children }: { children: React.ReactNode }) {
     <>
       <WorkspaceTab />
       <div className="xl:px-30 max-w-8xl container mx-auto h-full">
-        <div className="grid h-dvh grid-cols-5">
+        <div className="grid">
           <div className="col-span-4 border-x lg:col-span-3">{children}</div>
         </div>
       </div>
