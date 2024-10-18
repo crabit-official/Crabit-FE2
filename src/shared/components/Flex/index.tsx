@@ -1,3 +1,4 @@
+import type { ElementType } from 'react';
 import React from 'react';
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
@@ -7,6 +8,7 @@ import cn from '@/shared/utils/style';
 const FlexVariants = cva('flex', {
   variants: {
     row: {
+      start: 'justify-start',
       center: 'justify-center',
       between: 'justify-between',
       around: 'justify-around',
@@ -14,6 +16,7 @@ const FlexVariants = cva('flex', {
       end: 'justify-end',
     },
     column: {
+      start: 'flex-col justify-start',
       center: 'flex-col justify-center',
       between: 'flex-col justify-between',
       around: 'flex-col justify-around',
@@ -34,8 +37,10 @@ const FlexVariants = cva('flex', {
 });
 
 interface IFlexProps extends VariantProps<typeof FlexVariants> {
+  as?: ElementType;
   children: React.ReactNode;
   className?: string;
+  onClick?: () => void;
 }
 
 /**
@@ -45,10 +50,17 @@ interface IFlexProps extends VariantProps<typeof FlexVariants> {
  * @param column column 주축 기준 flex를 선언합니다.
  * @param rowColumn 주축과, 반대축 모두를 기준으로 flex를 선언합니다.
  * @param className 추가 스타일링에 대한 코드를 작성합니다.
+ * @param as 태그명을 변경합니다.
+ * @param onClick 클릭 이벤트를 설정합니다.
  * @constructor
  */
-function Flex({ children, row, column, rowColumn, className }: IFlexProps) {
-  return <div className={cn(FlexVariants({ row, column, rowColumn }), className)}>{children}</div>;
+function Flex({ children, row, column, rowColumn, className, as, onClick }: IFlexProps) {
+  const Component = as || 'div';
+  return (
+    <Component onClick={onClick} className={cn(FlexVariants({ row, column, rowColumn }), className)}>
+      {children}
+    </Component>
+  );
 }
 
 export default Flex;
