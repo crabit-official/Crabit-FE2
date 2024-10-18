@@ -1,10 +1,11 @@
 import Content from '@/features/academy/(workspace)/components/dashboard/Content';
 
 function AcademyDashBoardPage() {
-  const imgUrl = '/images/logo.png';
+  const imgUrl =
+    'https://plus.unsplash.com/premium_photo-1681396937086-8a28edd8d257?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Z3VpdGFyfGVufDB8fDB8fHww';
 
   return (
-    <section className="flex w-2/3 flex-col gap-4 md:w-full md:px-14">
+    <section className="flex w-full flex-col gap-4 px-3 md:px-14">
       <Content content="우와아아" imgUrl={imgUrl} />
       <Content content="우와아아" />
       <Content

@@ -25,15 +25,15 @@ function Content({ content, imgUrl }: IContentProps) {
 
   return (
     <Flex column="center" className="relative gap-4 rounded-2xl bg-white p-4 shadow-transparent transition-all duration-200 hover:shadow-lg">
-      <Flex className="gap-4">
+      <Flex column="center" className="gap-4 sm:flex-row">
         <CiMenuKebab className="absolute right-3 top-3 cursor-pointer text-neutral-300" onClick={toggleOpen} />
         {imgUrl && (
           <Image
             onClick={() => router.push('/academy/123/dashboard/1')}
             alt="이미지 설명"
-            className="size-32 shrink-0 rounded-lg bg-[#131315] object-contain"
-            width={32}
-            height={32}
+            className="mt-6 h-52 w-full shrink-0 rounded-lg bg-[#131315] object-contain sm:mt-0 sm:w-52"
+            width={100}
+            height={100}
             src={imgUrl}
           />
         )}
