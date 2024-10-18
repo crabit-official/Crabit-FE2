@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaMedal } from 'react-icons/fa';
 
-import Index from '@/features/academy/(workspace)/components/dashboard/Profile';
+import Profile from '@/features/academy/(workspace)/components/dashboard/Profile';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 
@@ -15,9 +15,9 @@ function Trendbar() {
           </Typography>
         </Flex>
         <Flex column="start" className="gap-4 rounded-xl bg-white px-10 py-4">
-          <Index size="sm" icon={FaMedal} />
-          <Index size="sm" icon={FaMedal} />
-          <Index size="sm" icon={FaMedal} />
+          <Profile size="sm" icon={FaMedal} />
+          <Profile size="sm" icon={FaMedal} />
+          <Profile size="sm" icon={FaMedal} />
         </Flex>
       </Flex>
     </Flex>

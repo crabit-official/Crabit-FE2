@@ -16,7 +16,7 @@ interface IContentProps {
   imgUrl?: string;
 }
 
-function Trendbar({ content, imgUrl }: IContentProps) {
+function Content({ content, imgUrl }: IContentProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const toggleOpen = useCallback(() => {
@@ -57,4 +57,4 @@ function Trendbar({ content, imgUrl }: IContentProps) {
   );
 }
 
-export default Trendbar;
+export default Content;

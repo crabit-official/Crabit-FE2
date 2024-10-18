@@ -10,7 +10,7 @@ interface IProfileProps {
   size?: 'sm' | 'md';
 }
 
-function Index({ size, icon: Icon }: IProfileProps) {
+function Profile({ size, icon: Icon }: IProfileProps) {
   return (
     <Flex row="between" className="max-w-52 gap-4 rounded-md md:justify-center">
       <Flex className={Icon ? 'gap-2' : 'gap-4'}>
@@ -37,4 +37,4 @@ function Index({ size, icon: Icon }: IProfileProps) {
   );
 }
 
-export default Index;
+export default Profile;

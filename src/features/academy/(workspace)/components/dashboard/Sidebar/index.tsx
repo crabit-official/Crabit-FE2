@@ -1,14 +1,14 @@
 import React from 'react';
 
 import ChallengeMenu from '@/features/academy/(workspace)/components/dashboard/ChallengeMenu';
-import Index from '@/features/academy/(workspace)/components/dashboard/Profile';
+import Profile from '@/features/academy/(workspace)/components/dashboard/Profile';
 import Flex from '@/shared/components/Flex';
 
 function Sidebar() {
   return (
     <Flex column="center" className="min-w-[150px] items-center gap-14 md:flex md:items-start md:justify-start">
       <Flex className="hidden max-w-52 md:flex">
-        <Index />
+        <Profile />
       </Flex>
       <Flex row="center" className="max-w-96 gap-4 overflow-x-scroll md:flex-col">
         <ChallengeMenu label="미라클 모닝" />
