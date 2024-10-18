@@ -3,10 +3,8 @@ import Container from '@/features/main/components/Container';
 
 function MyAcademyPage() {
   return (
-    <Container>
-      <div className="flex justify-center">
-        <RowCard />
-      </div>
+    <Container className="mt-10">
+      <RowCard />
     </Container>
   );
 }
