@@ -11,13 +11,18 @@ declare module 'next-auth' {
     accessTokenExpires: number;
     error?: 'RefreshAccessTokenError';
     expires: string;
+    globalRole: string;
+    name: string;
+    profileImageUrl: string;
     refreshToken?: string;
     socialType: string;
-    user: User;
   }
 
   interface User {
     accessToken: string;
+    globalRole: string;
+    name: string;
+    profileImageUrl: string;
     refreshToken: string;
     socialType: string;
   }
@@ -29,6 +34,9 @@ declare module 'next-auth/jwt' {
   interface JWT {
     accessToken: string;
     accessTokenExpires: number;
+    globalRole: string;
+    name: string;
+    profileImageUrl: string;
     refreshToken: string;
     socialType: string;
   }
