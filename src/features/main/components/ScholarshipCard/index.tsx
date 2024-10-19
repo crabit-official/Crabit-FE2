@@ -18,14 +18,14 @@ function ScholarshipCard({ title, contents, position = 'left' }: IScholarshipCar
     <Flex className={position === 'left' ? 'justify-start' : 'justify-end'}>
       <Flex column="center" className="w-full gap-16 rounded-xl bg-neutral-50 p-12 md:w-[700px]">
         <Flex column="center" className="gap-4">
-          <Typography size="h1" className="break-keep text-xl font-extrabold text-main-pink md:text-2xl">
+          <Typography size="h1" className="break-keep text-xl font-bold text-main-pink sm:font-extrabold md:text-2xl">
             {title}
           </Typography>
           <Flex column="center">
             {contents.map((e) => (
               <Flex key={e.id} className="items-start justify-start gap-1">
                 <BiSolidRightArrow size={9} className="mt-1.5 md:mt-2" />
-                <Typography size="h5" as="p" className="w-96 break-keep text-sm font-normal md:text-base">
+                <Typography size="h5" as="p" className="w-96 break-keep text-xs font-normal sm:text-sm md:text-base">
                   {e.title}
                 </Typography>
               </Flex>
@@ -33,7 +33,7 @@ function ScholarshipCard({ title, contents, position = 'left' }: IScholarshipCar
           </Flex>
         </Flex>
         <Flex className="items-center justify-start gap-1">
-          <Typography as="p" size="h5" className="text-sm text-neutral-200 md:text-base">
+          <Typography as="p" size="h5" className="text-xs text-neutral-200 sm:text-sm md:text-base">
             더 알아보기
           </Typography>
           <IoIosArrowForward className="text-neutral-200" />
