@@ -17,10 +17,10 @@ function MainBanner() {
       />
       <div className="h-14" />
       <Flex rowColumn="center" className="z-10 gap-4">
-        <Typography size="h0" className="text-3xl font-extrabold text-white md:text-6xl">
+        <Typography size="h0" className="text-3xl font-bold text-white sm:font-extrabold md:text-6xl">
           학습 습관 형성의 출발점
         </Typography>
-        <Flex rowColumn="center" className="text-lg font-medium text-white md:text-2xl">
+        <Flex rowColumn="center" className="text-base font-medium text-white sm:text-lg md:text-2xl">
           <p>{`Crabit은 'Craft Your Habit'의 합성어로,`}</p>
           <p>지속가능한 학습 습관을 형성할 수 있도록 지원합니다</p>
         </Flex>
