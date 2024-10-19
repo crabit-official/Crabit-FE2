@@ -64,6 +64,22 @@ function UserMenu() {
             {!session ? (
               <>
                 <MenuItem
+                  className="block md:hidden"
+                  onClick={() => {
+                    setIsOpen(false);
+                    router.push('/space/enroll');
+                  }}
+                  label="기관 등록하기"
+                />
+                <MenuItem
+                  className="block md:hidden"
+                  onClick={() => {
+                    setIsOpen(false);
+                    router.push('/academy/my');
+                  }}
+                  label="내 학원"
+                />
+                <MenuItem
                   onClick={() => {
                     loginModal.onOpen();
                     setIsOpen(false);
@@ -79,13 +95,33 @@ function UserMenu() {
                 />
               </>
             ) : (
-              <MenuItem
-                onClick={() => {
-                  handleLogout();
-                  setIsOpen(false);
-                }}
-                label="로그아웃"
-              />
+              <>
+                <MenuItem
+                  className="block md:hidden"
+                  onClick={() => {
+                    setIsOpen(false);
+                    router.push('/space/enroll');
+                  }}
+                  label="기관 등록하기"
+                />
+                <MenuItem
+                  className="block md:hidden"
+                  onClick={() => {
+                    setIsOpen(false);
+                    router.push('/academy/my');
+                  }}
+                  label="내 학원"
+                />
+
+                <MenuItem
+                  onClick={() => {
+                    handleLogout();
+                    setIsOpen(false);
+                    router.push('/');
+                  }}
+                  label="로그아웃"
+                />
+              </>
             )}
           </div>
         </div>
