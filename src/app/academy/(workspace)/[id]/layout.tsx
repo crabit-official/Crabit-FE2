@@ -18,7 +18,12 @@ async function Layout({ children, params }: { children: React.ReactNode; params:
   });
 
   const data: IAcademyResponse = await res.json();
-  const role = data?.result.academyRole;
+  const role = data?.result?.academyRole;
+
+  if (!role) {
+    // TODO: 에러 메세지 수정
+    return <div>학원에 대한 권한이 없습니다.</div>;
+  }
 
   return (
     <>
