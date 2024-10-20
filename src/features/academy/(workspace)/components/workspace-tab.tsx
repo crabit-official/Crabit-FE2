@@ -16,9 +16,21 @@ function WorkspaceTab() {
 
   return (
     <Flex row="around">
-      <TabButton icon={FaBookmark} label="대시보드" isActive={pathname.includes(`/academy/${id}/dashboard`)} path={`/academy/${id}/dashboard`} />
+      <TabButton
+        icon={FaBookmark}
+        label="대시보드"
+        isActive={pathname.includes(`/academy/${id}/dashboard`)}
+        path={`/academy/${id}/dashboard`}
+        className="size-4"
+      />
       <TabButton icon={MdInsertChart} label="챌린지 관리" isActive={pathname.includes(`/academy/${id}/challenge`)} path={`/academy/${id}/challenge`} />
-      <TabButton icon={FaUserPlus} label="학원 관리" isActive={pathname.includes(`/academy/${id}/manage`)} path={`/academy/${id}/manage`} />
+      <TabButton
+        className="size-[19px]"
+        icon={FaUserPlus}
+        label="학원 관리"
+        isActive={pathname.includes(`/academy/${id}/manage`)}
+        path={`/academy/${id}/manage`}
+      />
       <TabButton icon={IoIosSettings} label="설정" isActive={pathname.includes(`/academy/${id}/setting`)} path={`/academy/${id}/setting`} />
     </Flex>
   );
