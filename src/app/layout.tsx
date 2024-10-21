@@ -4,6 +4,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import localFont from 'next/font/local';
+import { Toaster } from 'sonner';
 
 import LoginModal from '@/features/main/components/LoginModal';
 import Navbar from '@/features/main/components/Navbar';
@@ -56,6 +57,7 @@ export default async function RootLayout({
                   <main className="flex-1 pb-20 pt-28">{children}</main>
                   <LoginModal />
                   <RegisterModal />
+                  <Toaster />
                 </Flex>
               </QueryProvider>
               <Footer />

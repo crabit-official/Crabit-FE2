@@ -5,6 +5,7 @@ import { AiOutlineMenu } from 'react-icons/ai';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
+import { toast } from 'sonner';
 
 import MenuItem from '@/features/main/components/MenuItem';
 import useLoginModal from '@/features/main/hooks/use-login-modal';
@@ -37,7 +38,10 @@ function UserMenu() {
           기관 등록하기
         </div>
         <div
-          onClick={() => router.push('/academy/my')}
+          onClick={() => {
+            router.push('/academy/my');
+            toast.success('hi');
+          }}
           className="hidden cursor-pointer rounded-full px-4 py-3 text-sm font-semibold transition hover:bg-neutral-100 md:block"
         >
           내 학원
@@ -75,6 +79,7 @@ function UserMenu() {
                   className="block md:hidden"
                   onClick={() => {
                     setIsOpen(false);
+                    toast.success('하이');
                     router.push('/academy/my');
                   }}
                   label="내 학원"

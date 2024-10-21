@@ -2077,6 +2077,7 @@ __metadata:
     react-dom: ^18
     react-hook-form: ^7.53.0
     react-icons: ^5.3.0
+    sonner: ^1.5.0
     tailwind-merge: ^2.5.3
     tailwindcss: ^3.4.1
     typescript: ^5
@@ -6258,6 +6259,16 @@ __metadata:
     ip-address: ^9.0.5
     smart-buffer: ^4.2.0
   checksum: 7a6b7f6eedf7482b9e4597d9a20e09505824208006ea8f2c49b71657427f3c137ca2ae662089baa73e1971c62322d535d9d0cf1c9235cf6f55e315c18203eadd
+  languageName: node
+  linkType: hard
+
+"sonner@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "sonner@npm:1.5.0"
+  peerDependencies:
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  checksum: 0b0f911785b74209a44fe85fe5b0cf3bd440c78271285026dc1290bb6e8c6296c92a01a0f72646d18312654c138838aeadd15a55c20954a193cb65ccf84f51e3
   languageName: node
   linkType: hard
 
