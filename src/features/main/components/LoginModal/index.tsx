@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn } from 'next-auth/react';
+import { toast } from 'sonner';
 
 import useLoginModal from '@/features/main/hooks/use-login-modal';
 import useRegisterModal from '@/features/main/hooks/use-register-modal';
@@ -46,8 +47,7 @@ function LoginModal() {
       loginModal.onClose();
       reset();
     } else {
-      // 에러 처리 수정
-      // alert(res?.error);
+      toast.error(res?.error);
     }
 
     setIsLoading(false);
