@@ -1,6 +1,7 @@
 import React from 'react';
 
 import getAcademyProfile from '@/features/academy/(workspace)/api/get-academy-profile';
+import ChallengeModal from '@/features/academy/(workspace)/components/dashboard/ChallengeModal';
 import Sidebar from '@/features/academy/(workspace)/components/dashboard/Sidebar';
 import Trendbar from '@/features/academy/(workspace)/components/dashboard/Trendbar';
 import Error from '@/features/academy/(workspace)/components/error';
@@ -26,6 +27,7 @@ async function Layout({ children, modal, params }: ILayout) {
         <Flex className="border-x md:col-span-3">
           {modal}
           {children}
+          <ChallengeModal />
         </Flex>
         <Trendbar />
       </div>

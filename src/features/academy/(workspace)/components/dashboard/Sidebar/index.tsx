@@ -5,6 +5,7 @@ import { FaCirclePlus } from 'react-icons/fa6';
 
 import ChallengeMenu from '@/features/academy/(workspace)/components/dashboard/ChallengeMenu';
 import Profile from '@/features/academy/(workspace)/components/dashboard/Profile';
+import useChallengeModal from '@/features/academy/(workspace)/hooks/use-challenge-modal';
 import MenuItem from '@/features/main/components/MenuItem';
 import Flex from '@/shared/components/Flex';
 import { useDraggable } from '@/shared/hooks/useDraggable';
@@ -19,6 +20,7 @@ function Sidebar({ role }: ISidebarProps) {
   const toggleOpen = useCallback(() => {
     setIsOpen((open) => !open);
   }, []);
+  const challengeModal = useChallengeModal();
 
   return (
     <Flex row="center" className="items-center gap-3 md:flex md:flex-col md:items-start md:justify-start md:gap-14">
@@ -40,21 +42,22 @@ function Sidebar({ role }: ISidebarProps) {
         <ChallengeMenu label="미라클 모닝" />
       </ul>
       {role !== 'STUDENT' && (
-        <button type="button" onClick={toggleOpen} className="relative w-fit md:w-full">
-          <FaCirclePlus size={20} className="text-slate-500 hover:text-black" />
+        <div className="relative w-fit md:w-full">
+          <FaCirclePlus size={20} className="cursor-pointer text-slate-500 hover:text-black" onClick={toggleOpen} role="button" />
           {isOpen && (
             <div className="absolute right-0 z-10 w-[150px] max-w-[170px] overflow-hidden rounded-xl bg-white text-sm shadow-md md:left-0 md:top-10 md:w-full">
               <div className="flex cursor-pointer flex-col">
                 <MenuItem
                   onClick={() => {
                     setIsOpen(false);
+                    challengeModal.onOpen();
                   }}
                   label="챌린저 추가하기"
                 />
               </div>
             </div>
           )}
-        </button>
+        </div>
       )}
     </Flex>
   );

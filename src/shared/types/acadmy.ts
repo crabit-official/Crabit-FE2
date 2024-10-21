@@ -9,9 +9,22 @@ export interface IAcademyProfile {
   school: string | null;
 }
 
-export interface IAcademyResponse {
+export interface IAcademyResponse<T = any> {
   code: string;
   isSuccess: boolean;
   message: string;
-  result: IAcademyProfile;
+  result: T;
+}
+
+export interface IAcademyChallenges {
+  challengeCategory: string;
+  challengeMarketVisibility: string;
+  challengeParticipationMethod: string;
+  content: string;
+  imageUrl?: string | null;
+  open: boolean;
+  points: number;
+  studentIdList?: number[];
+  title: string;
+  totalDays: number;
 }

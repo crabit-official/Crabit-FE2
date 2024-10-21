@@ -57,7 +57,7 @@ export default async function RootLayout({
                   <main className="flex-1 pb-20 pt-28">{children}</main>
                   <LoginModal />
                   <RegisterModal />
-                  <Toaster />
+                  <Toaster richColors />
                 </Flex>
               </QueryProvider>
               <Footer />

@@ -1,6 +1,6 @@
 import { getServerSession } from 'next-auth';
 
-import type { IAcademyResponse } from '@/shared/types/acadmy';
+import type { IAcademyProfile, IAcademyResponse } from '@/shared/types/acadmy';
 import { authOptions } from '@/shared/utils/authOptions';
 
 const getAcademyProfile = async (id: string) => {
@@ -13,7 +13,7 @@ const getAcademyProfile = async (id: string) => {
     },
   });
 
-  const data: IAcademyResponse = await res.json();
+  const data: IAcademyResponse<IAcademyProfile> = await res.json();
   const role = data?.result?.academyRole;
 
   if (!role) return null;
