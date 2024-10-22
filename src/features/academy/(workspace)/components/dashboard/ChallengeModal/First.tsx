@@ -1,8 +1,10 @@
 import { type FieldValues, useForm } from 'react-hook-form';
+import { BiX } from 'react-icons/bi';
 import { IoMdPhotos } from 'react-icons/io';
 import Image from 'next/image';
 
 import type { IChallengeValue } from '@/features/academy/(workspace)/components/dashboard/ChallengeModal/index';
+import useChallengeModal from '@/features/academy/(workspace)/hooks/use-challenge-modal';
 import { useImage } from '@/features/academy/(workspace)/hooks/use-image';
 import Flex from '@/shared/components/Flex';
 import Input from '@/shared/components/Input';
@@ -19,6 +21,7 @@ interface IFirstProps {
 function First({ onNext }: IFirstProps) {
   const { filePreview, handleChangeFile, file } = useImage();
   const { data: image } = useGetPresignedUrl(file?.name as string);
+  const challengeModal = useChallengeModal();
 
   const {
     register,
@@ -45,9 +48,14 @@ function First({ onNext }: IFirstProps) {
     }
   };
 
+  const handleExit = () => {
+    challengeModal.onClose();
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex size-full min-h-96 flex-col items-center justify-between gap-2">
       <Flex column="center" className="w-full gap-8">
+        <BiX onClick={handleExit} className="absolute right-9 top-9 cursor-pointer hover:opacity-80" size={20} />
         <Typography size="h4" className="text-center">
           챌린지 정보 입력하기
         </Typography>

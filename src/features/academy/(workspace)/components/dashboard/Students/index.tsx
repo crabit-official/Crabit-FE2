@@ -1,7 +1,5 @@
 import type { Dispatch, SetStateAction } from 'react';
 
-import Flex from '@/shared/components/Flex';
-
 interface IStudentsProps {
   nickname: string;
   selectedStudentIdList: number[];
@@ -21,12 +19,12 @@ function Students({ nickname, studentId, setSelectedStudentIdList, selectedStude
   };
 
   return (
-    <Flex
+    <div
       onClick={handleSelect}
-      className={`cursor-pointer rounded-md p-2 hover:scale-95 ${isSelected ? 'bg-main-pink font-medium text-white' : 'bg-neutral-100 text-black'}`}
+      className={`h-fit cursor-pointer rounded-md p-2 hover:scale-95 ${isSelected ? 'bg-main-pink font-medium text-white' : 'bg-neutral-100 text-black'}`}
     >
       {nickname}
-    </Flex>
+    </div>
   );
 }
 

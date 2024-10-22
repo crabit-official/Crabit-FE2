@@ -1,7 +1,9 @@
 import { type FieldValues, useForm } from 'react-hook-form';
+import { BiX } from 'react-icons/bi';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import type { IChallengeValue } from '@/features/academy/(workspace)/components/dashboard/ChallengeModal/index';
+import useChallengeModal from '@/features/academy/(workspace)/hooks/use-challenge-modal';
 import Flex from '@/shared/components/Flex';
 import Input from '@/shared/components/Input';
 import SelectDropdown from '@/shared/components/SelectDropdown';
@@ -18,6 +20,8 @@ interface ISecondProps {
 }
 
 function Second({ onNext, onBack }: ISecondProps) {
+  const challengeModal = useChallengeModal();
+
   const {
     register,
     handleSubmit,
@@ -41,19 +45,22 @@ function Second({ onNext, onBack }: ISecondProps) {
     });
   };
 
+  const handleExit = () => {
+    challengeModal.onClose();
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex size-full flex-col items-center justify-center gap-2">
+      <BiX onClick={handleExit} className="absolute right-9 top-9 cursor-pointer hover:opacity-80" size={20} />
       <Typography size="h4">챌린지 정보 입력하기</Typography>
       <Spacing direction="vertical" size={20} />
       <SelectDropdown id="challengeCategory" label="챌린지 종류" register={register} errors={errors} options={CHALLENGE_CATEGORIES} />
       <SelectDropdown id="challengeMarketVisibility" label="챌린지 마켓 업로드 여부" register={register} errors={errors} options={VISIBILITY_CATEGORIES} />
       <Input id="points" type="number" label="포인트" register={register} errors={errors} required valueAsNumber />
       <Input id="totalDays" type="number" label="totalDays" register={register} errors={errors} required valueAsNumber />
-
       <Typography className="w-full pl-1 text-start text-xs font-medium text-neutral-300" size="h5">
         챌린지 진행 기간은 최소 3일에서 최대 31일까지 설정할 수 있습니다.
       </Typography>
-
       <Spacing direction="vertical" size={20} />
       <Flex className="w-full gap-2">
         <button type="button" className="w-full rounded-xl bg-neutral-100 p-4 text-neutral-400 hover:bg-gray-300" onClick={onBack}>
