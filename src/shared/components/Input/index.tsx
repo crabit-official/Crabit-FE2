@@ -15,16 +15,17 @@ interface IInputProps {
   register: UseFormRegister<FieldValues>;
   required?: boolean;
   type?: string;
+  valueAsNumber?: boolean;
 }
 
-function Input({ id, label, type, disabled, formatPrice, required, register, errors, className }: IInputProps) {
+function Input({ id, label, type, disabled, formatPrice, required, register, errors, className, valueAsNumber }: IInputProps) {
   return (
     <div className={cn(`relative w-full`, className)}>
       {formatPrice && <BiWon size={24} className="absolute left-2 top-5 text-neutral-700" />}
       <input
         id={id}
         disabled={disabled}
-        {...register(id, { required })}
+        {...register(id, { required, valueAsNumber })}
         placeholder=" "
         type={type}
         className={`peer w-full rounded-md border-2 bg-main-white p-4 pt-6 font-light outline-none transition disabled:cursor-not-allowed disabled:opacity-70 ${formatPrice ? 'pl-9' : 'pl-4'} ${errors[id] ? 'border-main-pink' : 'border-neutral-300'} ${errors[id] ? 'focus:border-main-pink' : 'focus:border-main-black'} `}
