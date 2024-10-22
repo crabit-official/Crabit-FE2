@@ -10,24 +10,18 @@ import Flex from '@/shared/components/Flex';
 import SelectDropdown from '@/shared/components/SelectDropdown';
 import Spacing from '@/shared/components/Spacing/spacing';
 import Typography from '@/shared/components/Typography';
+import { METHOD_CATEGORIES } from '@/shared/constants/challenge-cataegrories';
 import { challengeSchema } from '@/shared/utils/schema';
 
 type InfoValues = Pick<IChallengeValue, 'challengeParticipationMethod' | 'studentIdList'>;
 
-const MethodCategories = [
-  { value: 'ASSIGNED', label: '배정' },
-  {
-    value: 'SELF_PARTICIPATING',
-    label: '개인 참여',
-  },
-];
-
 interface IThirdProps {
   accessToken: string;
   id: string;
+  onBack: () => void;
   onNext: (values: InfoValues) => void;
 }
-function Third({ onNext, id, accessToken }: IThirdProps) {
+function Third({ onNext, id, accessToken, onBack }: IThirdProps) {
   const {
     register,
     handleSubmit,
@@ -41,7 +35,7 @@ function Third({ onNext, id, accessToken }: IThirdProps) {
     },
   });
   const [selectedStudentIdList, setSelectedStudentIdList] = useState<number[]>([]);
-  const watchCategroy = watch('challengeCategory');
+  const watchCategory = watch('challengeCategory');
   const { data: students } = useGetStudents({ id, accessToken });
 
   const onSubmit = (data: FieldValues) => {
@@ -61,8 +55,8 @@ function Third({ onNext, id, accessToken }: IThirdProps) {
         <Typography size="h4" className="text-center">
           챌린지 정보 입력하기
         </Typography>
-        <SelectDropdown id="challengeCategory" label="챌린지 참여 방식" register={register} errors={errors} options={MethodCategories} />
-        {watchCategroy === 'ASSIGNED' && (
+        <SelectDropdown id="challengeCategory" label="챌린지 참여 방식" register={register} errors={errors} options={METHOD_CATEGORIES} />
+        {watchCategory === 'ASSIGNED' && (
           <Flex className="w-full flex-wrap gap-2">
             {students?.map((e) =>
               e.result?.studentList?.map((st) => (
@@ -73,9 +67,14 @@ function Third({ onNext, id, accessToken }: IThirdProps) {
         )}
       </Flex>
       <Spacing direction="vertical" size={20} />
-      <button type="submit" className="w-full rounded-xl bg-main-pink p-4 font-medium text-white hover:opacity-90">
-        챌린지 생성
-      </button>
+      <Flex className="w-full gap-2">
+        <button type="button" className="w-full rounded-xl bg-neutral-100 p-4 text-neutral-400 hover:bg-gray-300" onClick={onBack}>
+          이전
+        </button>
+        <button type="submit" className="w-full rounded-xl bg-main-pink p-4 text-white hover:opacity-90">
+          챌린지 생성
+        </button>
+      </Flex>
     </form>
   );
 }

@@ -18,7 +18,6 @@ interface IFirstProps {
 
 function First({ onNext }: IFirstProps) {
   const { filePreview, handleChangeFile, file } = useImage();
-
   const { data: image } = useGetPresignedUrl(file?.name as string);
 
   const {

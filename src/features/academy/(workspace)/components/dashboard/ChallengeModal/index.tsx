@@ -97,6 +97,13 @@ function ChallengeModal({ id }: { id: string }) {
     }));
   };
 
+  const handleBack = () => {
+    setValue((pre) => ({
+      ...pre,
+      step: (pre.step as number) - 1,
+    }));
+  };
+
   if (!challengeModal.isOpen) {
     return null;
   }
@@ -120,8 +127,8 @@ function ChallengeModal({ id }: { id: string }) {
         <ProgressBar progress={(values.step as number) / LAST_STEP} />
         <div className="h-full p-10">
           {values.step === 0 ? <First onNext={handleInfoChange} /> : null}
-          {values.step === 1 ? <Second onNext={handleTypeChange} /> : null}
-          {values.step === 2 ? <Third onNext={handleParticipationChange} id={id} accessToken={session?.accessToken as string} /> : null}
+          {values.step === 1 ? <Second onNext={handleTypeChange} onBack={handleBack} /> : null}
+          {values.step === 2 ? <Third onNext={handleParticipationChange} onBack={handleBack} id={id} accessToken={session?.accessToken as string} /> : null}
         </div>
       </div>
     </div>
