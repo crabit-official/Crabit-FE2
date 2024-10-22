@@ -1,7 +1,6 @@
 'use client';
 
 import { FaUserPlus } from 'react-icons/fa';
-import { FaBookmark } from 'react-icons/fa6';
 import { IoIosSettings } from 'react-icons/io';
 import { MdInsertChart } from 'react-icons/md';
 import { useParams, usePathname } from 'next/navigation';
@@ -9,7 +8,12 @@ import { useParams, usePathname } from 'next/navigation';
 import { TabButton } from '@/features/academy/components/tab-button';
 import Flex from '@/shared/components/Flex';
 
-function WorkspaceTab({ role }: { role: string }) {
+interface IWorkspaceTabProps {
+  memberId: number;
+  role: string;
+}
+
+function WorkspaceTab({ role, memberId }: IWorkspaceTabProps) {
   const pathname = usePathname();
   const params = useParams();
   const id = params.id as string;
@@ -32,21 +36,19 @@ function WorkspaceTab({ role }: { role: string }) {
   }
 
   if (role === 'STUDENT') {
-    // TODO: 경로 수정
     content = (
-      <TabButton className="size-[19px]" icon={FaUserPlus} label="MY 챌린지" isActive={pathname.includes(`/academy/my/${id}`)} path={`/academy/my/${id}`} />
+      <TabButton
+        className="size-[19px]"
+        icon={FaUserPlus}
+        label="MY 챌린지"
+        isActive={pathname.includes(`/academy/${id}/my-challenge/${memberId}`)}
+        path={`/academy/${id}/my-challenge/${memberId}`}
+      />
     );
   }
 
   return (
     <Flex row="around">
-      <TabButton
-        icon={FaBookmark}
-        label="대시보드"
-        isActive={pathname.includes(`/academy/${id}/dashboard`)}
-        path={`/academy/${id}/dashboard`}
-        className="size-4"
-      />
       {content}
       <TabButton icon={IoIosSettings} label="설정" isActive={pathname.includes(`/academy/${id}/setting`)} path={`/academy/${id}/setting`} />
     </Flex>
