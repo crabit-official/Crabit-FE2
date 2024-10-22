@@ -27,7 +27,7 @@ async function Layout({ children, modal, params }: ILayout) {
         <Flex className="border-x md:col-span-3">
           {modal}
           {children}
-          <ChallengeModal />
+          <ChallengeModal id={params.id} />
         </Flex>
         <Trendbar />
       </div>

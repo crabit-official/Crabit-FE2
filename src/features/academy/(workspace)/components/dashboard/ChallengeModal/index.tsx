@@ -26,7 +26,7 @@ export interface IChallengeValue {
 
 const LAST_STEP = 3;
 
-function ChallengeModal() {
+function ChallengeModal({ id }: { id: string }) {
   const { data: session } = useSession();
   const storageKey = `challenge=${session?.name}`;
   const { mutate, isPending } = useCreateChallenges();
@@ -50,7 +50,7 @@ function ChallengeModal() {
   useEffect(() => {
     if (values.step === 3 && challengeModal.isOpen) {
       mutate({
-        id: '1',
+        id,
         challengeData: {
           title: values.title ?? '',
           challengeCategory: values.challengeCategory ?? '',
@@ -71,7 +71,7 @@ function ChallengeModal() {
     } else if (typeof window !== 'undefined') {
       localStorage.setItem(storageKey, JSON.stringify(values));
     }
-  }, [values, storageKey, challengeModal, mutate, session?.accessToken]);
+  }, [values, storageKey, challengeModal, mutate, session?.accessToken, id]);
 
   const handleInfoChange = (infoValues: Pick<IChallengeValue, 'title' | 'content' | 'thumbnailImageUrl'>) => {
     setValue((pre) => ({
@@ -121,7 +121,7 @@ function ChallengeModal() {
         <div className="h-full p-10">
           {values.step === 0 ? <First onNext={handleInfoChange} /> : null}
           {values.step === 1 ? <Second onNext={handleTypeChange} /> : null}
-          {values.step === 2 ? <Third onNext={handleParticipationChange} /> : null}
+          {values.step === 2 ? <Third onNext={handleParticipationChange} id={id} accessToken={session?.accessToken as string} /> : null}
         </div>
       </div>
     </div>

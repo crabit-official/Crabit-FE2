@@ -17,4 +17,9 @@ const signUpSchema = z.object({
   }),
 });
 
-export { loginSchema, signUpSchema };
+const challengeSchema = z.object({
+  challengeParticipationMethod: z.enum(['ASSIGNED', 'SELF_PARTICIPATING']),
+  studentIdList: z.array(z.number()).optional(),
+});
+
+export { challengeSchema, loginSchema, signUpSchema };
