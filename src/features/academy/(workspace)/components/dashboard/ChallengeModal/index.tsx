@@ -32,15 +32,20 @@ function ChallengeModal() {
   const { mutate, isPending } = useCreateChallenges();
   const challengeModal = useChallengeModal();
 
-  const [values, setValue] = useState<Partial<IChallengeValue>>(() => {
-    const applied = localStorage.getItem(storageKey);
-    if (applied === null) {
-      return {
-        step: 0,
-      };
-    }
-    return JSON.parse(applied) as IChallengeValue;
+  const [values, setValue] = useState<Partial<IChallengeValue>>({
+    step: 0,
   });
+
+  // 클라이언트에서만 로컬스토리지를 접근
+  useEffect(() => {
+    // Client
+    if (typeof window !== 'undefined') {
+      const applied = localStorage.getItem(storageKey);
+      if (applied !== null) {
+        setValue(JSON.parse(applied) as IChallengeValue);
+      }
+    }
+  }, [storageKey]);
 
   useEffect(() => {
     if (values.step === 3 && challengeModal.isOpen) {
@@ -59,9 +64,11 @@ function ChallengeModal() {
         },
         accessToken: session?.accessToken as string,
       });
-      localStorage.removeItem(storageKey);
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem(storageKey);
+      }
       setValue({ step: 0 });
-    } else {
+    } else if (typeof window !== 'undefined') {
       localStorage.setItem(storageKey, JSON.stringify(values));
     }
   }, [values, storageKey, challengeModal, mutate, session?.accessToken]);
