@@ -21,10 +21,14 @@ export interface IAcademyChallenges {
   challengeMarketVisibility: string;
   challengeParticipationMethod: string;
   content: string;
-  imageUrl?: string | null;
-  open: boolean;
   points: number;
   studentIdList?: number[];
+  thumbnailImageUrl?: string | null;
   title: string;
   totalDays: number;
+}
+
+export interface IAcademyChallenge {
+  challengeTitle: string;
+  releasedChallengeId: number;
 }

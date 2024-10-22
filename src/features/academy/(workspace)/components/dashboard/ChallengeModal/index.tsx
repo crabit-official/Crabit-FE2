@@ -6,20 +6,20 @@ import { useSession } from 'next-auth/react';
 import First from '@/features/academy/(workspace)/components/dashboard/ChallengeModal/First';
 import Second from '@/features/academy/(workspace)/components/dashboard/ChallengeModal/Second';
 import Third from '@/features/academy/(workspace)/components/dashboard/ChallengeModal/Third';
+import useCreateChallenges from '@/features/academy/(workspace)/hooks/challenges/use-create-challenges';
 import useChallengeModal from '@/features/academy/(workspace)/hooks/use-challenge-modal';
 import ProgressBar from '@/shared/components/ProgressBar';
 
 export interface IChallengeValue {
   challengeCategory: string;
   challengeMarketVisibility: string;
-  challengeParticipationMethod: string;
+  challengeParticipationMethod: 'ASSIGNED' | 'SELF_PARTICIPATING';
   content: string;
-  file: File | null;
-  imageUrl: string;
   open: boolean;
   points: number;
   step: number;
   studentIdList: number[];
+  thumbnailImageUrl: string | null;
   title: string;
   totalDays: number;
 }
@@ -27,10 +27,10 @@ export interface IChallengeValue {
 const LAST_STEP = 3;
 
 function ChallengeModal() {
-  // const { mutate } = useCreateChallenges();
-  const challengeModal = useChallengeModal();
   const { data: session } = useSession();
   const storageKey = `challenge=${session?.name}`;
+  const { mutate, isPending } = useCreateChallenges();
+  const challengeModal = useChallengeModal();
 
   const [values, setValue] = useState<Partial<IChallengeValue>>(() => {
     const applied = localStorage.getItem(storageKey);
@@ -43,15 +43,30 @@ function ChallengeModal() {
   });
 
   useEffect(() => {
-    // 데이터를 저장
-    if (values.step === 3) {
+    if (values.step === 3 && challengeModal.isOpen) {
+      mutate({
+        id: '1',
+        challengeData: {
+          title: values.title ?? '',
+          challengeCategory: values.challengeCategory ?? '',
+          challengeMarketVisibility: values.challengeMarketVisibility ?? '',
+          challengeParticipationMethod: values.challengeParticipationMethod ?? '',
+          content: values.content ?? '',
+          thumbnailImageUrl: values.thumbnailImageUrl ?? null,
+          points: Number(values.points) ?? 0,
+          studentIdList: values.studentIdList ?? [],
+          totalDays: Number(values.totalDays) ?? 0,
+        },
+        accessToken: session?.accessToken as string,
+      });
       localStorage.removeItem(storageKey);
+      setValue({ step: 0 });
     } else {
       localStorage.setItem(storageKey, JSON.stringify(values));
     }
-  }, [values, storageKey, challengeModal]);
+  }, [values, storageKey, challengeModal, mutate, session?.accessToken]);
 
-  const handleInfoChange = (infoValues: Pick<IChallengeValue, 'title' | 'content' | 'file'>) => {
+  const handleInfoChange = (infoValues: Pick<IChallengeValue, 'title' | 'content' | 'thumbnailImageUrl'>) => {
     setValue((pre) => ({
       ...pre,
       ...infoValues,
@@ -77,6 +92,19 @@ function ChallengeModal() {
 
   if (!challengeModal.isOpen) {
     return null;
+  }
+
+  if (isPending) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden bg-neutral-800/70 outline-none focus:outline-none">
+        <div className="lg:w-3-/6 relative mx-auto my-6 size-full rounded-xl bg-white md:h-auto md:w-4/6 lg:h-auto xl:w-2/5">
+          <ProgressBar progress={(values.step as number) / LAST_STEP} />
+          <div className="h-full p-10">
+            <div>생성중..</div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (

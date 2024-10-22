@@ -1,19 +1,16 @@
-import { getServerSession } from 'next-auth';
+import type { IAcademyChallenge, IAcademyChallenges, IAcademyResponse } from '@/shared/types/acadmy';
 
-import type { IAcademyChallenges, IAcademyResponse } from '@/shared/types/acadmy';
-import { authOptions } from '@/shared/utils/authOptions';
-
-const createChallenges = async (id: string) => {
-  const session = await getServerSession(authOptions);
-
+const createChallenges = async ({ id, challengeData, accessToken }: { accessToken: string; challengeData: IAcademyChallenges; id: string }) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${id}/challenges`, {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`,
     },
+    body: JSON.stringify(challengeData),
   });
 
-  const data: IAcademyResponse<IAcademyChallenges> = await res.json();
+  const data: IAcademyResponse<IAcademyChallenge> = await res.json();
   return data.result;
 };
 

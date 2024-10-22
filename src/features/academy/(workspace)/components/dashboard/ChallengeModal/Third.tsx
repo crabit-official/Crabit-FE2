@@ -1,4 +1,6 @@
 import { type FieldValues, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
 import type { IChallengeValue } from '@/features/academy/(workspace)/components/dashboard/ChallengeModal/index';
 import Flex from '@/shared/components/Flex';
@@ -7,6 +9,11 @@ import Spacing from '@/shared/components/Spacing/spacing';
 import Typography from '@/shared/components/Typography';
 
 type InfoValues = Pick<IChallengeValue, 'challengeParticipationMethod' | 'studentIdList'>;
+
+const challengeSchema = z.object({
+  challengeParticipationMethod: z.enum(['ASSIGNED', 'SELF_PARTICIPATING']),
+  studentIdList: z.array(z.number()).optional(),
+});
 
 const MethodCategories = [
   { value: 'ASSIGNED', label: '배정' },
@@ -25,8 +32,9 @@ function Third({ onNext }: IThirdProps) {
     handleSubmit,
     formState: { errors },
   } = useForm<FieldValues>({
+    resolver: zodResolver(challengeSchema),
     defaultValues: {
-      challengeParticipationMethod: '',
+      challengeParticipationMethod: 'ASSIGNED',
       studentIdList: [],
     },
   });

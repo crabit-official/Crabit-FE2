@@ -24,12 +24,8 @@ function SelectDropdown({ id, label, disabled, required, register, errors, class
           id={id}
           disabled={disabled}
           {...register(id, { required })}
-          defaultValue=""
           className={`w-full appearance-none rounded-md border-2 bg-main-white p-4 pt-6 font-light outline-none transition disabled:cursor-not-allowed disabled:opacity-70 ${errors[id] ? 'border-main-pink' : 'border-neutral-300'} ${errors[id] ? 'focus:border-main-pink' : 'focus:border-main-black'} `}
         >
-          <option value="" disabled hidden>
-            옵션
-          </option>
           {options.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}

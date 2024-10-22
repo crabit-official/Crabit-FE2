@@ -1,4 +1,6 @@
 import { type FieldValues, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
 import type { IChallengeValue } from '@/features/academy/(workspace)/components/dashboard/ChallengeModal/index';
 import Input from '@/shared/components/Input';
@@ -27,6 +29,13 @@ const visibilityCategoriesv = [
   },
 ];
 
+const challengeSchema = z.object({
+  challengeCategory: z.enum(['STUDYING', 'EXERCISE', 'READING', 'NEWSPAPER', 'COPYING', 'DIARY_WRITING', 'LIFESTYLE_HABITS', 'ETC']),
+  challengeMarketVisibility: z.enum(['PUBLIC', 'PROTECTED']),
+  points: z.number().min(0, { message: '포인트는 0 이상이어야 합니다' }),
+  totalDays: z.number().min(3, { message: '최소 3일이상이어야 합니다.' }).max(31, { message: '최대 31일까지만 가능합니다' }),
+});
+
 interface ISecondProps {
   onNext: (values: InfoValues) => void;
 }
@@ -37,11 +46,12 @@ function Second({ onNext }: ISecondProps) {
     handleSubmit,
     formState: { errors },
   } = useForm<FieldValues>({
+    resolver: zodResolver(challengeSchema),
     defaultValues: {
-      challengeCategory: '',
-      challengeMarketVisibility: '',
+      challengeCategory: 'STUDYING',
+      challengeMarketVisibility: 'PUBLIC',
       points: 0,
-      totalDays: 0,
+      totalDays: 3,
     },
   });
 
@@ -60,8 +70,8 @@ function Second({ onNext }: ISecondProps) {
       <Spacing direction="vertical" size={20} />
       <SelectDropdown id="challengeCategory" label="챌린지 종류" register={register} errors={errors} options={challengeCategories} />
       <SelectDropdown id="challengeMarketVisibility" label="챌린지 마켓 업로드 여부" register={register} errors={errors} options={visibilityCategoriesv} />
-      <Input id="points" type="number" label="포인트" register={register} errors={errors} required />
-      <Input id="totalDays" type="number" label="totalDays" register={register} errors={errors} required />
+      <Input id="points" type="number" label="포인트" register={register} errors={errors} required valueAsNumber />
+      <Input id="totalDays" type="number" label="totalDays" register={register} errors={errors} required valueAsNumber />
       <Spacing direction="vertical" size={20} />
       <button type="submit" className="w-full rounded-xl bg-main-pink p-4 text-white hover:opacity-90">
         다음

@@ -8,9 +8,9 @@ import Flex from '@/shared/components/Flex';
 import Input from '@/shared/components/Input';
 import TextArea from '@/shared/components/Textarea';
 import Typography from '@/shared/components/Typography';
-// import useGetPresignedUrl from '@/shared/hooks/images/use-get-presigned-url';
+import useGetPresignedUrl from '@/shared/hooks/images/use-get-presigned-url';
 
-type InfoValues = Pick<IChallengeValue, 'title' | 'content' | 'file'>;
+type InfoValues = Pick<IChallengeValue, 'title' | 'content' | 'thumbnailImageUrl'>;
 
 interface IFirstProps {
   onNext: (values: InfoValues) => void;
@@ -19,7 +19,7 @@ interface IFirstProps {
 function First({ onNext }: IFirstProps) {
   const { filePreview, handleChangeFile, file } = useImage();
 
-  // const { data } = useGetPresignedUrl(file?.name as string);
+  const { data: image } = useGetPresignedUrl(file?.name as string);
 
   const {
     register,
@@ -29,11 +29,21 @@ function First({ onNext }: IFirstProps) {
     defaultValues: {
       title: '',
       content: '',
+      thumbnailImageUrl: null,
     },
   });
 
-  const onSubmit = (data: FieldValues) => {
-    onNext({ title: data.title, content: data.content, file });
+  const onSubmit = async (data: FieldValues) => {
+    if (image) {
+      const res = await fetch(image.url, {
+        method: 'PUT',
+        body: file,
+      });
+
+      if (res?.ok) onNext({ title: data.title, content: data.content, thumbnailImageUrl: image.keyName });
+    } else {
+      onNext({ title: data.title, content: data.content, thumbnailImageUrl: null });
+    }
   };
 
   return (
