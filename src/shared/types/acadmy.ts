@@ -1,15 +1,15 @@
 export interface IAcademyProfile {
   academyId: number;
-  academyMemberId: number | null;
+  academyMemberId: number;
   academyRole: string;
-  memberId: number | null;
+  memberId: number;
   nickname: string;
-  point: null | number;
-  profileImageUrl: string | null;
-  school: string | null;
+  point: number;
+  profileImageUrl: string;
+  school: string;
 }
 
-export interface IAcademyResponse<T = any> {
+export interface IAcademyResponse<T> {
   code: string;
   hasNext?: boolean;
   isSuccess: boolean;
@@ -45,4 +45,22 @@ export interface IStudent {
   profileImageUrl: string;
   school: string;
   studentId: number;
+}
+
+export interface IAcademy {
+  academyId: number;
+  academyMainImageUrl: string;
+  academyMemberId: number;
+  academyMemberNickname: string;
+  academyMemberProfileImageUrl: string;
+  academyName: string;
+  academyRole: string;
+}
+
+export interface IAcademyResult {
+  result: {
+    hasNext: boolean;
+    memberAcademyList: IAcademy[];
+    nextCursor: number;
+  };
 }
