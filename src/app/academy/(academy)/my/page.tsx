@@ -1,67 +1,37 @@
-import { Fragment, Suspense } from 'react';
+import { Suspense } from 'react';
+import { dehydrate, QueryClient } from '@tanstack/query-core';
+import { HydrationBoundary } from '@tanstack/react-query';
+import type { Session } from 'next-auth';
 import { getServerSession } from 'next-auth';
 
+import AcademyList from '@/app/academy/(academy)/my/components/academy-list';
 import Container from '@/features/main/components/Container';
+import { getAcademyList } from '@/shared/apis/academy';
+import { queryKeys } from '@/shared/constants/query-keys';
 import { authOptions } from '@/shared/utils/authOptions';
 
-type TAcademy = {
-  academyId: number;
-  academyMainImageUrl: string;
-  academyMemberId: number;
-  academyMemberNickname: string;
-  academyMemberProfileImageUrl: string;
-  academyName: string;
-  academyRole: string;
-};
-
-type TMyAcademyResult = {
-  result: {
-    hasNext: boolean;
-    memberAcademyList: TAcademy[];
-    nextCursor: number;
-  };
-};
-
-function MyAcademyPage() {
-  return (
-    <Container>
-      <div className="mt-5 h-dvh max-w-2xl rounded-md md:ml-20">
-        {/* <ListRow */}
-        {/*  icon={HiDotsHorizontal} */}
-        {/*  contents={<ListRow.Texts title="Craft Your Habit 학원." subTitle="Crabit 학원 " />} */}
-        {/*  // eslint-disable-next-line @next/next/no-img-element */}
-        {/*  left={<img src="/images/logo_app.png" alt="이미지" />} */}
-        {/* /> */}
-        <Suspense fallback="hihi">
-          <MyAcademy />
-        </Suspense>
-      </div>
-    </Container>
-  );
-}
-
-async function MyAcademy() {
-  const session = await getServerSession(authOptions);
-
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/member?cursor=0&take=10`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
-    },
+async function MyAcademyPage() {
+  const session = (await getServerSession(authOptions)) as Session;
+  const queryClient = new QueryClient();
+  await queryClient.prefetchInfiniteQuery({
+    queryKey: [queryKeys.ACADEMY_LIST],
+    queryFn: () => getAcademyList({ session, cursor: 0, take: 5 }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => (lastPage.result.hasNext ? allPages.length + 1 : undefined),
+    pages: 1,
   });
-
-  const data: TMyAcademyResult = await response.json();
+  const dehydratedState = dehydrate(queryClient);
 
   return (
-    <div>
-      {data.result.memberAcademyList.map((academy) => (
-        <Fragment key={academy.academyId}>
-          <div>{academy.academyMemberNickname}</div>
-          <div>{academy.academyRole}</div>
-          <div>{academy.academyMemberId}</div>
-        </Fragment>
-      ))}
-    </div>
+    <HydrationBoundary state={dehydratedState}>
+      <Container>
+        <div className="mt-5 min-h-screen max-w-2xl overflow-y-auto rounded-md md:ml-20">
+          <Suspense fallback={<div>Loading</div>}>
+            <AcademyList session={session} />
+          </Suspense>
+        </div>
+      </Container>
+    </HydrationBoundary>
   );
 }
 

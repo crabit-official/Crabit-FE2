@@ -11,6 +11,16 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        opacity: {
+          '0%': { opacity: '1' },
+          '50%': { opacity: '0.4' },
+          '100%': { opacity: '1' },
+        },
+      },
+      animation: {
+        opacity: 'opacity 2s ease-in-out 0.5s infinite',
+      },
       fontFamily: {
         pretendard: ['var(--font-pretendard)', 'sans-serif'],
         roboto: ['var(--font-roboto)', 'sans-serif'],
