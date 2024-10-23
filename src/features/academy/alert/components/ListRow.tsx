@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Flex from '@/shared/components/Flex';
+import Skeleton from '@/shared/components/Skeleton/Skeleton';
 import Spacing from '@/shared/components/Spacing/spacing';
 import Typography from '@/shared/components/Typography';
 
@@ -53,6 +54,21 @@ function IconArrowRight() {
   );
 }
 
+function ListRowSkeleton() {
+  return (
+    <Flex row="start" as="li" className="relative animate-opacity bg-gray-300 px-3 py-4">
+      <Skeleton height={65} width={65} className="mr-2 rounded-2xl" />
+      <Flex column="center" row="start" className="flex-1">
+        <ListRow.Texts title={<Skeleton width={67} height={23} />} subTitle={<Skeleton width={85} height={20} />} />
+      </Flex>
+      <Flex column="center">
+        <IconArrowRight />
+      </Flex>
+    </Flex>
+  );
+}
+
 ListRow.Texts = ListRowTexts;
+ListRow.Skeleton = ListRowSkeleton;
 
 export default ListRow;

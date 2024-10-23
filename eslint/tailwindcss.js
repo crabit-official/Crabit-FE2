@@ -4,5 +4,6 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   rules: {
     'tailwindcss/no-custom-classname': 'off',
+    'tailwindcss/classnames-order': 'off',
   },
 };

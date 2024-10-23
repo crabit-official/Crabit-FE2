@@ -38,7 +38,7 @@ const FlexVariants = cva('flex', {
 
 interface IFlexProps extends VariantProps<typeof FlexVariants> {
   as?: ElementType;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
   onClick?: () => void;
 }

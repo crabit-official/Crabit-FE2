@@ -60,8 +60,8 @@ function SideBar() {
           onClick={() => setIsOpen((prev) => !prev)}
           className="relative mb-3 flex h-[48px] w-full cursor-pointer items-center gap-3 rounded-2xl border-8 border-main-black py-4 transition hover:bg-neutral-100 md:hidden"
         >
-          <BiMenuAltLeft size={40} />
-          <Typography size="h4">필터</Typography>
+          <BiMenuAltLeft size={26} />
+          <Typography size="h5-2">필터</Typography>
         </div>
         {isOpen &&
           sidebarMenu.map((menu) => (
