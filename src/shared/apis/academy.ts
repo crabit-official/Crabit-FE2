@@ -1,4 +1,5 @@
 import type { Session } from 'next-auth';
+import { useSession } from 'next-auth/react';
 
 import type { IAcademyResult } from '@/shared/types/acadmy';
 
@@ -23,4 +24,53 @@ export async function getAcademyList({ session, cursor, take }: IGetAcademyList)
   const data: IAcademyResult = await response.json();
 
   return data;
+}
+
+export interface IAcademyCreateDTO {
+  academyAddress: string;
+  academyAddressDetail: string;
+  academyEmail: string;
+  academyName: string;
+  contactNumber: string;
+  studentCount: number;
+}
+
+interface IPostEnrollAcademyResponse {
+  result: {
+    academyAddress: string;
+    academyAddressDetail: string;
+    academyEmail: string;
+    academyName: string;
+    contactNumber: string;
+    studentCount: number;
+  };
+}
+
+export async function postEnrollAcademy({ academyAddress, academyAddressDetail, academyEmail, academyName, contactNumber, studentCount }: IAcademyCreateDTO) {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { data: session } = useSession();
+
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${session?.accessToken}`,
+    },
+    body: JSON.stringify({
+      academyAddress,
+      academyAddressDetail,
+      academyEmail,
+      academyName,
+      contactNumber,
+      studentCount,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error('학원을 생성하는데 에러가 발생했습니다!');
+  }
+
+  const data: IPostEnrollAcademyResponse = await response.json();
+
+  return data.result;
 }
