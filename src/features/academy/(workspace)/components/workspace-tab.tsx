@@ -1,6 +1,6 @@
 'use client';
 
-import { FaUserPlus } from 'react-icons/fa';
+import { FaBookmark, FaUserPlus } from 'react-icons/fa';
 import { IoIosSettings } from 'react-icons/io';
 import { MdInsertChart } from 'react-icons/md';
 import { useParams, usePathname } from 'next/navigation';
@@ -23,6 +23,13 @@ function WorkspaceTab({ role, memberId }: IWorkspaceTabProps) {
   if (role === 'PRINCIPAL' || role === 'INSTRUCTOR') {
     content = (
       <>
+        <TabButton
+          icon={FaBookmark}
+          label="대시보드"
+          isActive={pathname.includes(`/academy/${id}/dashboard`)}
+          path={`/academy/${id}/dashboard`}
+          className="size-4"
+        />
         <TabButton icon={MdInsertChart} label="챌린지 관리" isActive={pathname.includes(`/academy/${id}/challenge`)} path={`/academy/${id}/challenge`} />
         <TabButton
           className="size-[19px]"
