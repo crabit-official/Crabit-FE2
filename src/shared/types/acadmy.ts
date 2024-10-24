@@ -64,3 +64,18 @@ export interface IAcademyResult {
     nextCursor: number;
   };
 }
+
+// 챌린지 목록 조회
+export interface IChallenge {
+  releasedChallengeId: number;
+  thumbnailImageUrl: string;
+  title: string;
+}
+
+export interface IChallengeResult {
+  result: {
+    challengeList: IChallenge[];
+    hasNext: boolean;
+    nextCursor: number;
+  };
+}

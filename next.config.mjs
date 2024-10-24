@@ -18,10 +18,15 @@ const nextConfig = {
     },
     images: {
         remotePatterns: [
-            // 통신 규약 패턴
             {
                 protocol: "https",
                 hostname: "plus.unsplash.com",
+                port: "",
+                pathname: "/**",
+            },
+            {
+                protocol: "https",
+                hostname: process.env.NEXT_PUBLIC_S3_HOSTNAME,
                 port: "",
                 pathname: "/**",
             },

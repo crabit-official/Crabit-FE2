@@ -13,7 +13,7 @@ async function Layout({ children, params }: { children: React.ReactNode; params:
 
   return (
     <>
-      <WorkspaceTab role={data?.academyRole} memberId={data?.memberId as number} />
+      <WorkspaceTab role={data?.academyRole} memberId={data?.memberId} />
       <div className="xl:px-30 max-w-8xl container mx-auto h-full">
         <div className="grid">
           <div className="col-span-4 border-x lg:col-span-3">{children}</div>
