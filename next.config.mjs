@@ -18,10 +18,15 @@ const nextConfig = {
     },
     images: {
         remotePatterns: [
-            // 통신 규약 패턴
             {
                 protocol: "https",
                 hostname: "plus.unsplash.com",
+                port: "",
+                pathname: "/**",
+            },
+            {
+                protocol: "https",
+                hostname: 'crabit-bucket-dev.s3.ap-northeast-2.amazonaws.com',
                 port: "",
                 pathname: "/**",
             },

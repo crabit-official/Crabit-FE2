@@ -14,16 +14,16 @@ interface ILayout {
 }
 
 async function Layout({ children, modal, params }: ILayout) {
-  const role = await getAcademyProfile(params.id);
+  const data = await getAcademyProfile(params.id);
 
-  if (!role) {
+  if (!data?.academyRole) {
     return <Error label="학원에 대한 접근 권한이 없습니다." className="pt-20" />;
   }
 
   return (
     <div className="xl:px-30 max-w-8xl container mx-auto pb-8 pt-12">
       <div className="grid grid-rows-[min-content_auto] gap-5 md:grid-cols-5 md:gap-0">
-        <Sidebar role={role} />
+        <Sidebar role={data.academyRole} />
         <Flex className="border-x md:col-span-3">
           {modal}
           {children}

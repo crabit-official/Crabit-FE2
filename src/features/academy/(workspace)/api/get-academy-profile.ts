@@ -14,11 +14,10 @@ const getAcademyProfile = async (id: string) => {
   });
 
   const data: IAcademyResponse<IAcademyProfile> = await res.json();
-  const role = data?.result?.academyRole;
 
-  if (!role) return null;
+  if (!data) return null;
 
-  return role;
+  return data.result;
 };
 
 export default getAcademyProfile;
