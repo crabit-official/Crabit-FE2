@@ -1,6 +1,6 @@
 import type { Session } from 'next-auth';
 
-import type { IChallengeResult } from '@/shared/types/acadmy';
+import type { IChallengeResult, IStudentChallengeResult } from '@/shared/types/acadmy';
 
 interface IGetChallengeList {
   academyId: number;
@@ -27,19 +27,20 @@ export async function getTeachersChallengeList({ cursor, session, take, academyI
   return data;
 }
 
-// export async function getStudentChallengeList({ cursor, session, take }: IGetChallengeList) {
-//   const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/students?cursor=${cursor}&take=${take}`, {
-//     method: 'GET',
-//     headers: {
-//       Authorization: `Bearer ${session?.accessToken}`,
-//     },
-//   });
-//
-//   if (!res.ok) {
-//     throw new Error('학원 목록을 가져오는데 에러가 발생했습니다!');
-//   }
-//
-//   const data: IAcademyResult = await res.json();
-//
-//   return data;
-// }
+// 학생이 참여하는 챌린지 목록 전체 조회
+export async function getStudentChallengeList({ cursor, session, take, academyId }: IGetChallengeList) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/students?cursor=${cursor}&take=${take}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${session?.accessToken}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error('챌린지 목록을 가져오는데 에러가 발생했습니다!');
+  }
+
+  const data: IStudentChallengeResult = await res.json();
+
+  return data;
+}

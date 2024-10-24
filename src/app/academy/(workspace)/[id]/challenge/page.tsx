@@ -3,7 +3,7 @@ import { dehydrate, QueryClient } from '@tanstack/query-core';
 import { HydrationBoundary } from '@tanstack/react-query';
 import { getServerSession, type Session } from 'next-auth';
 
-import ChallengeList from '@/app/academy/(workspace)/[id]/my-challenge/components/challenge-list';
+import ChallengeList from '@/features/academy/(workspace)/components/challenge-list';
 import { getTeachersChallengeList } from '@/shared/apis/challenge';
 import Flex from '@/shared/components/Flex';
 import { queryKeys } from '@/shared/constants/query-keys';

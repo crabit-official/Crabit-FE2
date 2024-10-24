@@ -79,3 +79,21 @@ export interface IChallengeResult {
     nextCursor: number;
   };
 }
+
+export interface IStudentChallenge {
+  challengeLogApprovalStatus: 'REJECTED' | 'PENDING' | 'APPROVED';
+  challengeLogSubmissionStatus: 'NOT_STARTED' | 'IN_PROGRESS' | 'ALL_LOGS_SUBMITTED' | 'SUBMISSION_FAILED';
+  endedAt: string;
+  startedAt: string;
+  studentChallengeId: number;
+  thumbnailImageUrl: string;
+  title: string;
+}
+
+export interface IStudentChallengeResult {
+  result: {
+    hasNext: boolean;
+    nextCursor: number;
+    studentChallengeList: IStudentChallenge[];
+  };
+}

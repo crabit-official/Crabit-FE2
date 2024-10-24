@@ -5,9 +5,10 @@ import { useInView } from 'react-intersection-observer';
 import type { Session } from 'next-auth';
 
 import ChallengeCard from '@/features/academy/(workspace)/components/challenge-card';
+import MyChallengeCard from '@/features/academy/(workspace)/components/my-challenge-card';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
-import useGetInfiniteTeacherChallengeList from '@/shared/hooks/challenge/useGetInfiniteTeacherChallengeList';
+import useGetInfiniteStudentChallengeList from '@/shared/hooks/challenge/useGetInfiniteStudentChallengeList';
 
 interface IMyChallengeListProps {
   academyId: number;
@@ -15,7 +16,7 @@ interface IMyChallengeListProps {
 }
 
 function MyChallengeList({ session, academyId }: IMyChallengeListProps) {
-  const { data: challenge, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteTeacherChallengeList(session, academyId);
+  const { data: challenge, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteStudentChallengeList(session, academyId);
 
   const { ref, inView } = useInView({
     threshold: 0,
@@ -40,11 +41,10 @@ function MyChallengeList({ session, academyId }: IMyChallengeListProps) {
 
   return (
     <Flex column="center" className="size-full items-center gap-4 overflow-y-auto">
-      {challenge?.pages.map((page) => page?.result.challengeList.map((e) => <ChallengeCard {...e} key={e.releasedChallengeId} />))}
+      {challenge?.pages.map((page) => page?.result.studentChallengeList.map((e) => <MyChallengeCard {...e} key={e.studentChallengeId} />))}
       {isFetching ? <ChallengeCard.Skeleton /> : null}
       <div ref={ref} className="h-14" />
     </Flex>
   );
 }
-
 export default MyChallengeList;
