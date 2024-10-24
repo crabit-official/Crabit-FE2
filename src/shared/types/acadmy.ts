@@ -80,14 +80,22 @@ export interface IChallengeResult {
   };
 }
 
-export interface IStudentChallenge {
-  challengeLogApprovalStatus: 'REJECTED' | 'PENDING' | 'APPROVED';
-  challengeLogSubmissionStatus: 'NOT_STARTED' | 'IN_PROGRESS' | 'ALL_LOGS_SUBMITTED' | 'SUBMISSION_FAILED';
-  endedAt: string;
-  startedAt: string;
-  studentChallengeId: number;
+export interface IStudentChallengeDTO {
+  releasedChallengeId: number;
   thumbnailImageUrl: string;
   title: string;
+}
+
+export interface IStudentChallengeStatusDTO {
+  challengeLogApprovalStatus: 'REJECTED' | 'PENDING' | 'APPROVED' | 'INCOMPLETE_CHALLENGE';
+  challengeLogSubmissionStatus: 'NOT_STARTED' | 'IN_PROGRESS' | 'ALL_LOGS_SUBMITTED' | 'SUBMISSION_FAILED';
+  endedAt: Date;
+  startedAt: Date;
+}
+
+export interface IStudentChallenge {
+  challenge: IStudentChallengeDTO;
+  studentChallengeStatus: IStudentChallengeStatusDTO;
 }
 
 export interface IStudentChallengeResult {

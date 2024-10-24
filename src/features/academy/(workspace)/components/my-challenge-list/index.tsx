@@ -41,7 +41,11 @@ function MyChallengeList({ session, academyId }: IMyChallengeListProps) {
 
   return (
     <Flex column="center" className="size-full items-center gap-4 overflow-y-auto">
-      {challenge?.pages.map((page) => page?.result.studentChallengeList.map((e) => <MyChallengeCard {...e} key={e.studentChallengeId} />))}
+      {challenge?.pages.map((page) =>
+        page?.result.studentChallengeList.map((list) => (
+          <MyChallengeCard challenge={list.challenge} studentChallengeStatus={list.studentChallengeStatus} key={list.challenge.releasedChallengeId} />
+        )),
+      )}
       {isFetching ? <ChallengeCard.Skeleton /> : null}
       <div ref={ref} className="h-14" />
     </Flex>

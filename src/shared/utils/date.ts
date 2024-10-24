@@ -1,4 +1,4 @@
-function formatDate(isoString: string): string {
+function formatDate(isoString: Date): string {
   const date = new Date(isoString);
 
   const year = date.getFullYear();
