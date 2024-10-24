@@ -26,7 +26,7 @@ const nextConfig = {
             },
             {
                 protocol: "https",
-                hostname: process.env.NEXT_PUBLIC_S3_HOSTNAME,
+                hostname: 'crabit-bucket-dev.s3.ap-northeast-2.amazonaws.com',
                 port: "",
                 pathname: "/**",
             },
