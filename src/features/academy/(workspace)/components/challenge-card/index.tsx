@@ -6,7 +6,6 @@ import Skeleton from '@/shared/components/Skeleton/Skeleton';
 import Typography from '@/shared/components/Typography';
 
 interface IChallengeCardProps {
-  // releasedChallengeId: number;
   thumbnailImageUrl: string;
   title: string;
 }
