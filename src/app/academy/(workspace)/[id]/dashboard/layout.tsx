@@ -1,19 +1,17 @@
 import React from 'react';
 
 import getAcademyProfile from '@/features/academy/(workspace)/api/get-academy-profile';
-import ChallengeModal from '@/features/academy/(workspace)/components/dashboard/ChallengeModal';
-import Sidebar from '@/features/academy/(workspace)/components/dashboard/Sidebar';
-import Trendbar from '@/features/academy/(workspace)/components/dashboard/Trendbar';
+import AcademyTitle from '@/features/academy/(workspace)/components/dashboard/academy-title';
+import ChatView from '@/features/academy/(workspace)/components/dashboard/chat-view';
 import Error from '@/features/academy/(workspace)/components/error';
 import Flex from '@/shared/components/Flex';
 
 interface ILayout {
   children: React.ReactNode;
-  modal: React.ReactNode;
   params: { id: string };
 }
 
-async function Layout({ children, modal, params }: ILayout) {
+async function Layout({ children, params }: ILayout) {
   const data = await getAcademyProfile(params.id);
 
   if (!data?.academyRole) {
@@ -22,14 +20,10 @@ async function Layout({ children, modal, params }: ILayout) {
 
   return (
     <div className="xl:px-30 max-w-8xl container mx-auto pb-8 pt-12">
-      <div className="grid grid-rows-[min-content_auto] gap-5 md:grid-cols-5 md:gap-0">
-        <Sidebar role={data.academyRole} />
-        <Flex className="border-x md:col-span-3">
-          {modal}
-          {children}
-          <ChallengeModal id={params.id} />
-        </Flex>
-        <Trendbar />
+      <div className="grid gap-10">
+        <AcademyTitle />
+        <ChatView />
+        <Flex className="border-x">{children}</Flex>
       </div>
     </div>
   );
