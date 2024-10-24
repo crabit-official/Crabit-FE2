@@ -9,14 +9,14 @@ const imgUrl =
 
 function AcademyTitle() {
   return (
-    <Flex row="between" className="border-b border-solid border-gray-200 px-4 pb-4">
+    <Flex row="between" className="border-b border-solid border-gray-200 px-10 pb-4 md:px-0">
       <Flex column="center" className="gap-4">
         <Typography size="h3">조이 학원의 대시보드</Typography>
         <Typography size="h5" className="text-sm" as="p">
           안녕하세요! 오늘 우리학원의 챌린지 현황을 확인해보세요
         </Typography>
       </Flex>
-      <Flex row="between" className="max-w-56 cursor-pointer items-center gap-4 rounded-lg px-3 py-2">
+      <Flex row="between" className="hidden max-w-56 cursor-pointer items-center gap-4 rounded-lg px-3 py-2 sm:flex">
         <Image alt="profile img" className="size-10 rounded-2xl object-cover" width={30} height={30} src={imgUrl} />
         <Flex column="center">
           <Typography size="h5" className="ellipsis max-w-36 truncate">
