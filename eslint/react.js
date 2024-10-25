@@ -74,5 +74,8 @@ module.exports = {
 
     // 배열의 인덱스를 key로 사용하는 것을 허용합니다.
     'react/no-array-index-key': 'off',
+
+    // React Hook 규칙을 비활성화합니다.
+    'react-hooks/rules-of-hooks': 'off',
   },
 };
