@@ -10,12 +10,12 @@ import { queryKeys } from '@/shared/constants/query-keys';
 import { authOptions } from '@/shared/utils/authOptions';
 
 // 원장/강사 챌린지 관리 페이지
-async function AcademyChallengePage({ params }: { params: { id: number } }) {
+async function AcademyChallengePage({ params }: { params: { id: string } }) {
   const session = (await getServerSession(authOptions)) as Session;
   const queryClient = new QueryClient();
   await queryClient.prefetchInfiniteQuery({
     queryKey: [queryKeys.CHALLENGE_LIST],
-    queryFn: () => getTeachersChallengeList({ session, cursor: 0, take: 5, academyId: params.id }),
+    queryFn: () => getTeachersChallengeList({ session, cursor: 0, take: 5, academyId: Number(params.id) }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => (lastPage.result.hasNext ? allPages.length + 1 : undefined),
     pages: 1,
@@ -26,7 +26,7 @@ async function AcademyChallengePage({ params }: { params: { id: number } }) {
     <HydrationBoundary state={dehydratedState}>
       <Flex rowColumn="center" className="gap-4 px-4 pt-14">
         <Suspense fallback={<div>Loading</div>}>
-          <ChallengeList session={session} academyId={params.id} />
+          <ChallengeList session={session} academyId={Number(params.id)} />
         </Suspense>
       </Flex>
     </HydrationBoundary>
