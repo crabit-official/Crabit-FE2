@@ -5,6 +5,7 @@ import type { Session } from 'next-auth';
 import { getServerSession } from 'next-auth';
 
 import AcademyList from '@/app/academy/(academy)/my/components/academy-list';
+import ListRow from '@/features/academy/alert/components/ListRow';
 import Container from '@/features/main/components/Container';
 import { getAcademyList } from '@/shared/apis/academy';
 import { queryKeys } from '@/shared/constants/query-keys';
@@ -26,7 +27,7 @@ async function MyAcademyPage() {
     <HydrationBoundary state={dehydratedState}>
       <Container>
         <div className="mt-5 min-h-screen max-w-2xl overflow-y-auto rounded-md md:ml-20">
-          <Suspense fallback={<div>Loading</div>}>
+          <Suspense fallback={<ListRow.Skeleton />}>
             <AcademyList session={session} />
           </Suspense>
         </div>
