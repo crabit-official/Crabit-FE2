@@ -6,10 +6,11 @@ import Error from '@/features/academy/(workspace)/components/error';
 
 interface ILayout {
   children: React.ReactNode;
+  modal: React.ReactNode;
   params: { id: string };
 }
 
-async function Layout({ children, params }: ILayout) {
+async function Layout({ children, params, modal }: ILayout) {
   const data = await getAcademyProfile(params.id);
 
   if (!data?.academyRole) {
@@ -21,6 +22,7 @@ async function Layout({ children, params }: ILayout) {
       <div className="grid gap-20">
         <AcademyTitle />
         {children}
+        {modal}
       </div>
     </div>
   );
