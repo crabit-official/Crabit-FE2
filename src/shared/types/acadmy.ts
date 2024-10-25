@@ -1,3 +1,6 @@
+import type { Session } from 'next-auth';
+
+import type { ACADEMY_ROLE } from '@/shared/enums/academy';
 import type {
   CHALLENGE_APPROVAL_STATUS,
   CHALLENGE_CATEGORY,
@@ -7,6 +10,13 @@ import type {
   CHALLENGE_SOURCE_TYPE,
   CHALLENGE_TYPE,
 } from '@/shared/enums/challenge';
+
+export interface IGetChallengeList {
+  academyId: number;
+  cursor: number;
+  session: Session;
+  take: number;
+}
 
 export interface IAcademyProfile {
   academyId: number;
@@ -113,6 +123,33 @@ export interface IStudentChallengeResult {
     hasNext: boolean;
     nextCursor: number;
     studentChallengeList: IStudentChallenge[];
+  };
+}
+
+export interface IGetAcademyAttendeeList {
+  academyId: number;
+  academyRole?: ACADEMY_ROLE;
+  cursor: number;
+  session: Session;
+  take: number;
+}
+
+export interface IJoinRequestMemberListDTO {
+  academyMemberId: number;
+  academyRole: ACADEMY_ROLE;
+  crabitAccountProfileImageUrl: string;
+  introduction: string;
+  memberId: number;
+  memberName: string;
+  nickname: string;
+  school: string;
+}
+
+export interface IAcademyAttendeeListResult {
+  result: {
+    hasNext: boolean;
+    joinRequestMemberList: IJoinRequestMemberListDTO[];
+    nextCursor: number;
   };
 }
 
