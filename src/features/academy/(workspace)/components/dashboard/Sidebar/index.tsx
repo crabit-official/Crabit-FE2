@@ -8,7 +8,7 @@ import Profile from '@/features/academy/(workspace)/components/dashboard/Profile
 import useChallengeModal from '@/features/academy/(workspace)/hooks/use-challenge-modal';
 import MenuItem from '@/features/main/components/MenuItem';
 import Flex from '@/shared/components/Flex';
-import { useDraggable } from '@/shared/hooks/useDraggable';
+import { useDraggable } from '@/shared/hooks/use-draggable';
 
 interface ISidebarProps {
   role: string;

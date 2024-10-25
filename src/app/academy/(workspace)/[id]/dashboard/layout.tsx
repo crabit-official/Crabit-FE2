@@ -2,9 +2,7 @@ import React from 'react';
 
 import getAcademyProfile from '@/features/academy/(workspace)/api/get-academy-profile';
 import AcademyTitle from '@/features/academy/(workspace)/components/dashboard/academy-title';
-import ChartView from '@/features/academy/(workspace)/components/dashboard/chart-view';
 import Error from '@/features/academy/(workspace)/components/error';
-import Flex from '@/shared/components/Flex';
 
 interface ILayout {
   children: React.ReactNode;
@@ -20,10 +18,9 @@ async function Layout({ children, params }: ILayout) {
 
   return (
     <div className="xl:px-30 max-w-8xl container mx-auto px-4 pb-8 pt-12">
-      <div className="grid gap-10">
+      <div className="grid gap-20">
         <AcademyTitle />
-        <ChartView />
-        <Flex className="border-x">{children}</Flex>
+        {children}
       </div>
     </div>
   );
