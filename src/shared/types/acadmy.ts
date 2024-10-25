@@ -1,3 +1,5 @@
+import type { CHALLENGE_LOG_APPROVAL_STATUS, CHALLENGE_LOG_SUBMISSION_STATUS } from '@/shared/enums/challenge';
+
 export interface IAcademyProfile {
   academyId: number;
   academyMemberId: number;
@@ -80,14 +82,22 @@ export interface IChallengeResult {
   };
 }
 
-export interface IStudentChallenge {
-  challengeLogApprovalStatus: 'REJECTED' | 'PENDING' | 'APPROVED';
-  challengeLogSubmissionStatus: 'NOT_STARTED' | 'IN_PROGRESS' | 'ALL_LOGS_SUBMITTED' | 'SUBMISSION_FAILED';
-  endedAt: string;
-  startedAt: string;
-  studentChallengeId: number;
+export interface IStudentChallengeDTO {
+  releasedChallengeId: number;
   thumbnailImageUrl: string;
   title: string;
+}
+
+export interface IStudentChallengeStatusDTO {
+  challengeLogApprovalStatus: CHALLENGE_LOG_APPROVAL_STATUS;
+  challengeLogSubmissionStatus: CHALLENGE_LOG_SUBMISSION_STATUS;
+  endedAt: Date;
+  startedAt: Date;
+}
+
+export interface IStudentChallenge {
+  challenge: IStudentChallengeDTO;
+  studentChallengeStatus: IStudentChallengeStatusDTO;
 }
 
 export interface IStudentChallengeResult {
