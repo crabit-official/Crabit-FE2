@@ -21,7 +21,7 @@ export interface IGetChallengeList {
 export interface IAcademyProfile {
   academyId: number;
   academyMemberId: number;
-  academyRole: string;
+  academyRole: ACADEMY_ROLE;
   memberId: number;
   nickname: string;
   point: number;
