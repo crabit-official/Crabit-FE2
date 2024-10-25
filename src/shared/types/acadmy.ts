@@ -228,21 +228,3 @@ export interface IStudentChallengeContentsResults {
     nextCursor: number;
   };
 }
-
-export interface IAcademy {
-  academyId: number;
-  academyMainImageUrl: string;
-  academyMemberId: number;
-  academyMemberNickname: string;
-  academyMemberProfileImageUrl: string;
-  academyName: string;
-  academyRole: string;
-}
-
-export interface IAcademyResult {
-  result: {
-    hasNext: boolean;
-    memberAcademyList: IAcademy[];
-    nextCursor: number;
-  };
-}
