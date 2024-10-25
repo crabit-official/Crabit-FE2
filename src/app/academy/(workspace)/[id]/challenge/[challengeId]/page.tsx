@@ -1,3 +1,4 @@
+import { MdMode } from 'react-icons/md';
 import { dehydrate, QueryClient } from '@tanstack/query-core';
 import { HydrationBoundary } from '@tanstack/react-query';
 import Image from 'next/image';
@@ -61,7 +62,7 @@ async function ChallengeDetailPage({
           />
         </Flex>
       </Flex>
-      <Flex column="center" className="w-full max-w-[850px] gap-1 rounded-lg border border-solid border-gray-200 bg-main-white/50 p-4">
+      <Flex column="center" className="relative w-full max-w-[850px] gap-1 rounded-lg border border-solid border-gray-200 bg-main-white/50 p-4">
         <p>
           <strong className="font-bold text-main-pink">챌린지 진행 방법</strong> : {res?.releasedChallenge.content}
         </p>
@@ -69,7 +70,11 @@ async function ChallengeDetailPage({
           <strong className="font-bold text-main-pink">챌린지 기간</strong> : Day {res?.releasedChallenge.totalDays}
         </p>
         <p className="font-bold text-main-pink">Ⓟ {res?.releasedChallenge.points}</p>
+        <Flex className="absolute bottom-1 right-1">
+          <MdMode size={25} className="peer cursor-pointer px-1 hover:text-main-pink" />
+        </Flex>
       </Flex>
+
       <HydrationBoundary state={dehydratedState}>
         <ChallengeStudentList session={session} academyId={Number(params.id)} releasedChallengeId={Number(params.challengeId)} />
       </HydrationBoundary>

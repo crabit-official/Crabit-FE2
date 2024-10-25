@@ -15,7 +15,7 @@ async function AcademyChallengePage({ params }: { params: { id: string } }) {
   const queryClient = new QueryClient();
   await queryClient.prefetchInfiniteQuery({
     queryKey: [queryKeys.CHALLENGE_LIST],
-    queryFn: () => getTeachersChallengeList({ session, cursor: 0, take: 5, academyId: Number(params.id) }),
+    queryFn: () => getTeachersChallengeList({ session, cursor: 0, take: 10, academyId: Number(params.id) }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => (lastPage.result.hasNext ? allPages.length + 1 : undefined),
     pages: 1,

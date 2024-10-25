@@ -2,10 +2,12 @@
 
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { useRouter } from 'next/navigation';
 import type { Session } from 'next-auth';
 
 import StateLabel from '@/features/academy/(workspace)/components/state-label';
 import { getStatusName, getVariantByStatus } from '@/features/academy/(workspace)/utils/challengeState';
+import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import useGetInfiniteStudentChallengeProgressList from '@/shared/hooks/challenge/useGetInfiniteStudentChallengeProgressList';
@@ -18,6 +20,7 @@ interface IChallengeStudentListProps {
 }
 
 function ChallengeStudentList({ session, releasedChallengeId, academyId }: IChallengeStudentListProps) {
+  const router = useRouter();
   const { containerRef, handleMouseDown, handleMouseMove, handleMouseUpOrLeave } = useDraggable<HTMLDivElement>();
   const {
     data: studentsData,
@@ -78,7 +81,7 @@ function ChallengeStudentList({ session, releasedChallengeId, academyId }: IChal
                   제출 상태
                 </th>
                 <th scope="col" className="p-4" colSpan={3}>
-                  누적 포인트
+                  자세히 보기
                 </th>
               </tr>
             </thead>
@@ -102,7 +105,13 @@ function ChallengeStudentList({ session, releasedChallengeId, academyId }: IChal
                       />
                     </td>
                     <td className="p-4 text-center" colSpan={3}>
-                      Ⓟ {student.studentChallenge.earnedPoints}
+                      <Button
+                        onClick={() => router.push(`${releasedChallengeId}/student/${student.studentChallenge.studentChallengeId}`)}
+                        size="sm"
+                        className="m-auto w-16 text-xs text-white"
+                      >
+                        확인하기
+                      </Button>
                     </td>
                   </tr>
                 )),

@@ -166,3 +166,28 @@ export interface IChallengeParticipateResult {
     nextCursor: number;
   };
 }
+
+// 특정 챌린지 학생 인증 게시글
+export interface IStudentChallengeContents {
+  challengeLog: {
+    content: string;
+    createdAt: string;
+    day: number;
+    fileUrl: string;
+    studentChallengeId: number;
+    studentChallengeLogId: number;
+  };
+  studentProfile: {
+    academyMemberId: number;
+    academyNickname: string;
+    academyProfileImageUrl: string;
+  };
+}
+
+export interface IStudentChallengeContentsResults {
+  result: {
+    challengeLogList: IStudentChallengeContents[];
+    hasNext: boolean;
+    nextCursor: number;
+  };
+}
