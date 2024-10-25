@@ -1,7 +1,15 @@
 import type { Session } from 'next-auth';
 
 import type { ACADEMY_ROLE } from '@/shared/enums/academy';
-import type { CHALLENGE_LOG_APPROVAL_STATUS, CHALLENGE_LOG_SUBMISSION_STATUS } from '@/shared/enums/challenge';
+import type {
+  CHALLENGE_APPROVAL_STATUS,
+  CHALLENGE_CATEGORY,
+  CHALLENGE_LOG_APPROVAL_STATUS,
+  CHALLENGE_LOG_SUBMISSION_STATUS,
+  CHALLENGE_PARTICIPATION_METHODS,
+  CHALLENGE_SOURCE_TYPE,
+  CHALLENGE_TYPE,
+} from '@/shared/enums/challenge';
 
 export interface IGetChallengeList {
   academyId: number;
@@ -141,6 +149,82 @@ export interface IAcademyAttendeeListResult {
   result: {
     hasNext: boolean;
     joinRequestMemberList: IJoinRequestMemberListDTO[];
+    nextCursor: number;
+  };
+}
+
+// 상세 챌린지
+export interface IDetailChallengeResult {
+  result: {
+    challengeStatusCounts: {
+      allLogsSubmittedStudents: number;
+      inProgressStudents: number;
+      notStartedStudents: number;
+      submissionFailedStudents: number;
+      totalParticipants: number;
+    };
+    releasedChallenge: {
+      challengeCategory: CHALLENGE_CATEGORY;
+      challengeCoreCreatorAcademyName: string;
+      challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
+      challengeSource: CHALLENGE_SOURCE_TYPE;
+      challengeType: CHALLENGE_TYPE;
+      content: string;
+      points: number;
+      releasedChallengeId: number;
+      thumbnailImageUrl: string;
+      title: string;
+      totalDays: number;
+    };
+  };
+}
+
+// 학생 챌린지 참여 정보 리스트
+export interface IChallengeParticipant {
+  studentChallenge: {
+    challengeLogApprovalStatus: CHALLENGE_APPROVAL_STATUS;
+    challengeLogSubmissionStatus: CHALLENGE_LOG_SUBMISSION_STATUS;
+    earnedPoints: number;
+    endedAt: string;
+    startedAt: string;
+    studentChallengeId: number;
+  };
+  studentProfile: {
+    academyMemberId: number;
+    academyNickname: string;
+    academyProfileImageUrl: string;
+  };
+}
+
+export interface IChallengeParticipateResult {
+  result: {
+    challengeParticipantList: IChallengeParticipant[];
+    hasNext: boolean;
+    nextCursor: number;
+  };
+}
+
+// 특정 챌린지 학생 인증 게시글
+export interface IStudentChallengeContents {
+  challengeLog: {
+    content: string;
+    createdAt: string;
+    day: number;
+    fileUrl: string;
+    studentChallengeId: number;
+    studentChallengeLogId: number;
+  };
+  studentProfile: {
+    academyMemberId: number;
+    academyNickname: string;
+    academyProfileImageUrl: string;
+  };
+}
+
+export interface IStudentChallengeContentsResults {
+  result: {
+    challengeLogList: IStudentChallengeContents[];
+    hasNext: boolean;
     nextCursor: number;
   };
 }

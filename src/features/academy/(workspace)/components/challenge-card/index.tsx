@@ -1,20 +1,19 @@
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 import Flex from '@/shared/components/Flex';
 import Skeleton from '@/shared/components/Skeleton/Skeleton';
 import Typography from '@/shared/components/Typography';
+import type { IChallenge } from '@/shared/types/acadmy';
 
-interface IChallengeCardProps {
-  thumbnailImageUrl: string;
-  title: string;
-}
-
-function ChallengeCard({ thumbnailImageUrl, title }: IChallengeCardProps) {
+function ChallengeCard({ thumbnailImageUrl, title, releasedChallengeId }: IChallenge) {
+  const router = useRouter();
   return (
     <Flex
       column="between"
       className="w-full cursor-pointer gap-4 rounded-lg bg-white p-4 shadow-transparent transition-all duration-200 hover:shadow-lg md:w-3/5"
+      onClick={() => router.push(`challenge/${releasedChallengeId}`)}
     >
       {thumbnailImageUrl && (
         <Image
