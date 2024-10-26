@@ -61,7 +61,7 @@ function ChallengeStudentList({ session, releasedChallengeId, academyId }: IChal
         onMouseLeave={handleMouseUpOrLeave}
         onMouseUp={handleMouseUpOrLeave}
       >
-        <div className="max-h-[600px] w-full min-w-[600px] max-w-[1000px] overflow-auto rounded-lg border border-solid border-gray-200 bg-white/60 md:w-11/12">
+        <div className="max-h-[600px] w-full min-w-[600px] overflow-auto rounded-lg border border-solid border-gray-200 bg-white/60">
           <table className="w-full text-sm md:text-base">
             <thead className="font-bold">
               <tr>
