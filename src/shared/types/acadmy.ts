@@ -171,6 +171,23 @@ export interface IAcademyInstructorListResult {
   };
 }
 
+// 학원 학생 목록 조회
+export interface IAcademyStudentListDTO {
+  academyMemberId: number;
+  introduction: string;
+  nickname: string;
+  profileImageUrl: string;
+  school: string;
+}
+
+export interface IAcademyStudentListResult {
+  result: {
+    hasNext: boolean;
+    nextCursor: number;
+    studentList: IAcademyStudentListDTO[];
+  };
+}
+
 // 상세 챌린지
 export interface IDetailChallengeResult {
   result: {
