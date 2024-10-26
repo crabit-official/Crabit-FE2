@@ -22,7 +22,7 @@ function useGetInfiniteStudentChallengeContents(
 ) {
   return useInfiniteQuery({
     queryFn: ({ pageParam }) => getStudentChallengeContents({ session, cursor: pageParam, take: 10, academyId, studentChallengeId, releasedChallengeId }),
-    queryKey: [queryKeys.CHALLENGE_STUDENT_CONTENTS],
+    queryKey: [queryKeys.CHALLENGE_STUDENT_CONTENTS, academyId, releasedChallengeId, studentChallengeId],
     initialPageParam: 0,
     getNextPageParam: (lastPage) => (lastPage.result.hasNext ? lastPage.result.nextCursor : undefined),
     ...queryOptions,
