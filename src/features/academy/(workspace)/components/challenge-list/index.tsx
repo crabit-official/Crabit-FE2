@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+import Image from 'next/image';
 import type { Session } from 'next-auth';
 
 import ChallengeCard from '@/features/academy/(workspace)/components/challenge-card';
@@ -39,10 +40,19 @@ function ChallengeList({ session, academyId }: IChallengeListProps) {
   }
 
   return (
-    <Flex column="center" className="size-full items-center gap-4 overflow-y-auto">
-      {challenge?.pages?.map((page) => page?.result.challengeList.map((list) => <ChallengeCard {...list} key={list.releasedChallengeId} />))}
-      {isFetching ? <ChallengeCard.Skeleton /> : null}
-      <div ref={ref} className="h-14" />
+    <Flex column="center" className="w-full gap-5 lg:w-4/5">
+      <Flex row="start" className="items-end gap-2">
+        <Image src="/images/logo_goal.webp" alt="goal img" width={70} height={70} className="size-10 sm:size-[70px]" />
+        <Typography size="h3" className="pb-0 sm:pb-3">
+          챌린지 목록
+        </Typography>
+      </Flex>
+
+      <div className="grid size-full grid-cols-1 place-items-center gap-5 sm:grid-cols-2 md:grid-cols-3">
+        {challenge?.pages?.map((page) => page?.result.challengeList.map((list) => <ChallengeCard {...list} key={list.releasedChallengeId} />))}
+        {isFetching ? <ChallengeCard.Skeleton /> : null}
+        <div ref={ref} className="h-14" />
+      </div>
     </Flex>
   );
 }
