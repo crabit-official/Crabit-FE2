@@ -1,7 +1,6 @@
 'use client';
 
-import type { ChangeEvent } from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { FieldValues, SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
