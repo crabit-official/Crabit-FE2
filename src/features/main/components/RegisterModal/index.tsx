@@ -47,7 +47,7 @@ function RegisterModal() {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/join`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'members/json',
         },
         body: JSON.stringify({
           name: data.name,

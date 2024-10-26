@@ -2,32 +2,31 @@ import type { DefaultError, InfiniteData, QueryKey, UseInfiniteQueryOptions } fr
 import { useInfiniteQuery } from '@tanstack/react-query';
 import type { Session } from 'next-auth';
 
-import { getAcademyAttendeeList } from '@/shared/apis/challenge';
+import { getAcademyMemberDetailList } from '@/shared/apis/challenge';
 import { queryKeys } from '@/shared/constants/query-keys';
-import type { ACADEMY_ROLE } from '@/shared/enums/academy';
-import type { IAcademyAttendeeListResult } from '@/shared/types/acadmy';
+import type { IAcademyMemberListResult } from '@/shared/types/acadmy';
 
-function useGetInfiniteAcademyList(
+function useGetInfiniteAcademyMemberDetailList(
   session: Session,
   take: number,
   academyId: number,
-  academyRole?: ACADEMY_ROLE,
+  nickname?: string,
   queryOptions?: UseInfiniteQueryOptions<
-    IAcademyAttendeeListResult,
+    IAcademyMemberListResult,
     DefaultError,
-    InfiniteData<IAcademyAttendeeListResult, number>,
-    IAcademyAttendeeListResult,
+    InfiniteData<IAcademyMemberListResult, number>,
+    IAcademyMemberListResult,
     QueryKey,
     number
   >,
 ) {
   return useInfiniteQuery({
-    queryFn: ({ pageParam }) => getAcademyAttendeeList({ session, cursor: pageParam, take, academyId, academyRole }),
-    queryKey: [queryKeys.ATTENDEE_LIST],
+    queryFn: ({ pageParam }) => getAcademyMemberDetailList({ session, cursor: pageParam, take, academyId, nickname }),
+    queryKey: [queryKeys.ACADEMY_STUDENT_DETAIL_LIST],
     initialPageParam: 0,
     getNextPageParam: (lastPage) => (lastPage.result.hasNext ? lastPage.result.nextCursor : undefined),
     ...queryOptions,
   });
 }
 
-export default useGetInfiniteAcademyList;
+export default useGetInfiniteAcademyMemberDetailList;

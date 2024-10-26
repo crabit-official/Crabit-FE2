@@ -9,7 +9,7 @@ const getPresignedUrl = async (fileName: string) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/s3/presigned/upload`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'members/json',
       'Authorization': `Bearer ${session?.accessToken}`,
     },
     body: JSON.stringify({

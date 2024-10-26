@@ -3,20 +3,20 @@ import { dehydrate, QueryClient } from '@tanstack/query-core';
 import { HydrationBoundary } from '@tanstack/react-query';
 import { getServerSession, type Session } from 'next-auth';
 
-import ApplicationList from '@/app/academy/(workspace)/[id]/application/components/ApplicationList';
+import StudentDetailList from '@/app/academy/(workspace)/[id]/members/detail/components/StudentDetailList';
 import Container from '@/features/main/components/Container';
-import { getAcademyAttendeeList } from '@/shared/apis/challenge';
+import { getAcademyMemberDetailList } from '@/shared/apis/challenge';
 import Heading from '@/shared/components/Heading';
 import Spacing from '@/shared/components/Spacing/spacing';
 import { queryKeys } from '@/shared/constants/query-keys';
 import { authOptions } from '@/shared/utils/authOptions';
 
-async function AcademyApplicationPage({ params }: { params: { id: string } }) {
+async function AcademyMemberDetailPage({ params }: { params: { id: string } }) {
   const session = (await getServerSession(authOptions)) as Session;
   const queryClient = new QueryClient();
   await queryClient.prefetchInfiniteQuery({
-    queryKey: [queryKeys.ATTENDEE_LIST],
-    queryFn: () => getAcademyAttendeeList({ session, cursor: 0, take: 5, academyId: Number(params.id) }),
+    queryKey: [queryKeys.ACADEMY_STUDENT_DETAIL_LIST],
+    queryFn: () => getAcademyMemberDetailList({ session, cursor: 0, take: 5, academyId: Number(params.id) }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => (lastPage.result.hasNext ? allPages.length + 1 : undefined),
     pages: 1,
@@ -27,10 +27,10 @@ async function AcademyApplicationPage({ params }: { params: { id: string } }) {
     <HydrationBoundary state={dehydratedState}>
       <Container>
         <div className="m-auto mt-10 max-w-[600px]">
-          <Heading title="신청서 관리" subTitle="학원에 신청한 사람들의 리스트를 볼 수 있어요" />
+          <Heading title="학생 관리" subTitle="학원에 다니고 있는 학생을 확인할 수 있어요!" />
           <Spacing direction="vertical" size={24} />
           <Suspense fallback={<div>Loading...</div>}>
-            <ApplicationList session={session} academyId={Number(params.id)} />
+            <StudentDetailList session={session} academyId={Number(params.id)} />
           </Suspense>
         </div>
       </Container>
@@ -38,4 +38,4 @@ async function AcademyApplicationPage({ params }: { params: { id: string } }) {
   );
 }
 
-export default AcademyApplicationPage;
+export default AcademyMemberDetailPage;

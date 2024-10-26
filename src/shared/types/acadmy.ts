@@ -126,30 +126,30 @@ export interface IStudentChallengeResult {
   };
 }
 
-export interface IGetAcademyAttendeeList {
+export interface IGetAcademyMemberDetailList {
   academyId: number;
-  academyRole?: ACADEMY_ROLE;
   cursor: number;
+  nickname?: string;
   session: Session;
   take: number;
 }
 
-export interface IJoinRequestMemberListDTO {
+export interface IAcademyMemberDetailListDTO {
   academyMemberId: number;
-  academyRole: ACADEMY_ROLE;
-  crabitAccountProfileImageUrl: string;
   introduction: string;
   memberId: number;
   memberName: string;
   nickname: string;
+  point: number;
+  profileImageUrl: string;
   school: string;
 }
 
-export interface IAcademyAttendeeListResult {
+export interface IAcademyMemberListResult {
   result: {
     hasNext: boolean;
-    joinRequestMemberList: IJoinRequestMemberListDTO[];
     nextCursor: number;
+    studentList: IAcademyMemberDetailListDTO[];
   };
 }
 

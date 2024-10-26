@@ -52,7 +52,7 @@ export const authOptions: NextAuthOptions = {
       await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/logout`, {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'members/json',
           'Authorization': `Bearer ${message.token.accessToken}`,
         },
       });
