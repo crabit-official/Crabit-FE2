@@ -125,7 +125,7 @@ export async function getTeacherChallengeDetail({ session, releasedChallengeId, 
 
   const data: IDetailChallengeResult = await res.json();
 
-  return data.result;
+  return data;
 }
 
 // 특정 챌린지에 참여하는 학생들의 진행도 관련 정보 리스트 조회
