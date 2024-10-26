@@ -1,6 +1,7 @@
 import type { Session } from 'next-auth';
 
 import type {
+  IAcademyInstructorListResult,
   IAcademyMemberListResult,
   IChallengeParticipateResult,
   IChallengeResult,
@@ -77,10 +78,34 @@ export async function getAcademyMemberDetailList({ cursor, session, take, academ
   });
 
   if (!res.ok) {
-    throw new Error('챌린지 목록을 가져오는데 에러가 발생했습니다!');
+    throw new Error('학원의 학생 목록을 가져오는데 에러가 발생했습니다!');
   }
 
   const data: IAcademyMemberListResult = await res.json();
+
+  return data;
+}
+
+// [원장 선생님] 학원 전체 강사 리스트 조회
+export async function getAcademyInstructorList({ cursor, session, take, academyId, nickname }: IGetAcademyMemberDetailList) {
+  let url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/instructors?cursor=${cursor}&take=${take}`;
+
+  if (nickname) {
+    url += `&nickname=${nickname}`;
+  }
+
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${session?.accessToken}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error('학원의 선생님 목록을 가져오는데 에러가 발생했습니다!');
+  }
+
+  const data: IAcademyInstructorListResult = await res.json();
 
   return data;
 }

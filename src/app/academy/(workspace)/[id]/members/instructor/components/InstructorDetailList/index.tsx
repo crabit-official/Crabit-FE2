@@ -9,15 +9,15 @@ import StateLabel from '@/features/academy/(workspace)/components/state-label';
 import ListRow from '@/features/academy/alert/components/ListRow';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
-import useGetInfiniteAcademyMemberDetailList from '@/shared/hooks/academy/useGetInfiniteAcademyMemberDetailList';
+import useGetInfiniteAcademyInstructorList from '@/shared/hooks/academy/useGetInfiniteAcademyInstructorList';
 
-interface IStudentDetailList {
+interface IInstructorDetailList {
   academyId: number;
   session: Session;
 }
 
-function StudentDetailList({ session, academyId }: IStudentDetailList) {
-  const { data: students, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteAcademyMemberDetailList(session, 5, academyId);
+function InstructorDetailList({ session, academyId }: IInstructorDetailList) {
+  const { data: instructors, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteAcademyInstructorList(session, 5, academyId);
 
   const { ref, inView } = useInView({
     threshold: 0,
@@ -42,28 +42,28 @@ function StudentDetailList({ session, academyId }: IStudentDetailList) {
 
   return (
     <div className="h-full overflow-y-auto">
-      {students?.pages.map((page) =>
-        page?.result.studentList?.map((member) => (
+      {instructors?.pages.map((page) =>
+        page?.result.teacherList?.map((instructor) => (
           <ListRow
-            key={member.academyMemberId}
-            left={member.profileImageUrl == null ? <Image src="/images/logo_app.png" alt="이미지" width="60" height="60" /> : member.profileImageUrl}
+            key={instructor.academyMemberId}
+            left={instructor.profileImageUrl == null ? <Image src="/images/logo_app.png" alt="이미지" width="60" height="60" /> : instructor.profileImageUrl}
             contents={
               <ListRow.Texts
                 title={
                   <Typography size="h4">
-                    {member.memberName} | {member.nickname}
+                    {instructor.memberName} | {instructor.nickname}
                   </Typography>
                 }
                 subTitle={
                   <Typography size="h6" color="neutral-400" className="w-80 overflow-hidden truncate">
-                    {member.introduction}
+                    {instructor.introduction}
                   </Typography>
                 }
               />
             }
             right={
               <div>
-                <StateLabel label={String(member.point)} variant="green" />
+                <StateLabel label={String(instructor.academyMemberId)} variant="cyan" />
               </div>
             }
             withArrow
@@ -76,4 +76,4 @@ function StudentDetailList({ session, academyId }: IStudentDetailList) {
   );
 }
 
-export default StudentDetailList;
+export default InstructorDetailList;
