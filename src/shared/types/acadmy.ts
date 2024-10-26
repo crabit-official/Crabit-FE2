@@ -153,6 +153,24 @@ export interface IAcademyMemberListResult {
   };
 }
 
+// 학원 선생님 목록 조회
+export interface IAcademyInstructorListDTO {
+  academyMemberId: number;
+  introduction: string;
+  memberId: number;
+  memberName: string;
+  nickname: string;
+  profileImageUrl: string;
+}
+
+export interface IAcademyInstructorListResult {
+  result: {
+    hasNext: boolean;
+    nextCursor: number;
+    studentList: IAcademyInstructorListDTO[];
+  };
+}
+
 // 상세 챌린지
 export interface IDetailChallengeResult {
   result: {
