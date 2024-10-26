@@ -9,15 +9,15 @@ import StateLabel from '@/features/academy/(workspace)/components/state-label';
 import ListRow from '@/features/academy/alert/components/ListRow';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
-import useGetInfiniteApplicationList from '@/shared/hooks/academy/useGetInfiniteApplicationList';
+import useGetInfiniteAcademyMemberDetailList from '@/shared/hooks/academy/useGetInfiniteAcademyMemberDetailList';
 
-interface IApplicationList {
+interface IStudentDetailList {
   academyId: number;
   session: Session;
 }
 
-function ApplicationList({ session, academyId }: IApplicationList) {
-  const { data: application, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteApplicationList(session, 5, academyId);
+function StudentDetailList({ session, academyId }: IStudentDetailList) {
+  const { data: students, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteAcademyMemberDetailList(session, 5, academyId);
 
   const { ref, inView } = useInView({
     threshold: 0,
@@ -42,17 +42,11 @@ function ApplicationList({ session, academyId }: IApplicationList) {
 
   return (
     <div className="h-full overflow-y-auto">
-      {application?.pages.map((page) =>
-        page?.result.joinRequestMemberList?.map((member) => (
+      {students?.pages.map((page) =>
+        page?.result.studentList?.map((member) => (
           <ListRow
             key={member.academyMemberId}
-            left={
-              member.crabitAccountProfileImageUrl == null ? (
-                <Image src="/images/logo_app.png" alt="이미지" width="60" height="60" />
-              ) : (
-                member.crabitAccountProfileImageUrl
-              )
-            }
+            left={member.profileImageUrl == null ? <Image src="/images/logo_app.png" alt="이미지" width="60" height="60" /> : member.profileImageUrl}
             contents={
               <ListRow.Texts
                 title={
@@ -62,14 +56,14 @@ function ApplicationList({ session, academyId }: IApplicationList) {
                 }
                 subTitle={
                   <Typography size="h6" color="neutral-400" className="w-80 overflow-hidden truncate">
-                    {member.introduction.repeat(200)}
+                    {member.introduction}
                   </Typography>
                 }
               />
             }
             right={
               <div>
-                <StateLabel label={member.academyRole} variant="green" />
+                <StateLabel label={String(member.point)} variant="green" />
               </div>
             }
             withArrow
@@ -82,4 +76,4 @@ function ApplicationList({ session, academyId }: IApplicationList) {
   );
 }
 
-export default ApplicationList;
+export default StudentDetailList;
