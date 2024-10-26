@@ -1,20 +1,21 @@
 import type { Dispatch, SetStateAction } from 'react';
 
 interface IStudentsProps {
-  nickname: string;
+  memberId: number;
+  memberName: string;
+  school: string;
   selectedStudentIdList: number[];
   setSelectedStudentIdList: Dispatch<SetStateAction<number[]>>;
-  studentId: number;
 }
 
-function Students({ nickname, studentId, setSelectedStudentIdList, selectedStudentIdList }: IStudentsProps) {
-  const isSelected = selectedStudentIdList.includes(studentId);
+function Students({ school, memberName, memberId, setSelectedStudentIdList, selectedStudentIdList }: IStudentsProps) {
+  const isSelected = selectedStudentIdList.includes(memberId);
 
   const handleSelect = () => {
     if (isSelected) {
-      setSelectedStudentIdList(selectedStudentIdList.filter((id) => id !== studentId));
+      setSelectedStudentIdList(selectedStudentIdList.filter((id) => id !== memberId));
     } else {
-      setSelectedStudentIdList((prev) => [...prev, studentId]);
+      setSelectedStudentIdList((prev) => [...prev, memberId]);
     }
   };
 
@@ -23,7 +24,7 @@ function Students({ nickname, studentId, setSelectedStudentIdList, selectedStude
       onClick={handleSelect}
       className={`h-fit cursor-pointer rounded-md p-2 hover:scale-95 ${isSelected ? 'bg-main-pink font-medium text-white' : 'bg-neutral-100 text-black'}`}
     >
-      {nickname}
+      {school} | {memberName}
     </div>
   );
 }
