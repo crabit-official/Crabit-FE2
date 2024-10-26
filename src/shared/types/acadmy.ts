@@ -226,7 +226,7 @@ export interface IChallengeParticipateResult {
 export interface IStudentChallengeContents {
   challengeLog: {
     content: string;
-    createdAt: string;
+    createdAt: Date;
     day: number;
     fileUrl: string;
     studentChallengeId: number;
