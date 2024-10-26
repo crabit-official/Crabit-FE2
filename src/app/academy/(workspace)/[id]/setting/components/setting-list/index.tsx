@@ -19,11 +19,11 @@ function SettingList({ id, academyRole }: { academyRole: ACADEMY_ROLE; id: strin
           contents={
             <Flex row="start" className="gap-2">
               <IoPerson size={24} />
-              <Typography size="h5">학원 가입 신청 조회</Typography>
+              <Typography size="h5">학생 관리</Typography>
             </Flex>
           }
           withArrow
-          onClick={() => router.push(`/academy/${id}/application`)}
+          onClick={() => router.push(`/academy/${id}/members/detail`)}
         />
       ) : null}
       <ListRow
