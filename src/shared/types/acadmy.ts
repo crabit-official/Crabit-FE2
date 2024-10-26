@@ -167,7 +167,7 @@ export interface IAcademyInstructorListResult {
   result: {
     hasNext: boolean;
     nextCursor: number;
-    studentList: IAcademyInstructorListDTO[];
+    teacherList: IAcademyInstructorListDTO[];
   };
 }
 
