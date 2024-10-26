@@ -1,3 +1,4 @@
+import React from 'react';
 import { dehydrate, QueryClient } from '@tanstack/query-core';
 import { HydrationBoundary } from '@tanstack/react-query';
 import Image from 'next/image';
@@ -31,48 +32,49 @@ async function ChallengeDetail({ challenge, session, academyId, releasedChalleng
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <Flex rowColumn="center" className="w-full max-w-[700px] gap-10 px-4 py-20">
-      <Flex rowColumn="center" className="w-full gap-10">
-        {challenge?.result.releasedChallenge.thumbnailImageUrl && (
-          <Image
-            className="h-80 w-full rounded-2xl bg-black object-contain"
-            src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challenge?.result?.releasedChallenge.thumbnailImageUrl}`}
-            alt="thumbnail image"
-            width="500"
-            height="100"
-          />
-        )}
-        <Flex column="start" className="w-full px-1">
-          <Flex row="start" className="items-center gap-2">
-            <Typography size="h5" className="text-sm text-neutral-500">
-              {getChallengeType(challenge?.result?.releasedChallenge.challengeType)}
-            </Typography>
-            <div className="h-3 w-px rounded-[1px] bg-neutral-500" />
-            <Typography size="h5" className="text-sm text-neutral-500">
-              {getChallengeCategory(challenge?.result?.releasedChallenge.challengeCategory)}
+    <div className="grid-rows-[min-content, auto] grid w-full max-w-[1000px] place-items-center">
+      <Flex rowColumn="center" className="w-full max-w-[700px] gap-10 px-4 py-20">
+        <Flex rowColumn="center" className="w-full gap-10">
+          {challenge?.result.releasedChallenge.thumbnailImageUrl && (
+            <Image
+              className="h-80 w-full rounded-2xl bg-black object-contain"
+              src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challenge?.result?.releasedChallenge.thumbnailImageUrl}`}
+              alt="thumbnail image"
+              width="500"
+              height="100"
+            />
+          )}
+          <Flex column="start" className="w-full px-1">
+            <Flex row="start" className="items-center gap-2">
+              <Typography size="h5" className="text-sm text-neutral-500">
+                {getChallengeType(challenge?.result?.releasedChallenge.challengeType)}
+              </Typography>
+              <div className="h-3 w-px rounded-[1px] bg-neutral-500" />
+              <Typography size="h5" className="text-sm text-neutral-500">
+                {getChallengeCategory(challenge?.result?.releasedChallenge.challengeCategory)}
+              </Typography>
+            </Flex>
+            <Typography size="h1" className="text-start">
+              {challenge?.result.releasedChallenge.title}
             </Typography>
           </Flex>
-          <Typography size="h1" className="text-start">
-            {challenge?.result.releasedChallenge.title}
+        </Flex>
+        <Flex column="center" className="w-full gap-1 px-1">
+          <Typography size="h4" className="font-medium text-neutral-700">
+            📌 챌린지 진행 방법 : {challenge?.result?.releasedChallenge.content}
+          </Typography>
+          <Typography size="h4" className="font-medium text-neutral-700">
+            🗓️ 챌린지 기간 : {challenge?.result?.releasedChallenge.totalDays}
+          </Typography>
+          <Typography size="h4" className="font-medium text-neutral-700">
+            🎖️ 포인트 : Ⓟ {challenge?.result?.releasedChallenge.points}
           </Typography>
         </Flex>
       </Flex>
-      <Flex column="center" className="w-full gap-1 px-1">
-        <Typography size="h4" className="font-medium text-neutral-700">
-          📌 챌린지 진행 방법 : {challenge?.result?.releasedChallenge.content}
-        </Typography>
-        <Typography size="h4" className="font-medium text-neutral-700">
-          🗓️ 챌린지 기간 : {challenge?.result?.releasedChallenge.totalDays}
-        </Typography>
-        <Typography size="h4" className="font-medium text-neutral-700">
-          🎖️ 포인트 : Ⓟ {challenge?.result?.releasedChallenge.points}
-        </Typography>
-      </Flex>
-
       <HydrationBoundary state={dehydratedState}>
         <ChallengeStudentList session={session} academyId={academyId} releasedChallengeId={releasedChallengeId} />
       </HydrationBoundary>
-    </Flex>
+    </div>
   );
 }
 export default ChallengeDetail;
