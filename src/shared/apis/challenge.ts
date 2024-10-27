@@ -8,6 +8,7 @@ import type {
   IChallengeResult,
   IDetailChallengeResult,
   IGetAcademyMemberDetailList,
+  IMyChallengeProgressResult,
   IStudentChallengeContentsResults,
   IStudentChallengeResult,
 } from '@/shared/types/acadmy';
@@ -193,4 +194,18 @@ export async function getStudentChallengeContents({ session, releasedChallengeId
   const data: IStudentChallengeContentsResults = await res.json();
 
   return data;
+}
+
+// 특정 챌린지 학생 본인의 진행도 및 상세 정보
+export async function getMyChallengeProgress({ academyId, studentChallengeId, session }: { academyId: number; session: Session; studentChallengeId: number }) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/students/${studentChallengeId}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${session?.accessToken}`,
+    },
+  });
+
+  const data: IMyChallengeProgressResult = await res.json();
+
+  return data.result;
 }

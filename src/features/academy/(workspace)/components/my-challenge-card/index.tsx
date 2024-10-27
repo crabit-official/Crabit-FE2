@@ -12,11 +12,9 @@ import formatDate from '@/shared/utils/date';
 function MyChallengeCard({ challenge, studentChallengeStatus }: IStudentChallenge) {
   const router = useRouter();
 
-  // TODO: 클릭시 상세 페이지 주소 변경
-
   return (
     <Flex
-      onClick={() => router.push(`/academy/1/my-challenge/3/${challenge.releasedChallengeId}`)}
+      onClick={() => router.push(`challenge/${studentChallengeStatus.studentChallengeId}`)}
       column="between"
       className="w-full cursor-pointer gap-4 rounded-lg bg-white p-4 shadow-transparent transition-all duration-200 hover:shadow-lg md:w-3/5"
     >

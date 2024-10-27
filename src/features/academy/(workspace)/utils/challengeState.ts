@@ -1,4 +1,4 @@
-import { CHALLENGE_CATEGORY, CHALLENGE_LOG_SUBMISSION_STATUS, CHALLENGE_TYPE } from '@/shared/enums/challenge';
+import { CHALLENGE_CATEGORY, CHALLENGE_LOG_APPROVAL_STATUS, CHALLENGE_LOG_SUBMISSION_STATUS, CHALLENGE_TYPE } from '@/shared/enums/challenge';
 
 export function getVariantByStatus(status: CHALLENGE_LOG_SUBMISSION_STATUS | CHALLENGE_TYPE | CHALLENGE_CATEGORY) {
   switch (status) {
@@ -75,5 +75,20 @@ export function getChallengeCategory(category: CHALLENGE_CATEGORY) {
       return '운동 챌린지';
     default:
       return '공부 챌린지';
+  }
+}
+
+export function getApprovalStatus(status: CHALLENGE_LOG_APPROVAL_STATUS) {
+  switch (status) {
+    case CHALLENGE_LOG_APPROVAL_STATUS.APPROVED:
+      return '승인';
+    case CHALLENGE_LOG_APPROVAL_STATUS.PENDING:
+      return '대기 중';
+    case CHALLENGE_LOG_APPROVAL_STATUS.REJECTED:
+      return '반려';
+    case CHALLENGE_LOG_APPROVAL_STATUS.INCOMPLETE_CHALLENGE:
+      return '미완성';
+    default:
+      return '대기 중';
   }
 }
