@@ -35,7 +35,7 @@ function StudentChallengeDetail({ releasedChallenge, studentChallenge }: IStuden
       )}
       <Flex column="center" className="gap-2">
         <Typography size="h2">
-          {releasedChallenge?.challengeCoreCreatorAcademyName}의 {releasedChallenge?.title} 챌린지 진행도
+          {releasedChallenge?.challengeCoreCreatorAcademyName}의 {releasedChallenge?.title} 진행도
         </Typography>
         <Flex row="start" className="gap-1">
           <StateLabel label={getChallengeType(releasedChallenge.challengeType)} variant={getVariantByStatus(releasedChallenge.challengeType)} />

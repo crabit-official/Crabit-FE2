@@ -33,7 +33,7 @@ async function StudentChallengePage({ params }: { params: { id: string; studentC
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <Flex column="center" className="w-full max-w-[700px] gap-4 pt-20">
+    <Flex column="center" className="w-full max-w-[700px] gap-4 px-4 pt-10 md:px-1">
       <StudentChallengeDetail releasedChallenge={challengeData.releasedChallenge} studentChallenge={challengeData.studentChallenge} />
       <HydrationBoundary state={dehydratedState}>
         <StudentChallengeContents
