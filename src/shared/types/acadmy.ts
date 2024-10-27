@@ -195,6 +195,7 @@ export interface IAcademyInstructorListResult {
 export interface IAcademyStudentListDTO {
   academyMemberId: number;
   introduction: string;
+  memberName: string;
   nickname: string;
   profileImageUrl: string;
   school: string;

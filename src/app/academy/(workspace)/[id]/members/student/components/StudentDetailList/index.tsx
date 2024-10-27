@@ -51,7 +51,7 @@ function StudentDetailList({ session, academyId }: IInstructorStudentList) {
               <ListRow.Texts
                 title={
                   <Typography size="h4">
-                    {student.nickname} | {student.nickname}
+                    {student.memberName} | {student.nickname}
                   </Typography>
                 }
                 subTitle={
