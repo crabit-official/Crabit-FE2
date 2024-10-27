@@ -4,13 +4,13 @@ import { useState } from 'react';
 import type { FieldValues, SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
-import type { IAcademyCreateDTO } from '@/shared/apis/academy';
 import { postEnrollAcademy } from '@/shared/apis/academy';
 import AddressSearch from '@/shared/components/AddressSearch/address-search';
 import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
 import Input from '@/shared/components/Input';
 import Spacing from '@/shared/components/Spacing/spacing';
+import type { IAcademyCreateDTO } from '@/shared/types/acadmy';
 
 function Form() {
   const {

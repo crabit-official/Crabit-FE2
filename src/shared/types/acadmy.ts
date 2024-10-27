@@ -11,6 +11,26 @@ import type {
   CHALLENGE_TYPE,
 } from '@/shared/enums/challenge';
 
+export interface IAcademyCreateDTO {
+  academyAddress: string;
+  academyAddressDetail: string;
+  academyEmail: string;
+  academyName: string;
+  contactNumber: string;
+  studentCount: number;
+}
+
+export interface IPostEnrollAcademyResponse {
+  result: {
+    academyAddress: string;
+    academyAddressDetail: string;
+    academyEmail: string;
+    academyName: string;
+    contactNumber: string;
+    studentCount: number;
+  };
+}
+
 export interface IGetChallengeList {
   academyId: number;
   cursor: number;
@@ -261,5 +281,15 @@ export interface IStudentChallengeContentsResults {
     challengeLogList: IStudentChallengeContents[];
     hasNext: boolean;
     nextCursor: number;
+  };
+}
+
+// 학원 탈퇴
+export interface IRevokeAcademyResponse {
+  code: string;
+  isSuccess: boolean;
+  message: string;
+  result: {
+    academyMemberId: number;
   };
 }

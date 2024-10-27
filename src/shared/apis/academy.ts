@@ -1,7 +1,8 @@
 import type { Session } from 'next-auth';
 import { useSession } from 'next-auth/react';
 
-import type { IAcademyResult } from '@/shared/types/acadmy';
+import { ERROR_MESSAGES } from '@/shared/constants/api-error-message';
+import type { IAcademyCreateDTO, IAcademyResult, IPostEnrollAcademyResponse, IRevokeAcademyResponse } from '@/shared/types/acadmy';
 
 interface IGetAcademyList {
   cursor: number;
@@ -24,26 +25,6 @@ export async function getAcademyList({ session, cursor, take }: IGetAcademyList)
   const data: IAcademyResult = await response.json();
 
   return data;
-}
-
-export interface IAcademyCreateDTO {
-  academyAddress: string;
-  academyAddressDetail: string;
-  academyEmail: string;
-  academyName: string;
-  contactNumber: string;
-  studentCount: number;
-}
-
-interface IPostEnrollAcademyResponse {
-  result: {
-    academyAddress: string;
-    academyAddressDetail: string;
-    academyEmail: string;
-    academyName: string;
-    contactNumber: string;
-    studentCount: number;
-  };
 }
 
 export async function postEnrollAcademy({ academyAddress, academyAddressDetail, academyEmail, academyName, contactNumber, studentCount }: IAcademyCreateDTO) {
@@ -71,6 +52,31 @@ export async function postEnrollAcademy({ academyAddress, academyAddressDetail, 
   }
 
   const data: IPostEnrollAcademyResponse = await response.json();
+
+  return data.result;
+}
+
+interface IRevokeAcademy {
+  academyId: number;
+  session: Session;
+}
+
+export async function revokeAcademy({ session, academyId }: IRevokeAcademy) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'members/json',
+      'Authorization': `Bearer ${session?.accessToken}`,
+    },
+  });
+
+  const data: IRevokeAcademyResponse = await response.json();
+
+  if (data.code in ERROR_MESSAGES) {
+    // eslint-disable-next-line no-alert
+    alert(ERROR_MESSAGES[data.code]);
+    throw new Error(ERROR_MESSAGES[data.code]);
+  }
 
   return data.result;
 }
