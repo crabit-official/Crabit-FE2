@@ -1,6 +1,6 @@
 import type { Session } from 'next-auth';
-import { useSession } from 'next-auth/react';
 
+import { fetchData } from '@/shared/apis/fetch-data';
 import { ERROR_MESSAGES } from '@/shared/constants/api-error-message';
 import type { IAcademyCreateDTO, IAcademyResult, IPostEnrollAcademyResponse, IRevokeAcademyResponse } from '@/shared/types/acadmy';
 
@@ -27,31 +27,28 @@ export async function getAcademyList({ session, cursor, take }: IGetAcademyList)
   return data;
 }
 
-export async function postEnrollAcademy({ academyAddress, academyAddressDetail, academyEmail, academyName, contactNumber, studentCount }: IAcademyCreateDTO) {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { data: session } = useSession();
-
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'members/json',
-      'Authorization': `Bearer ${session?.accessToken}`,
-    },
-    body: JSON.stringify({
+export async function postEnrollAcademy({
+  academyAddress,
+  academyAddressDetail,
+  academyEmail,
+  academyName,
+  contactNumber,
+  studentCount,
+  session,
+}: IAcademyCreateDTO) {
+  const data = await fetchData<IPostEnrollAcademyResponse>(
+    `/api/v1/academies`,
+    'POST',
+    {
       academyAddress,
       academyAddressDetail,
       academyEmail,
       academyName,
       contactNumber,
       studentCount,
-    }),
-  });
-
-  if (!response.ok) {
-    throw new Error('학원을 생성하는데 에러가 발생했습니다!');
-  }
-
-  const data: IPostEnrollAcademyResponse = await response.json();
+    },
+    session,
+  );
 
   return data.result;
 }
@@ -62,15 +59,7 @@ interface IRevokeAcademy {
 }
 
 export async function revokeAcademy({ session, academyId }: IRevokeAcademy) {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'members/json',
-      'Authorization': `Bearer ${session?.accessToken}`,
-    },
-  });
-
-  const data: IRevokeAcademyResponse = await response.json();
+  const data = await fetchData<IRevokeAcademyResponse>(`/api/v1/academies/${academyId}`, 'DELETE', {}, session);
 
   if (data.code in ERROR_MESSAGES) {
     // eslint-disable-next-line no-alert

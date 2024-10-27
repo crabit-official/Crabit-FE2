@@ -1,5 +1,6 @@
 import type { Session } from 'next-auth';
 
+import type { CommonResponse } from '@/shared/apis/dto/response';
 import type { ACADEMY_ROLE } from '@/shared/enums/academy';
 import type {
   CHALLENGE_APPROVAL_STATUS,
@@ -17,6 +18,7 @@ export interface IAcademyCreateDTO {
   academyEmail: string;
   academyName: string;
   contactNumber: string;
+  session: Session;
   studentCount: number;
 }
 
@@ -97,13 +99,11 @@ export interface IAcademy {
   academyRole: string;
 }
 
-export interface IAcademyResult {
-  result: {
-    hasNext: boolean;
-    memberAcademyList: IAcademy[];
-    nextCursor: number;
-  };
-}
+export type IAcademyResult = CommonResponse<{
+  hasNext: boolean;
+  memberAcademyList: IAcademy[];
+  nextCursor: number;
+}>;
 
 // 챌린지 목록 조회
 export interface IChallenge {
@@ -285,11 +285,6 @@ export interface IStudentChallengeContentsResults {
 }
 
 // 학원 탈퇴
-export interface IRevokeAcademyResponse {
-  code: string;
-  isSuccess: boolean;
-  message: string;
-  result: {
-    academyMemberId: number;
-  };
-}
+export type IRevokeAcademyResponse = CommonResponse<{
+  academyMemberId: number;
+}>;
