@@ -2,6 +2,7 @@ import { getServerSession, type Session } from 'next-auth';
 
 import ChallengeDetail from '@/app/academy/(workspace)/[id]/challenge/components/ChallengeDetail';
 import { getTeacherChallengeDetail } from '@/shared/apis/challenge';
+import Flex from '@/shared/components/Flex';
 import { authOptions } from '@/shared/utils/authOptions';
 
 async function ChallengeDetailPage({
@@ -21,7 +22,11 @@ async function ChallengeDetailPage({
     academyId: Number(params.id),
   });
 
-  return <ChallengeDetail challenge={res} session={session} academyId={Number(params.id)} releasedChallengeId={Number(params.challengeId)} />;
+  return (
+    <Flex className="w-full" rowColumn="center">
+      <ChallengeDetail challenge={res} session={session} academyId={Number(params.id)} releasedChallengeId={Number(params.challengeId)} />
+    </Flex>
+  );
 }
 
 export default ChallengeDetailPage;
