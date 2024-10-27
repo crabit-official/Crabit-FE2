@@ -1,7 +1,7 @@
 import type { DefaultError, InfiniteData, QueryKey, UseInfiniteQueryOptions } from '@tanstack/react-query';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-const getAllStudents = async ({ id, cursor, accessToken, take }: { accessToken: string; cursor: number; id: string; take: number }) => {
+const getAllStudents = async ({ id, cursor, accessToken, take }: { accessToken: string; cursor: number; id: number; take: number }) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${id}/students?cursor=${cursor}&take=${take}`, {
     method: 'GET',
     headers: {
@@ -15,15 +15,17 @@ const getAllStudents = async ({ id, cursor, accessToken, take }: { accessToken: 
 
   const data: AcademyStudentListResponse = await res.json();
 
-  return data; // Assuming result is the part that conforms to AcademyStudentListResponse
+  return data;
 };
 
 type TStudentList = {
+  academyMemberId: number;
   introduction: string;
+  memberId: number;
+  memberName: string;
   nickname: string;
   profileImageUrl: string;
   school: string;
-  studentId: number;
 };
 
 export type AcademyStudentListResponse = {
@@ -35,7 +37,7 @@ export type AcademyStudentListResponse = {
 };
 
 function useGetStudents(
-  id: string,
+  id: number,
   accessToken: string,
   take: number,
   queryOptions?: UseInfiniteQueryOptions<
@@ -55,15 +57,5 @@ function useGetStudents(
     ...queryOptions,
   });
 }
-
-// const useGetStudents = ({ id, accessToken }: { accessToken: string; id: string }) =>
-//   useInfiniteQuery({
-//     queryKey: ['students', id],
-//     queryFn: ({ pageParam = 0 }) => getAllStudents({ id, cursor: pageParam, accessToken }),
-//     getNextPageParam: (lastPage) => lastPage.nextCursor || null,
-//     initialPageParam: 0,
-//     enabled: !!accessToken && !!id,
-//     select: (data) => data.pages,
-//   });
 
 export default useGetStudents;

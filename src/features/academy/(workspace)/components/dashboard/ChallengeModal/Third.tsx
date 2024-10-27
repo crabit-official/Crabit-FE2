@@ -18,7 +18,7 @@ type InfoValues = Pick<IChallengeValue, 'challengeParticipationMethod' | 'studen
 
 interface IThirdProps {
   accessToken: string;
-  id: string;
+  id: number;
   onBack: () => void;
   onNext: (values: InfoValues) => void;
 }
@@ -36,7 +36,8 @@ function Third({ onNext, id, accessToken, onBack }: IThirdProps) {
     },
   });
   const [selectedStudentIdList, setSelectedStudentIdList] = useState<number[]>([]);
-  const watchCategory = watch('challengeCategory');
+  const watchCategory = watch('challengeParticipationMethod');
+
   const { data: students } = useGetStudents(id, accessToken, 4);
   const challengeModal = useChallengeModal();
 
@@ -62,13 +63,13 @@ function Third({ onNext, id, accessToken, onBack }: IThirdProps) {
         <Typography size="h4" className="text-center">
           챌린지 정보 입력하기
         </Typography>
-        <SelectDropdown id="challengeCategory" label="챌린지 참여 방식" register={register} errors={errors} options={METHOD_CATEGORIES} />
+        <SelectDropdown id="challengeParticipationMethod" label="챌린지 참여 방식" register={register} errors={errors} options={METHOD_CATEGORIES} />
         {watchCategory === 'ASSIGNED' && (
           <Flex className="h-48 w-full gap-2">
             {students?.pages.map((page) =>
               page.result.studentList.map((student) => (
                 <Students
-                  key={student.studentId}
+                  key={student.memberId}
                   {...student}
                   selectedStudentIdList={selectedStudentIdList}
                   setSelectedStudentIdList={setSelectedStudentIdList}

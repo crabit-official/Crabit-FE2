@@ -11,7 +11,7 @@ interface ILayout {
 }
 
 async function Layout({ children, params, modal }: ILayout) {
-  const data = await getAcademyProfile(params.id);
+  const data = await getAcademyProfile(Number(params.id));
 
   if (!data?.academyRole) {
     return <Error label="학원에 대한 접근 권한이 없습니다." className="pt-20" />;
@@ -20,7 +20,7 @@ async function Layout({ children, params, modal }: ILayout) {
   return (
     <div className="xl:px-30 max-w-8xl container mx-auto px-4 pb-8 pt-12">
       <div className="grid gap-20">
-        <AcademyTitle />
+        <AcademyTitle profile={data} />
         {children}
         {modal}
       </div>

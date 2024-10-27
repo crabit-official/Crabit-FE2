@@ -1,5 +1,6 @@
 import type { Session } from 'next-auth';
 
+import { fetchData } from '@/shared/apis/fetch-data';
 import type {
   IAcademyInstructorListResult,
   IAcademyMemberListResult,
@@ -8,6 +9,7 @@ import type {
   IChallengeResult,
   IDetailChallengeResult,
   IGetAcademyMemberDetailList,
+  IMyChallengeProgressResult,
   IStudentChallengeContentsResults,
   IStudentChallengeResult,
 } from '@/shared/types/acadmy';
@@ -150,7 +152,7 @@ export async function getTeacherChallengeDetail({ session, releasedChallengeId, 
 
   const data: IDetailChallengeResult = await res.json();
 
-  return data.result;
+  return data;
 }
 
 // 특정 챌린지에 참여하는 학생들의 진행도 관련 정보 리스트 조회
@@ -174,7 +176,7 @@ export async function getStudentsChallengeProgress({ session, releasedChallengeI
   return data;
 }
 
-// 특정 챌린지에서 특정 학생의 챌린지 인증 게시물 존재
+// (원장/강사/학생) 특정 챌린지에서 특정 학생의 챌린지 인증 게시물 조회
 export async function getStudentChallengeContents({ session, releasedChallengeId, academyId, take, cursor, studentChallengeId }: IGetChallengeList) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/${releasedChallengeId}/participants/${studentChallengeId}?cursor=${cursor}&take=${take}`,
@@ -193,4 +195,45 @@ export async function getStudentChallengeContents({ session, releasedChallengeId
   const data: IStudentChallengeContentsResults = await res.json();
 
   return data;
+}
+
+// (학생) 특정 챌린지 학생 본인의 진행도 및 상세 정보
+export async function getMyChallengeProgress({ academyId, studentChallengeId, session }: { academyId: number; session: Session; studentChallengeId: number }) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/students/${studentChallengeId}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${session?.accessToken}`,
+    },
+  });
+
+  const data: IMyChallengeProgressResult = await res.json();
+
+  return data.result;
+}
+
+// (학생) 학생 유저가 챌린지 인증 게시물 작성
+export async function createChallengeContent({
+  academyId,
+  studentChallengeId,
+  session,
+  content,
+  imageUrl,
+}: {
+  academyId: number;
+  content: string;
+  imageUrl: string;
+  session: Session;
+  studentChallengeId: number;
+}) {
+  const data = await fetchData<{ result: { result: { studentChallengeLogId: number } } }>(
+    `/api/v1/academies/${academyId}/challenges/${studentChallengeId}/logs`,
+    'POST',
+    {
+      content,
+      imageUrl,
+    },
+    session,
+  );
+
+  return data.result;
 }

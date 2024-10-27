@@ -130,7 +130,9 @@ export interface IStudentChallengeStatusDTO {
   challengeLogApprovalStatus: CHALLENGE_LOG_APPROVAL_STATUS;
   challengeLogSubmissionStatus: CHALLENGE_LOG_SUBMISSION_STATUS;
   endedAt: Date;
+  hasTodayChallengeLog: boolean;
   startedAt: Date;
+  studentChallengeId: number;
 }
 
 export interface IStudentChallenge {
@@ -264,7 +266,7 @@ export interface IChallengeParticipateResult {
 export interface IStudentChallengeContents {
   challengeLog: {
     content: string;
-    createdAt: string;
+    createdAt: Date;
     day: number;
     fileUrl: string;
     studentChallengeId: number;
@@ -289,3 +291,29 @@ export interface IStudentChallengeContentsResults {
 export type IRevokeAcademyResponse = CommonResponse<{
   academyMemberId: number;
 }>;
+
+// 특정챌린지 학생 상세보기
+export interface IMyChallengeProgressResult {
+  result: {
+    releasedChallenge: {
+      challengeCategory: CHALLENGE_CATEGORY;
+      challengeCoreCreatorAcademyName: string;
+      challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
+      challengeType: CHALLENGE_TYPE;
+      content: string;
+      points: number;
+      releasedChallengeId: number;
+      thumbnailImageUrl: string;
+      title: string;
+      totalDays: number;
+    };
+    studentChallenge: {
+      challengeLogApprovalStatus: CHALLENGE_LOG_APPROVAL_STATUS;
+      challengeLogSubmissionStatus: CHALLENGE_LOG_SUBMISSION_STATUS;
+      endedAt: Date;
+      hasTodayChallengeLog: boolean;
+      startedAt: Date;
+      studentChallengeId: number;
+    };
+  };
+}
