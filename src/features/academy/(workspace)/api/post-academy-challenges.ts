@@ -4,7 +4,7 @@ const createChallenges = async ({ id, challengeData, accessToken }: { accessToke
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${id}/challenges`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'members/json',
+      'Content-Type': 'application/json',
       'Authorization': `Bearer ${accessToken}`,
     },
     body: JSON.stringify(challengeData),
