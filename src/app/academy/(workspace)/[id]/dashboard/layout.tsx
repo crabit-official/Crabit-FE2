@@ -11,7 +11,7 @@ interface ILayout {
 }
 
 async function Layout({ children, params, modal }: ILayout) {
-  const data = await getAcademyProfile(params.id);
+  const data = await getAcademyProfile(Number(params.id));
 
   if (!data?.academyRole) {
     return <Error label="학원에 대한 접근 권한이 없습니다." className="pt-20" />;

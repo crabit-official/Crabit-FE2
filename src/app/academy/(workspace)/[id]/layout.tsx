@@ -5,7 +5,7 @@ import Error from '@/features/academy/(workspace)/components/error';
 import WorkspaceTab from '@/features/academy/(workspace)/components/workspace-tab';
 
 async function Layout({ children, params }: { children: React.ReactNode; params: { id: string } }) {
-  const data = await getAcademyProfile(params.id);
+  const data = await getAcademyProfile(Number(params.id));
 
   if (!data?.academyRole) {
     return <Error label="학원에 대한 접근 권한이 없습니다." className="pt-20" />;
