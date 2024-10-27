@@ -2,6 +2,7 @@ import React from 'react';
 import { IoPerson } from 'react-icons/io5';
 import Link from 'next/link';
 
+import RevokeButton from '@/app/academy/(workspace)/[id]/setting/components/revoke-button';
 import ListRow from '@/features/academy/alert/components/ListRow';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
@@ -49,15 +50,7 @@ function SettingList({ id, academyRole }: { academyRole: ACADEMY_ROLE; id: strin
           />
         </Link>
       ) : null}
-      <ListRow
-        contents={
-          <Flex row="start" className="gap-2">
-            <IoPerson size={24} />
-            <Typography size="h5">전체 학원 리스트 조회</Typography>
-          </Flex>
-        }
-        withArrow
-      />
+      <RevokeButton academyId={id} />
     </>
   );
 }

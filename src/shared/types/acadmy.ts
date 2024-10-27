@@ -1,5 +1,6 @@
 import type { Session } from 'next-auth';
 
+import type { CommonResponse } from '@/shared/apis/dto/response';
 import type { ACADEMY_ROLE } from '@/shared/enums/academy';
 import type {
   CHALLENGE_APPROVAL_STATUS,
@@ -10,6 +11,27 @@ import type {
   CHALLENGE_SOURCE_TYPE,
   CHALLENGE_TYPE,
 } from '@/shared/enums/challenge';
+
+export interface IAcademyCreateDTO {
+  academyAddress: string;
+  academyAddressDetail: string;
+  academyEmail: string;
+  academyName: string;
+  contactNumber: string;
+  session: Session;
+  studentCount: number;
+}
+
+export interface IPostEnrollAcademyResponse {
+  result: {
+    academyAddress: string;
+    academyAddressDetail: string;
+    academyEmail: string;
+    academyName: string;
+    contactNumber: string;
+    studentCount: number;
+  };
+}
 
 export interface IGetChallengeList {
   academyId: number;
@@ -77,13 +99,11 @@ export interface IAcademy {
   academyRole: string;
 }
 
-export interface IAcademyResult {
-  result: {
-    hasNext: boolean;
-    memberAcademyList: IAcademy[];
-    nextCursor: number;
-  };
-}
+export type IAcademyResult = CommonResponse<{
+  hasNext: boolean;
+  memberAcademyList: IAcademy[];
+  nextCursor: number;
+}>;
 
 // 챌린지 목록 조회
 export interface IChallenge {
@@ -175,6 +195,7 @@ export interface IAcademyInstructorListResult {
 export interface IAcademyStudentListDTO {
   academyMemberId: number;
   introduction: string;
+  memberName: string;
   nickname: string;
   profileImageUrl: string;
   school: string;
@@ -263,3 +284,8 @@ export interface IStudentChallengeContentsResults {
     nextCursor: number;
   };
 }
+
+// 학원 탈퇴
+export type IRevokeAcademyResponse = CommonResponse<{
+  academyMemberId: number;
+}>;
