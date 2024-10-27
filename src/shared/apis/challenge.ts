@@ -1,5 +1,6 @@
 import type { Session } from 'next-auth';
 
+import { fetchData } from '@/shared/apis/fetch-data';
 import type {
   IAcademyInstructorListResult,
   IAcademyMemberListResult,
@@ -206,6 +207,33 @@ export async function getMyChallengeProgress({ academyId, studentChallengeId, se
   });
 
   const data: IMyChallengeProgressResult = await res.json();
+
+  return data.result;
+}
+
+// (학생) 학생 유저가 챌린지 인증 게시물 작성
+export async function createChallengeContent({
+  academyId,
+  studentChallengeId,
+  session,
+  content,
+  imageUrl,
+}: {
+  academyId: number;
+  content: string;
+  imageUrl: string;
+  session: Session;
+  studentChallengeId: number;
+}) {
+  const data = await fetchData<{ result: { result: { studentChallengeLogId: number } } }>(
+    `/api/v1/academies/${academyId}/challenges/${studentChallengeId}/logs`,
+    'POST',
+    {
+      content,
+      imageUrl,
+    },
+    session,
+  );
 
   return data.result;
 }

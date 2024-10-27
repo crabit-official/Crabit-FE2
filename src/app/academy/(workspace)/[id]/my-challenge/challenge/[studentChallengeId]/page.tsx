@@ -2,6 +2,7 @@ import { dehydrate, QueryClient } from '@tanstack/query-core';
 import { HydrationBoundary } from '@tanstack/react-query';
 import { getServerSession, type Session } from 'next-auth';
 
+import MyChallengeContentForm from '@/app/academy/(workspace)/[id]/challenge/components/MyChallengeContentForm';
 import StudentChallengeContents from '@/app/academy/(workspace)/[id]/challenge/components/StudentChallengeContents';
 import StudentChallengeDetail from '@/app/academy/(workspace)/[id]/challenge/components/StudentChallengeDetail';
 import { getMyChallengeProgress, getStudentChallengeContents } from '@/shared/apis/challenge';
@@ -35,6 +36,7 @@ async function StudentChallengePage({ params }: { params: { id: string; studentC
   return (
     <Flex column="center" className="w-full max-w-[700px] gap-4 px-4 pt-10 md:px-1">
       <StudentChallengeDetail releasedChallenge={challengeData.releasedChallenge} studentChallenge={challengeData.studentChallenge} />
+      <MyChallengeContentForm session={session} academyId={Number(params.id)} studentChallengeId={Number(params.studentChallengeId)} />
       <HydrationBoundary state={dehydratedState}>
         <StudentChallengeContents
           session={session}
