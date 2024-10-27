@@ -175,7 +175,7 @@ export async function getStudentsChallengeProgress({ session, releasedChallengeI
   return data;
 }
 
-// 특정 챌린지에서 특정 학생의 챌린지 인증 게시물 존재
+// (원장/강사/학생) 특정 챌린지에서 특정 학생의 챌린지 인증 게시물 조회
 export async function getStudentChallengeContents({ session, releasedChallengeId, academyId, take, cursor, studentChallengeId }: IGetChallengeList) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/${releasedChallengeId}/participants/${studentChallengeId}?cursor=${cursor}&take=${take}`,
@@ -196,7 +196,7 @@ export async function getStudentChallengeContents({ session, releasedChallengeId
   return data;
 }
 
-// 특정 챌린지 학생 본인의 진행도 및 상세 정보
+// (학생) 특정 챌린지 학생 본인의 진행도 및 상세 정보
 export async function getMyChallengeProgress({ academyId, studentChallengeId, session }: { academyId: number; session: Session; studentChallengeId: number }) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/students/${studentChallengeId}`, {
     method: 'GET',

@@ -49,8 +49,8 @@ function StudentChallengeContents({ session, academyId, releasedChallengeId, stu
   return (
     <Flex column="center" className="relative w-full max-w-[1000px] gap-10 py-10">
       <Image src="/images/logo_goal.webp" alt="bg-logo" width={200} height={200} className="absolute left-0 top-10 opacity-40" />
-      <Typography size="h3" className="text-center">
-        챌린지 인증 게시물 목록
+      <Typography size="h2" className="text-center">
+        챌린지 인증
       </Typography>
       <Flex rowColumn="center" className="z-10 gap-2 px-4 md:px-0">
         {contents?.pages.map((page) =>

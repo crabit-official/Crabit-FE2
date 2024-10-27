@@ -33,48 +33,45 @@ function StudentChallengeDetail({ releasedChallenge, studentChallenge }: IStuden
           className="h-48 w-full rounded-2xl bg-black object-contain"
         />
       )}
-      <Flex column="start" className="gap-2">
+      <Flex column="center" className="gap-2">
         <Typography size="h2">
-          {releasedChallenge?.challengeCoreCreatorAcademyName}의 {releasedChallenge?.title}
+          {releasedChallenge?.challengeCoreCreatorAcademyName}의 {releasedChallenge?.title} 챌린지 진행도
         </Typography>
         <Flex row="start" className="gap-1">
           <StateLabel label={getChallengeType(releasedChallenge.challengeType)} variant={getVariantByStatus(releasedChallenge.challengeType)} />
           <StateLabel label={getChallengeCategory(releasedChallenge.challengeCategory)} variant={getVariantByStatus(releasedChallenge.challengeCategory)} />
         </Flex>
-      </Flex>
-
-      <Flex column="center">
-        <Typography size="h5" as="p" className="font-normal">
-          {releasedChallenge?.content}
-        </Typography>
-        <Typography size="h5" as="p" className="font-normal text-neutral-400">
-          DAY {releasedChallenge?.totalDays} | Ⓟ {releasedChallenge?.points}
-        </Typography>
-      </Flex>
-      <hr className="h-2 w-full text-neutral-400" />
-      <Flex column="center" className="gap-1">
-        <Typography size="h2">📚 나의 챌린지 진행도</Typography>
-        <Flex row="start" className="gap-1">
-          <Typography size="h5" as="p" className="text-sm font-medium text-neutral-500">
-            {formatDate(studentChallenge.startedAt)}
+        <Flex column="center">
+          <Typography size="h5" as="p" className="font-normal">
+            {releasedChallenge?.content}
           </Typography>
-          <p className="text-sm text-neutral-400">~</p>
-          <Typography size="h5" as="p" className="text-sm font-medium text-neutral-500">
-            {formatDate(studentChallenge.endedAt)}
+          <Typography size="h5" as="p" className="font-normal text-neutral-400">
+            DAY {releasedChallenge?.totalDays} | Ⓟ {releasedChallenge?.points}
           </Typography>
+          <Flex row="start" className="gap-1">
+            <Typography size="h5" as="p" className="text-sm font-medium text-neutral-500">
+              {formatDate(studentChallenge.startedAt)}
+            </Typography>
+            <p className="text-sm text-neutral-400">~</p>
+            <Typography size="h5" as="p" className="text-sm font-medium text-neutral-500">
+              {formatDate(studentChallenge.endedAt)}
+            </Typography>
+          </Flex>
         </Flex>
+
         <Flex column="start">
           <Typography size="h5" as="p" className="text-sm font-medium">
-            제출 상태 : {getStatusName(studentChallenge.challengeLogSubmissionStatus)}
+            📌 제출 상태 : {getStatusName(studentChallenge.challengeLogSubmissionStatus)}
           </Typography>
           <Typography size="h5" as="p" className="text-sm font-medium">
-            승인 상태 : {getApprovalStatus(studentChallenge.challengeLogApprovalStatus)}
+            📌 승인 상태 : {getApprovalStatus(studentChallenge.challengeLogApprovalStatus)}
           </Typography>
           <Typography size="h5" as="p" className="text-sm font-medium">
-            오늘 챌린지 제출 상태 : {studentChallenge.hasTodayChallengeLog ? '완료' : '미완'}
+            📌 오늘 챌린지 제출 상태 : {studentChallenge.hasTodayChallengeLog ? '완료' : '미완'}
           </Typography>
         </Flex>
       </Flex>
+      <hr className="h-2 w-full text-neutral-400" />
     </>
   );
 }
