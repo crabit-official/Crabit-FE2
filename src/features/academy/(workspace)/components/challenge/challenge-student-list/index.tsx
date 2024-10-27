@@ -54,15 +54,22 @@ function ChallengeStudentList({ session, releasedChallengeId, academyId }: IChal
   if (studentsData)
     return (
       <div
-        className="scrollbar-hide flex w-full cursor-pointer flex-col items-center justify-center gap-6 overflow-x-auto"
+        className="scrollbar-hide flex w-full cursor-pointer flex-col items-center justify-center gap-6 overflow-x-auto px-2 md:px-0"
         ref={containerRef}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseUpOrLeave}
         onMouseUp={handleMouseUpOrLeave}
       >
-        <div className="max-h-[600px] w-full min-w-[600px] max-w-[1000px] overflow-auto rounded-lg border border-solid border-gray-200 bg-white/60 md:w-11/12">
-          <table className="w-full text-sm md:text-base">
+        <div
+          className="scrollbar-hide w-full overflow-x-auto rounded-lg border border-solid border-gray-200 bg-white/60"
+          ref={containerRef}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseUpOrLeave}
+          onMouseUp={handleMouseUpOrLeave}
+        >
+          <table className="w-full min-w-[800px] overflow-x-auto text-sm md:text-base">
             <thead className="font-bold">
               <tr>
                 <th scope="col" className="p-4">

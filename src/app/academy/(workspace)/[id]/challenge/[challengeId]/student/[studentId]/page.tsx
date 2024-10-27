@@ -19,7 +19,7 @@ async function StudentChallengeDetailPage({ params }: IStudentChallenge) {
   const session = (await getServerSession(authOptions)) as Session;
   const queryClient = new QueryClient();
   await queryClient.prefetchInfiniteQuery({
-    queryKey: [queryKeys.CHALLENGE_LIST],
+    queryKey: [queryKeys.CHALLENGE_STUDENT_CONTENTS, params.id, params.studentId, params.challengeId],
     queryFn: () =>
       getStudentChallengeContents({
         session,

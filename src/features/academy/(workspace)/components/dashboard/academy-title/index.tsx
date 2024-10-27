@@ -4,13 +4,17 @@ import React from 'react';
 import { CiMenuKebab } from 'react-icons/ci';
 import Image from 'next/image';
 
+import Avatar from '@/shared/components/Avatar';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
+import type { IAcademyProfile } from '@/shared/types/acadmy';
+import { getRoleName } from '@/shared/utils/academyRole';
 
-const imgUrl =
-  'https://plus.unsplash.com/premium_photo-1681396937086-8a28edd8d257?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Z3VpdGFyfGVufDB8fDB8fHww';
+interface IAcademyTitleProps {
+  profile: IAcademyProfile;
+}
 
-function AcademyTitle() {
+function AcademyTitle({ profile }: IAcademyTitleProps) {
   return (
     <Flex row="between" className="border-b border-solid border-gray-200 px-14 pb-4 md:px-0">
       <Flex column="center" className="gap-4">
@@ -25,24 +29,34 @@ function AcademyTitle() {
       <div className="bg-red relative">
         <CiMenuKebab className="peer block cursor-pointer sm:hidden" />
         <div className="absolute right-2 top-5 hidden w-[150px] peer-hover:block">
-          <Flex column="center" className="rounded-xl bg-white p-4">
+          <Flex column="center" className="bg-white p-4">
             <Typography size="h5" className="ellipsis max-w-36 truncate">
-              정조이
+              {profile?.nickname}
             </Typography>
             <Typography size="h5" as="p" className="ellipsis max-w-36 gap-1 truncate text-xs">
-              크래빗 참여학원 원장
+              크래빗 참여학원 {getRoleName(profile.academyRole)}
             </Typography>
           </Flex>
         </div>
       </div>
       <Flex row="between" className="hidden max-w-56 cursor-pointer items-center gap-4 rounded-lg px-3 py-2 sm:flex">
-        <Image alt="profile img" className="size-10 rounded-2xl object-cover" width={30} height={30} src={imgUrl} />
+        {profile?.profileImageUrl ? (
+          <Image
+            alt="profile img"
+            className="size-10 rounded-2xl object-cover"
+            width={30}
+            height={30}
+            src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${profile?.profileImageUrl}`}
+          />
+        ) : (
+          <Avatar size="md" variant="squareRound" />
+        )}
         <Flex column="center">
           <Typography size="h5" className="ellipsis max-w-36 truncate">
-            정조이
+            {profile?.nickname}
           </Typography>
           <Typography size="h5" as="p" className="ellipsis max-w-36 gap-1 truncate text-xs">
-            크래빗 참여학원 원장
+            크래빗 참여학원 {getRoleName(profile.academyRole)}
           </Typography>
         </Flex>
       </Flex>

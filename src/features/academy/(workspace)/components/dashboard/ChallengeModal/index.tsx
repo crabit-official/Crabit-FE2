@@ -26,7 +26,7 @@ export interface IChallengeValue {
 
 const LAST_STEP = 3;
 
-function ChallengeModal({ id }: { id: string }) {
+function ChallengeModal({ id }: { id: number }) {
   const { data: session } = useSession();
   const storageKey = `challenge=${session?.name}`;
   const { mutate, isPending } = useCreateChallenges();

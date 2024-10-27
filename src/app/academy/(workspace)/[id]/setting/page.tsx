@@ -8,7 +8,7 @@ import Heading from '@/shared/components/Heading';
 import Spacing from '@/shared/components/Spacing/spacing';
 
 async function AcademySettingBoardPage({ params }: { params: { id: string } }) {
-  const data = await getAcademyProfile(params.id);
+  const data = await getAcademyProfile(Number(params.id));
 
   if (!data?.academyRole) {
     return <Error label="학원에 대한 접근 권한이 없습니다." className="pt-20" />;

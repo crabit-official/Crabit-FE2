@@ -1,5 +1,6 @@
 import type { Session } from 'next-auth';
 
+import type { CommonResponse } from '@/shared/apis/dto/response';
 import type { ACADEMY_ROLE } from '@/shared/enums/academy';
 import type {
   CHALLENGE_APPROVAL_STATUS,
@@ -10,6 +11,27 @@ import type {
   CHALLENGE_SOURCE_TYPE,
   CHALLENGE_TYPE,
 } from '@/shared/enums/challenge';
+
+export interface IAcademyCreateDTO {
+  academyAddress: string;
+  academyAddressDetail: string;
+  academyEmail: string;
+  academyName: string;
+  contactNumber: string;
+  session: Session;
+  studentCount: number;
+}
+
+export interface IPostEnrollAcademyResponse {
+  result: {
+    academyAddress: string;
+    academyAddressDetail: string;
+    academyEmail: string;
+    academyName: string;
+    contactNumber: string;
+    studentCount: number;
+  };
+}
 
 export interface IGetChallengeList {
   academyId: number;
@@ -77,13 +99,11 @@ export interface IAcademy {
   academyRole: string;
 }
 
-export interface IAcademyResult {
-  result: {
-    hasNext: boolean;
-    memberAcademyList: IAcademy[];
-    nextCursor: number;
-  };
-}
+export type IAcademyResult = CommonResponse<{
+  hasNext: boolean;
+  memberAcademyList: IAcademy[];
+  nextCursor: number;
+}>;
 
 // 챌린지 목록 조회
 export interface IChallenge {
@@ -110,7 +130,9 @@ export interface IStudentChallengeStatusDTO {
   challengeLogApprovalStatus: CHALLENGE_LOG_APPROVAL_STATUS;
   challengeLogSubmissionStatus: CHALLENGE_LOG_SUBMISSION_STATUS;
   endedAt: Date;
+  hasTodayChallengeLog: boolean;
   startedAt: Date;
+  studentChallengeId: number;
 }
 
 export interface IStudentChallenge {
@@ -175,6 +197,7 @@ export interface IAcademyInstructorListResult {
 export interface IAcademyStudentListDTO {
   academyMemberId: number;
   introduction: string;
+  memberName: string;
   nickname: string;
   profileImageUrl: string;
   school: string;
@@ -243,7 +266,7 @@ export interface IChallengeParticipateResult {
 export interface IStudentChallengeContents {
   challengeLog: {
     content: string;
-    createdAt: string;
+    createdAt: Date;
     day: number;
     fileUrl: string;
     studentChallengeId: number;
@@ -261,5 +284,36 @@ export interface IStudentChallengeContentsResults {
     challengeLogList: IStudentChallengeContents[];
     hasNext: boolean;
     nextCursor: number;
+  };
+}
+
+// 학원 탈퇴
+export type IRevokeAcademyResponse = CommonResponse<{
+  academyMemberId: number;
+}>;
+
+// 특정챌린지 학생 상세보기
+export interface IMyChallengeProgressResult {
+  result: {
+    releasedChallenge: {
+      challengeCategory: CHALLENGE_CATEGORY;
+      challengeCoreCreatorAcademyName: string;
+      challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
+      challengeType: CHALLENGE_TYPE;
+      content: string;
+      points: number;
+      releasedChallengeId: number;
+      thumbnailImageUrl: string;
+      title: string;
+      totalDays: number;
+    };
+    studentChallenge: {
+      challengeLogApprovalStatus: CHALLENGE_LOG_APPROVAL_STATUS;
+      challengeLogSubmissionStatus: CHALLENGE_LOG_SUBMISSION_STATUS;
+      endedAt: Date;
+      hasTodayChallengeLog: boolean;
+      startedAt: Date;
+      studentChallengeId: number;
+    };
   };
 }

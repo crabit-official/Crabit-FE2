@@ -3,14 +3,16 @@
 import { useState } from 'react';
 import type { FieldValues, SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
+import type { Session } from 'next-auth';
+import { useSession } from 'next-auth/react';
 
-import type { IAcademyCreateDTO } from '@/shared/apis/academy';
 import { postEnrollAcademy } from '@/shared/apis/academy';
 import AddressSearch from '@/shared/components/AddressSearch/address-search';
 import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
 import Input from '@/shared/components/Input';
 import Spacing from '@/shared/components/Spacing/spacing';
+import type { IAcademyCreateDTO } from '@/shared/types/acadmy';
 
 function Form() {
   const {
@@ -18,14 +20,22 @@ function Form() {
     setValue,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FieldValues>({
     mode: 'onBlur',
   });
+  const { data: session } = useSession();
 
   const [isLoading] = useState<boolean>(false);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data: FieldValues) => {
-    await postEnrollAcademy({ ...(data as IAcademyCreateDTO) });
+    try {
+      await postEnrollAcademy({ ...(data as IAcademyCreateDTO), session: session as Session });
+      reset();
+    } catch (e) {
+      // eslint-disable-next-line no-alert
+      alert(e);
+    }
   };
 
   return (
