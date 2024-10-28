@@ -406,3 +406,19 @@ export interface IAllChallengeResult {
     nextCursor: number;
   };
 }
+
+// 학원 정보조회
+export interface IAcademyInfoResult {
+  result: {
+    academy: {
+      academyId: number;
+      address: string;
+      addressDetail: string;
+      contactNumber: string;
+      email: string;
+      mainImageUrl: string;
+      name: string;
+      studentCount: number;
+    };
+  };
+}
