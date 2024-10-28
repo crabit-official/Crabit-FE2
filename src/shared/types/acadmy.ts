@@ -339,7 +339,6 @@ export interface ICreateMyChallengeResult {
 }
 
 // TOP5 학생 정보
-
 export interface ITop5Students {
   academyMemberId: number;
   approvedChallengeCount: number;

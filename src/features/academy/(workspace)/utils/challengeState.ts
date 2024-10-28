@@ -1,4 +1,10 @@
-import { CHALLENGE_CATEGORY, CHALLENGE_LOG_APPROVAL_STATUS, CHALLENGE_LOG_SUBMISSION_STATUS, CHALLENGE_TYPE } from '@/shared/enums/challenge';
+import {
+  CHALLENGE_CATEGORY,
+  CHALLENGE_LOG_APPROVAL_STATUS,
+  CHALLENGE_LOG_SUBMISSION_STATUS,
+  CHALLENGE_PARTICIPATION_METHODS,
+  CHALLENGE_TYPE,
+} from '@/shared/enums/challenge';
 
 export function getVariantByStatus(status: CHALLENGE_LOG_SUBMISSION_STATUS | CHALLENGE_TYPE | CHALLENGE_CATEGORY | CHALLENGE_LOG_APPROVAL_STATUS) {
   switch (status) {
@@ -94,5 +100,17 @@ export function getApprovalStatus(status: CHALLENGE_LOG_APPROVAL_STATUS) {
       return '실패';
     default:
       return '대기 중';
+  }
+}
+
+export function getParticipationMethod(type: CHALLENGE_PARTICIPATION_METHODS) {
+  switch (type) {
+    case CHALLENGE_PARTICIPATION_METHODS.SELF_PARTICIPATING:
+      return '참여 챌린지';
+    case CHALLENGE_PARTICIPATION_METHODS.ASSIGNED:
+      return '배정 챌린지';
+
+    default:
+      return '참여 챌린지';
   }
 }
