@@ -4,6 +4,7 @@ import { fetchData } from '@/shared/apis/fetch-data';
 import { ERROR_MESSAGES } from '@/shared/constants/api-error-message';
 import type {
   IAcademyCreateDTO,
+  IAcademyInfoResult,
   IAcademyResult,
   IPostEnrollAcademyResponse,
   IRevokeAcademyResponse,
@@ -105,6 +106,20 @@ export async function getStatistics({ academyId, session }: { academyId: number;
   });
 
   const data: IStatisticsResult = await res.json();
+
+  return data.result;
+}
+
+// 학원 정보 조회
+export async function getAcademyInfo({ academyId, session }: { academyId: number; session: Session }) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/details`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${session?.accessToken}`,
+    },
+  });
+
+  const data: IAcademyInfoResult = await res.json();
 
   return data.result;
 }

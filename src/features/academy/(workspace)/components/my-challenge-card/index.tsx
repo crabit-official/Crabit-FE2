@@ -21,9 +21,9 @@ function MyChallengeCard({ challenge, studentChallengeStatus }: IStudentChalleng
       {challenge.thumbnailImageUrl && (
         <Image
           alt="이미지 설명"
-          className="h-44 w-full shrink-0 rounded-lg bg-[#131315] object-contain"
-          width={100}
-          height={100}
+          className="h-44 w-full shrink-0 rounded-lg bg-[#131315] object-cover"
+          width={300}
+          height={300}
           src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challenge.thumbnailImageUrl}`}
         />
       )}

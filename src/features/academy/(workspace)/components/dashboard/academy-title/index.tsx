@@ -7,19 +7,20 @@ import Image from 'next/image';
 import Avatar from '@/shared/components/Avatar';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
-import type { IAcademyProfile } from '@/shared/types/acadmy';
+import type { IAcademyInfoResult, IAcademyProfile } from '@/shared/types/acadmy';
 import { getRoleName } from '@/shared/utils/academyRole';
 
 interface IAcademyTitleProps {
+  academyInfo: IAcademyInfoResult['result'];
   profile: IAcademyProfile;
 }
 
-function AcademyTitle({ profile }: IAcademyTitleProps) {
+function AcademyTitle({ profile, academyInfo }: IAcademyTitleProps) {
   return (
     <Flex row="between" className="border-b border-solid border-gray-200 px-14 pb-4 md:px-0">
       <Flex column="center" className="gap-4">
         <Typography size="h3" className="break-keep">
-          조이 학원의 대시보드
+          {academyInfo.academy.name}의 대시보드
         </Typography>
         <Typography size="h5" className="break-keep text-sm" as="p">
           안녕하세요! 오늘 우리학원의 챌린지 현황을 확인해보세요

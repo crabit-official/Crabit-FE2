@@ -246,11 +246,13 @@ export interface IChallengeParticipant {
     startedAt: string;
     studentChallengeId: number;
   };
-  studentProfile: {
-    academyMemberId: number;
-    academyNickname: string;
-    academyProfileImageUrl: string;
-  };
+  studentProfile: IStudentProfileDTO;
+}
+
+export interface IStudentProfileDTO {
+  academyMemberId: number;
+  academyNickname: string;
+  academyProfileImageUrl: string;
 }
 
 export interface IChallengeParticipateResult {
@@ -381,5 +383,42 @@ export interface IStatisticsResult {
     highestChallengeApprovedStatistics: IChallengeStatistics;
     lowestChallengeApprovedStatistics: IChallengeStatistics;
     weeklyChallengeLogStatistics: IChallengeLog[];
+  };
+}
+
+// (학생) 학생 & 다른 학생 게시물 조회
+export interface IAllChallengeLogDTO {
+  content: string;
+  createdAt: Date;
+  day: number;
+  fileUrl: string;
+  studentChallengeId: number;
+  studentChallengeLogId: number;
+}
+
+export interface IAllChallengeResult {
+  result: {
+    challengeLogList: {
+      challengeLog: IAllChallengeLogDTO;
+      studentProfile: IStudentProfileDTO;
+    }[];
+    hasNext: boolean;
+    nextCursor: number;
+  };
+}
+
+// 학원 정보조회
+export interface IAcademyInfoResult {
+  result: {
+    academy: {
+      academyId: number;
+      address: string;
+      addressDetail: string;
+      contactNumber: string;
+      email: string;
+      mainImageUrl: string;
+      name: string;
+      studentCount: number;
+    };
   };
 }
