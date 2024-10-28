@@ -35,7 +35,7 @@ function BestChallengeTable({ topStudents }: IBestChallengeTableProps) {
                 닉네임
               </th>
               <th scope="col" className="p-4">
-                반
+                학교
               </th>
               <th scope="col" className="p-4" colSpan={2}>
                 완료한 챌린지
