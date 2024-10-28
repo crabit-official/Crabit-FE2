@@ -25,7 +25,7 @@ function StudentChallengeContent({ challengeLog, studentProfile }: IStudentChall
             alt="challenge"
             width={100}
             height={100}
-            className="h-[200px] w-full rounded-lg bg-black/10"
+            className="h-[200px] w-full rounded-lg bg-black/10 object-contain"
           />
         )}
         <Typography size="h5" className="text-sm font-normal">

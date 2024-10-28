@@ -1,10 +1,19 @@
 import { IoPieChart } from 'react-icons/io5';
 import { PiChartLineBold } from 'react-icons/pi';
+import type { Session } from 'next-auth';
 
+import { getStatistics } from '@/shared/apis/academy';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 
-function ChartView() {
+interface IChartViewProps {
+  academyId: number;
+  session: Session;
+}
+
+async function ChartView({ session, academyId }: IChartViewProps) {
+  const challengeData = await getStatistics({ session, academyId });
+
   return (
     <Flex column="center" className="gap-4 px-14 sm:px-20 md:px-0">
       <Typography size="h4">현황 한눈에 보기</Typography>
@@ -35,7 +44,7 @@ function ChartView() {
           </Typography>
           <IoPieChart size="100" className="text-neutral-500" />
           <Typography size="h5" className="text-sm font-medium">
-            지난주 챌린지 참여자 전원
+            {challengeData?.highestChallengeApprovedStatistics.approvedRate}
           </Typography>
           <PiChartLineBold size="100" className="text-neutral-300" />
         </Flex>

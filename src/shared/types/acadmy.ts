@@ -3,7 +3,6 @@ import type { Session } from 'next-auth';
 import type { CommonResponse } from '@/shared/apis/dto/response';
 import type { ACADEMY_ROLE } from '@/shared/enums/academy';
 import type {
-  CHALLENGE_APPROVAL_STATUS,
   CHALLENGE_CATEGORY,
   CHALLENGE_LOG_APPROVAL_STATUS,
   CHALLENGE_LOG_SUBMISSION_STATUS,
@@ -240,7 +239,7 @@ export interface IDetailChallengeResult {
 // 학생 챌린지 참여 정보 리스트
 export interface IChallengeParticipant {
   studentChallenge: {
-    challengeLogApprovalStatus: CHALLENGE_APPROVAL_STATUS;
+    challengeLogApprovalStatus: CHALLENGE_LOG_APPROVAL_STATUS;
     challengeLogSubmissionStatus: CHALLENGE_LOG_SUBMISSION_STATUS;
     earnedPoints: number;
     endedAt: string;
@@ -315,5 +314,72 @@ export interface IMyChallengeProgressResult {
       startedAt: Date;
       studentChallengeId: number;
     };
+  };
+}
+
+// 학생 챌린지 승인/반려 처리
+export interface IChallengeApprovalResults {
+  isSuccess: boolean;
+  message: string;
+  result: {
+    challengeLogApprovalStatus: CHALLENGE_LOG_APPROVAL_STATUS;
+    challengeLogSubmissionStatus: CHALLENGE_LOG_SUBMISSION_STATUS;
+    earnedPoints: number;
+    studentChallengeId: number;
+  };
+}
+
+// (학생) 챌린지 인증글 작성
+export interface ICreateMyChallengeResult {
+  isSuccess: boolean;
+  message: string;
+  result: {
+    studentChallengeLogId: number;
+  };
+}
+
+// TOP5 학생 정보
+export interface ITop5Students {
+  academyMemberId: number;
+  approvedChallengeCount: number;
+  nickname: string;
+  points: number;
+  profileImageUrl: string;
+  school: string;
+}
+
+export interface ITop5StudentsResult {
+  isSuccess: true;
+  message: string;
+  result: {
+    academyStudentPointsRankingList: ITop5Students[];
+  };
+}
+
+// 챌린지 통계
+export interface IChallengeStatistics {
+  approvedParticipants: number;
+  approvedRate: number;
+  challengeThumbnailImageUrl: string;
+  challengeTitle: string;
+  inProgressParticipants: number;
+  releasedAt: Date;
+  releasedChallengeId: number;
+  totalParticipants: number;
+}
+
+export interface IChallengeLog {
+  logCount: number;
+  logDate: string;
+}
+
+export interface IStatisticsResult {
+  result: {
+    academyChallengeStatistics: {
+      averageApprovedRate: number;
+    };
+    highestChallengeApprovedStatistics: IChallengeStatistics;
+    lowestChallengeApprovedStatistics: IChallengeStatistics;
+    weeklyChallengeLogStatistics: IChallengeLog[];
   };
 }
