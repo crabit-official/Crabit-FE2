@@ -13,6 +13,7 @@ import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
 import Spacing from '@/shared/components/Spacing/spacing';
 import Typography from '@/shared/components/Typography';
+import { queryKeys } from '@/shared/constants/query-keys';
 
 function InvitationTab() {
   const [tab, setTab] = useState<'INSTRUCTOR' | 'STUDENT'>('STUDENT');
@@ -27,13 +28,13 @@ function InvitationTab() {
         session: session as Session,
         academyRole: tab,
       }),
-    queryKey: ['invitation', tab],
+    queryKey: [queryKeys.INVITATION_CODE, tab],
   });
 
   const { mutate } = useMutation({
     mutationFn: postInvitationCode,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['invitation'] });
+      queryClient.invalidateQueries({ queryKey: [queryKeys.INVITATION_CODE] });
     },
   });
 
