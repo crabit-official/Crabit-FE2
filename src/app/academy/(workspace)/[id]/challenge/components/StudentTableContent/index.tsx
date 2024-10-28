@@ -32,28 +32,21 @@ function StudentTableContent({ studentProfile, studentChallenge, releasedChallen
   return (
     <tr className="border-t border-solid border-gray-200">
       <td className="p-4 text-center">{studentProfile?.academyNickname}</td>
-      <td className="p-4 text-center" colSpan={3}>
-        <StateLabel label="DAY 4" className="m-auto w-[60px]" />
-      </td>
-      <td className="break-keep p-4 text-center">중3 월수금반</td>
-      <td className="p-4 text-center" colSpan={3}>
-        99%
-      </td>
-      <td className="p-4 text-center" colSpan={3}>
+      <td className="p-4 text-center" colSpan={2}>
         <StateLabel
           label={getStatusName(studentChallenge?.challengeLogSubmissionStatus)}
           variant={getVariantByStatus(studentChallenge?.challengeLogSubmissionStatus)}
           className="m-auto w-[60px] break-keep px-0"
         />
       </td>
-      <td className="p-4 text-center" colSpan={3}>
+      <td className="p-4 text-center" colSpan={2}>
         <StateLabel
           label={getApprovalStatus(studentChallenge.challengeLogApprovalStatus)}
           variant={getVariantByStatus(studentChallenge.challengeLogApprovalStatus)}
           className="m-auto w-[60px] break-keep px-0"
         />
       </td>
-      <td className="p-4 text-center" colSpan={3}>
+      <td className="p-4 text-center">
         <Flex className="w-full gap-1">
           <Button
             size="sm"
