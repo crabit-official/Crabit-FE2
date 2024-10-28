@@ -355,3 +355,31 @@ export interface ITop5StudentsResult {
     academyStudentPointsRankingList: ITop5Students[];
   };
 }
+
+// 챌린지 통계
+export interface IChallengeStatistics {
+  approvedParticipants: number;
+  approvedRate: number;
+  challengeThumbnailImageUrl: string;
+  challengeTitle: string;
+  inProgressParticipants: number;
+  releasedAt: Date;
+  releasedChallengeId: number;
+  totalParticipants: number;
+}
+
+export interface IChallengeLog {
+  logCount: number;
+  logDate: string;
+}
+
+export interface IStatisticsResult {
+  result: {
+    academyChallengeStatistics: {
+      averageApprovedRate: number;
+    };
+    highestChallengeApprovedStatistics: IChallengeStatistics;
+    lowestChallengeApprovedStatistics: IChallengeStatistics;
+    weeklyChallengeLogStatistics: IChallengeLog[];
+  };
+}

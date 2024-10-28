@@ -2,7 +2,14 @@ import type { Session } from 'next-auth';
 
 import { fetchData } from '@/shared/apis/fetch-data';
 import { ERROR_MESSAGES } from '@/shared/constants/api-error-message';
-import type { IAcademyCreateDTO, IAcademyResult, IPostEnrollAcademyResponse, IRevokeAcademyResponse, ITop5StudentsResult } from '@/shared/types/acadmy';
+import type {
+  IAcademyCreateDTO,
+  IAcademyResult,
+  IPostEnrollAcademyResponse,
+  IRevokeAcademyResponse,
+  IStatisticsResult,
+  ITop5StudentsResult,
+} from '@/shared/types/acadmy';
 
 interface IGetAcademyList {
   cursor: number;
@@ -84,6 +91,20 @@ export async function getTop5Students({ academyId, session }: { academyId: numbe
   if (!data.isSuccess) {
     throw new Error(data.message);
   }
+
+  return data.result;
+}
+
+// 학원 챌린지 정보조회
+export async function getStatistics({ academyId, session }: { academyId: number; session: Session }) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/statistics/challenges`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${session?.accessToken}`,
+    },
+  });
+
+  const data: IStatisticsResult = await res.json();
 
   return data.result;
 }

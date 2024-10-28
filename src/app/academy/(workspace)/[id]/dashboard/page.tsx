@@ -23,7 +23,7 @@ async function AcademyDashBoardPage({ params }: { params: { id: string } }) {
 
   return (
     <div className="grid gap-40">
-      <ChartView />
+      <ChartView session={session} academyId={Number(params.id)} />
       <BestChallengeTable topStudents={topStudents} />
     </div>
   );
