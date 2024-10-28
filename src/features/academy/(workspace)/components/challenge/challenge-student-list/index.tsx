@@ -71,22 +71,13 @@ function ChallengeStudentList({ session, releasedChallengeId, academyId }: IChal
                 <th scope="col" className="p-4">
                   학생명
                 </th>
-                <th scope="col" className="p-4" colSpan={3}>
-                  현재 진행중인 DAY
-                </th>
-                <th scope="col" className="p-4">
-                  반
-                </th>
-                <th scope="col" className="p-4" colSpan={3}>
-                  진행율
-                </th>
-                <th scope="col" className="p-4" colSpan={3}>
+                <th scope="col" className="p-4" colSpan={2}>
                   제출 상태
                 </th>
-                <th scope="col" className="p-4" colSpan={3}>
+                <th scope="col" className="p-4" colSpan={2}>
                   승인 상태
                 </th>
-                <th scope="col" className="p-4" colSpan={3}>
+                <th scope="col" className="p-4">
                   승인
                 </th>
                 <th scope="col" className="p-4" colSpan={3}>

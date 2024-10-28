@@ -31,9 +31,9 @@ export default function DashboardCard({
         <Image
           src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challengeThumbnailImageUrl}`}
           alt="challenge thumbnail"
-          width={200}
-          height={200}
-          className="h-44 w-full shrink-0 rounded-xl bg-black/80 object-contain"
+          width={300}
+          height={300}
+          className="h-44 w-full shrink-0 rounded-xl bg-black/80 object-cover"
         />
       ) : (
         <Image alt="no images" className="h-44 w-full shrink-0 rounded-xl bg-black/80 object-contain" width={200} height={200} src="/images/logo_dark.png" />

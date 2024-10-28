@@ -46,8 +46,8 @@ function ModalDetail({ academyPublicChallenge, releaseInstructorProfile, session
             <Image
               src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${academyPublicChallenge.thumbnailImageUrl}`}
               alt="challenge thumbnail"
-              width={200}
-              height={200}
+              width={300}
+              height={300}
               className="h-40 w-full bg-black object-contain"
             />
           )}

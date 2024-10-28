@@ -19,9 +19,9 @@ function MarketChallengeCard({ challengeCategory, releasedChallengeId, title, th
       {thumbnailImageUrl ? (
         <Image
           alt="thumbnail image"
-          className="h-44 w-full shrink-0 rounded-t-xl bg-[#131315] object-contain"
-          width={100}
-          height={100}
+          className="h-44 w-full shrink-0 rounded-t-xl bg-[#131315] object-cover"
+          width={300}
+          height={300}
           src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${thumbnailImageUrl}`}
         />
       ) : (
