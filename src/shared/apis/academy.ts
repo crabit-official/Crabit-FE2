@@ -2,7 +2,7 @@ import type { Session } from 'next-auth';
 
 import { fetchData } from '@/shared/apis/fetch-data';
 import { ERROR_MESSAGES } from '@/shared/constants/api-error-message';
-import type { IAcademyCreateDTO, IAcademyResult, IPostEnrollAcademyResponse, IRevokeAcademyResponse } from '@/shared/types/acadmy';
+import type { IAcademyCreateDTO, IAcademyResult, IPostEnrollAcademyResponse, IRevokeAcademyResponse, ITop5StudentsResult } from '@/shared/types/acadmy';
 
 interface IGetAcademyList {
   cursor: number;
@@ -65,6 +65,24 @@ export async function revokeAcademy({ session, academyId }: IRevokeAcademy) {
     // eslint-disable-next-line no-alert
     alert(ERROR_MESSAGES[data.code]);
     throw new Error(ERROR_MESSAGES[data.code]);
+  }
+
+  return data.result;
+}
+
+// TOP 5 학생 정보 조회
+export async function getTop5Students({ academyId, session }: { academyId: number; session: Session }) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/statistics/monthly-point-ranking`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${session?.accessToken}`,
+    },
+  });
+
+  const data: ITop5StudentsResult = await res.json();
+
+  if (!data.isSuccess) {
+    throw new Error(data.message);
   }
 
   return data.result;

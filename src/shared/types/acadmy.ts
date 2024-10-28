@@ -337,3 +337,22 @@ export interface ICreateMyChallengeResult {
     studentChallengeLogId: number;
   };
 }
+
+// TOP5 학생 정보
+
+export interface ITop5Students {
+  academyMemberId: number;
+  approvedChallengeCount: number;
+  nickname: string;
+  points: number;
+  profileImageUrl: string;
+  school: string;
+}
+
+export interface ITop5StudentsResult {
+  isSuccess: true;
+  message: string;
+  result: {
+    academyStudentPointsRankingList: ITop5Students[];
+  };
+}
