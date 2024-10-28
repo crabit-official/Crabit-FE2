@@ -1,7 +1,6 @@
 import type { Session } from 'next-auth';
 
 import { fetchData } from '@/shared/apis/fetch-data';
-import type { CHALLENGE_LOG_APPROVAL_STATUS } from '@/shared/enums/challenge';
 import type {
   IAcademyInstructorListResult,
   IAcademyMemberListResult,
