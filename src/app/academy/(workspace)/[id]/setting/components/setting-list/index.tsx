@@ -1,5 +1,6 @@
 import React from 'react';
 import { IoPerson } from 'react-icons/io5';
+import { SlEnvolopeLetter } from 'react-icons/sl';
 import Link from 'next/link';
 
 import RevokeButton from '@/app/academy/(workspace)/[id]/setting/components/revoke-button';
@@ -51,6 +52,19 @@ function SettingList({ id, academyRole }: { academyRole: ACADEMY_ROLE; id: strin
         </Link>
       ) : null}
       <RevokeButton academyId={id} />
+      {academyRole === ACADEMY_ROLE.PRINCIPAL ? (
+        <Link href={`/academy/${id}/invitation`}>
+          <ListRow
+            contents={
+              <Flex row="start" className="gap-2">
+                <SlEnvolopeLetter size={24} />
+                <Typography size="h5">학원 스페이스 초대</Typography>
+              </Flex>
+            }
+            withArrow
+          />
+        </Link>
+      ) : null}
     </>
   );
 }
