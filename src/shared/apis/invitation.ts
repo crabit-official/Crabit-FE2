@@ -1,10 +1,9 @@
 import { revalidateTag } from 'next/cache';
 import type { Session } from 'next-auth';
 
-import type { ACADEMY_ROLE } from '@/shared/enums/academy';
 import type { IInvitationResult } from '@/shared/types/invitation';
 
-export async function getInvitationCode({ academyId, session, academyRole }: { academyId: number; academyRole: ACADEMY_ROLE; session: Session }) {
+export async function getInvitationCode({ academyId, session, academyRole }: { academyId: number; academyRole: 'INSTRUCTOR' | 'STUDENT'; session: Session }) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/join/code?academyRole=${academyRole}`, {
     method: 'GET',
     headers: {
@@ -22,7 +21,7 @@ export async function getInvitationCode({ academyId, session, academyRole }: { a
   return data;
 }
 
-export async function postInvitationCode({ academyId, session, academyRole }: { academyId: number; academyRole: ACADEMY_ROLE; session: Session }) {
+export async function postInvitationCode({ academyId, session, academyRole }: { academyId: number; academyRole: 'INSTRUCTOR' | 'STUDENT'; session: Session }) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/join/code?academyRole=${academyRole}`, {
     method: 'POST',
     headers: {
