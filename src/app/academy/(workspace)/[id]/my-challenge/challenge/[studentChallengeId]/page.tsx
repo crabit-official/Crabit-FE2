@@ -34,17 +34,19 @@ async function StudentChallengePage({ params }: { params: { id: string; studentC
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <Flex column="center" className="w-full max-w-[700px] gap-4 px-4 pt-10 md:px-1">
-      <StudentChallengeDetail releasedChallenge={challengeData.releasedChallenge} studentChallenge={challengeData.studentChallenge} />
-      <MyChallengeContentForm session={session} academyId={Number(params.id)} studentChallengeId={Number(params.studentChallengeId)} />
-      <HydrationBoundary state={dehydratedState}>
-        <StudentChallengeContents
-          session={session}
-          academyId={Number(params.id)}
-          studentChallengeId={Number(params.studentChallengeId)}
-          releasedChallengeId={challengeData?.releasedChallenge.releasedChallengeId}
-        />
-      </HydrationBoundary>
+    <Flex rowColumn="center" className="w-full">
+      <Flex column="center" className="w-full max-w-[700px] gap-4 px-4 pt-10 md:px-1">
+        <StudentChallengeDetail releasedChallenge={challengeData.releasedChallenge} studentChallenge={challengeData.studentChallenge} />
+        <MyChallengeContentForm session={session} academyId={Number(params.id)} studentChallengeId={Number(params.studentChallengeId)} />
+        <HydrationBoundary state={dehydratedState}>
+          <StudentChallengeContents
+            session={session}
+            academyId={Number(params.id)}
+            studentChallengeId={Number(params.studentChallengeId)}
+            releasedChallengeId={challengeData?.releasedChallenge.releasedChallengeId}
+          />
+        </HydrationBoundary>
+      </Flex>
     </Flex>
   );
 }

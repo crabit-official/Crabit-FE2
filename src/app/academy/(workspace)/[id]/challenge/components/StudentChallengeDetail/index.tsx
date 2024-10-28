@@ -42,7 +42,7 @@ function StudentChallengeDetail({ releasedChallenge, studentChallenge }: IStuden
           <StateLabel label={getChallengeCategory(releasedChallenge.challengeCategory)} variant={getVariantByStatus(releasedChallenge.challengeCategory)} />
         </Flex>
         <Flex column="center">
-          <Typography size="h5" as="p" className="font-normal">
+          <Typography size="h5" as="p" className="break-keep font-normal">
             {releasedChallenge?.content}
           </Typography>
           <Typography size="h5" as="p" className="font-normal text-neutral-400">
