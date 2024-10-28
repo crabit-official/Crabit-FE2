@@ -35,7 +35,13 @@ function StudentChallengeContent({ challengeLog, studentProfile }: IStudentChall
 
       <Flex row="end" className="items-center gap-2">
         {studentProfile.academyProfileImageUrl ? (
-          <Image src={studentProfile.academyProfileImageUrl} alt="student profile image" width={20} height={20} className="size-5" />
+          <Image
+            src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${studentProfile.academyProfileImageUrl}`}
+            alt="student profile image"
+            width={20}
+            height={20}
+            className="size-5"
+          />
         ) : (
           <Avatar size="xs" />
         )}
