@@ -2,12 +2,9 @@
 
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useRouter } from 'next/navigation';
 import type { Session } from 'next-auth';
 
-import StateLabel from '@/features/academy/(workspace)/components/state-label';
-import { getStatusName, getVariantByStatus } from '@/features/academy/(workspace)/utils/challengeState';
-import Button from '@/shared/components/Button';
+import StudentTableContent from '@/app/academy/(workspace)/[id]/challenge/components/StudentTableContent';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import useGetInfiniteStudentChallengeProgressList from '@/shared/hooks/challenge/useGetInfiniteStudentChallengeProgressList';
@@ -20,7 +17,6 @@ interface IChallengeStudentListProps {
 }
 
 function ChallengeStudentList({ session, releasedChallengeId, academyId }: IChallengeStudentListProps) {
-  const router = useRouter();
   const { containerRef, handleMouseDown, handleMouseMove, handleMouseUpOrLeave } = useDraggable<HTMLDivElement>();
   const {
     data: studentsData,
@@ -54,7 +50,7 @@ function ChallengeStudentList({ session, releasedChallengeId, academyId }: IChal
   if (studentsData)
     return (
       <div
-        className="scrollbar-hide flex w-full cursor-pointer flex-col items-center justify-center gap-6 overflow-x-auto px-2 md:px-0"
+        className="scrollbar-hide flex w-full max-w-[1000px] cursor-pointer flex-col items-center justify-center gap-6 overflow-x-auto px-2 md:px-0"
         ref={containerRef}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
@@ -75,7 +71,7 @@ function ChallengeStudentList({ session, releasedChallengeId, academyId }: IChal
                 <th scope="col" className="p-4">
                   학생명
                 </th>
-                <th scope="col" className="p-4" colSpan={2}>
+                <th scope="col" className="p-4" colSpan={3}>
                   현재 진행중인 DAY
                 </th>
                 <th scope="col" className="p-4">
@@ -88,6 +84,12 @@ function ChallengeStudentList({ session, releasedChallengeId, academyId }: IChal
                   제출 상태
                 </th>
                 <th scope="col" className="p-4" colSpan={3}>
+                  승인 상태
+                </th>
+                <th scope="col" className="p-4" colSpan={3}>
+                  승인
+                </th>
+                <th scope="col" className="p-4" colSpan={3}>
                   자세히 보기
                 </th>
               </tr>
@@ -95,32 +97,13 @@ function ChallengeStudentList({ session, releasedChallengeId, academyId }: IChal
             <tbody>
               {studentsData?.pages?.map((page) =>
                 page?.result?.challengeParticipantList?.map((student) => (
-                  <tr className="border-t border-solid border-gray-200" key={student.studentProfile.academyMemberId}>
-                    <td className="p-4 text-center">{student.studentProfile.academyNickname}</td>
-                    <td className="p-4 text-center" colSpan={2}>
-                      <StateLabel label="DAY 4" className="m-auto w-[60px]" />
-                    </td>
-                    <td className="break-keep p-4 text-center">중3 월수금반</td>
-                    <td className="p-4 text-center" colSpan={3}>
-                      99%
-                    </td>
-                    <td className="p-4 text-center" colSpan={3}>
-                      <StateLabel
-                        label={getStatusName(student.studentChallenge.challengeLogSubmissionStatus)}
-                        variant={getVariantByStatus(student.studentChallenge.challengeLogSubmissionStatus)}
-                        className="m-auto w-[60px]"
-                      />
-                    </td>
-                    <td className="p-4 text-center" colSpan={3}>
-                      <Button
-                        onClick={() => router.push(`${releasedChallengeId}/student/${student.studentChallenge.studentChallengeId}`)}
-                        size="sm"
-                        className="m-auto w-16 text-xs text-white"
-                      >
-                        확인하기
-                      </Button>
-                    </td>
-                  </tr>
+                  <StudentTableContent
+                    {...student}
+                    key={student.studentChallenge.studentChallengeId}
+                    releasedChallengeId={releasedChallengeId}
+                    academyId={academyId}
+                    session={session}
+                  />
                 )),
               )}
               <tr ref={ref} className="h-[10px]" />

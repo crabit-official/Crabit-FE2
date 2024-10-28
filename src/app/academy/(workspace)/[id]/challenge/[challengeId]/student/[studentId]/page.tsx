@@ -4,6 +4,7 @@ import { getServerSession, type Session } from 'next-auth';
 
 import StudentChallengeContents from '@/app/academy/(workspace)/[id]/challenge/components/StudentChallengeContents';
 import { getStudentChallengeContents } from '@/shared/apis/challenge';
+import Flex from '@/shared/components/Flex';
 import { queryKeys } from '@/shared/constants/query-keys';
 import { authOptions } from '@/shared/utils/authOptions';
 
@@ -38,12 +39,14 @@ async function StudentChallengeDetailPage({ params }: IStudentChallenge) {
 
   return (
     <HydrationBoundary state={dehydratedState}>
-      <StudentChallengeContents
-        session={session}
-        academyId={Number(params.id)}
-        releasedChallengeId={Number(params.challengeId)}
-        studentChallengeId={Number(params.studentId)}
-      />
+      <Flex rowColumn="center" className="w-full">
+        <StudentChallengeContents
+          session={session}
+          academyId={Number(params.id)}
+          releasedChallengeId={Number(params.challengeId)}
+          studentChallengeId={Number(params.studentId)}
+        />
+      </Flex>
     </HydrationBoundary>
   );
 }

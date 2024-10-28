@@ -34,7 +34,7 @@ function MyChallengeContentForm({ academyId, studentChallengeId, session }: IMyC
   });
 
   const { mutate } = useCreateChallengeContent();
-  const { filePreview, handleChangeFile, file } = useImage();
+  const { filePreview, handleChangeFile, file, setFile } = useImage();
   const { data: image } = useGetPresignedUrl(file?.name as string);
 
   const createContent: SubmitHandler<FieldValues> = async (data: FieldValues) => {
@@ -58,6 +58,7 @@ function MyChallengeContentForm({ academyId, studentChallengeId, session }: IMyC
     }
 
     reset();
+    setFile(null);
   };
 
   return (

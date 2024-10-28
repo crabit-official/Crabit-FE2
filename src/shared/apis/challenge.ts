@@ -1,12 +1,15 @@
 import type { Session } from 'next-auth';
 
 import { fetchData } from '@/shared/apis/fetch-data';
+import type { CHALLENGE_LOG_APPROVAL_STATUS } from '@/shared/enums/challenge';
 import type {
   IAcademyInstructorListResult,
   IAcademyMemberListResult,
   IAcademyStudentListResult,
+  IChallengeApprovalResults,
   IChallengeParticipateResult,
   IChallengeResult,
+  ICreateMyChallengeResult,
   IDetailChallengeResult,
   IGetAcademyMemberDetailList,
   IMyChallengeProgressResult,
@@ -225,7 +228,7 @@ export async function createChallengeContent({
   session: Session;
   studentChallengeId: number;
 }) {
-  const data = await fetchData<{ result: { result: { studentChallengeLogId: number } } }>(
+  const data = await fetchData<ICreateMyChallengeResult>(
     `/api/v1/academies/${academyId}/challenges/${studentChallengeId}/logs`,
     'POST',
     {
@@ -234,6 +237,43 @@ export async function createChallengeContent({
     },
     session,
   );
+
+  if (!data.isSuccess) {
+    throw new Error(data.message);
+  }
+
+  return data.result;
+}
+
+// (원장/강사) 챌린지 도전결과 최종 승인/반려 처리
+export async function approvalStudentChallengeResult({
+  academyId,
+  studentChallengeId,
+  session,
+  releasedChallengeId,
+  challengeLogApprovalStatus,
+}: {
+  academyId: number;
+  challengeLogApprovalStatus: CHALLENGE_LOG_APPROVAL_STATUS;
+  releasedChallengeId: number;
+  session: Session;
+  studentChallengeId: number;
+}) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/${releasedChallengeId}/participants/${studentChallengeId}?challengeLogApprovalStatus=${challengeLogApprovalStatus}`,
+    {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${session?.accessToken}`,
+      },
+    },
+  );
+
+  const data: IChallengeApprovalResults = await res.json();
+
+  if (!data.isSuccess) {
+    throw new Error(data.message);
+  }
 
   return data.result;
 }

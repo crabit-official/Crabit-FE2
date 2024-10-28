@@ -11,6 +11,11 @@ const createChallenges = async ({ id, challengeData, accessToken }: { accessToke
   });
 
   const data: IAcademyResponse<IAcademyChallenge> = await res.json();
+
+  if (!data.isSuccess) {
+    throw new Error(data.message);
+  }
+
   return data.result;
 };
 

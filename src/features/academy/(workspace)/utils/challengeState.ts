@@ -1,9 +1,16 @@
-import { CHALLENGE_CATEGORY, CHALLENGE_LOG_APPROVAL_STATUS, CHALLENGE_LOG_SUBMISSION_STATUS, CHALLENGE_TYPE } from '@/shared/enums/challenge';
+import {
+  CHALLENGE_CATEGORY,
+  CHALLENGE_LOG_APPROVAL_STATUS,
+  CHALLENGE_LOG_SUBMISSION_STATUS,
+  CHALLENGE_PARTICIPATION_METHODS,
+  CHALLENGE_TYPE,
+} from '@/shared/enums/challenge';
 
-export function getVariantByStatus(status: CHALLENGE_LOG_SUBMISSION_STATUS | CHALLENGE_TYPE | CHALLENGE_CATEGORY) {
+export function getVariantByStatus(status: CHALLENGE_LOG_SUBMISSION_STATUS | CHALLENGE_TYPE | CHALLENGE_CATEGORY | CHALLENGE_LOG_APPROVAL_STATUS) {
   switch (status) {
     case CHALLENGE_LOG_SUBMISSION_STATUS.NOT_STARTED:
     case CHALLENGE_CATEGORY.NEWSPAPER:
+    case CHALLENGE_LOG_APPROVAL_STATUS.INCOMPLETE_CHALLENGE:
       return 'gray';
     case CHALLENGE_LOG_SUBMISSION_STATUS.IN_PROGRESS:
     case CHALLENGE_CATEGORY.DIARY_WRITING:
@@ -11,16 +18,19 @@ export function getVariantByStatus(status: CHALLENGE_LOG_SUBMISSION_STATUS | CHA
     case CHALLENGE_LOG_SUBMISSION_STATUS.ALL_LOGS_SUBMITTED:
     case CHALLENGE_TYPE.ACADEMY:
     case CHALLENGE_CATEGORY.EXERCISE:
+    case CHALLENGE_LOG_APPROVAL_STATUS.APPROVED:
       return 'blue';
     case CHALLENGE_LOG_SUBMISSION_STATUS.SUBMISSION_FAILED:
     case CHALLENGE_TYPE.CRABIT:
     case CHALLENGE_CATEGORY.COPYING:
+    case CHALLENGE_LOG_APPROVAL_STATUS.REJECTED:
       return 'red';
     case CHALLENGE_CATEGORY.LIFESTYLE_HABITS:
       return 'purple';
     case CHALLENGE_CATEGORY.ETC:
       return 'yellow';
     case CHALLENGE_CATEGORY.STUDYING:
+    case CHALLENGE_LOG_APPROVAL_STATUS.PENDING:
       return 'cyan';
     case CHALLENGE_CATEGORY.READING:
       return 'lime';
@@ -87,8 +97,20 @@ export function getApprovalStatus(status: CHALLENGE_LOG_APPROVAL_STATUS) {
     case CHALLENGE_LOG_APPROVAL_STATUS.REJECTED:
       return '반려';
     case CHALLENGE_LOG_APPROVAL_STATUS.INCOMPLETE_CHALLENGE:
-      return '미완성';
+      return '실패';
     default:
       return '대기 중';
+  }
+}
+
+export function getParticipationMethod(type: CHALLENGE_PARTICIPATION_METHODS) {
+  switch (type) {
+    case CHALLENGE_PARTICIPATION_METHODS.SELF_PARTICIPATING:
+      return '참여 챌린지';
+    case CHALLENGE_PARTICIPATION_METHODS.ASSIGNED:
+      return '배정 챌린지';
+
+    default:
+      return '참여 챌린지';
   }
 }
