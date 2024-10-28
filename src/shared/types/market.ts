@@ -36,3 +36,12 @@ export interface IPublicChallengeDetailResult {
     };
   };
 }
+
+// (학생) 자유 챌린지 신청
+export interface IApplyChallengeResult {
+  isSuccess: boolean;
+  message: string;
+  result: {
+    studentChallengeId: number;
+  };
+}

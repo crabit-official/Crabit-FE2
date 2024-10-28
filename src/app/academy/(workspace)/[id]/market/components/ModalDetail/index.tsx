@@ -3,15 +3,34 @@
 import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import type { Session } from 'next-auth';
 
 import StateLabel from '@/features/academy/(workspace)/components/state-label';
 import { getChallengeCategory, getChallengeType, getParticipationMethod, getVariantByStatus } from '@/features/academy/(workspace)/utils/challengeState';
+import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
+import { ACADEMY_ROLE } from '@/shared/enums/academy';
+import { CHALLENGE_PARTICIPATION_METHODS } from '@/shared/enums/challenge';
+import useApplyChallenge from '@/shared/hooks/market/useApplyChallenge';
 import type { IPublicChallengeDetailResult } from '@/shared/types/market';
 
-function ModalDetail({ academyPublicChallenge, releaseInstructorProfile }: IPublicChallengeDetailResult['result']) {
+export type IPublicChallengeResult = IPublicChallengeDetailResult['result'];
+
+interface IModalDetailProps extends IPublicChallengeResult {
+  academyId: number;
+  releasedChallengeId: number;
+  role: ACADEMY_ROLE;
+  session: Session;
+}
+
+function ModalDetail({ academyPublicChallenge, releaseInstructorProfile, session, academyId, releasedChallengeId, role }: IModalDetailProps) {
   const router = useRouter();
+  const { mutate } = useApplyChallenge();
+
+  const applyChallenge = () => {
+    mutate({ session, academyId, releasedChallengeId });
+  };
 
   return (
     <div className="fixed left-0 top-0 z-10 size-full bg-black/60" onClick={() => router.back()}>
@@ -29,7 +48,7 @@ function ModalDetail({ academyPublicChallenge, releaseInstructorProfile }: IPubl
               alt="challenge thumbnail"
               width={200}
               height={200}
-              className="h-40 w-full bg-black"
+              className="h-40 w-full bg-black object-contain"
             />
           )}
           <Flex column="start" className="gap-5 px-3 py-5">
@@ -52,6 +71,13 @@ function ModalDetail({ academyPublicChallenge, releaseInstructorProfile }: IPubl
               </Typography>
             </Flex>
           </Flex>
+          {role === ACADEMY_ROLE.STUDENT && academyPublicChallenge.challengeParticipationMethod === CHALLENGE_PARTICIPATION_METHODS.SELF_PARTICIPATING && (
+            <div className="w-full p-2 text-sm">
+              <Button className="text-white" onClick={applyChallenge}>
+                챌린지 참여하기
+              </Button>
+            </div>
+          )}
         </div>
       </Flex>
     </div>
