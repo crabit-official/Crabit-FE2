@@ -32,7 +32,7 @@ async function ChallengeDetail({ challenge, session, academyId, releasedChalleng
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <div className="grid-rows-[min-content, auto] grid w-full max-w-[1000px] place-items-center">
+    <div className="grid-rows-[min-content, auto] grid w-full place-items-center">
       <Flex rowColumn="center" className="w-full max-w-[700px] gap-10 px-4 py-20">
         <Flex rowColumn="center" className="w-full gap-10">
           {challenge?.result.releasedChallenge.thumbnailImageUrl && (
