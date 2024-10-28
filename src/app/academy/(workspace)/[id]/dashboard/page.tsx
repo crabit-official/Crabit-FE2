@@ -14,7 +14,11 @@ async function AcademyDashBoardPage({ params }: { params: { id: string } }) {
   const topStudents = await getTop5Students({ session, academyId: Number(params.id) });
 
   if (data?.academyRole === ACADEMY_ROLE.STUDENT) {
-    return <div>학생만 보임</div>;
+    return (
+      <div>
+        <BestChallengeTable topStudents={topStudents} />
+      </div>
+    );
   }
 
   return (
