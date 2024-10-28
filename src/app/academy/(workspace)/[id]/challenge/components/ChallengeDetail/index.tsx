@@ -40,8 +40,8 @@ async function ChallengeDetail({ challenge, session, academyId, releasedChalleng
               className="h-80 w-full rounded-2xl bg-black object-contain"
               src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challenge?.result?.releasedChallenge.thumbnailImageUrl}`}
               alt="thumbnail image"
-              width="500"
-              height="100"
+              width={300}
+              height={300}
             />
           )}
           <Flex column="start" className="w-full px-1">
