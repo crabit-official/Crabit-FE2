@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
+import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
@@ -23,9 +24,11 @@ function UserMenu() {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const { data: session } = useSession();
+  const queryClient = useQueryClient();
 
   const handleLogout = async () => {
     await signOut({ redirect: false, callbackUrl: '/' });
+    queryClient.clear();
   };
 
   return (
