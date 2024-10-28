@@ -9,6 +9,7 @@ import type {
   IChallengeApprovalResults,
   IChallengeParticipateResult,
   IChallengeResult,
+  ICreateMyChallengeResult,
   IDetailChallengeResult,
   IGetAcademyMemberDetailList,
   IMyChallengeProgressResult,
@@ -227,7 +228,7 @@ export async function createChallengeContent({
   session: Session;
   studentChallengeId: number;
 }) {
-  const data = await fetchData<{ result: { result: { studentChallengeLogId: number } } }>(
+  const data = await fetchData<ICreateMyChallengeResult>(
     `/api/v1/academies/${academyId}/challenges/${studentChallengeId}/logs`,
     'POST',
     {
@@ -236,6 +237,10 @@ export async function createChallengeContent({
     },
     session,
   );
+
+  if (!data.isSuccess) {
+    throw new Error(data.message);
+  }
 
   return data.result;
 }

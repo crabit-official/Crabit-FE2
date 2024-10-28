@@ -328,3 +328,12 @@ export interface IChallengeApprovalResults {
     studentChallengeId: number;
   };
 }
+
+// (학생) 챌린지 인증글 작성
+export interface ICreateMyChallengeResult {
+  isSuccess: boolean;
+  message: string;
+  result: {
+    studentChallengeLogId: number;
+  };
+}
