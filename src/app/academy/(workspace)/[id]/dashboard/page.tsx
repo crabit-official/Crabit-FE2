@@ -15,7 +15,7 @@ async function AcademyDashBoardPage({ params }: { params: { id: string } }) {
 
   if (data?.academyRole === ACADEMY_ROLE.STUDENT) {
     return (
-      <div>
+      <div className="grid gap-40">
         <BestChallengeTable topStudents={topStudents} />
       </div>
     );

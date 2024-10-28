@@ -14,7 +14,7 @@ function BestChallengeTable({ topStudents }: IBestChallengeTableProps) {
   const { containerRef, handleMouseDown, handleMouseMove, handleMouseUpOrLeave } = useDraggable<HTMLDivElement>();
   return (
     <div
-      className="scrollbar-hide flex w-full cursor-pointer flex-col items-center justify-center gap-6 overflow-x-auto"
+      className="scrollbar-hide grid w-full cursor-pointer place-items-center gap-6 overflow-x-auto"
       ref={containerRef}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
