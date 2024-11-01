@@ -10,7 +10,7 @@ function FourthBanner() {
       <Container>
         <Flex column="center" className="w-full gap-8">
           <Flex column="center" className="gap-4">
-            <Typography size="h2" className="text-base font-bold text-main-pink sm:text-lg md:text-2xl">
+            <Typography size="h2" className="text-base font-bold text-main-deep-pink sm:text-lg md:text-2xl">
               크래빗만의 혁신적인 장학 시스템
             </Typography>
             <Typography size="h0" className="text-2xl font-bold sm:font-extrabold md:text-3xl">

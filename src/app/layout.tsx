@@ -47,7 +47,7 @@ export default async function RootLayout({
 
   return (
     <html lang="ko" className={`${pretendard.variable} ${roboto.variable} scroll-p-20 scroll-smooth antialiased`}>
-      <body className="bg-[#F5F5F7] font-pretendard">
+      <body className="bg-white font-pretendard">
         <Provider>
           <AuthProvider>
             <MSWProvider>
