@@ -12,7 +12,7 @@ function MainCard({ title, content }: IMainCardProps) {
       <Typography size="h2" className="break-keep text-center text-sm font-bold text-white sm:font-extrabold md:text-xl">
         {title}
       </Typography>
-      <Typography as="p" size="h5" className="max-w-[130px] break-keep text-center text-[10px] font-medium text-white md:text-sm">
+      <Typography as="p" size="h5" className="max-w-[130px] break-keep text-center text-[10px] font-medium text-white md:text-sm 2xl:max-w-full">
         {content}
       </Typography>
     </Flex>
