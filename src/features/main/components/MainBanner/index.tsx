@@ -2,12 +2,13 @@ import Image from 'next/image';
 
 import MainCard from '@/features/main/components/MainCard';
 import Flex from '@/shared/components/Flex';
+import Framer from '@/shared/components/Framer';
 import Typography from '@/shared/components/Typography';
 import { MAIN_CARDS } from '@/shared/constants/main-cards';
 
 function MainBanner() {
   return (
-    <Flex rowColumn="around" className="relative h-[500px] w-full gap-4 bg-neutral-100 md:h-[690px] md:pb-0">
+    <Flex rowColumn="around" className="relative h-[500px] w-full gap-4 bg-gray-50 md:h-[690px] md:pb-0">
       <Image
         src="/images/banner_background.webp"
         alt="background"
@@ -16,7 +17,7 @@ function MainBanner() {
         className="absolute h-[500px] w-[2000px] object-cover md:h-[690px]"
       />
       <div className="h-14" />
-      <Flex rowColumn="center" className="z-10 gap-4">
+      <Framer className="z-10 flex flex-col items-center justify-center gap-4" duration={0.5}>
         <Typography size="h0" className="text-3xl font-bold text-white sm:font-extrabold md:text-6xl">
           학습 습관 형성의 출발점
         </Typography>
@@ -24,12 +25,12 @@ function MainBanner() {
           <p>{`Crabit은 'Craft Your Habit'의 합성어로,`}</p>
           <p>지속가능한 학습 습관을 형성할 수 있도록 지원합니다</p>
         </Flex>
-      </Flex>
-      <Flex className="z-10 rounded-lg text-white md:flex-row">
+      </Framer>
+      <Framer className="z-10 flex overflow-hidden rounded-xl text-white">
         {MAIN_CARDS.map((e) => (
           <MainCard {...e} key={e.id} />
         ))}
-      </Flex>
+      </Framer>
     </Flex>
   );
 }

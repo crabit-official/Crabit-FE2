@@ -149,9 +149,10 @@ const config: Config = {
       },
       colors: {
         main: {
-          black: '#000000',
-          white: '#ffffff',
-          pink: '#E36B88',
+          'black': '#000000',
+          'white': '#ffffff',
+          'pink': '#E36B88',
+          'deep-pink': '#F06485',
         },
         neutral: {
           '000': '#FFFFFF',

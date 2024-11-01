@@ -1,3 +1,5 @@
+'use client';
+
 import ChallengeCard from '@/features/main/components/ChallengeCard';
 import Container from '@/features/main/components/Container';
 import Flex from '@/shared/components/Flex';
@@ -16,11 +18,11 @@ function SecondBanner() {
             크래빗 챌린지
           </Typography>
         </Flex>
-        <Flex className="w-full flex-col gap-4 md:flex-row">
+        <div className="flex w-full flex-col gap-4 md:flex-row">
           {CHALLENGE_CARDS.map((e) => (
             <ChallengeCard {...e} key={e.id} />
           ))}
-        </Flex>
+        </div>
       </Flex>
     </Container>
   );
