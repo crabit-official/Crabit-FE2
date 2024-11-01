@@ -4,7 +4,7 @@ import Typography from '@/shared/components/Typography';
 
 function ThirdBanner() {
   return (
-    <Flex className="relative w-full bg-neutral-50 p-8 sm:px-16">
+    <Flex className="relative w-full bg-gray-50 p-8 sm:px-16">
       <Flex column="center" className="z-10 w-full gap-16">
         <Flex column="center" className="gap-2">
           <Typography size="h5" className="text-sm font-medium text-blue-200 sm:text-base sm:font-bold">

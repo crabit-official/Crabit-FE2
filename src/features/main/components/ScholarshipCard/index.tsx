@@ -1,5 +1,8 @@
+'use client';
+
 import { BiSolidRightArrow } from 'react-icons/bi';
 import { IoIosArrowForward } from 'react-icons/io';
+import { motion } from 'framer-motion';
 
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
@@ -15,10 +18,19 @@ interface IScholarshipCardProps {
 
 function ScholarshipCard({ title, contents, position = 'left' }: IScholarshipCardProps) {
   return (
-    <Flex className={position === 'left' ? 'justify-start' : 'justify-end'}>
-      <Flex column="center" className="w-full gap-16 rounded-xl bg-neutral-50 p-12 md:w-[700px]">
+    <motion.div
+      className={`${position === 'left' ? 'justify-start' : 'justify-end'} flex`}
+      viewport={{ once: true }}
+      whileInView={{ opacity: 1 }}
+      initial={{ opacity: 0 }}
+      transition={{
+        ease: 'easeOut',
+        duration: 1.5,
+      }}
+    >
+      <Flex column="center" className="w-full gap-16 rounded-xl bg-gray-50 p-12 md:w-[700px]">
         <Flex column="center" className="gap-4">
-          <Typography size="h1" className="break-keep text-xl font-bold text-main-pink sm:font-extrabold md:text-2xl">
+          <Typography size="h1" className="break-keep text-xl font-bold text-main-deep-pink sm:font-extrabold md:text-2xl">
             {title}
           </Typography>
           <Flex column="center">
@@ -39,7 +51,7 @@ function ScholarshipCard({ title, contents, position = 'left' }: IScholarshipCar
           <IoIosArrowForward className="text-neutral-200" />
         </Flex>
       </Flex>
-    </Flex>
+    </motion.div>
   );
 }
 
