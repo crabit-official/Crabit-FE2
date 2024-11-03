@@ -207,6 +207,13 @@ const config: Config = {
         '3xl': '20px',
         '4xl': '24px',
       },
+      boxShadow: {
+        'custom': '0 2px 5px rgba(0, 0, 0, .03), 0 6px 3px rgba(0, 0, 0, .02), 0 8px 10px rgba(0, 0, 0, .02)',
+        'hover-custom': '0 2px 10px rgba(0, 0, 0, 0.08), 0 6px 6px rgba(0, 0, 0, 0.06), 0 8px 20px rgba(0, 0, 0, 0.06)',
+      },
+      backgroundImage: {
+        'main-gradient': 'linear-gradient(240deg, #F06485 0%, #ff9a9e 100%)',
+      },
     },
   },
   plugins: [],
