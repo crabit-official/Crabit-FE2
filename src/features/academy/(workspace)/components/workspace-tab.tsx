@@ -2,7 +2,6 @@
 
 import { FaBookmark, FaUserPlus } from 'react-icons/fa';
 import { IoIosSettings } from 'react-icons/io';
-import { MdInsertChart } from 'react-icons/md';
 import { RiStore2Fill } from 'react-icons/ri';
 import { useParams, usePathname } from 'next/navigation';
 
@@ -24,16 +23,13 @@ function WorkspaceTab({ role, memberId }: IWorkspaceTabProps) {
 
   if (role === ACADEMY_ROLE.PRINCIPAL || role === ACADEMY_ROLE.INSTRUCTOR) {
     content = (
-      <>
-        <TabButton icon={MdInsertChart} label="챌린지 관리" isActive={pathname.includes(`/academy/${id}/challenge`)} path={`/academy/${id}/challenge`} />
-        <TabButton
-          className="size-[19px]"
-          icon={FaUserPlus}
-          label="학원 관리"
-          isActive={pathname.includes(`/academy/${id}/manage`)}
-          path={`/academy/${id}/manage`}
-        />
-      </>
+      <TabButton
+        className="size-[19px]"
+        icon={FaUserPlus}
+        label="학원 관리"
+        isActive={pathname.includes(`/academy/${id}/manage`)}
+        path={`/academy/${id}/manage`}
+      />
     );
   }
 
