@@ -1,45 +1,32 @@
-import { dehydrate, QueryClient } from '@tanstack/query-core';
-import { HydrationBoundary } from '@tanstack/react-query';
-import { getServerSession, type Session } from 'next-auth';
+import React from 'react';
+import Image from 'next/image';
 
+import ChallengeCard from '@/app/academy/(workspace)/[id]/dashboard/components/ChallengeCard';
 import ChallengeTab from '@/app/academy/(workspace)/[id]/market/components/ChallengeTab';
-import PublicChallengeList from '@/app/academy/(workspace)/[id]/market/components/PublicChallengeLists';
-import { getPublicChallenges } from '@/shared/apis/market';
 import Flex from '@/shared/components/Flex';
-import { queryKeys } from '@/shared/constants/query-keys';
-import { authOptions } from '@/shared/utils/authOptions';
+import Typography from '@/shared/components/Typography';
 
-interface IMarketPageProps {
-  params: { id: string };
-}
-
-async function MarketPage({ params }: IMarketPageProps) {
-  const session = (await getServerSession(authOptions)) as Session;
-  const queryClient = new QueryClient();
-  await queryClient.prefetchInfiniteQuery({
-    queryKey: [queryKeys.PUBLIC_CHALLENGE_LIST, params.id],
-    queryFn: () =>
-      getPublicChallenges({
-        session,
-        cursor: 0,
-        take: 9,
-        academyId: Number(params.id),
-      }),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages) => (lastPage.result.hasNext ? allPages.length + 1 : undefined),
-    pages: 1,
-  });
-
-  const dehydratedState = dehydrate(queryClient);
-
+function MarketPage() {
   return (
     <Flex rowColumn="center" className="w-full gap-10 py-10">
-      <ChallengeTab />
-      <HydrationBoundary state={dehydratedState}>
-        <Flex className="w-full max-w-[1000px]">
-          <PublicChallengeList session={session} academyId={Number(params.id)} />
+      <Flex row="start" className="z-10 h-40 w-full gap-4 px-6 md:px-0">
+        <Image src="/images/logo_goal.webp" alt="img" width={100} height={100} className="hidden object-contain sm:block" />
+        <Flex column="center" className="w-full gap-1">
+          <Typography size="h5" className="break-keep text-main-deep-pink">
+            생성된 챌린지를 손쉽게 탐색하고 활용
+          </Typography>
+          <Typography size="h1" className="break-keep text-3xl font-bold md:text-4xl">
+            챌린지 마켓
+          </Typography>
         </Flex>
-      </HydrationBoundary>
+      </Flex>
+      <ChallengeTab />
+      <div className="absolute top-[550px] flex h-[800px] w-full items-center justify-center rounded-t-[100px] bg-gradient-to-b from-main-deep-pink sm:rounded-t-[130px] lg:rounded-t-[260px]" />
+      <div className="grid min-h-[800px] grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {new Array(10).fill('').map((_, idx) => (
+          <ChallengeCard key={idx} id={idx + 1} />
+        ))}
+      </div>
     </Flex>
   );
 }

@@ -35,7 +35,7 @@ function AcademyDashBoardPage() {
             </Flex>
           </Framer>
           {new Array(4).fill('').map((_, idx) => (
-            <ChallengeCard key={idx} id={idx + 1} />
+            <ChallengeCard key={idx} />
           ))}
         </div>
       </Flex>

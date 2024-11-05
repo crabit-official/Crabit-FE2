@@ -5,20 +5,15 @@ import Flex from '@/shared/components/Flex';
 import Framer from '@/shared/components/Framer';
 import Typography from '@/shared/components/Typography';
 
-interface IChallengeCardProps {
-  id: number;
-}
-
-export default function ChallengeCard({ id }: IChallengeCardProps) {
+export default function ChallengeCard() {
   return (
     <Framer
       whileHover={{ scale: 1.01 }}
-      duration={id * 0.5}
-      className="relative flex w-64 cursor-pointer flex-col items-center justify-between overflow-hidden rounded-lg border border-solid border-gray-100 shadow-custom transition-shadow duration-300 hover:shadow-hover-custom"
+      className="relative flex h-fit min-h-80 w-64 cursor-pointer flex-col items-center justify-between overflow-hidden rounded-lg border border-solid border-gray-100 bg-white shadow-custom transition-shadow duration-300 hover:shadow-hover-custom"
     >
       <div className="absolute left-2 top-2 rounded-2xl bg-neutral-500/80 px-2 py-1 text-xs text-white">공부 챌린지</div>
-      <Image src="/images/logo_goal.webp" alt="test" width={480} height={100} className="h-40 w-full object-cover" />
-      <Flex column="start" className="size-full min-h-32 gap-2 px-6 pb-10 pt-6">
+      <Image src="/images/test.jpeg" alt="test" width={480} height={100} className="h-40 w-full object-cover" />
+      <Flex column="start" className="size-full min-h-32 gap-2 px-6">
         <Typography size="h5" className="break-keep">
           감사일기 챌린지 ✏️
         </Typography>
