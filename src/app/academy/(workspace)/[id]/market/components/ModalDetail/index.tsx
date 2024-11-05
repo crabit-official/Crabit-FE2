@@ -3,84 +3,46 @@
 import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import type { Session } from 'next-auth';
 
-import StateLabel from '@/features/academy/(workspace)/components/state-label';
-import { getChallengeCategory, getChallengeType, getParticipationMethod, getVariantByStatus } from '@/features/academy/(workspace)/utils/challengeState';
 import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
-import { ACADEMY_ROLE } from '@/shared/enums/academy';
-import { CHALLENGE_PARTICIPATION_METHODS } from '@/shared/enums/challenge';
-import useApplyChallenge from '@/shared/hooks/market/useApplyChallenge';
-import type { IPublicChallengeDetailResult } from '@/shared/types/market';
 
-export type IPublicChallengeResult = IPublicChallengeDetailResult['result'];
-
-interface IModalDetailProps extends IPublicChallengeResult {
-  academyId: number;
-  releasedChallengeId: number;
-  role: ACADEMY_ROLE;
-  session: Session;
-}
-
-function ModalDetail({ academyPublicChallenge, releaseInstructorProfile, session, academyId, releasedChallengeId, role }: IModalDetailProps) {
+function ModalDetail() {
   const router = useRouter();
-  const { mutate } = useApplyChallenge();
-
-  const applyChallenge = () => {
-    mutate({ session, academyId, releasedChallengeId });
-  };
 
   return (
-    <div className="fixed left-0 top-0 z-10 size-full bg-black/60" onClick={() => router.back()}>
+    <div className="fixed left-0 top-0 z-50 size-full bg-black/60 backdrop-blur-sm" onClick={() => router.back()}>
       <Flex rowColumn="center" className="size-full px-4">
         <div
-          className="relative flex w-full max-w-[500px] flex-col overflow-hidden rounded-xl bg-white sm:w-2/3"
+          className="relative flex min-h-[500px] w-full max-w-[500px] flex-col overflow-hidden rounded-2xl bg-white sm:w-2/3"
           onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
         >
-          <button type="button" className="absolute right-4 top-4 cursor-pointer font-bold text-white hover:text-main-pink" onClick={() => router.back()}>
+          <button type="button" className="absolute right-4 top-4 cursor-pointer font-bold text-black hover:text-main-pink" onClick={() => router.back()}>
             X
           </button>
-          {academyPublicChallenge.thumbnailImageUrl && (
-            <Image
-              src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${academyPublicChallenge.thumbnailImageUrl}`}
-              alt="challenge thumbnail"
-              width={300}
-              height={300}
-              className="h-40 w-full bg-black object-contain"
-            />
-          )}
-          <Flex column="start" className="gap-5 px-3 py-5">
-            <Flex row="start" className="gap-1">
-              <StateLabel label={getChallengeType(academyPublicChallenge.challengeType)} variant={getVariantByStatus(academyPublicChallenge.challengeType)} />
-              <StateLabel
-                label={getChallengeCategory(academyPublicChallenge.challengeCategory)}
-                variant={getVariantByStatus(academyPublicChallenge.challengeCategory)}
-              />
-              <StateLabel label={getParticipationMethod(academyPublicChallenge.challengeParticipationMethod)} />
+          <Image src="/images/test.jpeg" alt="test" width={480} height={100} className="h-64 w-full object-cover" />
+          <Flex column="between" className="h-full p-6">
+            <Flex column="start" className="gap-4">
+              <Flex row="start" className="gap-2">
+                <div className="rounded-2xl bg-main-deep-pink px-2 py-1 text-xs font-medium text-white">공식 챌린지</div>
+                <div className="rounded-2xl bg-neutral-500/60 px-2 py-1 text-xs font-medium text-white">공부 챌린지</div>
+              </Flex>
+              <Flex column="start" className="px-1">
+                <Typography size="h4" className="break-keep">
+                  감사일기 챌린지 ✏️
+                </Typography>
+                <Typography size="h5" as="p" className="break-keep text-sm opacity-60">
+                  진행 방법: 매일 하루를 되돌아보고, 감사했던 일을 적어보는 감사일기 챌린지에요. 이번주는 우리 가족과 나의 친구에 대해 감사한 것을 적어봅시다!
+                </Typography>
+              </Flex>
             </Flex>
-            <Flex column="start" className="gap-2">
-              <Typography size="h5">{academyPublicChallenge.title}</Typography>
-              <Typography size="h5" as="p" className="break-keep text-xs">
-                {academyPublicChallenge.content}
-              </Typography>
-              <Typography size="h5" as="p" className="break-keep text-xs">
-                {academyPublicChallenge.challengeCoreCreatorAcademyName} - {releaseInstructorProfile.academyNickname} | DAY {academyPublicChallenge.totalDays} |
-                Ⓟ {academyPublicChallenge.points}
-              </Typography>
-            </Flex>
+            <Button className="mt-4 bg-main-deep-pink font-medium text-white">우리 학원에 배포</Button>
           </Flex>
-          {role === ACADEMY_ROLE.STUDENT && academyPublicChallenge.challengeParticipationMethod === CHALLENGE_PARTICIPATION_METHODS.SELF_PARTICIPATING && (
-            <div className="w-full p-2 text-sm">
-              <Button className="text-white" onClick={applyChallenge}>
-                챌린지 참여하기
-              </Button>
-            </div>
-          )}
         </div>
       </Flex>
     </div>
   );
 }
+
 export default ModalDetail;

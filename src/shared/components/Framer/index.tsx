@@ -20,11 +20,13 @@ interface IFramerProps extends MotionProps {
   className?: string;
   duration?: number;
   location?: 'top' | 'bottom';
+  onClick?: () => void;
 }
 
-function Framer({ children, className, duration = 1, location = 'bottom', ...props }: IFramerProps) {
+function Framer({ children, className, duration = 1, location = 'bottom', onClick, ...props }: IFramerProps) {
   return (
     <motion.div
+      onClick={onClick}
       {...props}
       viewport={{ once: true }}
       className={className}

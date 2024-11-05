@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 
-import ChallengeCard from '@/app/academy/(workspace)/[id]/dashboard/components/ChallengeCard';
+import ChallengeCardList from '@/app/academy/(workspace)/[id]/market/components/ChallengeCardList';
 import ChallengeTab from '@/app/academy/(workspace)/[id]/market/components/ChallengeTab';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
@@ -22,11 +22,7 @@ function MarketPage() {
       </Flex>
       <ChallengeTab />
       <div className="absolute top-[550px] flex h-[800px] w-full items-center justify-center rounded-t-[100px] bg-gradient-to-b from-main-deep-pink sm:rounded-t-[130px] lg:rounded-t-[260px]" />
-      <div className="grid min-h-[800px] grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {new Array(10).fill('').map((_, idx) => (
-          <ChallengeCard key={idx} id={idx + 1} />
-        ))}
-      </div>
+      <ChallengeCardList />
     </Flex>
   );
 }

@@ -5,9 +5,14 @@ import Flex from '@/shared/components/Flex';
 import Framer from '@/shared/components/Framer';
 import Typography from '@/shared/components/Typography';
 
-export default function ChallengeCard() {
+interface IChallengeCard {
+  onClick?: () => void;
+}
+
+export default function ChallengeCard({ onClick }: IChallengeCard) {
   return (
     <Framer
+      onClick={onClick}
       whileHover={{ scale: 1.01 }}
       className="relative flex h-fit min-h-80 w-64 cursor-pointer flex-col items-center justify-between overflow-hidden rounded-lg border border-solid border-gray-100 bg-white shadow-custom transition-shadow duration-300 hover:shadow-hover-custom"
     >
