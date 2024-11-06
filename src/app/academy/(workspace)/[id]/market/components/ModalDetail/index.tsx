@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { GoX } from 'react-icons/go';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -19,7 +20,7 @@ function ModalDetail() {
           onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
         >
           <button type="button" className="absolute right-4 top-4 cursor-pointer font-bold text-black hover:text-main-pink" onClick={() => router.back()}>
-            X
+            <GoX />
           </button>
           <Image src="/images/test.jpeg" alt="test" width={480} height={100} className="h-64 w-full object-cover" />
           <Flex column="between" className="h-full p-6">
