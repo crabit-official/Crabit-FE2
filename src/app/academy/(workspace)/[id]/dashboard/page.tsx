@@ -1,49 +1,48 @@
 import React from 'react';
-import { dehydrate, QueryClient } from '@tanstack/query-core';
-import { HydrationBoundary } from '@tanstack/react-query';
-import { getServerSession, type Session } from 'next-auth';
+import { BsFillPatchPlusFill } from 'react-icons/bs';
+import Image from 'next/image';
 
-import AllChallengeContents from '@/app/academy/(workspace)/[id]/dashboard/components/AllChallengeContents';
-import getAcademyProfile from '@/features/academy/(workspace)/api/get-academy-profile';
-import BestChallengeTable from '@/features/academy/(workspace)/components/dashboard/best-challenge-table';
-import ChartView from '@/features/academy/(workspace)/components/dashboard/chart-view';
-import { getTop5Students } from '@/shared/apis/academy';
-import { getAllChallengeContents } from '@/shared/apis/challenge';
-import { queryKeys } from '@/shared/constants/query-keys';
-import { ACADEMY_ROLE } from '@/shared/enums/academy';
-import { authOptions } from '@/shared/utils/authOptions';
+import ChallengeCard from '@/app/academy/(workspace)/[id]/dashboard/components/ChallengeCard';
+import Menubar from '@/app/academy/(workspace)/[id]/dashboard/components/Menubar';
+import Flex from '@/shared/components/Flex';
+import Framer from '@/shared/components/Framer';
+import Typography from '@/shared/components/Typography';
 
-async function AcademyDashBoardPage({ params }: { params: { id: string } }) {
-  const session = (await getServerSession(authOptions)) as Session;
-  const data = await getAcademyProfile(Number(params.id));
-  const topStudents = await getTop5Students({ session, academyId: Number(params.id) });
-
-  const queryClient = new QueryClient();
-  await queryClient.prefetchInfiniteQuery({
-    queryKey: [queryKeys.ALL_CHALLENGE_LIST],
-    queryFn: () => getAllChallengeContents({ session, cursor: 0, take: 5, academyId: Number(params.id) }),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages) => (lastPage.result.hasNext ? allPages.length + 1 : undefined),
-    pages: 1,
-  });
-  const dehydratedState = dehydrate(queryClient);
-
-  if (data?.academyRole === ACADEMY_ROLE.STUDENT) {
-    return (
-      <HydrationBoundary state={dehydratedState}>
-        <div className="grid gap-40">
-          <BestChallengeTable topStudents={topStudents} />
-          <AllChallengeContents session={session} academyId={Number(params.id)} />
-        </div>
-      </HydrationBoundary>
-    );
-  }
-
+function AcademyDashBoardPage() {
   return (
-    <div className="grid gap-40">
-      <ChartView session={session} academyId={Number(params.id)} />
-      <BestChallengeTable topStudents={topStudents} />
-    </div>
+    <Flex rowColumn="center" className="gap-2">
+      <Flex row="start" className="relative h-40 w-full max-w-[1100px] px-6 md:h-60 md:px-0">
+        <Flex column="center" className="w-full gap-1">
+          <Typography size="h5" className="text-main-deep-pink">
+            매일의 작은 성취를 통한 습관 형성
+          </Typography>
+          <Typography size="h1" className="break-keep text-3xl font-bold md:text-4xl">
+            크래빗 수학학원 챌린지
+          </Typography>
+        </Flex>
+        <Image src="/images/logo_goal.webp" alt="img" width={400} height={400} className="absolute right-0 top-0 hidden opacity-40 lg:block" />
+      </Flex>
+      <div className="flex flex-col gap-20 lg:grid lg:grid-cols-[180px,1fr] lg:gap-10 xl:gap-32">
+        <Menubar />
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <Framer
+            whileHover={{ scale: 1.01 }}
+            className="flex min-h-80 w-64 cursor-pointer flex-col justify-center gap-20 overflow-hidden rounded-lg border border-solid border-gray-100 bg-main-gradient px-6 shadow-custom transition-shadow duration-300 hover:shadow-hover-custom"
+          >
+            <Typography size="h2" className="break-keep text-white">
+              새로운
+              <br /> 챌린지 추가하기
+            </Typography>
+            <Flex rowColumn="center">
+              <BsFillPatchPlusFill size={50} className="text-white opacity-80" />
+            </Flex>
+          </Framer>
+          {new Array(4).fill('').map((_, idx) => (
+            <ChallengeCard key={idx} />
+          ))}
+        </div>
+      </div>
+    </Flex>
   );
 }
 

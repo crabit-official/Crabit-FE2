@@ -54,7 +54,7 @@ export default async function RootLayout({
               <QueryProvider>
                 <Flex column="center" className="min-h-screen">
                   <Navbar />
-                  <main className="flex-1 pb-20 pt-28">{children}</main>
+                  <main className="flex-1 py-20">{children}</main>
                   <Footer />
                   <LoginModal />
                   <RegisterModal />
