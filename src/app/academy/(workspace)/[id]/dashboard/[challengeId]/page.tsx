@@ -1,5 +1,5 @@
 function ContentDetail() {
-  return <div>이건 진짜 페이지</div>;
+  return <div>상세 페이지</div>;
 }
 
 export default ContentDetail;

@@ -17,7 +17,7 @@ function MainBanner() {
         className="absolute h-[500px] w-[2000px] object-cover md:h-[690px]"
       />
       <div className="h-14" />
-      <Framer className="z-10 flex flex-col items-center justify-center gap-4" duration={0.5}>
+      <Framer className="z-10 flex flex-col items-center justify-center gap-4" duration={0.5} location="top">
         <Typography size="h0" className="text-3xl font-bold text-white sm:font-extrabold md:text-6xl">
           학습 습관 형성의 출발점
         </Typography>

@@ -1,10 +1,13 @@
+import Image from 'next/image';
+
 import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 
 function ThirdBanner() {
   return (
-    <Flex className="relative w-full bg-gray-50 p-8 sm:px-16">
+    <Flex className="relative size-full overflow-hidden bg-gray-50 p-8 pr-0 sm:pl-16">
+      <Image src="/images/logo_nsc.webp" alt="nsc logo" width={500} height={500} className="absolute right-[-120px] top-0 h-full object-contain" />
       <Flex column="center" className="z-10 w-full gap-16">
         <Flex column="center" className="gap-2">
           <Typography size="h5" className="text-sm font-medium text-blue-200 sm:text-base sm:font-bold">
