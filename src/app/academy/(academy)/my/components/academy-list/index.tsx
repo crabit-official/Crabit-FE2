@@ -4,16 +4,15 @@ import { Fragment, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import type { Session } from 'next-auth';
 
 import ListRow from '@/features/academy/alert/components/ListRow';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import useGetInfiniteAcademyList from '@/shared/hooks/academy/useGetInfiniteAcademyList';
 
-function AcademyList({ session }: { session: Session }) {
+function AcademyList() {
   const router = useRouter();
-  const { data: academies, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteAcademyList(session);
+  const { data: academies, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteAcademyList();
 
   const { ref, inView } = useInView({
     threshold: 0,

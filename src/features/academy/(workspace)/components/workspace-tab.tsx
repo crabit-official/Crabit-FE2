@@ -21,18 +21,6 @@ function WorkspaceTab({ role, memberId }: IWorkspaceTabProps) {
 
   let content;
 
-  if (role === ACADEMY_ROLE.PRINCIPAL || role === ACADEMY_ROLE.INSTRUCTOR) {
-    content = (
-      <TabButton
-        className="size-[19px]"
-        icon={FaUserPlus}
-        label="학원 관리"
-        isActive={pathname.includes(`/academy/${id}/manage`)}
-        path={`/academy/${id}/manage`}
-      />
-    );
-  }
-
   if (role === ACADEMY_ROLE.STUDENT) {
     content = (
       <TabButton

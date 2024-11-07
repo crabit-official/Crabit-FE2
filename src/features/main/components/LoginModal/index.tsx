@@ -5,7 +5,6 @@ import type { FieldValues, SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { signIn } from 'next-auth/react';
 import { toast } from 'sonner';
 
 import useLoginModal from '@/features/main/hooks/use-login-modal';
@@ -37,17 +36,30 @@ function LoginModal() {
   const onSubmit: SubmitHandler<FieldValues> = async (data: FieldValues) => {
     setIsLoading(true);
 
-    const res = await signIn('credentials', {
-      email: data.email,
-      password: data.password,
-      redirect: false,
+    const { email, password } = data;
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/login`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
     });
 
+    //
+    // const res = await signIn('credentials', {
+    //   email: data.email,
+    //   password: data.password,
+    //   redirect: false,
+    // });
+    //
     if (res?.ok) {
       loginModal.onClose();
       reset();
     } else {
-      toast.error(res?.error);
+      toast.error('로그인에 실패했습니다.');
+      // toast.error(res?.error);
     }
 
     setIsLoading(false);
