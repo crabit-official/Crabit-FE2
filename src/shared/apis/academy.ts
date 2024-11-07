@@ -5,7 +5,6 @@ import { ERROR_MESSAGES } from '@/shared/constants/api-error-message';
 import type {
   IAcademyCreateDTO,
   IAcademyInfoResult,
-  IAcademyResult,
   IPostEnrollAcademyResponse,
   IRevokeAcademyResponse,
   IStatisticsResult,
@@ -14,26 +13,17 @@ import type {
 
 interface IGetAcademyList {
   cursor: number;
-  // session: Session;
   take: number;
 }
 
 export async function getAcademyList({ cursor, take }: IGetAcademyList) {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/member?cursor=${cursor}&take=${take}`, {
-    method: 'GET',
-    credentials: 'include',
-    // headers: {
-    //   Authorization: `Bearer ${session?.accessToken}`,
-    // },
-  });
+  const res = await fetch(`/api/academy/list?cursor=${cursor}&take=${take}`);
 
-  if (!response.ok) {
+  if (!res.ok) {
     throw new Error('학원 목록을 가져오는데 에러가 발생했습니다!');
   }
 
-  const data: IAcademyResult = await response.json();
-
-  return data;
+  return res;
 }
 
 export async function postEnrollAcademy({

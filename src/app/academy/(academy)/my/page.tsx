@@ -9,7 +9,6 @@ import { getAcademyList } from '@/shared/apis/academy';
 import { queryKeys } from '@/shared/constants/query-keys';
 
 async function MyAcademyPage() {
-  // const session = (await getServerSession(authOptions)) as Session;
   const queryClient = new QueryClient();
   await queryClient.prefetchInfiniteQuery({
     queryKey: [queryKeys.ACADEMY_LIST],
