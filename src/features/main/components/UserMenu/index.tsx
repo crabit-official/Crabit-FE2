@@ -5,7 +5,6 @@ import { AiOutlineMenu } from 'react-icons/ai';
 import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { signOut, useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 
 import MenuItem from '@/features/main/components/MenuItem';
@@ -13,6 +12,7 @@ import useLoginModal from '@/features/main/hooks/use-login-modal';
 import useRegisterModal from '@/features/main/hooks/use-register-modal';
 import Avatar from '@/shared/components/Avatar';
 import Typography from '@/shared/components/Typography';
+import useGetProfile from '@/shared/hooks/main/useGetProfile';
 
 function UserMenu() {
   const router = useRouter();
@@ -23,12 +23,17 @@ function UserMenu() {
 
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
-  const { data: session } = useSession();
   const queryClient = useQueryClient();
 
+  const { data: profile } = useGetProfile();
+
   const handleLogout = async () => {
-    await signOut({ redirect: false, callbackUrl: '/' });
+    await fetch('/api/auth/logout', {
+      method: 'GET',
+    });
     queryClient.clear();
+    router.replace('/');
+    router.refresh();
   };
 
   return (
@@ -56,10 +61,10 @@ function UserMenu() {
           <AiOutlineMenu />
           <div className="hidden md:flex md:items-center md:gap-2">
             {/* 프로필있을 때 경로 수정 */}
-            {session?.profileImageUrl ? <Image alt="profile" src={`${session?.profileImageUrl}`} /> : <Avatar />}
-            {session ? (
+            {profile?.profileImageUrl ? <Image alt="profile" src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${profile?.profileImageUrl}`} /> : <Avatar />}
+            {profile ? (
               <Typography size="h5" as="p" className="text-xs">
-                {session?.name}
+                {profile?.name}
               </Typography>
             ) : null}
           </div>
@@ -68,7 +73,7 @@ function UserMenu() {
       {isOpen && (
         <div className="absolute right-0 top-12 w-[40vw] overflow-hidden rounded-xl bg-white text-sm shadow-md md:w-3/4">
           <div className="flex cursor-pointer flex-col">
-            {!session ? (
+            {!profile ? (
               <>
                 <MenuItem
                   className="block md:hidden"
@@ -125,7 +130,6 @@ function UserMenu() {
                   onClick={() => {
                     handleLogout();
                     setIsOpen(false);
-                    router.push('/');
                   }}
                   label="로그아웃"
                 />

@@ -1,6 +1,5 @@
 import type { Session } from 'next-auth';
 
-import { fetchData } from '@/shared/apis/fetch-data';
 import type { CHALLENGE_LOG_APPROVAL_STATUS } from '@/shared/enums/challenge';
 import type {
   IAcademyInstructorListResult,
@@ -10,7 +9,6 @@ import type {
   IChallengeApprovalResults,
   IChallengeParticipateResult,
   IChallengeResult,
-  ICreateMyChallengeResult,
   IDetailChallengeResult,
   IGetAcademyMemberDetailList,
   IMyChallengeProgressResult,
@@ -229,19 +227,17 @@ export async function createChallengeContent({
   session: Session;
   studentChallengeId: number;
 }) {
-  const data = await fetchData<ICreateMyChallengeResult>(
-    `/api/v1/academies/${academyId}/challenges/${studentChallengeId}/logs`,
-    'POST',
-    {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/${studentChallengeId}/logs`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${session?.accessToken}`,
+    },
+    body: JSON.stringify({
       content,
       imageUrl,
-    },
-    session,
-  );
-
-  if (!data.isSuccess) {
-    throw new Error(data.message);
-  }
+    }),
+  });
+  const data: IMyChallengeProgressResult = await res.json();
 
   return data.result;
 }
