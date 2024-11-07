@@ -20,7 +20,6 @@ interface IGetChallengeList {
   academyId: number;
   cursor: number;
   releasedChallengeId?: number;
-  session: Session;
   studentChallengeId?: number;
   take: number;
 }
@@ -32,21 +31,12 @@ interface IGetChallengeDetails {
 }
 
 // 원장/강사가 배포한 챌린지 목록 전체 조회
-export async function getTeachersChallengeList({ cursor, session, take, academyId }: IGetChallengeList) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/teachers?cursor=${cursor}&take=${take}`, {
+export async function getTeachersChallengeList({ cursor, take, academyId }: IGetChallengeList) {
+  const res = await fetch(`/api/challenge/list?cursor=${cursor}&take=${take}&academyId=${academyId}`, {
     method: 'GET',
-    headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
-    },
   });
 
-  if (!res.ok) {
-    throw new Error('챌린지 목록을 가져오는데 에러가 발생했습니다!');
-  }
-
-  const data: IChallengeResult = await res.json();
-
-  return data;
+  return (await res.json()) as IChallengeResult;
 }
 
 // 학생이 참여하는 챌린지 목록 전체 조회

@@ -18,7 +18,7 @@ export async function fetchData<T>(
   cache?: RequestCache,
 ): Promise<T> {
   const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}${endpoint}`;
-
+  const isProduction = process.env.NODE_ENV === 'production';
   const accessToken = cookies().get('accessToken')?.value;
 
   const headers: HeadersInit = {
@@ -54,7 +54,7 @@ export async function fetchData<T>(
         cookieStore.set('accessToken', data.result.accessToken, {
           maxAge: 3600, // 1시간
           httpOnly: true,
-          secure: true,
+          secure: isProduction,
         });
 
         // 재시도: 새로운 토큰으로 요청

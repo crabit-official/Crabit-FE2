@@ -1,12 +1,47 @@
 import React from 'react';
+import { dehydrate, QueryClient } from '@tanstack/query-core';
+import { HydrationBoundary } from '@tanstack/react-query';
 import Image from 'next/image';
 
 import AllChallengeContents from '@/app/academy/(workspace)/[id]/dashboard/components/AllChallengeContents';
 import Menubar from '@/app/academy/(workspace)/[id]/dashboard/components/Menubar';
+import { getTeachersChallengeList } from '@/shared/apis/challenge';
+import { fetchData } from '@/shared/apis/fetch-data';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
+import { queryKeys } from '@/shared/constants/query-keys';
+import { ACADEMY_ROLE } from '@/shared/enums/academy';
+import type { IAcademyProfile, IAcademyResponse } from '@/shared/types/acadmy';
 
-function AcademyDashBoardPage() {
+interface IAcademyDashBoardProps {
+  params: {
+    id: string;
+  };
+}
+
+async function AcademyDashBoardPage({ params }: IAcademyDashBoardProps) {
+  let contents;
+  const res = await fetchData<IAcademyResponse<IAcademyProfile>>(`/api/v1/academies/${Number(params.id)}`, 'GET');
+  const queryClient = new QueryClient();
+  await queryClient.prefetchInfiniteQuery({
+    queryKey: [queryKeys.CHALLENGE_LIST],
+    queryFn: () => getTeachersChallengeList({ cursor: 0, take: 6, academyId: Number(params.id) }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => (lastPage.result.hasNext ? allPages.length + 1 : undefined),
+    pages: 1,
+  });
+  const dehydratedState = dehydrate(queryClient);
+
+  if (res.result.academyRole === ACADEMY_ROLE.STUDENT) {
+    contents = <div>학생뷰는 준비중입니다.</div>;
+  } else {
+    contents = (
+      <HydrationBoundary state={dehydratedState}>
+        <AllChallengeContents academyId={Number(params.id)} />
+      </HydrationBoundary>
+    );
+  }
+
   return (
     <Flex rowColumn="center" className="gap-2">
       <Flex row="start" className="relative h-40 w-full max-w-[1100px] px-6 md:h-60 md:px-0">
@@ -22,7 +57,7 @@ function AcademyDashBoardPage() {
       </Flex>
       <div className="flex flex-col gap-20 lg:grid lg:grid-cols-[180px,1fr] lg:gap-10 xl:gap-32">
         <Menubar />
-        <AllChallengeContents />
+        {contents}
       </div>
     </Flex>
   );
