@@ -214,35 +214,33 @@ export async function getMyChallengeProgress({ academyId, studentChallengeId, se
 }
 
 // (학생) 학생 유저가 챌린지 인증 게시물 작성
-// export async function createChallengeContent({
-//   academyId,
-//   studentChallengeId,
-//   session,
-//   content,
-//   imageUrl,
-// }: {
-//   academyId: number;
-//   content: string;
-//   imageUrl: string;
-//   session: Session;
-//   studentChallengeId: number;
-// }) {
-//   const data = await fetchData<ICreateMyChallengeResult>(
-//     `/api/v1/academies/${academyId}/challenges/${studentChallengeId}/logs`,
-//     'POST',
-//     {
-//       content,
-//       imageUrl,
-//     },
-//     session,
-//   );
-//
-//   if (!data.isSuccess) {
-//     throw new Error(data.message);
-//   }
-//
-//   return data.result;
-// }
+export async function createChallengeContent({
+  academyId,
+  studentChallengeId,
+  session,
+  content,
+  imageUrl,
+}: {
+  academyId: number;
+  content: string;
+  imageUrl: string;
+  session: Session;
+  studentChallengeId: number;
+}) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/${studentChallengeId}/logs`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${session?.accessToken}`,
+    },
+    body: JSON.stringify({
+      content,
+      imageUrl,
+    }),
+  });
+  const data: IMyChallengeProgressResult = await res.json();
+
+  return data.result;
+}
 
 // (원장/강사) 챌린지 도전결과 최종 승인/반려 처리
 export async function approvalStudentChallengeResult({
