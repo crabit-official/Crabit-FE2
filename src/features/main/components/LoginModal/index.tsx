@@ -13,6 +13,7 @@ import Button from '@/shared/components/Button';
 import Heading from '@/shared/components/Heading';
 import Input from '@/shared/components/Input';
 import Modal from '@/shared/components/Modal';
+import type { ICommonResponse } from '@/shared/types/auth';
 import { loginSchema } from '@/shared/utils/schema';
 
 function LoginModal() {
@@ -38,7 +39,7 @@ function LoginModal() {
 
     const { email, password } = data;
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/login`, {
+    const res = await fetch('/api/auth/login', {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -47,19 +48,12 @@ function LoginModal() {
       body: JSON.stringify({ email, password }),
     });
 
-    //
-    // const res = await signIn('credentials', {
-    //   email: data.email,
-    //   password: data.password,
-    //   redirect: false,
-    // });
-    //
     if (res?.ok) {
       loginModal.onClose();
       reset();
     } else {
-      toast.error('로그인에 실패했습니다.');
-      // toast.error(res?.error);
+      const errorData: ICommonResponse = await res.json();
+      toast.error(errorData.message || '로그인에 실패하였습니다.');
     }
 
     setIsLoading(false);
