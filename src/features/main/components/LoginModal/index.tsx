@@ -5,6 +5,7 @@ import type { FieldValues, SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import useLoginModal from '@/features/main/hooks/use-login-modal';
@@ -13,6 +14,7 @@ import Button from '@/shared/components/Button';
 import Heading from '@/shared/components/Heading';
 import Input from '@/shared/components/Input';
 import Modal from '@/shared/components/Modal';
+import { queryKeys } from '@/shared/constants/query-keys';
 import type { ICommonResponse } from '@/shared/types/auth';
 import { loginSchema } from '@/shared/utils/schema';
 
@@ -20,6 +22,7 @@ function LoginModal() {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
   const [isLoading, setIsLoading] = useState(false);
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -49,6 +52,7 @@ function LoginModal() {
     });
 
     if (res?.ok) {
+      await queryClient.invalidateQueries({ queryKey: [queryKeys.PROFILE] });
       loginModal.onClose();
       reset();
     } else {

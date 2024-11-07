@@ -10,4 +10,5 @@ export const queryKeys = {
   PUBLIC_CHALLENGE_LIST: 'publicChallengeList',
   INVITATION_CODE: 'invitationCode',
   ALL_CHALLENGE_LIST: 'allChallengeList',
+  PROFILE: 'profile',
 } as const;
