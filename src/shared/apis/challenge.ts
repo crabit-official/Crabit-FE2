@@ -1,6 +1,5 @@
 import type { Session } from 'next-auth';
 
-import { fetchData } from '@/shared/apis/fetch-data';
 import type { CHALLENGE_LOG_APPROVAL_STATUS } from '@/shared/enums/challenge';
 import type {
   IAcademyInstructorListResult,
@@ -10,7 +9,6 @@ import type {
   IChallengeApprovalResults,
   IChallengeParticipateResult,
   IChallengeResult,
-  ICreateMyChallengeResult,
   IDetailChallengeResult,
   IGetAcademyMemberDetailList,
   IMyChallengeProgressResult,
@@ -216,35 +214,35 @@ export async function getMyChallengeProgress({ academyId, studentChallengeId, se
 }
 
 // (학생) 학생 유저가 챌린지 인증 게시물 작성
-export async function createChallengeContent({
-  academyId,
-  studentChallengeId,
-  session,
-  content,
-  imageUrl,
-}: {
-  academyId: number;
-  content: string;
-  imageUrl: string;
-  session: Session;
-  studentChallengeId: number;
-}) {
-  const data = await fetchData<ICreateMyChallengeResult>(
-    `/api/v1/academies/${academyId}/challenges/${studentChallengeId}/logs`,
-    'POST',
-    {
-      content,
-      imageUrl,
-    },
-    session,
-  );
-
-  if (!data.isSuccess) {
-    throw new Error(data.message);
-  }
-
-  return data.result;
-}
+// export async function createChallengeContent({
+//   academyId,
+//   studentChallengeId,
+//   session,
+//   content,
+//   imageUrl,
+// }: {
+//   academyId: number;
+//   content: string;
+//   imageUrl: string;
+//   session: Session;
+//   studentChallengeId: number;
+// }) {
+//   const data = await fetchData<ICreateMyChallengeResult>(
+//     `/api/v1/academies/${academyId}/challenges/${studentChallengeId}/logs`,
+//     'POST',
+//     {
+//       content,
+//       imageUrl,
+//     },
+//     session,
+//   );
+//
+//   if (!data.isSuccess) {
+//     throw new Error(data.message);
+//   }
+//
+//   return data.result;
+// }
 
 // (원장/강사) 챌린지 도전결과 최종 승인/반려 처리
 export async function approvalStudentChallengeResult({
