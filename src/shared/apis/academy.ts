@@ -14,16 +14,17 @@ import type {
 
 interface IGetAcademyList {
   cursor: number;
-  session: Session;
+  // session: Session;
   take: number;
 }
 
-export async function getAcademyList({ session, cursor, take }: IGetAcademyList) {
+export async function getAcademyList({ cursor, take }: IGetAcademyList) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/member?cursor=${cursor}&take=${take}`, {
     method: 'GET',
-    headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
-    },
+    credentials: 'include',
+    // headers: {
+    //   Authorization: `Bearer ${session?.accessToken}`,
+    // },
   });
 
   if (!response.ok) {

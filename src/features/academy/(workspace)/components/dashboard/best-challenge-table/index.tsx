@@ -3,7 +3,6 @@
 import React from 'react';
 
 import BestStudentTableContent from '@/app/academy/(workspace)/[id]/dashboard/components/BestStudentTableContent';
-import Typography from '@/shared/components/Typography';
 import { useDraggable } from '@/shared/hooks/use-draggable';
 import type { ITop5StudentsResult } from '@/shared/types/acadmy';
 
@@ -21,9 +20,6 @@ function BestChallengeTable({ topStudents }: IBestChallengeTableProps) {
       onMouseLeave={handleMouseUpOrLeave}
       onMouseUp={handleMouseUpOrLeave}
     >
-      <Typography size="h4" className="">
-        BEST CHALLENGER TOP 5
-      </Typography>
       <div className="w-full min-w-[600px] max-w-[800px] rounded-lg border border-solid border-gray-200 bg-white/60 md:w-11/12">
         <table className="w-full text-sm md:text-base">
           <thead className="font-bold">

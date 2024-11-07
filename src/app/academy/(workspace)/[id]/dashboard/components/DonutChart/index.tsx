@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 interface IDonutChartProps {
   approvedRate: number;
   color: string;
-  size?: 'small' | 'large';
+  size?: 'small' | 'large' | 'medium';
 }
 
 function DonutChart({ approvedRate, color, size = 'small' }: IDonutChartProps) {
@@ -17,8 +17,8 @@ function DonutChart({ approvedRate, color, size = 'small' }: IDonutChartProps) {
     }, 0);
   }, [approvedRate]);
 
-  const radius = size === 'large' ? 100 : 50;
-  const stroke = size === 'large' ? 44 : 22;
+  const radius = size === 'large' ? 100 : size === 'medium' ? 80 : 50;
+  const stroke = size === 'large' ? 44 : size === 'medium' ? 35 : 22;
   const normalizedRadius = radius - stroke / 2;
   const circumference = normalizedRadius * 2 * Math.PI;
   const strokeDashoffset = circumference - (progress / 100) * circumference;
