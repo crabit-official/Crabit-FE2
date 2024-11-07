@@ -213,7 +213,6 @@ const config: Config = {
       },
       backgroundImage: {
         'main-gradient': 'linear-gradient(240deg, #F06485 0%, #ff9a9e 100%)',
-        'gradient-radial': 'radial-gradient(circle, #F06485, transparent)',
       },
     },
   },
