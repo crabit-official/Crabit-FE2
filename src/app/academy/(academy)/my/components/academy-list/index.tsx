@@ -22,7 +22,7 @@ function AcademyList() {
   useEffect(() => {
     if (inView) {
       if (!isFetching && hasNextPage) {
-        fetchNextPage();
+        void fetchNextPage();
       }
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
