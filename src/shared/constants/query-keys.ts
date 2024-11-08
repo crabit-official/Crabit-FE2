@@ -12,4 +12,5 @@ export const queryKeys = {
   ALL_CHALLENGE_LIST: 'allChallengeList',
   PROFILE: 'profile',
   STUDENT_CHALLENGE_LIST: 'studentChallengeList',
+  CHALLENGE_MARKET: 'challengeMarket',
 } as const;

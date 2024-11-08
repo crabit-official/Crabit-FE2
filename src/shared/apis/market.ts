@@ -1,6 +1,7 @@
 import type { Session } from 'next-auth';
 
-import type { IApplyChallengeResult, IPublicChallengeDetailResult, IPublicChallengesResult } from '@/shared/types/market';
+import type { CHALLENGE_TYPE } from '@/shared/enums/challenge';
+import type { IApplyChallengeResult, IPublicChallengeDetailResult, IPublicChallengesResult, TChallengeMarketResult } from '@/shared/types/market';
 
 // 학원 공개 챌린지 조회
 export async function getPublicChallenges({ academyId, session, cursor, take }: { academyId: number; cursor: number; session: Session; take: number }) {
@@ -53,4 +54,23 @@ export async function applyPublicChallenge({ academyId, session, releasedChallen
     throw new Error(data.message);
   }
   return data.result;
+}
+
+// (원장/강사) 챌린지 마켓의 챌린지 리스트 조회
+export async function getMarketList({
+  academyId,
+  cursor,
+  take,
+  challengeType,
+}: {
+  academyId: number;
+  challengeType: CHALLENGE_TYPE;
+  cursor: number;
+  take: number;
+}) {
+  const res = await fetch(`/api/market/list?academyId=${academyId}&cursor=${cursor}&take=${take}&challengeType=${challengeType}`, {
+    method: 'GET',
+  });
+
+  return (await res.json()) as TChallengeMarketResult;
 }

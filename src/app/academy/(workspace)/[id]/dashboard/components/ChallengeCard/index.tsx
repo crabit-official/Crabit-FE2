@@ -6,19 +6,22 @@ import Flex from '@/shared/components/Flex';
 import Framer from '@/shared/components/Framer';
 import Typography from '@/shared/components/Typography';
 import type { IChallenge } from '@/shared/types/acadmy';
+import type { IMarketChallenge } from '@/shared/types/market';
 
-interface IChallengeCard extends IChallenge {
+interface IChallengeCard extends Partial<IChallenge>, Partial<IMarketChallenge> {
   onClick?: () => void;
 }
 
-export default function ChallengeCard({ onClick, challengeCategory, content, title, thumbnailImageUrl }: IChallengeCard) {
+export default function ChallengeCard({ onClick, challengeCategory, content = '', title, thumbnailImageUrl }: IChallengeCard) {
   return (
     <Framer
       onClick={onClick}
       whileHover={{ scale: 1.01 }}
       className="relative flex h-fit min-h-80 w-64 cursor-pointer flex-col items-center justify-between overflow-hidden rounded-lg border border-solid border-gray-100 bg-white shadow-custom transition-shadow duration-300 hover:shadow-hover-custom"
     >
-      <div className="absolute left-2 top-2 rounded-2xl bg-neutral-500/80 px-2 py-1 text-xs text-white">{getChallengeCategory(challengeCategory)}</div>
+      {challengeCategory && (
+        <div className="absolute left-2 top-2 rounded-2xl bg-neutral-500/80 px-2 py-1 text-xs text-white">{getChallengeCategory(challengeCategory)}</div>
+      )}
       {thumbnailImageUrl ? (
         <Image
           src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${thumbnailImageUrl}`}

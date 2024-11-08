@@ -45,3 +45,18 @@ export interface IApplyChallengeResult {
     studentChallengeId: number;
   };
 }
+
+// 챌린지 마켓 리스트 조회
+export interface IMarketChallenge {
+  challengeCategory: CHALLENGE_CATEGORY;
+  challengeCoreId: number;
+  challengeType: CHALLENGE_TYPE;
+  thumbnailImageUrl: string;
+  title: string;
+}
+
+export type TChallengeMarketResult = CommonResponse<{
+  challengeList: IMarketChallenge[];
+  hasNext: boolean;
+  nextCursor: number;
+}>;
