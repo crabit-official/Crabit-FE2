@@ -8,11 +8,12 @@ import type {
   IAllChallengeResult,
   IChallengeParticipateResult,
   IChallengeResult,
-  IDetailChallengeResult,
   IGetAcademyMemberDetailList,
   IMyChallengeProgressResult,
   IStudentChallengeContentsResults,
   IStudentChallengeResult,
+  TChallengeResult,
+  TDetailChallengeResult,
 } from '@/shared/types/acadmy';
 
 interface IGetChallengeList {
@@ -136,7 +137,7 @@ export async function getTeacherChallengeDetail({ session, releasedChallengeId, 
     throw new Error('챌린지 상세 정보를 가져오는데 에러가 발생했습니다!');
   }
 
-  const data: IDetailChallengeResult = await res.json();
+  const data: TDetailChallengeResult = await res.json();
 
   return data;
 }
@@ -234,6 +235,21 @@ export async function getAllChallengeContents({ academyId, session, cursor, take
   });
 
   const data: IAllChallengeResult = await res.json();
+
+  return data;
+}
+
+// (원장/강사) 챌린지 삭제
+export async function deleteChallenge({ academyId, releasedChallengeId }: { academyId: number; releasedChallengeId: number }) {
+  const res = await fetch(`/api/challenge/delete?academyId=${academyId}&releasedChallengeId=${releasedChallengeId}`, {
+    method: 'DELETE',
+  });
+
+  const data = (await res.json()) as TChallengeResult;
+
+  if (!data.isSuccess) {
+    throw new Error(data.message);
+  }
 
   return data;
 }

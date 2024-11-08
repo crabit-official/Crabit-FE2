@@ -209,7 +209,7 @@ export interface IAcademyStudentListResult {
 }
 
 // 상세 챌린지
-export type IDetailChallengeResult = CommonResponse<{
+export type TDetailChallengeResult = CommonResponse<{
   challengeStatusCounts: {
     allLogsSubmittedStudents: number;
     approvedStudents: number;
@@ -419,3 +419,7 @@ export interface IAcademyInfoResult {
     };
   };
 }
+
+export type TChallengeResult = CommonResponse<{
+  releasedChallengeId: number;
+}>;
