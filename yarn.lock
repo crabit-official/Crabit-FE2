@@ -2078,6 +2078,7 @@ __metadata:
     react-icons: ^5.3.0
     react-intersection-observer: ^9.13.1
     sonner: ^1.5.0
+    swiper: ^11.1.14
     tailwind-merge: ^2.5.3
     tailwindcss: ^3.4.1
     typescript: ^5
@@ -6627,6 +6628,13 @@ __metadata:
   version: 1.0.0
   resolution: "svg-tags@npm:1.0.0"
   checksum: 407e5ef87cfa2fb81c61d738081c2decd022ce13b922d035b214b49810630bf5d1409255a4beb3a940b77b32f6957806deff16f1bf0ce1ab11c7a184115a0b7f
+  languageName: node
+  linkType: hard
+
+"swiper@npm:^11.1.14":
+  version: 11.1.14
+  resolution: "swiper@npm:11.1.14"
+  checksum: 87bf4c42d893c76d3545d42ad664b78b032f7768c99f3d90d8340c035d661e10e7805c3270df704f8da99508304e8ca87cab61d3c863586d9d231c9f718ae785
   languageName: node
   linkType: hard
 
