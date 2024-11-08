@@ -2,9 +2,9 @@ import { dehydrate, QueryClient } from '@tanstack/query-core';
 import { HydrationBoundary } from '@tanstack/react-query';
 import { getServerSession, type Session } from 'next-auth';
 
-import MyChallengeContentForm from '@/app/academy/(workspace)/[id]/challenge/components/MyChallengeContentForm';
-import StudentChallengeContents from '@/app/academy/(workspace)/[id]/challenge/components/StudentChallengeContents';
-import StudentChallengeDetail from '@/app/academy/(workspace)/[id]/challenge/components/StudentChallengeDetail';
+import MyChallengeContentForm from '../../../dashboard/components/MyChallengeContentForm';
+import StudentChallengeContents from '../../../dashboard/components/StudentChallengeContents';
+
 import { getMyChallengeProgress, getStudentChallengeContents } from '@/shared/apis/challenge';
 import Flex from '@/shared/components/Flex';
 import { queryKeys } from '@/shared/constants/query-keys';
@@ -19,7 +19,6 @@ async function StudentChallengePage({ params }: { params: { id: string; studentC
     queryKey: [queryKeys.CHALLENGE_STUDENT_CONTENTS, params.id, params.studentChallengeId, challengeData?.releasedChallenge.releasedChallengeId],
     queryFn: () =>
       getStudentChallengeContents({
-        session,
         cursor: 0,
         take: 10,
         academyId: Number(params.id),
@@ -36,11 +35,9 @@ async function StudentChallengePage({ params }: { params: { id: string; studentC
   return (
     <Flex rowColumn="center" className="w-full">
       <Flex column="center" className="w-full max-w-[700px] gap-4 px-4 pt-10 md:px-1">
-        <StudentChallengeDetail releasedChallenge={challengeData.releasedChallenge} studentChallenge={challengeData.studentChallenge} />
         <MyChallengeContentForm session={session} academyId={Number(params.id)} studentChallengeId={Number(params.studentChallengeId)} />
         <HydrationBoundary state={dehydratedState}>
           <StudentChallengeContents
-            session={session}
             academyId={Number(params.id)}
             studentChallengeId={Number(params.studentChallengeId)}
             releasedChallengeId={challengeData?.releasedChallenge.releasedChallengeId}
