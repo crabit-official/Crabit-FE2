@@ -19,7 +19,7 @@ function useGetInfiniteStudentChallengeProgressList(
 ) {
   return useInfiniteQuery({
     queryFn: ({ pageParam }) => getStudentsChallengeProgress({ cursor: pageParam, take: 10, academyId, releasedChallengeId }),
-    queryKey: [queryKeys.CHALLENGE_STUDENT_PROGRESS_LIST, { academyId }],
+    queryKey: [queryKeys.CHALLENGE_STUDENT_PROGRESS_LIST, { academyId }, { releasedChallengeId }],
     initialPageParam: 0,
     getNextPageParam: (lastPage) => (lastPage.result.hasNext ? lastPage.result.nextCursor : undefined),
     ...queryOptions,
