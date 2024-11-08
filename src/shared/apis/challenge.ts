@@ -6,7 +6,6 @@ import type {
   IAcademyMemberListResult,
   IAcademyStudentListResult,
   IAllChallengeResult,
-  IChallengeApprovalResults,
   IChallengeParticipateResult,
   IChallengeResult,
   IDetailChallengeResult,
@@ -20,7 +19,6 @@ interface IGetChallengeList {
   academyId: number;
   cursor: number;
   releasedChallengeId?: number;
-  session: Session;
   studentChallengeId?: number;
   take: number;
 }
@@ -32,39 +30,25 @@ interface IGetChallengeDetails {
 }
 
 // 원장/강사가 배포한 챌린지 목록 전체 조회
-export async function getTeachersChallengeList({ cursor, session, take, academyId }: IGetChallengeList) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/teachers?cursor=${cursor}&take=${take}`, {
+export async function getTeachersChallengeList({ cursor, take, academyId }: IGetChallengeList) {
+  const res = await fetch(`/api/challenge/list?cursor=${cursor}&take=${take}&academyId=${academyId}`, {
     method: 'GET',
-    headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
-    },
   });
 
-  if (!res.ok) {
-    throw new Error('챌린지 목록을 가져오는데 에러가 발생했습니다!');
-  }
-
-  const data: IChallengeResult = await res.json();
-
-  return data;
+  return (await res.json()) as IChallengeResult;
 }
 
 // 학생이 참여하는 챌린지 목록 전체 조회
-export async function getStudentChallengeList({ cursor, session, take, academyId }: IGetChallengeList) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/students?cursor=${cursor}&take=${take}`, {
+export async function getStudentChallengeList({ cursor, take, academyId }: IGetChallengeList) {
+  const res = await fetch(`/api/challenge/student/list?cursor=${cursor}&take=${take}&academyId=${academyId}`, {
     method: 'GET',
-    headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
-    },
   });
 
   if (!res.ok) {
-    throw new Error('챌린지 목록을 가져오는데 에러가 발생했습니다!');
+    throw new Error('챌린지를 불러오지 못했습니다.');
   }
 
-  const data: IStudentChallengeResult = await res.json();
-
-  return data;
+  return (await res.json()) as IStudentChallengeResult;
 }
 
 // [원장 선생님] 학원 전체 학생 리스트 조회
@@ -157,46 +141,22 @@ export async function getTeacherChallengeDetail({ session, releasedChallengeId, 
   return data;
 }
 
-// 특정 챌린지에 참여하는 학생들의 진행도 관련 정보 리스트 조회
-export async function getStudentsChallengeProgress({ session, releasedChallengeId, academyId, take, cursor }: IGetChallengeList) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/${releasedChallengeId}/participants?cursor=${cursor}&take=${take}`,
-    {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
-    },
-  );
+// (원장/강사) 특정 챌린지에 참여하는 학생들의 진행도 관련 정보 리스트 조회
+export async function getStudentsChallengeProgress({ releasedChallengeId, academyId, take, cursor }: IGetChallengeList) {
+  const res = await fetch(`/api/challenge/student/progress?academyId=${academyId}&releasedChallengeId=${releasedChallengeId}&cursor=${cursor}&take=${take}`, {
+    method: 'GET',
+  });
 
-  if (!res.ok) {
-    throw new Error('챌린지 상세 정보를 가져오는데 에러가 발생했습니다!');
-  }
-
-  const data: IChallengeParticipateResult = await res.json();
-
-  return data;
+  return (await res.json()) as IChallengeParticipateResult;
 }
 
 // (원장/강사/학생) 특정 챌린지에서 특정 학생의 챌린지 인증 게시물 조회
-export async function getStudentChallengeContents({ session, releasedChallengeId, academyId, take, cursor, studentChallengeId }: IGetChallengeList) {
+export async function getStudentChallengeContents({ releasedChallengeId, academyId, take, cursor, studentChallengeId }: IGetChallengeList) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/${releasedChallengeId}/participants/${studentChallengeId}?cursor=${cursor}&take=${take}`,
-    {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
-    },
+    `/api/challenge/student/contents?academyId=${academyId}&releasedChallengeId=${releasedChallengeId}&studentChallengeId=${studentChallengeId}&take=${take}&cursor=${cursor}`,
   );
 
-  if (!res.ok) {
-    throw new Error('챌린지 상세 정보를 가져오는데 에러가 발생했습니다!');
-  }
-
-  const data: IStudentChallengeContentsResults = await res.json();
-
-  return data;
+  return (await res.json()) as IStudentChallengeContentsResults;
 }
 
 // (학생) 특정 챌린지 학생 본인의 진행도 및 상세 정보
@@ -246,33 +206,22 @@ export async function createChallengeContent({
 export async function approvalStudentChallengeResult({
   academyId,
   studentChallengeId,
-  session,
   releasedChallengeId,
   challengeLogApprovalStatus,
 }: {
   academyId: number;
   challengeLogApprovalStatus: CHALLENGE_LOG_APPROVAL_STATUS;
   releasedChallengeId: number;
-  session: Session;
   studentChallengeId: number;
 }) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/${releasedChallengeId}/participants/${studentChallengeId}?challengeLogApprovalStatus=${challengeLogApprovalStatus}`,
+    `/api/challenge/student/approval?academyId=${academyId}&studentChallengeId=${studentChallengeId}&releasedChallengeId=${releasedChallengeId}&challengeLogApprovalStatus=${challengeLogApprovalStatus}`,
     {
       method: 'PUT',
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
     },
   );
 
-  const data: IChallengeApprovalResults = await res.json();
-
-  if (!data.isSuccess) {
-    throw new Error(data.message);
-  }
-
-  return data.result;
+  return res;
 }
 
 // 학생 & 다른 친구 진행중인 챌린지 인증 게시글 조회

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import type { FieldValues, SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 import AddressSearch from '@/shared/components/AddressSearch/address-search';
 import Button from '@/shared/components/Button';
@@ -23,13 +24,24 @@ function Form() {
 
   const [isLoading] = useState<boolean>(false);
 
-  const onSubmit: SubmitHandler<FieldValues> = () => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-      // await postEnrollAcademy({ ...(data as IAcademyCreateDTO), session: session as Session });
+      const response = await fetch('/api/academy/enroll', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       reset();
-    } catch (e) {
-      // eslint-disable-next-line no-alert
-      alert(e);
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        toast.success(errorData.message as string);
+      }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (_) {
+      toast.error('알수 없는 에러가 발생했습니다.');
     }
   };
 
@@ -38,11 +50,12 @@ function Form() {
       <Flex rowColumn="center">
         <Input id="academyName" label="학원명" disabled={isLoading} register={register} errors={errors} required />
         <Spacing direction="vertical" size={24} />
-        <Input id="academyEmail" type="email" label="학원 이메일" disabled={isLoading} register={register} errors={errors} required />
+        <Flex className="w-full">
+          <Input id="academyEmail" type="email" label="학원 이메일" disabled={isLoading} register={register} errors={errors} required />
+          <Button className="ml-4 w-[150px]">이메일 인증</Button>
+        </Flex>
         <Spacing direction="vertical" size={24} />
-
         <AddressSearch setValue={setValue} id="academyAddress" label="학원 주소" register={register} errors={errors} required />
-
         <Spacing direction="vertical" size={24} />
         <Input disabled={isLoading} id="academyAddressDetail" label="학원 상세 주소" register={register} errors={errors} required />
         <Spacing direction="vertical" size={24} />

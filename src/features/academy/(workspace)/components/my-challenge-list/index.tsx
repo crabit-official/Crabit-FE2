@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import type { Session } from 'next-auth';
 
 import ChallengeCard from '@/features/academy/(workspace)/components/challenge-card';
 import MyChallengeCard from '@/features/academy/(workspace)/components/my-challenge-card';
@@ -12,11 +11,10 @@ import useGetInfiniteStudentChallengeList from '@/shared/hooks/challenge/useGetI
 
 interface IMyChallengeListProps {
   academyId: number;
-  session: Session;
 }
 
-function MyChallengeList({ session, academyId }: IMyChallengeListProps) {
-  const { data: challenge, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteStudentChallengeList(session, academyId);
+function MyChallengeList({ academyId }: IMyChallengeListProps) {
+  const { data: challenge, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteStudentChallengeList(academyId);
 
   const { ref, inView } = useInView({
     threshold: 0,

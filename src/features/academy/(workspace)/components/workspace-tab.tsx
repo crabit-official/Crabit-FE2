@@ -31,6 +31,16 @@ function WorkspaceTab({ role, memberId }: IWorkspaceTabProps) {
         path={`/academy/${id}/my-challenge/${memberId}`}
       />
     );
+  } else {
+    content = (
+      <TabButton
+        className="size-[19px]"
+        icon={RiStore2Fill}
+        label="챌린지 마켓"
+        isActive={pathname.includes(`/academy/${id}/market`)}
+        path={`/academy/${id}/market`}
+      />
+    );
   }
 
   return (
@@ -43,13 +53,6 @@ function WorkspaceTab({ role, memberId }: IWorkspaceTabProps) {
         className="size-4"
       />
       {content}
-      <TabButton
-        className="size-[19px]"
-        icon={RiStore2Fill}
-        label="챌린지 마켓"
-        isActive={pathname.includes(`/academy/${id}/market`)}
-        path={`/academy/${id}/market`}
-      />
       <TabButton icon={IoIosSettings} label="설정" isActive={pathname.includes(`/academy/${id}/setting`)} path={`/academy/${id}/setting`} />
     </Flex>
   );

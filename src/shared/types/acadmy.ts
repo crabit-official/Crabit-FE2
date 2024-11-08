@@ -21,16 +21,16 @@ export interface IAcademyCreateDTO {
   studentCount: number;
 }
 
-export interface IPostEnrollAcademyResponse {
-  result: {
-    academyAddress: string;
-    academyAddressDetail: string;
-    academyEmail: string;
-    academyName: string;
-    contactNumber: string;
-    studentCount: number;
-  };
+export interface IPostEnrollAcademyDTO {
+  academyAddress: string;
+  academyAddressDetail: string;
+  academyEmail: string;
+  academyName: string;
+  contactNumber: string;
+  studentCount: number;
 }
+
+export type IPostEnrollAcademyResponse = CommonResponse<IPostEnrollAcademyDTO>;
 
 export interface IGetChallengeList {
   academyId: number;
@@ -106,18 +106,18 @@ export type IAcademyResult = CommonResponse<{
 
 // 챌린지 목록 조회
 export interface IChallenge {
+  challengeCategory: CHALLENGE_CATEGORY;
+  content: string;
   releasedChallengeId: number;
   thumbnailImageUrl: string;
   title: string;
 }
 
-export interface IChallengeResult {
-  result: {
-    challengeList: IChallenge[];
-    hasNext: boolean;
-    nextCursor: number;
-  };
-}
+export type IChallengeResult = CommonResponse<{
+  challengeList: IChallenge[];
+  hasNext: boolean;
+  nextCursor: number;
+}>;
 
 export interface IStudentChallengeDTO {
   releasedChallengeId: number;
@@ -139,13 +139,11 @@ export interface IStudentChallenge {
   studentChallengeStatus: IStudentChallengeStatusDTO;
 }
 
-export interface IStudentChallengeResult {
-  result: {
-    hasNext: boolean;
-    nextCursor: number;
-    studentChallengeList: IStudentChallenge[];
-  };
-}
+export type IStudentChallengeResult = CommonResponse<{
+  hasNext: boolean;
+  nextCursor: number;
+  studentChallengeList: IStudentChallenge[];
+}>;
 
 export interface IGetAcademyMemberDetailList {
   academyId: number;
@@ -211,30 +209,33 @@ export interface IAcademyStudentListResult {
 }
 
 // 상세 챌린지
-export interface IDetailChallengeResult {
-  result: {
-    challengeStatusCounts: {
-      allLogsSubmittedStudents: number;
-      inProgressStudents: number;
-      notStartedStudents: number;
-      submissionFailedStudents: number;
-      totalParticipants: number;
-    };
-    releasedChallenge: {
-      challengeCategory: CHALLENGE_CATEGORY;
-      challengeCoreCreatorAcademyName: string;
-      challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
-      challengeSource: CHALLENGE_SOURCE_TYPE;
-      challengeType: CHALLENGE_TYPE;
-      content: string;
-      points: number;
-      releasedChallengeId: number;
-      thumbnailImageUrl: string;
-      title: string;
-      totalDays: number;
-    };
+export type IDetailChallengeResult = CommonResponse<{
+  challengeStatusCounts: {
+    allLogsSubmittedStudents: number;
+    approvedStudents: number;
+    inProgressStudents: number;
+    incompleteChallengeStudents: number;
+    notStartedStudents: number;
+    pendingStudents: number;
+    rejectedStudents: number;
+    submissionFailedStudents: number;
+    totalParticipants: number;
   };
-}
+  releasedChallenge: {
+    challengeCategory: CHALLENGE_CATEGORY;
+    challengeCoreCreatorAcademyName: string;
+    challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
+    challengeSource: CHALLENGE_SOURCE_TYPE;
+    challengeType: CHALLENGE_TYPE;
+    content: string;
+    fileUrl: string;
+    points: number;
+    releasedChallengeId: number;
+    thumbnailImageUrl: string;
+    title: string;
+    totalDays: number;
+  };
+}>;
 
 // 학생 챌린지 참여 정보 리스트
 export interface IChallengeParticipant {
@@ -255,13 +256,11 @@ export interface IStudentProfileDTO {
   academyProfileImageUrl: string;
 }
 
-export interface IChallengeParticipateResult {
-  result: {
-    challengeParticipantList: IChallengeParticipant[];
-    hasNext: boolean;
-    nextCursor: number;
-  };
-}
+export type IChallengeParticipateResult = CommonResponse<{
+  challengeParticipantList: IChallengeParticipant[];
+  hasNext: boolean;
+  nextCursor: number;
+}>;
 
 // 특정 챌린지 학생 인증 게시글
 export interface IStudentChallengeContents {
@@ -280,13 +279,11 @@ export interface IStudentChallengeContents {
   };
 }
 
-export interface IStudentChallengeContentsResults {
-  result: {
-    challengeLogList: IStudentChallengeContents[];
-    hasNext: boolean;
-    nextCursor: number;
-  };
-}
+export type IStudentChallengeContentsResults = CommonResponse<{
+  challengeLogList: IStudentChallengeContents[];
+  hasNext: boolean;
+  nextCursor: number;
+}>;
 
 // 학원 탈퇴
 export type IRevokeAcademyResponse = CommonResponse<{
