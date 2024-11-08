@@ -18,7 +18,7 @@ export async function fetchData<T>(
   cache?: RequestCache,
 ): Promise<T> {
   const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}${endpoint}`;
-  const isProduction = process.env.NODE_ENV === 'production';
+
   const accessToken = cookies().get('accessToken')?.value;
 
   const headers: HeadersInit = {
@@ -33,37 +33,47 @@ export async function fetchData<T>(
     credentials: 'include',
   });
 
-  if (response.status === 401 || response.status === 404) {
-    const cookieStore = cookies();
-    const refreshToken = cookies().get('refreshToken')?.value;
+  const data = await response.json();
 
-    if (refreshToken) {
-      const refreshResponse = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/reissue-token`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(refreshToken ? { Cookie: `refreshToken=${refreshToken};` } : {}),
-        },
-        next: revalidateTag ? { tags: [revalidateTag] } : undefined,
-        cache,
-      });
+  if (!response.ok) {
+    switch (response.status) {
+      case 401:
+      case 404: {
+        const cookieStore = cookies();
+        const refreshToken = cookies().get('refreshToken')?.value;
 
-      if (refreshResponse.ok) {
-        const data = (await refreshResponse.json()) as IAuthResponse;
+        if (refreshToken) {
+          const refreshResponse = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/reissue-token`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              ...(refreshToken ? { Cookie: `refreshToken=${refreshToken};` } : {}),
+            },
+            next: revalidateTag ? { tags: [revalidateTag] } : undefined,
+            cache,
+          });
 
-        cookieStore.set('accessToken', data.result.accessToken, {
-          maxAge: 3600, // 1시간
-          httpOnly: true,
-          secure: isProduction,
-        });
+          if (refreshResponse.ok) {
+            // eslint-disable-next-line @typescript-eslint/no-shadow
+            const data = (await refreshResponse.json()) as IAuthResponse;
 
-        // 재시도: 새로운 토큰으로 요청
-        return fetchData<T>(endpoint, method, body);
+            cookieStore.set('accessToken', data.result.accessToken, {
+              maxAge: 3600, // 1시간
+              httpOnly: true,
+              secure: true,
+            });
+
+            // 재시도: 새로운 토큰으로 요청
+            return fetchData<T>(endpoint, method, body);
+          }
+        }
+        throw new Error('에러가 발생하였습니다');
       }
+      default:
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        throw new Error(data.message);
     }
-
-    throw new Error('에러가 발생하였습니다');
   }
 
-  return (await response.json()) as Promise<T>;
+  return response.json() as Promise<T>;
 }

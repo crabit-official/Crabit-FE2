@@ -21,16 +21,16 @@ export interface IAcademyCreateDTO {
   studentCount: number;
 }
 
-export interface IPostEnrollAcademyResponse {
-  result: {
-    academyAddress: string;
-    academyAddressDetail: string;
-    academyEmail: string;
-    academyName: string;
-    contactNumber: string;
-    studentCount: number;
-  };
+export interface IPostEnrollAcademyDTO {
+  academyAddress: string;
+  academyAddressDetail: string;
+  academyEmail: string;
+  academyName: string;
+  contactNumber: string;
+  studentCount: number;
 }
+
+export type IPostEnrollAcademyResponse = CommonResponse<IPostEnrollAcademyDTO>;
 
 export interface IGetChallengeList {
   academyId: number;

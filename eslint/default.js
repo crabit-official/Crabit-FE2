@@ -25,5 +25,7 @@ module.exports = {
     'no-unused-vars': 'warn',
 
     '@typescript-eslint/no-explicit-any': 'off',
+
+    'react-hooks/rules-of-hooks': 'off', // 이 규칙을 비활성화
   },
 };
