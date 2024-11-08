@@ -5,8 +5,18 @@ import ChallengeCardList from '@/app/academy/(workspace)/[id]/market/components/
 import ChallengeTab from '@/app/academy/(workspace)/[id]/market/components/ChallengeTab';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
+import { CHALLENGE_TYPE } from '@/shared/enums/challenge';
 
-function MarketPage() {
+interface IMarketPageProps {
+  params: {
+    id: number;
+  };
+  searchParams: {
+    tab: string;
+  };
+}
+
+function MarketPage({ params, searchParams }: IMarketPageProps) {
   return (
     <Flex rowColumn="center" className="w-full gap-10 py-10">
       <Flex row="start" className="z-10 h-40 w-full gap-4 px-6 md:px-0">
@@ -20,9 +30,12 @@ function MarketPage() {
           </Typography>
         </Flex>
       </Flex>
-      <ChallengeTab />
+      <ChallengeTab academyId={Number(params.id)} />
       <div className="absolute top-[550px] flex h-[800px] w-full items-center justify-center rounded-t-[100px] bg-gradient-to-b from-main-deep-pink sm:rounded-t-[130px] lg:rounded-t-[260px]" />
-      <ChallengeCardList />
+      <Flex rowColumn="center" className="w-full">
+        {(searchParams.tab === 'crabit' || !searchParams.tab) && <ChallengeCardList academyId={Number(params.id)} challengeType={CHALLENGE_TYPE.CRABIT} />}
+        {searchParams.tab === 'academy' && <ChallengeCardList academyId={Number(params.id)} challengeType={CHALLENGE_TYPE.ACADEMY} />}
+      </Flex>
     </Flex>
   );
 }

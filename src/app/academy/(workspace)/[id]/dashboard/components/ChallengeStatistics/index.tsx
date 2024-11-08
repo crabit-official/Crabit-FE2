@@ -3,11 +3,20 @@ import { FaCrown } from 'react-icons/fa';
 
 import DonutChart from '@/app/academy/(workspace)/[id]/dashboard/components/DonutChart';
 import BestChallengeTable from '@/features/academy/(workspace)/components/dashboard/best-challenge-table';
+import { fetchData } from '@/shared/apis/fetch-data';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import { STUDENTS } from '@/shared/constants/student';
+import type { IDetailChallengeResult } from '@/shared/types/acadmy';
 
-function ChallengeStatistics() {
+interface IChallengeStatisticsProps {
+  academyId: number;
+  releasedChallengeId: number;
+}
+
+async function ChallengeStatistics({ academyId, releasedChallengeId }: IChallengeStatisticsProps) {
+  const challengeData = await fetchData<IDetailChallengeResult>(`/api/v1/academies/${academyId}/challenges/teachers/${releasedChallengeId}`, 'GET');
+
   return (
     <Flex column="center" className="w-full gap-4">
       <Flex column="between" className="min-h-80 w-full rounded-2xl border border-solid border-gray-100 bg-gray-50 p-10">
@@ -39,10 +48,10 @@ function ChallengeStatistics() {
           <Flex column="start" className="w-full gap-1">
             <Flex row="between">
               <Typography size="h2" className="text-white">
-                참여중인 학생수
+                진행중인 학생수
               </Typography>
               <Typography size="h2" className="text-white">
-                90 명
+                {challengeData.result.challengeStatusCounts.inProgressStudents} 명
               </Typography>
             </Flex>
             <Flex row="between">
@@ -50,7 +59,7 @@ function ChallengeStatistics() {
                 시작하지 않은 학생수
               </Typography>
               <Typography size="h2" className="text-white">
-                4 명
+                {challengeData.result.challengeStatusCounts.notStartedStudents} 명
               </Typography>
             </Flex>
             <Flex row="between">
@@ -58,15 +67,15 @@ function ChallengeStatistics() {
                 제출한 학생 수
               </Typography>
               <Typography size="h2" className="text-white">
-                50 명
+                {challengeData.result.challengeStatusCounts.submissionFailedStudents} 명
               </Typography>
             </Flex>
             <Flex row="between">
               <Typography size="h2" className="text-white">
-                승인 대기 중인 학생 수
+                제출 실패한 학생 수
               </Typography>
               <Typography size="h2" className="text-white">
-                20 명
+                {challengeData.result.challengeStatusCounts.submissionFailedStudents} 명
               </Typography>
             </Flex>
             <Flex row="between">
@@ -74,7 +83,23 @@ function ChallengeStatistics() {
                 승인 된 학생 수
               </Typography>
               <Typography size="h2" className="text-white">
-                15 명
+                {challengeData.result.challengeStatusCounts.approvedStudents} 명
+              </Typography>
+            </Flex>
+            <Flex row="between">
+              <Typography size="h2" className="text-white">
+                승인 대기 중인 학생 수
+              </Typography>
+              <Typography size="h2" className="text-white">
+                {challengeData.result.challengeStatusCounts.pendingStudents} 명
+              </Typography>
+            </Flex>
+            <Flex row="between">
+              <Typography size="h2" className="text-white">
+                승인 거절 학생 수
+              </Typography>
+              <Typography size="h2" className="text-white">
+                {challengeData.result.challengeStatusCounts.rejectedStudents} 명
               </Typography>
             </Flex>
           </Flex>

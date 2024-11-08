@@ -75,5 +75,5 @@ export async function fetchData<T>(
     }
   }
 
-  return response.json() as Promise<T>;
+  return data as Promise<T>;
 }
