@@ -6,7 +6,6 @@ import type {
   IAcademyMemberListResult,
   IAcademyStudentListResult,
   IAllChallengeResult,
-  IChallengeApprovalResults,
   IChallengeParticipateResult,
   IChallengeResult,
   IDetailChallengeResult,
@@ -207,33 +206,22 @@ export async function createChallengeContent({
 export async function approvalStudentChallengeResult({
   academyId,
   studentChallengeId,
-  session,
   releasedChallengeId,
   challengeLogApprovalStatus,
 }: {
   academyId: number;
   challengeLogApprovalStatus: CHALLENGE_LOG_APPROVAL_STATUS;
   releasedChallengeId: number;
-  session: Session;
   studentChallengeId: number;
 }) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/${releasedChallengeId}/participants/${studentChallengeId}?challengeLogApprovalStatus=${challengeLogApprovalStatus}`,
+    `/api/challenge/student/approval?academyId=${academyId}&studentChallengeId=${studentChallengeId}&releasedChallengeId=${releasedChallengeId}&challengeLogApprovalStatus=${challengeLogApprovalStatus}`,
     {
       method: 'PUT',
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
     },
   );
 
-  const data: IChallengeApprovalResults = await res.json();
-
-  if (!data.isSuccess) {
-    throw new Error(data.message);
-  }
-
-  return data.result;
+  return res;
 }
 
 // 학생 & 다른 친구 진행중인 챌린지 인증 게시글 조회

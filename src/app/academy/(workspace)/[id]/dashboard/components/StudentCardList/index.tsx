@@ -42,6 +42,7 @@ function StudentCardList({ academyId, releasedChallengeId }: IStudentCardListPro
       {students?.pages.map((page) =>
         page.result.challengeParticipantList.map((student) => (
           <StudentCard
+            academyId={academyId}
             key={student.studentChallenge.studentChallengeId}
             releasedChallengeId={releasedChallengeId}
             studentChallenge={student.studentChallenge}

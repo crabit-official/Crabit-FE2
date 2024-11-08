@@ -11,15 +11,27 @@ import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import { CHALLENGE_LOG_APPROVAL_STATUS } from '@/shared/enums/challenge';
+import useApprovalChallenge from '@/shared/hooks/challenge/useApprovalChallenge';
 import type { IChallengeParticipant } from '@/shared/types/acadmy';
 
 interface IStudentCardProps extends IChallengeParticipant {
+  academyId: number;
   releasedChallengeId: number;
 }
 
 // TODO: 학교명 수정
-function StudentCard({ studentChallenge, studentProfile, releasedChallengeId }: IStudentCardProps) {
+function StudentCard({ studentChallenge, academyId, studentProfile, releasedChallengeId }: IStudentCardProps) {
   const router = useRouter();
+  const { mutate } = useApprovalChallenge({ academyId, releasedChallengeId });
+
+  const handleApprovalChallenge = (status: CHALLENGE_LOG_APPROVAL_STATUS) => {
+    mutate({
+      academyId,
+      studentChallengeId: studentChallenge.studentChallengeId,
+      releasedChallengeId,
+      challengeLogApprovalStatus: status,
+    });
+  };
 
   return (
     <Flex row="between" className="gap-2">
@@ -41,11 +53,17 @@ function StudentCard({ studentChallenge, studentProfile, releasedChallengeId }: 
         <IoIosArrowForward />
       </Flex>
       {studentChallenge.challengeLogApprovalStatus === CHALLENGE_LOG_APPROVAL_STATUS.APPROVED ? (
-        <Button className="w-16 rounded-lg border border-solid border-gray-100 bg-neutral-500 text-sm text-white shadow-custom transition-shadow duration-300 hover:shadow-hover-custom sm:w-20 sm:text-base">
+        <Button
+          onClick={() => handleApprovalChallenge(CHALLENGE_LOG_APPROVAL_STATUS.REJECTED)}
+          className="w-16 rounded-lg border border-solid border-gray-100 bg-neutral-500 text-sm text-white shadow-custom transition-shadow duration-300 hover:shadow-hover-custom sm:w-20 sm:text-base"
+        >
           반려
         </Button>
       ) : (
-        <Button className="w-16 rounded-lg border border-solid border-gray-100 bg-neutral-500 text-sm text-white shadow-custom transition-shadow duration-300 hover:shadow-hover-custom sm:w-20 sm:text-base">
+        <Button
+          onClick={() => handleApprovalChallenge(CHALLENGE_LOG_APPROVAL_STATUS.APPROVED)}
+          className="w-16 rounded-lg border border-solid border-gray-100 bg-neutral-500 text-sm text-white shadow-custom transition-shadow duration-300 hover:shadow-hover-custom sm:w-20 sm:text-base"
+        >
           승인
         </Button>
       )}

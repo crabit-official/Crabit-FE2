@@ -40,12 +40,9 @@ export async function getPublicChallengeDetail({
 }
 
 // (학생) 공개 챌린지 신청
-export async function applyPublicChallenge({ academyId, session, releasedChallengeId }: { academyId: number; releasedChallengeId: number; session: Session }) {
+export async function applyPublicChallenge({ academyId, releasedChallengeId }: { academyId: number; releasedChallengeId: number }) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/${releasedChallengeId}`, {
     method: 'POST',
-    headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
-    },
   });
 
   const data: IApplyChallengeResult = await res.json();

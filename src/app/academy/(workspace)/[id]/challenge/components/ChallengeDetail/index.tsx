@@ -1,35 +1,17 @@
 import React from 'react';
-import { dehydrate, QueryClient } from '@tanstack/query-core';
-import { HydrationBoundary } from '@tanstack/react-query';
 import Image from 'next/image';
-import type { Session } from 'next-auth';
 
-import ChallengeStudentList from '@/features/academy/(workspace)/components/challenge/challenge-student-list';
 import { getChallengeCategory, getChallengeType } from '@/features/academy/(workspace)/utils/challengeState';
-import { getStudentsChallengeProgress } from '@/shared/apis/challenge';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
-import { queryKeys } from '@/shared/constants/query-keys';
 import type { IDetailChallengeResult } from '@/shared/types/acadmy';
 
 interface IChallengeDetailProps {
-  academyId: number;
   challenge: IDetailChallengeResult;
-  releasedChallengeId: number;
-  session: Session;
 }
 
-async function ChallengeDetail({ challenge, session, academyId, releasedChallengeId }: IChallengeDetailProps) {
+function ChallengeDetail({ challenge }: IChallengeDetailProps) {
   // 특정 챌린지에 참여하는 학생들의 진행도 관련 정보 리스트 조회
-  const queryClient = new QueryClient();
-  await queryClient.prefetchInfiniteQuery({
-    queryKey: [queryKeys.CHALLENGE_STUDENT_PROGRESS_LIST],
-    queryFn: () => getStudentsChallengeProgress({ session, cursor: 0, take: 5, academyId, releasedChallengeId }),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages) => (lastPage.result.hasNext ? allPages.length + 1 : undefined),
-    pages: 1,
-  });
-  const dehydratedState = dehydrate(queryClient);
 
   return (
     <div className="grid-rows-[min-content, auto] grid w-full place-items-center">
@@ -71,9 +53,6 @@ async function ChallengeDetail({ challenge, session, academyId, releasedChalleng
           </Typography>
         </Flex>
       </Flex>
-      <HydrationBoundary state={dehydratedState}>
-        <ChallengeStudentList session={session} academyId={academyId} releasedChallengeId={releasedChallengeId} />
-      </HydrationBoundary>
     </div>
   );
 }

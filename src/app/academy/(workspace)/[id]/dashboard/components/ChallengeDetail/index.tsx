@@ -82,7 +82,7 @@ async function ChallengeDetail({ academyId, releasedChallengeId }: IChallengeDet
             {challengeData?.result?.releasedChallenge?.fileUrl ? `첨부파일: ${challengeData?.result?.releasedChallenge.fileUrl}` : '첨부파일이 없습니다.'}
           </Typography>
         </Flex>
-        <Flex className="w-full cursor-pointer items-center rounded-lg border border-solid border-gray-100 bg-gray-50 px-4 py-5">
+        <Flex className="w-full items-center rounded-lg border border-solid border-gray-100 bg-gray-50 px-4 py-5">
           <Typography size="h5" className="w-full text-start font-normal opacity-80" as="p">
             {challengeData?.result?.releasedChallenge?.content}
           </Typography>
