@@ -32,8 +32,22 @@ async function AcademyDashBoardPage({ params }: IAcademyDashBoardProps) {
   });
   const dehydratedState = dehydrate(queryClient);
 
+  // await queryClientStudent.prefetchInfiniteQuery({
+  //   queryKey: [queryKeys.STUDENT_CHALLENGE_LIST],
+  //   queryFn: () => useGetInfiniteStudentChallengeList({ cursor: 0, take: 6, academyId: Number(params.id) }),
+  //   initialPageParam: 0,
+  //   getNextPageParam: (lastPage, allPages) => (lastPage.result.hasNext ? allPages.length + 1 : undefined),
+  //   pages: 1,
+  // });
+  // const dehydratedStudentState = dehydrate(queryClientStudent);
+
   if (res.result.academyRole === ACADEMY_ROLE.STUDENT) {
-    contents = <div>학생뷰는 준비중입니다.</div>;
+    contents = (
+      <div>준비중</div>
+      // <HydrationBoundary state={dehydratedStudentState}>
+      //   <StudentAllChallengeContents academyId={Number(params.id)} />
+      // </HydrationBoundary>
+    );
   } else {
     contents = (
       <HydrationBoundary state={dehydratedState}>

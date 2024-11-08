@@ -61,6 +61,7 @@ export async function fetchData<T>(
         return fetchData<T>(endpoint, method, body);
       }
     }
+
     throw new Error('에러가 발생하였습니다');
   }
 

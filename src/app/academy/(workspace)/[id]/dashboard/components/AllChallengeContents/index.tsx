@@ -57,7 +57,7 @@ function AllChallengeContents({ academyId }: IAllChallengeContentsProps) {
       </Framer>
       {challenge?.pages?.map((page) =>
         page.result.challengeList.map((item) => (
-          <ChallengeCard {...item} key={item.releasedChallengeId} onClick={() => router.push(`dashboard/${item.releasedChallengeId}`)} />
+          <ChallengeCard {...item} key={item.releasedChallengeId} onClick={() => router.push(`dashboard/${item.releasedChallengeId}?tab=challenge`)} />
         )),
       )}
       <div ref={ref} className="h-14" />

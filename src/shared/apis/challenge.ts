@@ -40,21 +40,16 @@ export async function getTeachersChallengeList({ cursor, take, academyId }: IGet
 }
 
 // 학생이 참여하는 챌린지 목록 전체 조회
-export async function getStudentChallengeList({ cursor, session, take, academyId }: IGetChallengeList) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/students?cursor=${cursor}&take=${take}`, {
+export async function getStudentChallengeList({ cursor, take, academyId }: IGetChallengeList) {
+  const res = await fetch(`/api/challenge/student/list?cursor=${cursor}&take=${take}&academyId=${academyId}`, {
     method: 'GET',
-    headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
-    },
   });
 
   if (!res.ok) {
-    throw new Error('챌린지 목록을 가져오는데 에러가 발생했습니다!');
+    throw new Error('챌린지를 불러오지 못했습니다.');
   }
 
-  const data: IStudentChallengeResult = await res.json();
-
-  return data;
+  return (await res.json()) as IStudentChallengeResult;
 }
 
 // [원장 선생님] 학원 전체 학생 리스트 조회

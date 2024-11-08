@@ -139,13 +139,11 @@ export interface IStudentChallenge {
   studentChallengeStatus: IStudentChallengeStatusDTO;
 }
 
-export interface IStudentChallengeResult {
-  result: {
-    hasNext: boolean;
-    nextCursor: number;
-    studentChallengeList: IStudentChallenge[];
-  };
-}
+export type IStudentChallengeResult = CommonResponse<{
+  hasNext: boolean;
+  nextCursor: number;
+  studentChallengeList: IStudentChallenge[];
+}>;
 
 export interface IGetAcademyMemberDetailList {
   academyId: number;
@@ -211,30 +209,33 @@ export interface IAcademyStudentListResult {
 }
 
 // 상세 챌린지
-export interface IDetailChallengeResult {
-  result: {
-    challengeStatusCounts: {
-      allLogsSubmittedStudents: number;
-      inProgressStudents: number;
-      notStartedStudents: number;
-      submissionFailedStudents: number;
-      totalParticipants: number;
-    };
-    releasedChallenge: {
-      challengeCategory: CHALLENGE_CATEGORY;
-      challengeCoreCreatorAcademyName: string;
-      challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
-      challengeSource: CHALLENGE_SOURCE_TYPE;
-      challengeType: CHALLENGE_TYPE;
-      content: string;
-      points: number;
-      releasedChallengeId: number;
-      thumbnailImageUrl: string;
-      title: string;
-      totalDays: number;
-    };
+export type IDetailChallengeResult = CommonResponse<{
+  challengeStatusCounts: {
+    allLogsSubmittedStudents: number;
+    approvedStudents: number;
+    inProgressStudents: number;
+    incompleteChallengeStudents: number;
+    notStartedStudents: number;
+    pendingStudents: number;
+    rejectedStudents: number;
+    submissionFailedStudents: number;
+    totalParticipants: number;
   };
-}
+  releasedChallenge: {
+    challengeCategory: CHALLENGE_CATEGORY;
+    challengeCoreCreatorAcademyName: string;
+    challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
+    challengeSource: CHALLENGE_SOURCE_TYPE;
+    challengeType: CHALLENGE_TYPE;
+    content: string;
+    fileUrl: string;
+    points: number;
+    releasedChallengeId: number;
+    thumbnailImageUrl: string;
+    title: string;
+    totalDays: number;
+  };
+}>;
 
 // 학생 챌린지 참여 정보 리스트
 export interface IChallengeParticipant {
