@@ -4,7 +4,8 @@ import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import Image from 'next/image';
 
-import StudentChallengeContent from '@/app/academy/(workspace)/[id]/challenge/components/StudentChallengeContent';
+import StudentChallengeContent from '../StudentChallengeContent';
+
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import useGetInfiniteStudentChallengeContents from '@/shared/hooks/challenge/useGetInfiniteStudentChallengeContents';

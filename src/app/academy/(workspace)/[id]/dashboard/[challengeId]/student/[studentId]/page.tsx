@@ -1,6 +1,6 @@
 import React from 'react';
 
-import StudentChallengeContents from '@/app/academy/(workspace)/[id]/challenge/components/StudentChallengeContents';
+import StudentChallengeContents from '../../../components/StudentChallengeContents';
 
 interface IStudentChallengePageProps {
   params: {
