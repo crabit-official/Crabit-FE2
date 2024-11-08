@@ -74,4 +74,5 @@ export const ERROR_MESSAGES: Record<string, string> = {
   EMAIL_002: '이메일 인증 코드가 일치하지 않습니다.',
   EMAIL_003: '유저 이메일에 해당하는 이메일 코드가 저장되어있지 않습니다. 재요청을 시도해주세요.',
   EMAIL_004: '이메일 인증에 실패했습니다.',
+  EMAIL_007: '학원 등록을 위한 이메일 인증이 완료되지 않은 이메일입니다.',
 } as const;
