@@ -18,7 +18,7 @@ interface IDetailTabProps {
 function DetailTab({ academyId, releasedChallengeId }: IDetailTabProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const tab = searchParams.get('tab');
+  const tab = searchParams.get('tab') || 'challenge';
 
   const handleTabChange = (tabId: string) => {
     router.push(`/academy/${academyId}/dashboard/${releasedChallengeId}?tab=${tabId}`);

@@ -36,7 +36,9 @@ async function ContentDetail({ params, searchParams }: IContentDetailProps) {
       <Flex column="start" className="min-h-[550px] w-full lg:w-2/3">
         <DetailTab academyId={Number(params.id)} releasedChallengeId={Number(params.challengeId)} />
         <Flex rowColumn="center" className="z-10 mt-1 w-full gap-20 py-10">
-          {searchParams.tab === 'challenge' && <ChallengeDetail academyId={Number(params.id)} releasedChallengeId={Number(params.challengeId)} />}
+          {(searchParams.tab === 'challenge' || !searchParams.tab) && (
+            <ChallengeDetail academyId={Number(params.id)} releasedChallengeId={Number(params.challengeId)} />
+          )}
           {searchParams.tab === 'student' && (
             <HydrationBoundary state={dehydratedState}>
               <StudentCardList academyId={Number(params.id)} releasedChallengeId={Number(params.challengeId)} />
