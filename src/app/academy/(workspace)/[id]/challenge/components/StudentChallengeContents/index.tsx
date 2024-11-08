@@ -1,9 +1,8 @@
 'use client';
 
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import Image from 'next/image';
-import type { Session } from 'next-auth';
 
 import StudentChallengeContent from '@/app/academy/(workspace)/[id]/challenge/components/StudentChallengeContent';
 import Flex from '@/shared/components/Flex';
@@ -13,18 +12,17 @@ import useGetInfiniteStudentChallengeContents from '@/shared/hooks/challenge/use
 interface IStudentChallengeContents {
   academyId: number;
   releasedChallengeId: number;
-  session: Session;
   studentChallengeId: number;
 }
 
-function StudentChallengeContents({ session, academyId, releasedChallengeId, studentChallengeId }: IStudentChallengeContents) {
+function StudentChallengeContents({ academyId, releasedChallengeId, studentChallengeId }: IStudentChallengeContents) {
   const {
     data: contents,
     fetchNextPage,
     hasNextPage,
     isFetching,
     isError,
-  } = useGetInfiniteStudentChallengeContents(session, academyId, releasedChallengeId, studentChallengeId);
+  } = useGetInfiniteStudentChallengeContents(academyId, releasedChallengeId, studentChallengeId);
 
   const { ref, inView } = useInView({
     threshold: 0,
@@ -47,16 +45,31 @@ function StudentChallengeContents({ session, academyId, releasedChallengeId, stu
     );
   }
   return (
-    <Flex column="center" className="relative w-full max-w-[1000px] gap-10 py-10">
-      <Image src="/images/logo_goal.webp" alt="bg-logo" width={200} height={200} className="absolute left-0 top-10 opacity-40" />
-      <Typography size="h2" className="text-center">
-        챌린지 인증 게시물
-      </Typography>
-      <Flex rowColumn="center" className="z-10 gap-2 px-4 md:px-0">
-        {contents?.pages.map((page) =>
-          page?.result?.challengeLogList.map((content) => <StudentChallengeContent {...content} key={content.challengeLog.studentChallengeLogId} />),
-        )}
-        <div ref={ref} className="h-14" />
+    <Flex className="min-h-[600px] w-full">
+      <Flex column="start" className="relative w-full gap-4 lg:w-3/5">
+        <Image src="/images/icons/icon_book.webp" alt="img" width={300} height={300} className="absolute right-[-50px] top-0 hidden opacity-40 md:block" />
+        <Flex row="start" className="gap-5">
+          <Flex column="start">
+            <Typography size="h2">챌린지 현황</Typography>
+          </Flex>
+        </Flex>
+        <Flex rowColumn="center" className="z-10 gap-6 pt-10">
+          {contents?.pages.map((page) =>
+            page?.result.challengeLogList.length !== 0 ? (
+              page.result.challengeLogList.map((content) => (
+                <StudentChallengeContent
+                  key={content.challengeLog.studentChallengeLogId}
+                  challengeLog={content.challengeLog}
+                  studentProfile={content.studentProfile}
+                />
+              ))
+            ) : (
+              <div key={0}>학생이 글을 작성하지 않았습니다</div>
+            ),
+          )}
+          <div ref={ref} className="h-14" />
+        </Flex>
+        <Flex />
       </Flex>
     </Flex>
   );
