@@ -256,13 +256,11 @@ export interface IStudentProfileDTO {
   academyProfileImageUrl: string;
 }
 
-export interface IChallengeParticipateResult {
-  result: {
-    challengeParticipantList: IChallengeParticipant[];
-    hasNext: boolean;
-    nextCursor: number;
-  };
-}
+export type IChallengeParticipateResult = CommonResponse<{
+  challengeParticipantList: IChallengeParticipant[];
+  hasNext: boolean;
+  nextCursor: number;
+}>;
 
 // 특정 챌린지 학생 인증 게시글
 export interface IStudentChallengeContents {
@@ -281,13 +279,11 @@ export interface IStudentChallengeContents {
   };
 }
 
-export interface IStudentChallengeContentsResults {
-  result: {
-    challengeLogList: IStudentChallengeContents[];
-    hasNext: boolean;
-    nextCursor: number;
-  };
-}
+export type IStudentChallengeContentsResults = CommonResponse<{
+  challengeLogList: IStudentChallengeContents[];
+  hasNext: boolean;
+  nextCursor: number;
+}>;
 
 // 학원 탈퇴
 export type IRevokeAcademyResponse = CommonResponse<{
