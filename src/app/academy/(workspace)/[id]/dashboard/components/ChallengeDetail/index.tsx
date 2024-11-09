@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { getChallengeCategory, getChallengeType } from '@/features/academy/(workspace)/utils/challengeState';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
-import useApprovalChallenge from '@/shared/hooks/challenge/useDeleteChallenge';
+import useDeleteChallenge from '@/shared/hooks/challenge/useDeleteChallenge';
 import type { TDetailChallengeResult } from '@/shared/types/acadmy';
 
 type TChallengeDetailProps = Omit<TDetailChallengeResult['result'], 'challengeStatusCounts'> & {
@@ -18,7 +18,7 @@ type TChallengeDetailProps = Omit<TDetailChallengeResult['result'], 'challengeSt
 
 // TODO: 첨부파일 처리
 function ChallengeDetail({ academyId, releasedChallengeId, releasedChallenge }: TChallengeDetailProps) {
-  const { mutate } = useApprovalChallenge({ academyId });
+  const { mutate } = useDeleteChallenge({ academyId });
 
   const handleDelete = () => {
     mutate({ academyId, releasedChallengeId });

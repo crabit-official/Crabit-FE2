@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 import { deleteChallenge } from '@/shared/apis/challenge';
 import { queryKeys } from '@/shared/constants/query-keys';
 
-function useApprovalChallenge({ academyId }: { academyId: number }) {
+function useDeleteChallenge({ academyId }: { academyId: number }) {
   const router = useRouter();
   const queryClient = useQueryClient();
   return useMutation({
@@ -21,4 +21,4 @@ function useApprovalChallenge({ academyId }: { academyId: number }) {
   });
 }
 
-export default useApprovalChallenge;
+export default useDeleteChallenge;
