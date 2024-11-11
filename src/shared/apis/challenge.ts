@@ -6,6 +6,7 @@ import type {
   IAcademyMemberListResult,
   IAcademyStudentListResult,
   IAllChallengeResult,
+  IChallengeApprovalResults,
   IChallengeParticipateResult,
   IChallengeResult,
   IGetAcademyMemberDetailList,
@@ -207,7 +208,13 @@ export async function approvalStudentChallengeResult({
     },
   );
 
-  return res;
+  const data = (await res.json()) as IChallengeApprovalResults;
+
+  if (!data.isSuccess) {
+    throw new Error(data.message);
+  }
+
+  return data;
 }
 
 // 학생 & 다른 친구 진행중인 챌린지 인증 게시글 조회

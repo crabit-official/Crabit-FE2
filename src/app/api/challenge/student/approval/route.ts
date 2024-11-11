@@ -10,8 +10,9 @@ export async function PUT(req: NextRequest) {
   const challengeLogApprovalStatus = req.nextUrl.searchParams.get('challengeLogApprovalStatus') || '';
 
   const data = await fetchData<IChallengeApprovalResults>(
-    `api/v1/academies/${academyId}/challenges/${releasedChallengeId}/participants/${studentChallengeId}?challengeLogApprovalStatus=${challengeLogApprovalStatus}`,
+    `/api/v1/academies/${academyId}/challenges/${releasedChallengeId}/participants/${studentChallengeId}?challengeLogApprovalStatus=${challengeLogApprovalStatus}`,
     'PUT',
   );
+
   return NextResponse.json(data);
 }
