@@ -11,7 +11,7 @@ import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import { queryKeys } from '@/shared/constants/query-keys';
 import { ACADEMY_ROLE } from '@/shared/enums/academy';
-import type { IAcademyProfile, IAcademyResponse } from '@/shared/types/acadmy';
+import type { IAcademyProfile, IAcademyResponse, TAcademyInfoResult } from '@/shared/types/acadmy';
 
 interface IAcademyDashBoardProps {
   params: {
@@ -21,6 +21,7 @@ interface IAcademyDashBoardProps {
 
 async function AcademyDashBoardPage({ params }: IAcademyDashBoardProps) {
   let contents;
+  const academyData = await fetchData<TAcademyInfoResult>(`/api/v1/academies/${Number(params.id)}/details`, 'GET');
   const res = await fetchData<IAcademyResponse<IAcademyProfile>>(`/api/v1/academies/${Number(params.id)}`, 'GET');
   const queryClient = new QueryClient();
   await queryClient.prefetchInfiniteQuery({
@@ -64,7 +65,7 @@ async function AcademyDashBoardPage({ params }: IAcademyDashBoardProps) {
             매일의 작은 성취를 통한 습관 형성
           </Typography>
           <Typography size="h1" className="break-keep text-3xl font-bold md:text-4xl">
-            크래빗 수학학원 챌린지
+            {academyData?.result?.academy?.name} 챌린지
           </Typography>
         </Flex>
         <Image src="/images/logo_goal.webp" alt="img" width={400} height={400} className="absolute right-0 top-0 hidden opacity-40 lg:block" />

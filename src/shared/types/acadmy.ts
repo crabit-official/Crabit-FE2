@@ -405,21 +405,18 @@ export interface IAllChallengeResult {
 }
 
 // 학원 정보조회
-export interface IAcademyInfoResult {
-  result: {
-    academy: {
-      academyId: number;
-      address: string;
-      addressDetail: string;
-      contactNumber: string;
-      email: string;
-      mainImageUrl: string;
-      name: string;
-      studentCount: number;
-    };
+export type TAcademyInfoResult = CommonResponse<{
+  academy: {
+    academyId: number;
+    address: string;
+    addressDetail: string;
+    contactNumber: string;
+    email: string;
+    mainImageUrl: string;
+    name: string;
+    studentCount: number;
   };
-}
-
+}>;
 export type TChallengeResult = CommonResponse<{
   releasedChallengeId: number;
 }>;

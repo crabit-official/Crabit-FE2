@@ -1,6 +1,6 @@
 import type { Session } from 'next-auth';
 
-import type { IAcademyInfoResult, IAcademyResult, IStatisticsResult, ITop5StudentsResult } from '@/shared/types/acadmy';
+import type { IAcademyResult, IStatisticsResult, ITop5StudentsResult } from '@/shared/types/acadmy';
 
 interface IGetAcademyList {
   cursor: number;
@@ -84,20 +84,6 @@ export async function getStatistics({ academyId, session }: { academyId: number;
   });
 
   const data: IStatisticsResult = await res.json();
-
-  return data.result;
-}
-
-// 학원 정보 조회
-export async function getAcademyInfo({ academyId, session }: { academyId: number; session: Session }) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/details`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
-    },
-  });
-
-  const data: IAcademyInfoResult = await res.json();
 
   return data.result;
 }
