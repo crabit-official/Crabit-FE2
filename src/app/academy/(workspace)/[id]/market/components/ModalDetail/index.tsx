@@ -13,7 +13,7 @@ import Typography from '@/shared/components/Typography';
 import type { TChallengeDetail } from '@/shared/types/market';
 
 // TODO: 첨부파일
-function ModalDetail({ challenge }: TChallengeDetail['result']) {
+function ModalDetail({ challenge, teacher, academy }: TChallengeDetail['result']) {
   const router = useRouter();
 
   return (
@@ -38,12 +38,20 @@ function ModalDetail({ challenge }: TChallengeDetail['result']) {
             <Image src="/images/test.jpeg" alt="default img" width={480} height={100} className="h-64 w-full object-cover" />
           )}
           <Flex column="between" className="h-full gap-4 p-6">
-            <Flex column="start" className="gap-4">
-              <Flex row="start" className="gap-2">
-                <StateLabel label={getChallengeType(challenge?.challengeType)} variant={getVariantByStatus(challenge?.challengeType)} />
-                <StateLabel label={getChallengeCategory(challenge?.challengeCategory)} variant={getVariantByStatus(challenge?.challengeCategory)} />
+            <Flex column="start" className="gap-6">
+              <Flex row="between" className="items-center">
+                <Flex row="start" className="gap-2">
+                  <StateLabel label={getChallengeType(challenge?.challengeType)} variant={getVariantByStatus(challenge?.challengeType)} />
+                  <StateLabel label={getChallengeCategory(challenge?.challengeCategory)} variant={getVariantByStatus(challenge?.challengeCategory)} />
+                </Flex>
+                {teacher && academy && (
+                  <Typography size="h5" as="p" className="text-xs text-blue-950">
+                    {academy?.academyName} • {teacher?.academyNickname}/{teacher?.memberName}
+                  </Typography>
+                )}
               </Flex>
-              <Flex column="start" className="px-1">
+
+              <Flex column="start" className="gap-1 px-1">
                 <Typography size="h4" className="break-keep">
                   {challenge?.title}
                 </Typography>

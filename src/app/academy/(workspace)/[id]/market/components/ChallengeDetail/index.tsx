@@ -7,13 +7,20 @@ import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import type { TChallengeDetail } from '@/shared/types/market';
 
-function ChallengeDetail({ challenge }: TChallengeDetail['result']) {
+function ChallengeDetail({ challenge, teacher, academy }: TChallengeDetail['result']) {
   return (
     <Flex rowColumn="center" className="w-full gap-10 px-6 py-20 md:w-3/5 md:px-0">
       <Flex column="center" className="w-full gap-1">
-        <Typography size="h5" className="break-keep text-main-deep-pink">
-          {getChallengeType(challenge?.challengeType)} • {getChallengeCategory(challenge?.challengeCategory)}
-        </Typography>
+        <Flex row="start" className="items-center gap-2">
+          <Typography size="h5" className="break-keep text-main-deep-pink">
+            {getChallengeType(challenge?.challengeType)} • {getChallengeCategory(challenge?.challengeCategory)}
+          </Typography>
+          {teacher && academy && (
+            <Typography size="h5" as="p" className="py-2 text-xs opacity-60">
+              {academy?.academyName} • {teacher?.academyNickname}/{teacher?.memberName}
+            </Typography>
+          )}
+        </Flex>
         <Typography size="h1" className="break-keep text-3xl font-bold md:text-4xl">
           {challenge?.title}
         </Typography>
