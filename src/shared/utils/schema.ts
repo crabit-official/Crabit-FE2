@@ -29,4 +29,11 @@ const challengeTwoSchema = z.object({
   totalDays: z.number().min(3, { message: '최소 3일이상이어야 합니다.' }).max(31, { message: '최대 31일까지만 가능합니다' }),
 });
 
-export { challengeSchema, challengeTwoSchema, loginSchema, signUpSchema };
+const marketSchema = z.object({
+  points: z.number().min(0, { message: '포인트는 0 이상이어야 합니다' }),
+  totalDays: z.number().min(3, { message: '최소 3일이상이어야 합니다.' }).max(31, { message: '최대 31일까지만 가능합니다' }),
+  challengeParticipationMethod: z.enum(['ASSIGNED', 'SELF_PARTICIPATING']),
+  studentIdList: z.array(z.number()).optional(),
+});
+
+export { challengeSchema, challengeTwoSchema, loginSchema, marketSchema, signUpSchema };

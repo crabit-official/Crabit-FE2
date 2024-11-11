@@ -84,3 +84,15 @@ export type TChallengeDetail = CommonResponse<{
     memberName: string;
   };
 }>;
+
+export type TReleasedChallengeResult = CommonResponse<{
+  challengeCoreId: number;
+  releasedChallengeId: number;
+}>;
+
+export interface IReleaseChallengeDTO {
+  challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
+  points: number;
+  studentIdList: number[] | [];
+  totalDays: number;
+}

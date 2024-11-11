@@ -12,6 +12,6 @@ interface IMarketChallengeModalProps {
 async function MarketChallengeModalPage({ params }: IMarketChallengeModalProps) {
   const challengeData = await fetchData<TChallengeDetail>(`/api/v1/academies/${Number(params.id)}/market/${Number(params.challengeId)}`, 'GET');
 
-  return <ModalDetail {...challengeData.result} />;
+  return <ModalDetail {...challengeData.result} academyId={Number(params.id)} challengeCoreId={Number(params.challengeId)} />;
 }
 export default MarketChallengeModalPage;
