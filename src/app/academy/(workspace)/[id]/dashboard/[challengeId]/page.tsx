@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { dehydrate, QueryClient } from '@tanstack/query-core';
 import { HydrationBoundary } from '@tanstack/react-query';
 
@@ -51,9 +51,11 @@ async function ContentDetail({ params, searchParams }: IContentDetailProps) {
             />
           )}
           {searchParams.tab === 'student' && (
-            <HydrationBoundary state={dehydratedState}>
-              <StudentCardList academyId={Number(params.id)} releasedChallengeId={Number(params.challengeId)} />
-            </HydrationBoundary>
+            <Suspense fallback={<div>Loading...</div>}>
+              <HydrationBoundary state={dehydratedState}>
+                <StudentCardList academyId={Number(params.id)} releasedChallengeId={Number(params.challengeId)} />
+              </HydrationBoundary>
+            </Suspense>
           )}
           {searchParams.tab === 'statistics' && <ChallengeStatistics academyId={Number(params.id)} releasedChallengeId={Number(params.challengeId)} />}
         </Flex>

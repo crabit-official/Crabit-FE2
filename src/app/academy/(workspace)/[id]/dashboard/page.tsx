@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { dehydrate, QueryClient } from '@tanstack/query-core';
 import { HydrationBoundary } from '@tanstack/react-query';
 import Image from 'next/image';
@@ -72,7 +72,7 @@ async function AcademyDashBoardPage({ params }: IAcademyDashBoardProps) {
       </Flex>
       <div className="flex flex-col gap-20 lg:grid lg:grid-cols-[180px,1fr] lg:gap-10 xl:gap-32">
         <Menubar />
-        {contents}
+        <Suspense fallback={<div>로당중</div>}>{contents}</Suspense>
       </div>
     </Flex>
   );
