@@ -1,12 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { type FieldValues, useForm } from 'react-hook-form';
 import { GoX } from 'react-icons/go';
+import { useInView } from 'react-intersection-observer';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
+import Students from '@/features/academy/(workspace)/components/dashboard/Students';
 import StateLabel from '@/features/academy/(workspace)/components/state-label';
 import { getChallengeCategory, getChallengeType, getVariantByStatus } from '@/features/academy/(workspace)/utils/challengeState';
 import Button from '@/shared/components/Button';
@@ -16,6 +18,7 @@ import SelectDropdown from '@/shared/components/SelectDropdown';
 import Typography from '@/shared/components/Typography';
 import { METHOD_CATEGORIES } from '@/shared/constants/challenge-cataegrories';
 import { CHALLENGE_PARTICIPATION_METHODS } from '@/shared/enums/challenge';
+import useGetInfiniteAcademyMemberDetailList from '@/shared/hooks/academy/useGetInfiniteAcademyStudentList';
 import useReleaseChallenge from '@/shared/hooks/market/useReleaseChallenge';
 import type { IReleaseChallengeDTO, TChallengeDetail } from '@/shared/types/market';
 import { marketSchema } from '@/shared/utils/schema';
@@ -29,7 +32,21 @@ function ModalDetail({ challenge, teacher, academy, academyId, challengeCoreId }
   let content;
   const router = useRouter();
   const [release, setRelease] = useState<boolean>(false);
-  const { mutate } = useReleaseChallenge(academyId);
+  const { mutate, isPending } = useReleaseChallenge(academyId);
+  const { data: studentData, isFetching, hasNextPage, fetchNextPage, isError } = useGetInfiniteAcademyMemberDetailList(10, academyId);
+  const [selectedStudentIdList, setSelectedStudentIdList] = useState<number[]>([]);
+  const { ref, inView } = useInView({
+    threshold: 0,
+    delay: 0,
+  });
+
+  useEffect(() => {
+    if (inView) {
+      if (!isFetching && hasNextPage) {
+        void fetchNextPage();
+      }
+    }
+  }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
   const {
     register,
@@ -55,8 +72,7 @@ function ModalDetail({ challenge, teacher, academy, academyId, challengeCoreId }
     };
 
     if (data.challengeParticipationMethod === CHALLENGE_PARTICIPATION_METHODS.ASSIGNED) {
-      // TODO: 학생 골라서 넣기
-      challengeData.studentIdList = [3];
+      challengeData.studentIdList = selectedStudentIdList;
     }
 
     mutate({
@@ -68,6 +84,14 @@ function ModalDetail({ challenge, teacher, academy, academyId, challengeCoreId }
     reset();
   };
 
+  if (isError) {
+    return (
+      <Flex>
+        <Typography size="h5">에러가 발생했습니다.</Typography>
+      </Flex>
+    );
+  }
+
   if (release) {
     content = (
       <form onSubmit={handleSubmit(handleRelease)} className="flex h-full flex-col justify-center gap-4 p-6">
@@ -78,9 +102,23 @@ function ModalDetail({ challenge, teacher, academy, academyId, challengeCoreId }
         <Input id="totalDays" type="number" label="챌린지 기간" register={register} errors={errors} required valueAsNumber />
         <Input id="points" type="number" label="포인트" register={register} errors={errors} required valueAsNumber />
         <SelectDropdown id="challengeParticipationMethod" label="챌린지 참여 방식" register={register} errors={errors} options={METHOD_CATEGORIES} />
-        {watchCategory === CHALLENGE_PARTICIPATION_METHODS.ASSIGNED && <div>배정형인 경우</div>}
-        <Button type="submit" className="font-medium text-white">
-          배포 하기
+        {watchCategory === CHALLENGE_PARTICIPATION_METHODS.ASSIGNED && (
+          <div className="flex max-h-48 flex-wrap gap-2 overflow-y-scroll">
+            {studentData?.pages.map((page) =>
+              page.result.studentList.map((student) => (
+                <Students
+                  key={student.academyMemberId}
+                  {...student}
+                  selectedStudentIdList={selectedStudentIdList}
+                  setSelectedStudentIdList={setSelectedStudentIdList}
+                />
+              )),
+            )}
+            <div ref={ref} className="h-14" />
+          </div>
+        )}
+        <Button type="submit" className="font-medium text-white" disabled={isPending}>
+          {isPending ? '학원에 배포중..' : '배포 하기'}
         </Button>
       </form>
     );

@@ -149,7 +149,6 @@ export interface IGetAcademyMemberDetailList {
   academyId: number;
   cursor: number;
   nickname?: string;
-  session: Session;
   take: number;
 }
 

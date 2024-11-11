@@ -77,7 +77,7 @@ export async function getAcademyMemberDetailList({ cursor, session, take, academ
 }
 
 // [원장 선생님] 학원 전체 강사 리스트 조회
-export async function getAcademyInstructorList({ cursor, session, take, academyId, nickname }: IGetAcademyMemberDetailList) {
+export async function getAcademyInstructorList({ cursor, take, academyId, nickname }: IGetAcademyMemberDetailList) {
   let url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/instructors?cursor=${cursor}&take=${take}`;
 
   if (nickname) {
@@ -86,9 +86,6 @@ export async function getAcademyInstructorList({ cursor, session, take, academyI
 
   const res = await fetch(url, {
     method: 'GET',
-    headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
-    },
   });
 
   if (!res.ok) {
@@ -101,27 +98,15 @@ export async function getAcademyInstructorList({ cursor, session, take, academyI
 }
 
 // [원장 선생님, 강사] 학원 전체 학생 리스트 조회
-export async function getAcademyStudentList({ cursor, session, take, academyId, nickname }: IGetAcademyMemberDetailList) {
-  let url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/students?cursor=${cursor}&take=${take}`;
+export async function getAcademyStudentList({ cursor, take, academyId, nickname }: IGetAcademyMemberDetailList) {
+  let url = `/api/academy/students?academyId=${academyId}&cursor=${cursor}&take=${take}`;
 
   if (nickname) {
     url += `&nickname=${nickname}`;
   }
+  const res = await fetch(url);
 
-  const res = await fetch(url, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
-    },
-  });
-
-  if (!res.ok) {
-    throw new Error('학원의 학생 목록을 가져오는데 에러가 발생했습니다!');
-  }
-
-  const data: IAcademyStudentListResult = await res.json();
-
-  return data;
+  return (await res.json()) as IAcademyStudentListResult;
 }
 
 // 원장/강사가 배포한 챌린지 상세 조회
