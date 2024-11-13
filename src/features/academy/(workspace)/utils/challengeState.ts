@@ -4,6 +4,7 @@ import {
   CHALLENGE_LOG_SUBMISSION_STATUS,
   CHALLENGE_PARTICIPATION_METHODS,
   CHALLENGE_TYPE,
+  MARKET_VISIBILITY_CATEGORIES,
 } from '@/shared/enums/challenge';
 
 export function getVariantByStatus(status: CHALLENGE_LOG_SUBMISSION_STATUS | CHALLENGE_TYPE | CHALLENGE_CATEGORY | CHALLENGE_LOG_APPROVAL_STATUS) {
@@ -78,9 +79,9 @@ export function getChallengeCategory(category: CHALLENGE_CATEGORY) {
     case CHALLENGE_CATEGORY.STUDYING:
       return '공부 챌린지';
     case CHALLENGE_CATEGORY.ETC:
-      return '기타 챌린지';
+      return '기타';
     case CHALLENGE_CATEGORY.DIARY_WRITING:
-      return '?? 챌린지';
+      return '매일 쓰기 챌린지';
     case CHALLENGE_CATEGORY.EXERCISE:
       return '운동 챌린지';
     default:
@@ -109,8 +110,18 @@ export function getParticipationMethod(type: CHALLENGE_PARTICIPATION_METHODS) {
       return '참여 챌린지';
     case CHALLENGE_PARTICIPATION_METHODS.ASSIGNED:
       return '배정 챌린지';
-
     default:
       return '참여 챌린지';
+  }
+}
+
+export function getVisibilityType(category: MARKET_VISIBILITY_CATEGORIES) {
+  switch (category) {
+    case MARKET_VISIBILITY_CATEGORIES.PUBLIC:
+      return '공개';
+    case MARKET_VISIBILITY_CATEGORIES.PROTECTED:
+      return '공개하지 않음';
+    default:
+      return '공개하지 않음';
   }
 }

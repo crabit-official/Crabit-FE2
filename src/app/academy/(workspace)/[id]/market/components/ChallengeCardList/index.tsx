@@ -42,7 +42,7 @@ function ChallengeCardList({ academyId, challengeType }: IChallengeCardListProps
   }
 
   return (
-    <div className="s w-6/7 relative grid min-h-[800px] grid-cols-1 place-items-center gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div className="s w-6/7 relative grid min-h-[800px] grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {challenges?.pages?.map((page) =>
         page.result.challengeList.length !== 0
           ? page.result.challengeList.map((challenge) => (

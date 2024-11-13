@@ -20,13 +20,20 @@ const signUpSchema = z.object({
 const challengeSchema = z.object({
   challengeParticipationMethod: z.enum(['ASSIGNED', 'SELF_PARTICIPATING']),
   studentIdList: z.array(z.number()).optional(),
+  challengeCategory: z.enum(['STUDYING', 'EXERCISE', 'READING', 'NEWSPAPER', 'COPYING', 'DIARY_WRITING', 'LIFESTYLE_HABITS', 'ETC']),
+  challengeMarketVisibility: z.enum(['PUBLIC', 'PROTECTED']),
 });
 
 const challengeTwoSchema = z.object({
-  challengeCategory: z.enum(['STUDYING', 'EXERCISE', 'READING', 'NEWSPAPER', 'COPYING', 'DIARY_WRITING', 'LIFESTYLE_HABITS', 'ETC']),
-  challengeMarketVisibility: z.enum(['PUBLIC', 'PROTECTED']),
   points: z.number().min(0, { message: '포인트는 0 이상이어야 합니다' }),
   totalDays: z.number().min(3, { message: '최소 3일이상이어야 합니다.' }).max(31, { message: '최대 31일까지만 가능합니다' }),
 });
 
-export { challengeSchema, challengeTwoSchema, loginSchema, signUpSchema };
+const marketSchema = z.object({
+  points: z.number().min(0, { message: '포인트는 0 이상이어야 합니다' }),
+  totalDays: z.number().min(3, { message: '최소 3일이상이어야 합니다.' }).max(31, { message: '최대 31일까지만 가능합니다' }),
+  challengeParticipationMethod: z.enum(['ASSIGNED', 'SELF_PARTICIPATING']),
+  studentIdList: z.array(z.number()).optional(),
+});
+
+export { challengeSchema, challengeTwoSchema, loginSchema, marketSchema, signUpSchema };

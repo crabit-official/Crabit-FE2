@@ -7,7 +7,7 @@ import { fetchData } from '@/shared/apis/fetch-data';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import { STUDENTS } from '@/shared/constants/student';
-import type { IDetailChallengeResult } from '@/shared/types/acadmy';
+import type { TDetailChallengeResult } from '@/shared/types/acadmy';
 
 interface IChallengeStatisticsProps {
   academyId: number;
@@ -15,7 +15,7 @@ interface IChallengeStatisticsProps {
 }
 
 async function ChallengeStatistics({ academyId, releasedChallengeId }: IChallengeStatisticsProps) {
-  const challengeData = await fetchData<IDetailChallengeResult>(`/api/v1/academies/${academyId}/challenges/teachers/${releasedChallengeId}`, 'GET');
+  const challengeData = await fetchData<TDetailChallengeResult>(`/api/v1/academies/${academyId}/challenges/teachers/${releasedChallengeId}`, 'GET');
 
   return (
     <Flex column="center" className="w-full gap-4">

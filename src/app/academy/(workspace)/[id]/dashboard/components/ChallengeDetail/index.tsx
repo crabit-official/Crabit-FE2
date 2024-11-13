@@ -1,26 +1,28 @@
+'use client';
+
 import React from 'react';
 import { AiTwotoneEdit } from 'react-icons/ai';
 import { BsTrash3Fill } from 'react-icons/bs';
 import Image from 'next/image';
 
 import { getChallengeCategory, getChallengeType } from '@/features/academy/(workspace)/utils/challengeState';
-import { fetchData } from '@/shared/apis/fetch-data';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
-import type { IDetailChallengeResult } from '@/shared/types/acadmy';
+import useDeleteChallenge from '@/shared/hooks/challenge/useDeleteChallenge';
+import type { TDetailChallengeResult } from '@/shared/types/acadmy';
 
-interface IChallengeDetailProps {
+type TChallengeDetailProps = Omit<TDetailChallengeResult['result'], 'challengeStatusCounts'> & {
   academyId: number;
   releasedChallengeId: number;
-}
+};
 
-// TODO: 오류처리 및 첨부파일 처리
-async function ChallengeDetail({ academyId, releasedChallengeId }: IChallengeDetailProps) {
-  const challengeData = await fetchData<IDetailChallengeResult>(`/api/v1/academies/${academyId}/challenges/teachers/${releasedChallengeId}`, 'GET');
+// TODO: 첨부파일 처리
+function ChallengeDetail({ academyId, releasedChallengeId, releasedChallenge }: TChallengeDetailProps) {
+  const { mutate } = useDeleteChallenge({ academyId });
 
-  if (!challengeData) {
-    return <div>오류 발생</div>;
-  }
+  const handleDelete = () => {
+    mutate({ academyId, releasedChallengeId });
+  };
 
   return (
     <Flex className="w-full">
@@ -29,22 +31,21 @@ async function ChallengeDetail({ academyId, releasedChallengeId }: IChallengeDet
           <button type="button">
             <AiTwotoneEdit className="hover:text-main-deep-pink" />
           </button>
-          <button type="button">
+          <button type="button" onClick={handleDelete}>
             <BsTrash3Fill className="hover:text-main-deep-pink" />
           </button>
         </Flex>
         <Flex column="center" className="gap-1">
           <Typography size="h5" className="break-keep text-main-deep-pink">
-            {getChallengeType(challengeData?.result?.releasedChallenge?.challengeType)} •{' '}
-            {getChallengeCategory(challengeData?.result?.releasedChallenge?.challengeCategory)}
+            {getChallengeType(releasedChallenge?.challengeType)} • {getChallengeCategory(releasedChallenge?.challengeCategory)}
           </Typography>
           <Typography size="h1" className="break-keep text-3xl font-bold md:text-4xl">
-            {challengeData?.result?.releasedChallenge?.title}
+            {releasedChallenge?.title}
           </Typography>
         </Flex>
-        {challengeData?.result?.releasedChallenge?.thumbnailImageUrl ? (
+        {releasedChallenge?.thumbnailImageUrl ? (
           <Image
-            src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challengeData?.result?.releasedChallenge?.thumbnailImageUrl}`}
+            src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${releasedChallenge?.thumbnailImageUrl}`}
             alt="test"
             width={500}
             height={500}
@@ -65,7 +66,7 @@ async function ChallengeDetail({ academyId, releasedChallengeId }: IChallengeDet
               배정된 포인트
             </Typography>
             <Typography size="h5" className="w-full text-end text-main-deep-pink">
-              Ⓟ {challengeData?.result?.releasedChallenge?.points}
+              Ⓟ {releasedChallenge?.points}
             </Typography>
           </Flex>
           <Flex column="center" className="w-full items-center gap-4 rounded-lg border border-solid border-gray-100 bg-gray-50 px-4 py-5">
@@ -73,18 +74,18 @@ async function ChallengeDetail({ academyId, releasedChallengeId }: IChallengeDet
               총 일수
             </Typography>
             <Typography size="h5" className="w-full text-end text-main-deep-pink">
-              Day {challengeData?.result?.releasedChallenge?.totalDays}
+              Day {releasedChallenge?.totalDays}
             </Typography>
           </Flex>
         </Flex>
         <Flex className="w-full cursor-pointer items-center rounded-lg border border-solid border-gray-100 bg-gray-50 px-4 py-5">
           <Typography size="h5" className="w-full text-start">
-            {challengeData?.result?.releasedChallenge?.fileUrl ? `첨부파일: ${challengeData?.result?.releasedChallenge.fileUrl}` : '첨부파일이 없습니다.'}
+            {releasedChallenge?.fileUrl ? `첨부파일: ${releasedChallenge.fileUrl}` : '첨부파일이 없습니다.'}
           </Typography>
         </Flex>
         <Flex className="w-full items-center rounded-lg border border-solid border-gray-100 bg-gray-50 px-4 py-5">
           <Typography size="h5" className="w-full text-start font-normal opacity-80" as="p">
-            {challengeData?.result?.releasedChallenge?.content}
+            {releasedChallenge?.content}
           </Typography>
         </Flex>
       </Flex>

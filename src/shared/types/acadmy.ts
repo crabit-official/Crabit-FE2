@@ -9,6 +9,7 @@ import type {
   CHALLENGE_PARTICIPATION_METHODS,
   CHALLENGE_SOURCE_TYPE,
   CHALLENGE_TYPE,
+  MARKET_VISIBILITY_CATEGORIES,
 } from '@/shared/enums/challenge';
 
 export interface IAcademyCreateDTO {
@@ -60,13 +61,14 @@ export interface IAcademyResponse<T> {
 }
 
 export interface IAcademyChallenges {
-  challengeCategory: string;
-  challengeMarketVisibility: string;
-  challengeParticipationMethod: string;
+  challengeCategory: CHALLENGE_CATEGORY;
+  challengeMarketVisibility: MARKET_VISIBILITY_CATEGORIES;
+  challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
   content: string;
+  fileUrl: string | null;
   points: number;
-  studentIdList?: number[];
-  thumbnailImageUrl?: string | null;
+  studentIdList: number[] | [];
+  thumbnailImageUrl: string | null;
   title: string;
   totalDays: number;
 }
@@ -149,7 +151,6 @@ export interface IGetAcademyMemberDetailList {
   academyId: number;
   cursor: number;
   nickname?: string;
-  session: Session;
   take: number;
 }
 
@@ -209,7 +210,7 @@ export interface IAcademyStudentListResult {
 }
 
 // 상세 챌린지
-export type IDetailChallengeResult = CommonResponse<{
+export type TDetailChallengeResult = CommonResponse<{
   challengeStatusCounts: {
     allLogsSubmittedStudents: number;
     approvedStudents: number;
@@ -405,17 +406,18 @@ export interface IAllChallengeResult {
 }
 
 // 학원 정보조회
-export interface IAcademyInfoResult {
-  result: {
-    academy: {
-      academyId: number;
-      address: string;
-      addressDetail: string;
-      contactNumber: string;
-      email: string;
-      mainImageUrl: string;
-      name: string;
-      studentCount: number;
-    };
+export type TAcademyInfoResult = CommonResponse<{
+  academy: {
+    academyId: number;
+    address: string;
+    addressDetail: string;
+    contactNumber: string;
+    email: string;
+    mainImageUrl: string;
+    name: string;
+    studentCount: number;
   };
-}
+}>;
+export type TChallengeResult = CommonResponse<{
+  releasedChallengeId: number;
+}>;

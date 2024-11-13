@@ -1,25 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
-import { getSession } from 'next-auth/react';
 
-import type { IFetchResponse, IPresignedUrl } from '@/shared/types/images';
+import type { IAcademyResponse } from '@/shared/types/acadmy';
+import type { IPresignedUrl } from '@/shared/types/images';
 
 const getPresignedUrl = async (fileName: string) => {
-  const session = await getSession();
-
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/s3/presigned/upload`, {
+  const res = await fetch(`/api/image/upload`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${session?.accessToken}`,
-    },
     body: JSON.stringify({
       fileName,
     }),
   });
 
-  const data: IFetchResponse<IPresignedUrl> = await res.json();
-
-  return data.result;
+  return (await res.json()) as IAcademyResponse<IPresignedUrl>;
 };
 
 const useGetPresignedUrl = (fileName: string) =>
