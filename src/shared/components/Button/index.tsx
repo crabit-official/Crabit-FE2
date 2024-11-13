@@ -8,7 +8,7 @@ import cn from '@/shared/utils/style';
 const ButtonVariants = cva('flex w-full items-center justify-center rounded-lg transition hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-70', {
   variants: {
     variant: {
-      main: 'border-2 border-main-pink bg-main-pink',
+      main: 'border-2 border-main-deep-pink bg-main-deep-pink',
       outline: 'border-main-black bg-main-white',
       link: 'border-none',
     },

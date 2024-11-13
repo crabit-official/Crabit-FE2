@@ -25,6 +25,7 @@ export const extendTwMerge = extendTailwindMerge({
         'text-main-black',
         'text-main-white',
         'text-main-pink',
+        'text-main-deep-pink',
         'text-neutral-000',
         'text-neutral-100',
         'text-neutral-200',
