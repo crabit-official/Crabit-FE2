@@ -60,3 +60,39 @@ export type TChallengeMarketResult = CommonResponse<{
   hasNext: boolean;
   nextCursor: number;
 }>;
+
+// 챌린지 마켓 상세 조회
+export type TChallengeDetail = CommonResponse<{
+  academy: {
+    academyId: number;
+    academyName: string;
+  };
+  challenge: {
+    alreadyReleasedInAcademy: boolean;
+    challengeCategory: CHALLENGE_CATEGORY;
+    challengeCoreId: number;
+    challengeType: CHALLENGE_TYPE;
+    content: string;
+    fileUrl: string;
+    thumbnailImageUrl: string;
+    title: string;
+  };
+  teacher: {
+    academyMemberId: number;
+    academyNickname: string;
+    memberId: number;
+    memberName: string;
+  };
+}>;
+
+export type TReleasedChallengeResult = CommonResponse<{
+  challengeCoreId: number;
+  releasedChallengeId: number;
+}>;
+
+export interface IReleaseChallengeDTO {
+  challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
+  points: number;
+  studentIdList: number[] | [];
+  totalDays: number;
+}

@@ -1,13 +1,9 @@
 import type { IAcademyChallenge, IAcademyChallenges, IAcademyResponse } from '@/shared/types/acadmy';
 
-const createChallenges = async ({ id, challengeData, accessToken }: { accessToken: string; challengeData: IAcademyChallenges; id: number }) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${id}/challenges`, {
+const createChallenges = async ({ academyId, challengeData }: { academyId: number; challengeData: IAcademyChallenges }) => {
+  const res = await fetch(`/api/challenge/create?academyId=${academyId}`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify(challengeData),
+    body: JSON.stringify({ ...challengeData }),
   });
 
   const data: IAcademyResponse<IAcademyChallenge> = await res.json();

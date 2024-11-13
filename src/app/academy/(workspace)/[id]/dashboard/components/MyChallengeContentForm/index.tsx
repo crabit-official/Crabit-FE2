@@ -39,7 +39,7 @@ function MyChallengeContentForm({ academyId, studentChallengeId, session }: IMyC
 
   const createContent: SubmitHandler<FieldValues> = async (data: FieldValues) => {
     if (image) {
-      const res = await fetch(image.url, {
+      const res = await fetch(image.result.url, {
         method: 'PUT',
         body: file,
       });
@@ -50,7 +50,7 @@ function MyChallengeContentForm({ academyId, studentChallengeId, session }: IMyC
           academyId,
           studentChallengeId,
           content: data.content,
-          imageUrl: image.keyName,
+          imageUrl: image.result.keyName,
         });
       }
     } else {
