@@ -54,7 +54,7 @@ export async function getStudentChallengeList({ cursor, take, academyId }: IGetC
 }
 
 // [원장 선생님] 학원 전체 학생 리스트 조회
-export async function getAcademyMemberDetailList({ cursor, session, take, academyId, nickname }: IGetAcademyMemberDetailList) {
+export async function getAcademyMemberDetailList({ cursor, take, academyId, nickname }: IGetAcademyMemberDetailList) {
   let url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/students/detail?cursor=${cursor}&take=${take}`;
 
   if (nickname) {
@@ -63,9 +63,6 @@ export async function getAcademyMemberDetailList({ cursor, session, take, academ
 
   const res = await fetch(url, {
     method: 'GET',
-    headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
-    },
   });
 
   if (!res.ok) {

@@ -3,7 +3,6 @@
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import Image from 'next/image';
-import type { Session } from 'next-auth';
 
 import StateLabel from '@/features/academy/(workspace)/components/state-label';
 import ListRow from '@/features/academy/alert/components/ListRow';
@@ -13,11 +12,10 @@ import useGetInfiniteAcademyMemberDetailList from '@/shared/hooks/academy/useGet
 
 interface IStudentDetailList {
   academyId: number;
-  session: Session;
 }
 
-function StudentDetailList({ session, academyId }: IStudentDetailList) {
-  const { data: students, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteAcademyMemberDetailList(session, 5, academyId);
+function StudentDetailList({ academyId }: IStudentDetailList) {
+  const { data: students, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteAcademyMemberDetailList(5, academyId);
 
   const { ref, inView } = useInView({
     threshold: 0,
