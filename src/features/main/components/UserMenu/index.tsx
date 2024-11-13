@@ -48,7 +48,6 @@ function UserMenu() {
         <div
           onClick={() => {
             router.push('/academy/my');
-            toast.success('hi');
           }}
           className="hidden cursor-pointer rounded-full px-4 py-3 text-sm font-semibold transition hover:bg-neutral-100 md:block"
         >
