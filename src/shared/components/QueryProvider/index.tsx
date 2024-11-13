@@ -1,11 +1,13 @@
 'use client';
 
 import type React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { QueryClient } from '@tanstack/query-core';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental';
+
+import ChannelService from '@/shared/components/ChannelTalk';
 
 type Props = {
   children: React.ReactNode;
@@ -22,6 +24,14 @@ export function QueryProvider({ children }: Props) {
         },
       }),
   );
+
+  useEffect(() => {
+    ChannelService.loadScript();
+
+    ChannelService.boot({
+      pluginKey: process.env.NEXT_PUBLIC_CHANNEL_TALK_PLUGIN_KEY || '',
+    });
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
