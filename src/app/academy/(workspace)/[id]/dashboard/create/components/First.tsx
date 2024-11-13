@@ -2,6 +2,7 @@ import React from 'react';
 import { type FieldValues, useForm } from 'react-hook-form';
 import { IoMdPhotos } from 'react-icons/io';
 import Image from 'next/image';
+import { toast } from 'sonner';
 
 import type { IChallengeValue } from '@/app/academy/(workspace)/[id]/dashboard/create/page';
 import { useImage } from '@/features/academy/(workspace)/hooks/use-image';
@@ -23,17 +24,25 @@ function First({ onNext }: IFirstProps) {
     formState: { errors },
   } = useForm<FieldValues>({});
   const { filePreview, handleChangeFile, file } = useImage();
-  const { data: image } = useGetPresignedUrl(file?.name as string);
+  const { data: image, isSuccess } = useGetPresignedUrl(file?.name as string);
 
   const onSubmit = async (data: FieldValues) => {
     if (image) {
-      if (image.isSuccess) {
-        const res = await fetch(image.result.url, {
-          method: 'PUT',
-          body: file,
-        });
+      if (isSuccess) {
+        try {
+          const res = await fetch(image.result.url, {
+            method: 'PUT',
+            body: file,
+          });
 
-        if (res?.ok) onNext({ title: data.title, content: data.content, thumbnailImageUrl: image.result.keyName });
+          if (!res.ok) {
+            toast.error('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
+          } else {
+            onNext({ title: data.title, content: data.content, thumbnailImageUrl: image.result.keyName });
+          }
+        } catch {
+          toast.error('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
+        }
       }
     } else {
       onNext({ title: data.title, content: data.content, thumbnailImageUrl: null });

@@ -152,7 +152,7 @@ const config: Config = {
           'black': '#000000',
           'white': '#ffffff',
           'pink': '#E36B88',
-          'deep-pink': '#F06485',
+          'deep-pink': '#F06480',
         },
         neutral: {
           '000': '#FFFFFF',

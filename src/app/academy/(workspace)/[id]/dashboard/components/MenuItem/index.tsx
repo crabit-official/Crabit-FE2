@@ -12,7 +12,7 @@ function MenuItem({ text }: { text: string }) {
     <motion.ul className="border-b border-solid border-gray-300" layout onClick={toggleOpen}>
       <motion.div layout className="flex cursor-pointer items-center justify-between py-4 text-lg font-bold">
         <p>{text}</p>
-        <GoX />
+        <GoX className={`${isOpen ? 'rotate-180' : 'rotate-45'} transition-transform duration-500`} />
       </motion.div>
       <ul>
         <AnimatePresence>
