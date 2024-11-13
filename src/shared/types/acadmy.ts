@@ -9,6 +9,7 @@ import type {
   CHALLENGE_PARTICIPATION_METHODS,
   CHALLENGE_SOURCE_TYPE,
   CHALLENGE_TYPE,
+  MARKET_VISIBILITY_CATEGORIES,
 } from '@/shared/enums/challenge';
 
 export interface IAcademyCreateDTO {
@@ -60,13 +61,14 @@ export interface IAcademyResponse<T> {
 }
 
 export interface IAcademyChallenges {
-  challengeCategory: string;
-  challengeMarketVisibility: string;
-  challengeParticipationMethod: string;
+  challengeCategory: CHALLENGE_CATEGORY;
+  challengeMarketVisibility: MARKET_VISIBILITY_CATEGORIES;
+  challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
   content: string;
+  fileUrl: string | null;
   points: number;
-  studentIdList?: number[];
-  thumbnailImageUrl?: string | null;
+  studentIdList: number[] | [];
+  thumbnailImageUrl: string | null;
   title: string;
   totalDays: number;
 }

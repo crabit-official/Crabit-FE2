@@ -103,7 +103,7 @@ function ModalDetail({ challenge, teacher, academy, academyId, challengeCoreId }
         <Input id="points" type="number" label="포인트" register={register} errors={errors} required valueAsNumber />
         <SelectDropdown id="challengeParticipationMethod" label="챌린지 참여 방식" register={register} errors={errors} options={METHOD_CATEGORIES} />
         {watchCategory === CHALLENGE_PARTICIPATION_METHODS.ASSIGNED && (
-          <div className="flex max-h-48 flex-wrap gap-2 overflow-y-scroll">
+          <div className="flex max-h-48 flex-wrap gap-2 overflow-y-auto">
             {studentData?.pages.map((page) =>
               page.result.studentList.map((student) => (
                 <Students

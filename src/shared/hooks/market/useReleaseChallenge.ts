@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 import { releaseChallenge } from '@/shared/apis/market';
 import { queryKeys } from '@/shared/constants/query-keys';
 
-function useApplyChallenge(academyId: number) {
+function useReleaseChallenge(academyId: number) {
   const router = useRouter();
   const queryClient = useQueryClient();
   return useMutation({
@@ -20,4 +20,4 @@ function useApplyChallenge(academyId: number) {
     },
   });
 }
-export default useApplyChallenge;
+export default useReleaseChallenge;
