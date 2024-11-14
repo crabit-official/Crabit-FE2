@@ -1,16 +1,12 @@
 import React from 'react';
-import { dehydrate, QueryClient } from '@tanstack/query-core';
-import { HydrationBoundary } from '@tanstack/react-query';
 import Image from 'next/image';
 
-import AllChallengeContents from '@/app/academy/(workspace)/[id]/dashboard/components/AllChallengeContents';
+import PrincipalDashBoardUIl from '@/app/academy/(workspace)/[id]/dashboard/components/(principal)/DashBoardUI';
+import StudentDashBoardUI from '@/app/academy/(workspace)/[id]/dashboard/components/(student)/DashBoardUI';
 import Menubar from '@/app/academy/(workspace)/[id]/dashboard/components/Menubar';
-import StudentAllChallengeContents from '@/app/academy/(workspace)/[id]/dashboard/components/StudentAllChallengeContents';
-import { getStudentChallengeList, getTeachersChallengeList } from '@/shared/apis/challenge';
 import { fetchData } from '@/shared/apis/fetch-data';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
-import { queryKeys } from '@/shared/constants/query-keys';
 import { ACADEMY_ROLE } from '@/shared/enums/academy';
 import type { IAcademyProfile, IAcademyResponse, TAcademyInfoResult } from '@/shared/types/acadmy';
 
@@ -21,42 +17,8 @@ interface IAcademyDashBoardProps {
 }
 
 async function AcademyDashBoardPage({ params }: IAcademyDashBoardProps) {
-  let contents;
   const academyData = await fetchData<TAcademyInfoResult>(`/api/v1/academies/${Number(params.id)}/details`, 'GET');
-  const res = await fetchData<IAcademyResponse<IAcademyProfile>>(`/api/v1/academies/${Number(params.id)}`, 'GET');
-  const queryClient = new QueryClient();
-  await queryClient.prefetchInfiniteQuery({
-    queryKey: [queryKeys.CHALLENGE_LIST],
-    queryFn: () => getTeachersChallengeList({ cursor: 0, take: 6, academyId: Number(params.id) }),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages) => (lastPage.result.hasNext ? allPages.length + 1 : undefined),
-    pages: 1,
-  });
-  const dehydratedState = dehydrate(queryClient);
-
-  const queryClientStudent = new QueryClient();
-  await queryClientStudent.prefetchInfiniteQuery({
-    queryKey: [queryKeys.STUDENT_CHALLENGE_LIST],
-    queryFn: () => getStudentChallengeList({ cursor: 0, take: 6, academyId: Number(params.id) }),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages) => (lastPage.result.hasNext ? allPages.length + 1 : undefined),
-    pages: 1,
-  });
-  const dehydratedStudentState = dehydrate(queryClientStudent);
-
-  if (res.result.academyRole === ACADEMY_ROLE.STUDENT) {
-    contents = (
-      <HydrationBoundary state={dehydratedStudentState}>
-        <StudentAllChallengeContents academyId={Number(params.id)} />
-      </HydrationBoundary>
-    );
-  } else {
-    contents = (
-      <HydrationBoundary state={dehydratedState}>
-        <AllChallengeContents academyId={Number(params.id)} />
-      </HydrationBoundary>
-    );
-  }
+  const AcademyProfile = await fetchData<IAcademyResponse<IAcademyProfile>>(`/api/v1/academies/${Number(params.id)}`, 'GET');
 
   return (
     <Flex rowColumn="center" className="gap-2">
@@ -73,7 +35,11 @@ async function AcademyDashBoardPage({ params }: IAcademyDashBoardProps) {
       </Flex>
       <div className="flex flex-col gap-20 lg:grid lg:grid-cols-[180px,1fr] lg:gap-10 xl:gap-32">
         <Menubar />
-        {contents}
+        {AcademyProfile.result.academyRole === ACADEMY_ROLE.STUDENT ? (
+          <StudentDashBoardUI academyId={Number(params.id)} />
+        ) : (
+          <PrincipalDashBoardUIl academyId={Number(params.id)} />
+        )}
       </div>
     </Flex>
   );

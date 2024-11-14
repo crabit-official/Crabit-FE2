@@ -1,6 +1,6 @@
 import React from 'react';
 
-import PrincipalChallengeDetail from '@/app/academy/(workspace)/[id]/dashboard/components/(Principal)/ChallengeDetail';
+import PrincipalChallengeDetail from '@/app/academy/(workspace)/[id]/dashboard/components/(principal)/ChallengeDetail';
 import StudentChallengeDetail from '@/app/academy/(workspace)/[id]/dashboard/components/(student)/ChallengeDetail';
 import DetailTab from '@/app/academy/(workspace)/[id]/dashboard/components/DetailTab';
 import { fetchData } from '@/shared/apis/fetch-data';
