@@ -11,7 +11,7 @@ function useGetInfiniteTeacherChallengeList(
 ) {
   return useInfiniteQuery({
     queryFn: ({ pageParam }) => getTeachersChallengeList({ cursor: pageParam, take: 6, academyId }),
-    queryKey: [queryKeys.CHALLENGE_LIST],
+    queryKey: [queryKeys.CHALLENGE_LIST, { academyId }],
     initialPageParam: 0,
     getNextPageParam: (lastPage) => (lastPage.result.hasNext ? lastPage.result.nextCursor : undefined),
     ...queryOptions,
