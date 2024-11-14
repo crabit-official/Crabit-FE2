@@ -1,6 +1,6 @@
 'use client';
 
-import { FaBookmark, FaUserPlus } from 'react-icons/fa';
+import { FaBookmark } from 'react-icons/fa';
 import { IoIosSettings } from 'react-icons/io';
 import { RiStore2Fill } from 'react-icons/ri';
 import { useParams, usePathname } from 'next/navigation';
@@ -10,11 +10,10 @@ import Flex from '@/shared/components/Flex';
 import { ACADEMY_ROLE } from '@/shared/enums/academy';
 
 interface IWorkspaceTabProps {
-  memberId: number;
   role: ACADEMY_ROLE;
 }
 
-function WorkspaceTab({ role, memberId }: IWorkspaceTabProps) {
+function WorkspaceTab({ role }: IWorkspaceTabProps) {
   const pathname = usePathname();
   const params = useParams();
   const id = params.id as string;
@@ -25,10 +24,10 @@ function WorkspaceTab({ role, memberId }: IWorkspaceTabProps) {
     content = (
       <TabButton
         className="size-[19px]"
-        icon={FaUserPlus}
-        label="MY 챌린지"
-        isActive={pathname.includes(`/academy/${id}/my-challenge/${memberId}`)}
-        path={`/academy/${id}/my-challenge/${memberId}`}
+        icon={RiStore2Fill}
+        label="공개 챌린지"
+        isActive={pathname.includes(`/academy/${id}/public-challenge`)}
+        path={`/academy/${id}/public-challenge`}
       />
     );
   } else {
