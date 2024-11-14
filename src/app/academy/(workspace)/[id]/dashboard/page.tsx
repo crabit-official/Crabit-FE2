@@ -1,11 +1,12 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { dehydrate, QueryClient } from '@tanstack/query-core';
 import { HydrationBoundary } from '@tanstack/react-query';
 import Image from 'next/image';
 
 import AllChallengeContents from '@/app/academy/(workspace)/[id]/dashboard/components/AllChallengeContents';
 import Menubar from '@/app/academy/(workspace)/[id]/dashboard/components/Menubar';
-import { getTeachersChallengeList } from '@/shared/apis/challenge';
+import StudentAllChallengeContents from '@/app/academy/(workspace)/[id]/dashboard/components/StudentAllChallengeContents';
+import { getStudentChallengeList, getTeachersChallengeList } from '@/shared/apis/challenge';
 import { fetchData } from '@/shared/apis/fetch-data';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
@@ -33,21 +34,21 @@ async function AcademyDashBoardPage({ params }: IAcademyDashBoardProps) {
   });
   const dehydratedState = dehydrate(queryClient);
 
-  // await queryClientStudent.prefetchInfiniteQuery({
-  //   queryKey: [queryKeys.STUDENT_CHALLENGE_LIST],
-  //   queryFn: () => useGetInfiniteStudentChallengeList({ cursor: 0, take: 6, academyId: Number(params.id) }),
-  //   initialPageParam: 0,
-  //   getNextPageParam: (lastPage, allPages) => (lastPage.result.hasNext ? allPages.length + 1 : undefined),
-  //   pages: 1,
-  // });
-  // const dehydratedStudentState = dehydrate(queryClientStudent);
+  const queryClientStudent = new QueryClient();
+  await queryClientStudent.prefetchInfiniteQuery({
+    queryKey: [queryKeys.STUDENT_CHALLENGE_LIST],
+    queryFn: () => getStudentChallengeList({ cursor: 0, take: 6, academyId: Number(params.id) }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => (lastPage.result.hasNext ? allPages.length + 1 : undefined),
+    pages: 1,
+  });
+  const dehydratedStudentState = dehydrate(queryClientStudent);
 
   if (res.result.academyRole === ACADEMY_ROLE.STUDENT) {
     contents = (
-      <div>준비중</div>
-      // <HydrationBoundary state={dehydratedStudentState}>
-      //   <StudentAllChallengeContents academyId={Number(params.id)} />
-      // </HydrationBoundary>
+      <HydrationBoundary state={dehydratedStudentState}>
+        <StudentAllChallengeContents academyId={Number(params.id)} />
+      </HydrationBoundary>
     );
   } else {
     contents = (
@@ -72,7 +73,7 @@ async function AcademyDashBoardPage({ params }: IAcademyDashBoardProps) {
       </Flex>
       <div className="flex flex-col gap-20 lg:grid lg:grid-cols-[180px,1fr] lg:gap-10 xl:gap-32">
         <Menubar />
-        <Suspense fallback={<div>로당중</div>}>{contents}</Suspense>
+        {contents}
       </div>
     </Flex>
   );
