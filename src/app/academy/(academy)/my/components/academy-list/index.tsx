@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 
 import AnimateCard from '@/app/academy/(workspace)/[id]/dashboard/components/AnimateCard';
 import Flex from '@/shared/components/Flex';
+import Framer from '@/shared/components/Framer';
 import Typography from '@/shared/components/Typography';
 import useGetInfiniteAcademyList from '@/shared/hooks/academy/useGetInfiniteAcademyList';
 
@@ -36,6 +37,26 @@ function AcademyList() {
 
   return (
     <div className="grid h-full grid-cols-1 gap-6 overflow-hidden md:grid-cols-3 lg:grid-cols-4">
+      <Framer
+        onClick={() => {}}
+        whileHover={{ scale: 1.01 }}
+        className="relative flex h-fit min-h-80 w-[300px] cursor-pointer flex-col items-center justify-start overflow-hidden rounded-lg border border-solid border-gray-100 bg-main-deep-pink p-4 py-10 shadow-custom transition-shadow duration-300 hover:shadow-hover-custom sm:w-64"
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-main-white to-main-deep-pink opacity-50" />
+        <Flex column="start" className="size-full min-h-32 gap-2 px-1">
+          <Typography size="h1" color="main-white" className="break-keep font-bold">
+            학원
+          </Typography>
+          <Typography size="h1" color="main-white" className="break-keep font-bold">
+            초대코드 가입
+          </Typography>
+        </Flex>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="mt-10 flex size-[50px] items-center justify-center rounded-full bg-white">
+            <span className="text-3xl text-main-deep-pink">+</span>
+          </div>
+        </div>
+      </Framer>
       {academies?.pages.map((page) =>
         page.result?.memberAcademyList.map((academy) => (
           <AnimateCard
