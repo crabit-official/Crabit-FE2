@@ -5,7 +5,8 @@ import { BsFillPatchPlusFill } from 'react-icons/bs';
 import { useInView } from 'react-intersection-observer';
 import { useRouter } from 'next/navigation';
 
-import ChallengeCard from '@/app/academy/(workspace)/[id]/dashboard/components/ChallengeCard';
+import AnimateCard from '@/app/academy/(workspace)/[id]/dashboard/components/AnimateCard';
+import { getChallengeCategory } from '@/features/academy/(workspace)/utils/challengeState';
 import Flex from '@/shared/components/Flex';
 import Framer from '@/shared/components/Framer';
 import Typography from '@/shared/components/Typography';
@@ -60,9 +61,25 @@ function AllChallengeContents({ academyId }: IAllChallengeContentsProps) {
       </Framer>
       {challenge?.pages?.map((page) =>
         page.result.challengeList.map((item) => (
-          <ChallengeCard {...item} key={item.releasedChallengeId} onClick={() => router.push(`dashboard/${item.releasedChallengeId}`)} />
+          <AnimateCard
+            leftLabel={
+              <Typography as="p" size="h7" className="text-xs" color="main-white">
+                {getChallengeCategory(item.challengeCategory)}
+              </Typography>
+            }
+            imageUrl={item.thumbnailImageUrl}
+            key={item.releasedChallengeId}
+            onClick={() => router.push(`dashboard/${item.releasedChallengeId}`)}
+            title={item.title}
+            subTitle={item.content}
+          />
         )),
       )}
+      {isFetching
+        ? Array(10)
+            .fill('')
+            .map((_, i) => <AnimateCard.Skeleton key={i} />)
+        : null}
       <div ref={ref} className="h-14" />
     </div>
   );
