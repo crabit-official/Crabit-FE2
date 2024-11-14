@@ -1,14 +1,13 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { BsFillPatchPlusFill } from 'react-icons/bs';
 import { useInView } from 'react-intersection-observer';
 import { useRouter } from 'next/navigation';
 
 import AnimateCard from '@/app/academy/(workspace)/[id]/dashboard/components/AnimateCard';
+import PlusChallengeCard from '@/app/academy/(workspace)/[id]/dashboard/components/PlusChallengeCard';
 import { getChallengeCategory } from '@/features/academy/(workspace)/utils/challengeState';
 import Flex from '@/shared/components/Flex';
-import Framer from '@/shared/components/Framer';
 import Typography from '@/shared/components/Typography';
 import useGetInfiniteTeacherChallengeList from '@/shared/hooks/challenge/useGetInfiniteTeacherChallengeList';
 
@@ -44,21 +43,7 @@ function AllChallengeContents({ academyId }: IAllChallengeContentsProps) {
 
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      <Framer
-        onClick={() => {
-          router.push('dashboard/create');
-        }}
-        whileHover={{ scale: 1.01 }}
-        className="flex min-h-80 w-64 cursor-pointer flex-col justify-center gap-20 overflow-hidden rounded-lg border border-solid border-gray-100 bg-main-gradient px-6 shadow-custom transition-shadow duration-300 hover:shadow-hover-custom"
-      >
-        <Typography size="h2" className="break-keep text-white">
-          새로운
-          <br /> 챌린지 추가하기
-        </Typography>
-        <Flex rowColumn="center">
-          <BsFillPatchPlusFill size={50} className="text-white opacity-80" />
-        </Flex>
-      </Framer>
+      <PlusChallengeCard onClick={() => router.push('dashboard/create')} content={'새로운\n챌린지 추가하기'} />
       {challenge?.pages?.map((page) =>
         page.result.challengeList.map((item) => (
           <AnimateCard
@@ -76,7 +61,7 @@ function AllChallengeContents({ academyId }: IAllChallengeContentsProps) {
         )),
       )}
       {isFetching
-        ? Array(10)
+        ? Array(6)
             .fill('')
             .map((_, i) => <AnimateCard.Skeleton key={i} />)
         : null}
