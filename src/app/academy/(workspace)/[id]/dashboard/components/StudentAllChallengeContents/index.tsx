@@ -57,7 +57,7 @@ function StudentAllChallengeContents({ academyId }: IStudentAllChallengeContents
       {challenge?.pages.map((page) =>
         page.result.studentChallengeList.map((item) => (
           <AnimateCard
-            onClick={() => router.push('/')}
+            onClick={() => router.push(`dashboard/${item.studentChallengeStatus.studentChallengeId}`)}
             title={item.challenge.title}
             subTitle="예원이가 데이터 넣어주면 수정할 예정"
             key={item.studentChallengeStatus.studentChallengeId}

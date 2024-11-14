@@ -1,16 +1,12 @@
-import React, { Suspense } from 'react';
-import { dehydrate, QueryClient } from '@tanstack/query-core';
-import { HydrationBoundary } from '@tanstack/react-query';
+import React from 'react';
 
-import ChallengeDetail from '@/app/academy/(workspace)/[id]/dashboard/components/ChallengeDetail';
-import ChallengeStatistics from '@/app/academy/(workspace)/[id]/dashboard/components/ChallengeStatistics';
+import PrincipalChallengeDetail from '@/app/academy/(workspace)/[id]/dashboard/components/(Principal)/ChallengeDetail';
+import StudentChallengeDetail from '@/app/academy/(workspace)/[id]/dashboard/components/(student)/ChallengeDetail';
 import DetailTab from '@/app/academy/(workspace)/[id]/dashboard/components/DetailTab';
-import StudentCardList from '@/app/academy/(workspace)/[id]/dashboard/components/StudentCardList';
-import { getStudentsChallengeProgress } from '@/shared/apis/challenge';
 import { fetchData } from '@/shared/apis/fetch-data';
 import Flex from '@/shared/components/Flex';
-import { queryKeys } from '@/shared/constants/query-keys';
-import type { TDetailChallengeResult } from '@/shared/types/acadmy';
+import { ACADEMY_ROLE } from '@/shared/enums/academy';
+import type { IAcademyProfile, IAcademyResponse } from '@/shared/types/acadmy';
 
 interface IContentDetailProps {
   params: {
@@ -23,42 +19,25 @@ interface IContentDetailProps {
 }
 
 async function ContentDetail({ params, searchParams }: IContentDetailProps) {
-  const challengeData = await fetchData<TDetailChallengeResult>(
-    `/api/v1/academies/${Number(params.id)}/challenges/teachers/${Number(params.challengeId)}`,
-    'GET',
-  );
+  const academyProfile = await fetchData<IAcademyResponse<IAcademyProfile>>(`/api/v1/academies/${Number(params.id)}`, 'GET');
 
-  const queryClient = new QueryClient();
-  await queryClient.prefetchInfiniteQuery({
-    queryKey: [queryKeys.CHALLENGE_LIST],
-    queryFn: () => getStudentsChallengeProgress({ cursor: 0, take: 10, academyId: Number(params.id) }),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages) => (lastPage.result.hasNext ? allPages.length + 1 : undefined),
-    pages: 1,
-  });
-  const dehydratedState = dehydrate(queryClient);
+  let content;
+
+  if (academyProfile.result.academyRole === ACADEMY_ROLE.STUDENT) {
+    content = <StudentChallengeDetail />;
+  } else {
+    content = (
+      <>
+        <DetailTab academyId={Number(params.id)} releasedChallengeId={Number(params.challengeId)} />
+        <PrincipalChallengeDetail tabName={searchParams.tab} releasedChallengeId={Number(params.challengeId)} academyId={Number(params.id)} />
+      </>
+    );
+  }
 
   return (
     <Flex className="w-full">
       <Flex column="start" className="min-h-[550px] w-full lg:w-2/3">
-        <DetailTab academyId={Number(params.id)} releasedChallengeId={Number(params.challengeId)} />
-        <Flex rowColumn="center" className="z-10 mt-1 w-full gap-20 py-10">
-          {(searchParams.tab === 'challenge' || !searchParams.tab) && (
-            <ChallengeDetail
-              academyId={Number(params.id)}
-              releasedChallengeId={Number(params.challengeId)}
-              releasedChallenge={challengeData?.result.releasedChallenge}
-            />
-          )}
-          {searchParams.tab === 'student' && (
-            <Suspense fallback={<div>Loading...</div>}>
-              <HydrationBoundary state={dehydratedState}>
-                <StudentCardList academyId={Number(params.id)} releasedChallengeId={Number(params.challengeId)} />
-              </HydrationBoundary>
-            </Suspense>
-          )}
-          {searchParams.tab === 'statistics' && <ChallengeStatistics academyId={Number(params.id)} releasedChallengeId={Number(params.challengeId)} />}
-        </Flex>
+        {content}
       </Flex>
     </Flex>
   );
