@@ -30,13 +30,13 @@ function AnimateCard({ imageUrl, onClick, subTitle, title, leftLabel }: IAnimate
       className="relative flex h-fit min-h-80 w-[300px] cursor-pointer flex-col items-center justify-between overflow-hidden rounded-lg border border-solid border-gray-100 bg-white shadow-custom transition-shadow duration-300 hover:shadow-hover-custom sm:w-64"
     >
       {imageUrl ? (
-        <Image src={imageUrl} alt="thumbnail img" width={480} height={100} className="h-40 w-full object-cover" />
+        <Image src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${imageUrl}`} alt="thumbnail img" width={480} height={100} className="h-40 w-full object-cover" />
       ) : (
         <Image src="/images/logo_app.png" alt="default thumbnail img" width={480} height={100} className="h-40 w-full object-cover" />
       )}
 
       {leftLabel && (
-        <Flex column="center" className="absolute left-2 top-2 rounded-2xl bg-gray-300 p-2 shadow-custom">
+        <Flex column="center" className="absolute left-2 top-2 rounded-2xl bg-neutral-500/80 px-2 py-1">
           {leftLabel}
         </Flex>
       )}
@@ -58,8 +58,8 @@ function AnimateCardSkeleton() {
     <Framer className="relative flex h-fit min-h-80 w-[300px] flex-col items-center justify-between overflow-hidden rounded-lg border border-solid border-gray-100 bg-white shadow-custom sm:w-64">
       <Skeleton height={160} />
       <Flex column="start" className="size-full min-h-32 gap-2 px-6">
-        <Skeleton height={20} />
-        <Skeleton height={20} width={100} />
+        <Skeleton height={20} className="rounded-md" />
+        <Skeleton height={15} width={100} className="rounded-md" />
       </Flex>
     </Framer>
   );
