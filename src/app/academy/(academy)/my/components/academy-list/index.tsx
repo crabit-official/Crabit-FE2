@@ -1,11 +1,10 @@
 'use client';
 
-import { Fragment, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import ListRow from '@/features/academy/alert/components/ListRow';
+import AnimateCard from '@/app/academy/(workspace)/[id]/dashboard/components/AnimateCard';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import useGetInfiniteAcademyList from '@/shared/hooks/academy/useGetInfiniteAcademyList';
@@ -36,28 +35,46 @@ function AcademyList() {
   }
 
   return (
-    <div className="h-full overflow-y-auto">
+    <div className="grid h-full grid-cols-1 gap-6 overflow-hidden md:grid-cols-3 lg:grid-cols-4">
       {academies?.pages.map((page) =>
         page.result?.memberAcademyList.map((academy) => (
-          <Fragment key={academy.academyId}>
-            <ListRow
-              onClick={() => {
-                router.push(`/academy/${academy.academyId}/dashboard`);
-              }}
-              right={academy.academyRole}
-              left={
-                academy.academyMainImageUrl == null ? <Image src="/images/logo_app.png" alt="이미지" width="60" height="60" /> : academy.academyMainImageUrl
-              }
-              contents={<ListRow.Texts title={academy.academyName} subTitle={academy.academyMemberId} />}
-              withArrow
-            />
-          </Fragment>
+          <AnimateCard
+            key={academy.academyId}
+            onClick={() => {
+              router.push(`/academy/${academy.academyId}/dashboard`);
+            }}
+            title={academy.academyName}
+            subTitle={academy.academyMemberNickname}
+            imageUrl={academy.academyMainImageUrl}
+            leftLabel={
+              <Typography color="main-white" size="h7">
+                {getRoleLabel(academy.academyRole)}
+              </Typography>
+            }
+          />
         )),
       )}
-      {isFetching ? <ListRow.Skeleton /> : null}
+      {isFetching
+        ? Array(10)
+            .fill('')
+            .map((_, i) => <AnimateCard.Skeleton key={i} />)
+        : null}
       <div ref={ref} className="h-[100px]" />
     </div>
   );
 }
 
 export default AcademyList;
+
+function getRoleLabel(role: string) {
+  switch (role) {
+    case 'PRINCIPAL':
+      return '원장님';
+    case 'INSTRUCTOR':
+      return '강사';
+    case 'STUDENT':
+      return '학생';
+    default:
+      return '유저';
+  }
+}

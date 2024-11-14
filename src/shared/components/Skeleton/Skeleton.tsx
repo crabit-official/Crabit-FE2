@@ -10,7 +10,7 @@ function Skeleton({ width, height, className }: ISkeletonProps) {
   return (
     <div
       style={{
-        width: width ? `${width}px` : 'auto',
+        width: width ? `${width}px` : '100%',
         height: `${height}px`,
       }}
       className={cn(`animate-opacity bg-slate-200`, className)}
