@@ -13,10 +13,14 @@ import Input from '@/shared/components/Input';
 import Modal from '@/shared/components/Modal';
 import TextArea from '@/shared/components/Textarea';
 import Typography from '@/shared/components/Typography';
+import useEnrollInvitation from '@/shared/hooks/invitation/useEnrollInvitation';
 
 function InvitationModal() {
   const invitationModal = useInvitationModal();
   const [activeTab, setActiveTab] = useState(0);
+
+  console.log(activeTab);
+  const { mutate } = useEnrollInvitation();
 
   const {
     register,
@@ -33,15 +37,30 @@ function InvitationModal() {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data: FieldValues) => {
-    console.log({
-      ...data,
-      academyRole: activeTab === 0 ? 'STUDENT' : 'INSTRUCTOR',
-    });
+    console.log(data);
+    mutate(
+      {
+        joinCode: data.joinCode,
+        academyRole: activeTab === 0 ? 'STUDENT' : 'INSTRUCTOR',
+        nickname: data.nickname,
+        introduction: data.introduction,
+        school: data.school,
+      },
+      {
+        onSuccess: () => {
+          console.log('성공');
+        },
+        onError: (error) => {
+          console.log(error);
+          console.error('Error');
+        },
+      },
+    );
   };
 
   const bodyContent = (
     <>
-      <Heading title="Crabit에 오신 것을 환영합니다." subTitle="학원 초대 코드를 통해 학원에 가입해주세요!" />
+      <Heading title="크래빗에 오신 것을 환영합니다." subTitle="학원 초대 코드를 통해 학원에 가입해주세요!" />
       <Tabs.TabList>
         <Tabs.Tab index={0} activeTab={activeTab} setActiveTab={setActiveTab}>
           학생으로 가입
@@ -51,22 +70,26 @@ function InvitationModal() {
         </Tabs.Tab>
       </Tabs.TabList>
       <Tabs.TabPanels>
-        <Tabs.TabPanel index={0} activeTab={activeTab}>
-          <Flex column="start" className="gap-5">
-            <Input id="joinCode" label="초대 코드" register={register} errors={errors} required />
-            <Input id="nickname" label="닉네임" register={register} errors={errors} required />
-            <TextArea id="introduction" label="소개" register={register} errors={errors} required />
-            <Input id="school" label="학교" register={register} errors={errors} required />
-          </Flex>
-        </Tabs.TabPanel>
-        <Tabs.TabPanel index={1} activeTab={activeTab}>
-          <Flex column="start" className="gap-5">
-            <Input id="joinCode" label="초대 코드" register={register} errors={errors} required />
-            <Input id="nickname" label="닉네임" register={register} errors={errors} required />
-            <TextArea id="introduction" label="소개" register={register} errors={errors} required />
-            <Input id="school" label="학교" register={register} errors={errors} required />
-          </Flex>
-        </Tabs.TabPanel>
+        {activeTab === 0 && (
+          <Tabs.TabPanel index={0} activeTab={activeTab}>
+            <Flex column="start" className="gap-5">
+              <Input id="joinCode" label="초대 코드" register={register} errors={errors} required />
+              <Input id="nickname" label="닉네임" register={register} errors={errors} required />
+              <TextArea id="introduction" label="소개" register={register} errors={errors} required />
+              <Input id="school" label="학교" register={register} errors={errors} required />
+            </Flex>
+          </Tabs.TabPanel>
+        )}
+        {activeTab === 1 && (
+          <Tabs.TabPanel index={1} activeTab={activeTab}>
+            <Flex column="start" className="gap-5">
+              <Input id="joinCode" label="초대 코드" register={register} errors={errors} required />
+              <Input id="nickname" label="닉네임" register={register} errors={errors} required />
+              <TextArea id="introduction" label="소개" register={register} errors={errors} required />
+              <Input id="school" label="학교" register={register} errors={errors} required />
+            </Flex>
+          </Tabs.TabPanel>
+        )}
       </Tabs.TabPanels>
     </>
   );
