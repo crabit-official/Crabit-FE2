@@ -228,17 +228,3 @@ export async function deleteChallenge({ academyId, releasedChallengeId }: { acad
 
   return data;
 }
-
-// 학생 & 다른 친구 진행중인 챌린지 인증 게시글 조회
-export async function getAllChallengeContents({ academyId, session, cursor, take }: { academyId: number; cursor: number; session: Session; take: number }) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/logs?cursor=${cursor}&take=${take}`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
-    },
-  });
-
-  const data: IAllChallengeResult = await res.json();
-
-  return data;
-}
