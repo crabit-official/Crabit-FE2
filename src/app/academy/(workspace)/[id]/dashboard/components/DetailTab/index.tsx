@@ -4,21 +4,18 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-const menu = [
-  { tab: 'challenge', text: '챌린지' },
-  { tab: 'student', text: '학생' },
-  { tab: 'statistics', text: '통계' },
-];
+import type { ITabMenu } from '@/shared/constants/tab-menu';
 
 interface IDetailTabProps {
   academyId: number;
+  menu: ITabMenu[];
   releasedChallengeId: number;
 }
 
-function DetailTab({ academyId, releasedChallengeId }: IDetailTabProps) {
+function DetailTab({ academyId, releasedChallengeId, menu }: IDetailTabProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const tab = searchParams.get('tab') || 'challenge';
+  const tab = searchParams.get('tab') || menu[0].tab;
 
   const handleTabChange = (tabId: string) => {
     router.push(`/academy/${academyId}/dashboard/${releasedChallengeId}?tab=${tabId}`);
