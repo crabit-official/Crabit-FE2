@@ -1,19 +1,6 @@
 import type { CommonResponse } from '@/shared/apis/dto/response';
 import type { CHALLENGE_CATEGORY, CHALLENGE_PARTICIPATION_METHODS, CHALLENGE_TYPE } from '@/shared/enums/challenge';
 
-export type IPublicChallengesResult = CommonResponse<{
-  academyPublicChallengeList: IPublicChallengeList[];
-  hasNext: boolean;
-  nextCursor: number;
-}>;
-
-export interface IPublicChallengeList {
-  challengeCategory: CHALLENGE_CATEGORY;
-  releasedChallengeId: number;
-  thumbnailImageUrl: string;
-  title: string;
-}
-
 export interface IPublicChallengeDetailResult {
   result: {
     academyPublicChallenge: {

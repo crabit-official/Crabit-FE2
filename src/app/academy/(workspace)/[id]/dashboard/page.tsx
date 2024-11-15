@@ -14,9 +14,12 @@ interface IAcademyDashBoardProps {
   params: {
     id: string;
   };
+  searchParams: {
+    tab: string;
+  };
 }
 
-async function AcademyDashBoardPage({ params }: IAcademyDashBoardProps) {
+async function AcademyDashBoardPage({ params, searchParams }: IAcademyDashBoardProps) {
   const academyData = await fetchData<TAcademyInfoResult>(`/api/v1/academies/${Number(params.id)}/details`, 'GET');
   const AcademyProfile = await fetchData<IAcademyResponse<IAcademyProfile>>(`/api/v1/academies/${Number(params.id)}`, 'GET');
 
@@ -34,7 +37,7 @@ async function AcademyDashBoardPage({ params }: IAcademyDashBoardProps) {
         <Image src="/images/logo_goal.webp" alt="img" width={400} height={400} className="absolute right-0 top-0 hidden opacity-40 lg:block" />
       </Flex>
       <div className="flex flex-col gap-20 lg:grid lg:grid-cols-[180px,1fr] lg:gap-10 xl:gap-32">
-        <Menubar />
+        <Menubar academyId={Number(params.id)} activeTab={searchParams.tab} />
         {AcademyProfile.result.academyRole === ACADEMY_ROLE.STUDENT ? (
           <StudentDashBoardUI academyId={Number(params.id)} />
         ) : (
