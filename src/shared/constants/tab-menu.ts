@@ -15,4 +15,9 @@ const STUDENT_TAB_MENU = [
   { tab: 'friend', text: '칭구들 이름 챌린진데 뭐라하지' },
 ];
 
-export { PRINCIPAL_TAB_MENU, STUDENT_TAB_MENU };
+const MARKET_TAB_MENU = [
+  { tab: 'crabit', text: '크래빗 공식' },
+  { tab: 'academy', text: '학원 챌린지' },
+];
+
+export { MARKET_TAB_MENU, PRINCIPAL_TAB_MENU, STUDENT_TAB_MENU };
