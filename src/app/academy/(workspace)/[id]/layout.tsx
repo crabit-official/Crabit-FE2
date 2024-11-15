@@ -20,7 +20,7 @@ async function Layout({ children, params }: ILayoutProps) {
 
   return (
     <>
-      <WorkspaceTab role={res?.result.academyRole} memberId={res?.result.memberId} />
+      <WorkspaceTab role={res?.result.academyRole} />
       <div className="xl:px-30 max-w-8xl container mx-auto h-full">
         <div className="grid">
           <div className="col-span-4 place-items-center border-x lg:col-span-3">{children}</div>

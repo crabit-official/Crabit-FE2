@@ -10,11 +10,11 @@ import type {
   IChallengeParticipateResult,
   IChallengeResult,
   IGetAcademyMemberDetailList,
-  IMyChallengeProgressResult,
   IStudentChallengeContentsResults,
   IStudentChallengeResult,
   TChallengeResult,
   TDetailChallengeResult,
+  TMyChallengeProgressResult,
 } from '@/shared/types/acadmy';
 
 interface IGetChallengeList {
@@ -143,20 +143,6 @@ export async function getStudentChallengeContents({ releasedChallengeId, academy
   return (await res.json()) as IStudentChallengeContentsResults;
 }
 
-// (학생) 특정 챌린지 학생 본인의 진행도 및 상세 정보
-export async function getMyChallengeProgress({ academyId, studentChallengeId, session }: { academyId: number; session: Session; studentChallengeId: number }) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/students/${studentChallengeId}`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
-    },
-  });
-
-  const data: IMyChallengeProgressResult = await res.json();
-
-  return data.result;
-}
-
 // (학생) 학생 유저가 챌린지 인증 게시물 작성
 export async function createChallengeContent({
   academyId,
@@ -181,7 +167,7 @@ export async function createChallengeContent({
       imageUrl,
     }),
   });
-  const data: IMyChallengeProgressResult = await res.json();
+  const data: TMyChallengeProgressResult = await res.json();
 
   return data.result;
 }

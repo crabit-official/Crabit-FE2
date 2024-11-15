@@ -19,7 +19,7 @@ function useGetInfiniteMarketChallenge(
   >,
 ) {
   return useInfiniteQuery({
-    queryFn: ({ pageParam }) => getMarketList({ academyId, cursor: pageParam, take: 18, challengeType }),
+    queryFn: ({ pageParam }) => getMarketList({ academyId, cursor: pageParam, take: 12, challengeType }),
     queryKey: [queryKeys.CHALLENGE_MARKET, { academyId }, { challengeType }],
     initialPageParam: 0,
     getNextPageParam: (lastPage) => (lastPage.result.hasNext ? lastPage.result.nextCursor : undefined),

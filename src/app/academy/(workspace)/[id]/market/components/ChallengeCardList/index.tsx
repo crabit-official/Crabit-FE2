@@ -4,7 +4,8 @@ import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useRouter } from 'next/navigation';
 
-import ChallengeCard from '@/app/academy/(workspace)/[id]/dashboard/components/ChallengeCard';
+import AnimateCard from '@/app/academy/(workspace)/[id]/dashboard/components/AnimateCard';
+import { getChallengeCategory } from '@/features/academy/(workspace)/utils/challengeState';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import type { CHALLENGE_TYPE } from '@/shared/enums/challenge';
@@ -44,12 +45,26 @@ function ChallengeCardList({ academyId, challengeType }: IChallengeCardListProps
   return (
     <div className="s w-6/7 relative grid min-h-[800px] grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {challenges?.pages?.map((page) =>
-        page.result.challengeList.length !== 0
-          ? page.result.challengeList.map((challenge) => (
-              <ChallengeCard {...challenge} key={challenge.challengeCoreId} onClick={() => router.push(`market/${challenge.challengeCoreId}`)} />
-            ))
-          : null,
+        page.result.challengeList.map((challenge) => (
+          <AnimateCard
+            leftLabel={
+              <Typography as="p" size="h7" className="text-xs" color="main-white">
+                {getChallengeCategory(challenge.challengeCategory)}
+              </Typography>
+            }
+            imageUrl={challenge.thumbnailImageUrl}
+            onClick={() => router.push(`market/${challenge.challengeCoreId}`)}
+            subTitle="예원이가 넣어주면 추가"
+            title={challenge.title}
+            key={challenge.challengeCoreId}
+          />
+        )),
       )}
+      {isFetching
+        ? Array(8)
+            .fill('')
+            .map((_, i) => <AnimateCard.Skeleton key={i} />)
+        : null}
       <div ref={ref} className="h-14" />
     </div>
   );
