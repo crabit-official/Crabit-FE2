@@ -27,14 +27,14 @@ async function ContentDetail({ params, searchParams }: IContentDetailProps) {
   if (academyProfile.result.academyRole === ACADEMY_ROLE.STUDENT) {
     content = (
       <>
-        <DetailTab menu={STUDENT_TAB_MENU} academyId={Number(params.id)} releasedChallengeId={Number(params.challengeId)} />
+        <DetailTab menu={STUDENT_TAB_MENU} academyId={Number(params.id)} releasedChallengeId={Number(params.challengeId)} type="dashboard" />
         <StudentChallengeDetail tabName={searchParams.tab} academyId={Number(params.id)} studentChallengeId={Number(params.challengeId)} />
       </>
     );
   } else {
     content = (
       <>
-        <DetailTab menu={PRINCIPAL_TAB_MENU} academyId={Number(params.id)} releasedChallengeId={Number(params.challengeId)} />
+        <DetailTab menu={PRINCIPAL_TAB_MENU} academyId={Number(params.id)} releasedChallengeId={Number(params.challengeId)} type="dashboard" />
         <PrincipalChallengeDetail tabName={searchParams.tab} releasedChallengeId={Number(params.challengeId)} academyId={Number(params.id)} />
       </>
     );

@@ -4,13 +4,19 @@ import React from 'react';
 
 import MenuItem from '@/app/academy/(workspace)/[id]/dashboard/components/MenuItem';
 import Flex from '@/shared/components/Flex';
+import { DASHBOARD_MENU } from '@/shared/constants/tab-menu';
 
-function Menubar() {
+interface IMenubarProps {
+  academyId: number;
+  activeTab: string;
+}
+
+function Menubar({ academyId, activeTab }: IMenubarProps) {
   return (
     <Flex column="start">
       <ul>
-        <MenuItem text="진행중인 챌린지" />
-        <MenuItem text="진행 예정 챌린지" />
+        <MenuItem title="진행중인 챌린지" content={DASHBOARD_MENU} academyId={academyId} activeTab={activeTab} />
+        <MenuItem title="진행 예정 챌린지" content={DASHBOARD_MENU} academyId={academyId} activeTab={activeTab} />
       </ul>
     </Flex>
   );

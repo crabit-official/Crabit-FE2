@@ -6,7 +6,7 @@ import StateLabel from '@/features/academy/(workspace)/components/state-label';
 import { getChallengeCategory } from '@/features/academy/(workspace)/utils/challengeState';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
-import type { IPublicChallengeList } from '@/shared/types/market';
+import type { IPublicChallengeList } from '@/shared/types/public';
 
 function MarketChallengeCard({ challengeCategory, releasedChallengeId, title, thumbnailImageUrl }: IPublicChallengeList) {
   const router = useRouter();
