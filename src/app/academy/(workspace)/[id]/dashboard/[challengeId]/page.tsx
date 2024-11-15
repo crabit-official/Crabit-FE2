@@ -5,6 +5,7 @@ import StudentChallengeDetail from '@/app/academy/(workspace)/[id]/dashboard/com
 import DetailTab from '@/app/academy/(workspace)/[id]/dashboard/components/DetailTab';
 import { fetchData } from '@/shared/apis/fetch-data';
 import Flex from '@/shared/components/Flex';
+import { PRINCIPAL_TAB_MENU, STUDENT_TAB_MENU } from '@/shared/constants/tab-menu';
 import { ACADEMY_ROLE } from '@/shared/enums/academy';
 import type { IAcademyProfile, IAcademyResponse } from '@/shared/types/acadmy';
 
@@ -24,11 +25,16 @@ async function ContentDetail({ params, searchParams }: IContentDetailProps) {
   let content;
 
   if (academyProfile.result.academyRole === ACADEMY_ROLE.STUDENT) {
-    content = <StudentChallengeDetail />;
+    content = (
+      <>
+        <DetailTab menu={STUDENT_TAB_MENU} academyId={Number(params.id)} releasedChallengeId={Number(params.challengeId)} />
+        <StudentChallengeDetail tabName={searchParams.tab} academyId={Number(params.id)} studentChallengeId={Number(params.challengeId)} />
+      </>
+    );
   } else {
     content = (
       <>
-        <DetailTab academyId={Number(params.id)} releasedChallengeId={Number(params.challengeId)} />
+        <DetailTab menu={PRINCIPAL_TAB_MENU} academyId={Number(params.id)} releasedChallengeId={Number(params.challengeId)} />
         <PrincipalChallengeDetail tabName={searchParams.tab} releasedChallengeId={Number(params.challengeId)} academyId={Number(params.id)} />
       </>
     );
