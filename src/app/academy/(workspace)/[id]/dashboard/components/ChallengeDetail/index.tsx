@@ -49,7 +49,7 @@ function ChallengeDetail({ academyId, releasedChallengeId, releasedChallenge }: 
             alt="test"
             width={500}
             height={500}
-            className="h-96 w-full rounded-2xl border border-solid border-gray-100 object-cover shadow-custom"
+            className="h-96 w-full rounded-2xl border border-solid border-gray-100 object-contain shadow-custom"
           />
         ) : (
           <Image
