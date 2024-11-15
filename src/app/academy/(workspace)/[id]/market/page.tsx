@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import Image from 'next/image';
 
 import DetailTab from '@/app/academy/(workspace)/[id]/dashboard/components/DetailTab';
@@ -33,10 +33,8 @@ function MarketPage({ params, searchParams }: IMarketPageProps) {
       </Flex>
       <DetailTab academyId={Number(params.id)} type="market" menu={MARKET_TAB_MENU} />
       <Flex rowColumn="center" className="w-full">
-        <Suspense fallback={<div>로딩중</div>}>
-          {(searchParams.tab === 'crabit' || !searchParams.tab) && <ChallengeCardList academyId={Number(params.id)} challengeType={CHALLENGE_TYPE.CRABIT} />}
-          {searchParams.tab === 'academy' && <ChallengeCardList academyId={Number(params.id)} challengeType={CHALLENGE_TYPE.ACADEMY} />}
-        </Suspense>
+        {(searchParams.tab === 'crabit' || !searchParams.tab) && <ChallengeCardList academyId={Number(params.id)} challengeType={CHALLENGE_TYPE.CRABIT} />}
+        {searchParams.tab === 'academy' && <ChallengeCardList academyId={Number(params.id)} challengeType={CHALLENGE_TYPE.ACADEMY} />}
       </Flex>
     </Flex>
   );
