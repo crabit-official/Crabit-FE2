@@ -5,7 +5,6 @@ import Flex from '@/shared/components/Flex';
 import Framer from '@/shared/components/Framer';
 import Skeleton from '@/shared/components/Skeleton/Skeleton';
 import Typography from '@/shared/components/Typography';
-
 /**
  * AnimateCard Component
  * @params imageUrl: string
@@ -13,7 +12,6 @@ import Typography from '@/shared/components/Typography';
  * @params subTitle: string
  * @params title: string
  */
-
 interface IAnimateCard {
   imageUrl: string;
   leftLabel?: React.ReactNode;
@@ -21,7 +19,6 @@ interface IAnimateCard {
   subTitle: string;
   title: string;
 }
-
 function AnimateCard({ imageUrl, onClick, subTitle, title, leftLabel }: IAnimateCard) {
   return (
     <Framer
@@ -34,13 +31,11 @@ function AnimateCard({ imageUrl, onClick, subTitle, title, leftLabel }: IAnimate
       ) : (
         <Image src="/images/logo_app.png" alt="default thumbnail img" width={480} height={100} className="h-40 w-full object-cover" />
       )}
-
       {leftLabel && (
         <Flex column="center" className="absolute left-2 top-2 rounded-2xl bg-neutral-500/80 px-2 py-1">
           {leftLabel}
         </Flex>
       )}
-
       <Flex column="start" className="size-full min-h-32 gap-2 px-6">
         <Typography size="h5" className="break-keep">
           {title}
@@ -52,7 +47,6 @@ function AnimateCard({ imageUrl, onClick, subTitle, title, leftLabel }: IAnimate
     </Framer>
   );
 }
-
 function AnimateCardSkeleton() {
   return (
     <Framer className="relative flex h-fit min-h-80 w-[300px] flex-col items-center justify-between overflow-hidden rounded-lg border border-solid border-gray-100 bg-white shadow-custom sm:w-64">
@@ -64,7 +58,5 @@ function AnimateCardSkeleton() {
     </Framer>
   );
 }
-
 AnimateCard.Skeleton = AnimateCardSkeleton;
-
 export default AnimateCard;

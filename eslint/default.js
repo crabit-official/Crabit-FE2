@@ -16,13 +16,18 @@ module.exports = {
     'jsx-a11y/no-static-element-interactions': 'off',
 
     // console.log(), console.warn(), console.error()를 사용할 때 경고를 표시합니다.
-    'no-console': 'warn',
+    'no-console': 'off',
 
     // 가능한 경우 dot notation을 사용하도록 경고를 표시합니다.
     'dot-notation': 'warn',
 
-    // 사용하지 않는 변수에 대해 경고를 표시합니다.
-    'no-unused-vars': 'warn',
+    // 사용하지 않는 변수에 대해 경고를 표시합니다. 단, _에는 적용되지 않습니다.
+    'no-unused-vars': [
+      'warn',
+      {
+        argsIgnorePattern: '^_',
+      },
+    ],
 
     '@typescript-eslint/no-explicit-any': 'off',
 

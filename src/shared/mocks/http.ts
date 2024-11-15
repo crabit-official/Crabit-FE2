@@ -16,5 +16,4 @@ app.use(
 );
 app.use(express.json());
 app.use(createMiddleware(...handlers));
-// eslint-disable-next-line no-console
 app.listen(port, () => console.log(`Mock server is running on port: ${port}`));
