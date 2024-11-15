@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useRouter } from 'next/navigation';
 
+import useInvitationModal from '../../hooks/use-invitation-modal';
+
 import AnimateCard from '@/app/academy/(workspace)/[id]/dashboard/components/AnimateCard';
 import Flex from '@/shared/components/Flex';
 import Framer from '@/shared/components/Framer';
@@ -12,6 +14,7 @@ import useGetInfiniteAcademyList from '@/shared/hooks/academy/useGetInfiniteAcad
 
 function AcademyList() {
   const router = useRouter();
+  const invitationModal = useInvitationModal();
   const { data: academies, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteAcademyList();
 
   const { ref, inView } = useInView({
@@ -38,7 +41,9 @@ function AcademyList() {
   return (
     <div className="grid h-full grid-cols-1 gap-6 overflow-hidden md:grid-cols-3 lg:grid-cols-4">
       <Framer
-        onClick={() => {}}
+        onClick={() => {
+          invitationModal.onOpen();
+        }}
         whileHover={{ scale: 1.01 }}
         className="relative flex h-fit min-h-80 w-[300px] cursor-pointer flex-col items-center justify-start overflow-hidden rounded-lg border border-solid border-gray-100 bg-main-deep-pink p-4 py-10 shadow-custom transition-shadow duration-300 hover:shadow-hover-custom sm:w-64"
       >
