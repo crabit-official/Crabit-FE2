@@ -1,10 +1,11 @@
 import React from 'react';
 import Image from 'next/image';
 
+import DetailTab from '@/app/academy/(workspace)/[id]/dashboard/components/DetailTab';
 import ChallengeCardList from '@/app/academy/(workspace)/[id]/market/components/ChallengeCardList';
-import ChallengeTab from '@/app/academy/(workspace)/[id]/market/components/ChallengeTab';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
+import { MARKET_TAB_MENU } from '@/shared/constants/tab-menu';
 import { CHALLENGE_TYPE } from '@/shared/enums/challenge';
 
 interface IMarketPageProps {
@@ -30,7 +31,7 @@ function MarketPage({ params, searchParams }: IMarketPageProps) {
           </Typography>
         </Flex>
       </Flex>
-      <ChallengeTab academyId={Number(params.id)} />
+      <DetailTab academyId={Number(params.id)} type="market" menu={MARKET_TAB_MENU} />
       <div className="absolute top-[550px] flex h-[800px] w-full items-center justify-center rounded-t-[100px] bg-gradient-to-b from-main-deep-pink sm:rounded-t-[130px] lg:rounded-t-[260px]" />
       <Flex rowColumn="center" className="w-full">
         {(searchParams.tab === 'crabit' || !searchParams.tab) && <ChallengeCardList academyId={Number(params.id)} challengeType={CHALLENGE_TYPE.CRABIT} />}
