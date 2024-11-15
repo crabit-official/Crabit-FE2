@@ -6,16 +6,16 @@ import { IoMdClose } from 'react-icons/io';
 import Button from '@/shared/components/Button';
 
 interface IModalProps {
-  actionLabel: string;
-  body?: React.ReactElement;
+  actionLabel: React.ReactNode;
+  body?: React.ReactNode;
   disabled: boolean;
-  footer?: React.ReactElement;
+  footer?: React.ReactNode;
   isOpen?: boolean;
   onClose: () => void;
   onSubmit: () => void;
   secondaryAction?: () => void;
-  secondaryActionLabel?: string;
-  title?: string;
+  secondaryActionLabel?: React.ReactNode;
+  title?: React.ReactNode;
 }
 
 function Modal({ isOpen = true, onClose, onSubmit, title, body, footer, actionLabel, disabled, secondaryAction, secondaryActionLabel }: IModalProps) {
