@@ -30,7 +30,7 @@ export async function postInvitationCode({ academyId, session, academyRole }: { 
   });
 
   if (!response.ok) {
-    throw new Error('가입 코드를 생성하는데 에러가 발생했습니다.ㄴ');
+    throw new Error('가입 코드를 생성하는데 에러가 발생했습니다.');
   }
 
   const data: IInvitationResult = await response.json();
@@ -40,22 +40,19 @@ export async function postInvitationCode({ academyId, session, academyRole }: { 
 }
 
 export async function enrollInvitation({ joinCode, academyRole, nickname, introduction, school }: IJoinInvitation) {
-  const response = await fetch('/api/invitation', {
+  const response = await fetch(`/api/invitation`, {
     method: 'POST',
-    body: JSON.stringify({
-      joinCode,
-      academyRole,
-      nickname,
-      introduction,
-      school,
-    }),
+    body: JSON.stringify({ joinCode, academyRole, nickname, introduction, school }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
 
-  if (!response.ok) {
-    throw new Error('가입 신청을 하는데 에러가 발생했습니다.');
-  }
-
   const data: IJoinInvitationResponse = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || '초대 등록 중 에러가 발생했습니다.');
+  }
 
   return data;
 }

@@ -19,6 +19,8 @@ function InvitationModal() {
   const invitationModal = useInvitationModal();
   const [activeTab, setActiveTab] = useState(0);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   console.log(activeTab);
   const { mutate } = useEnrollInvitation();
 
@@ -37,7 +39,8 @@ function InvitationModal() {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data: FieldValues) => {
-    console.log(data);
+    setIsLoading(true);
+
     mutate(
       {
         joinCode: data.joinCode,
@@ -56,6 +59,8 @@ function InvitationModal() {
         },
       },
     );
+
+    setIsLoading(false);
   };
 
   const bodyContent = (
@@ -73,20 +78,20 @@ function InvitationModal() {
         {activeTab === 0 && (
           <Tabs.TabPanel index={0} activeTab={activeTab}>
             <Flex column="start" className="gap-5">
-              <Input id="joinCode" label="초대 코드" register={register} errors={errors} required />
-              <Input id="nickname" label="닉네임" register={register} errors={errors} required />
-              <TextArea id="introduction" label="소개" register={register} errors={errors} required />
-              <Input id="school" label="학교" register={register} errors={errors} required />
+              <Input disabled={isLoading} id="joinCode" label="초대 코드" register={register} errors={errors} required />
+              <Input disabled={isLoading} id="nickname" label="닉네임" register={register} errors={errors} required />
+              <TextArea disabled={isLoading} id="introduction" label="소개" register={register} errors={errors} required />
+              <Input disabled={isLoading} id="school" label="학교" register={register} errors={errors} required />
             </Flex>
           </Tabs.TabPanel>
         )}
         {activeTab === 1 && (
           <Tabs.TabPanel index={1} activeTab={activeTab}>
             <Flex column="start" className="gap-5">
-              <Input id="joinCode" label="초대 코드" register={register} errors={errors} required />
-              <Input id="nickname" label="닉네임" register={register} errors={errors} required />
-              <TextArea id="introduction" label="소개" register={register} errors={errors} required />
-              <Input id="school" label="학교" register={register} errors={errors} required />
+              <Input disabled={isLoading} id="joinCode" label="초대 코드" register={register} errors={errors} required />
+              <Input disabled={isLoading} id="nickname" label="닉네임" register={register} errors={errors} required />
+              <TextArea disabled={isLoading} id="introduction" label="소개" register={register} errors={errors} required />
+              <Input disabled={isLoading} id="school" label="학교" register={register} errors={errors} required />
             </Flex>
           </Tabs.TabPanel>
         )}
@@ -103,7 +108,7 @@ function InvitationModal() {
           학원 가입 신청하기
         </Typography>
       }
-      disabled={false}
+      disabled={isLoading}
       isOpen={invitationModal.isOpen}
       title="학원 가입 신청"
       body={bodyContent}
