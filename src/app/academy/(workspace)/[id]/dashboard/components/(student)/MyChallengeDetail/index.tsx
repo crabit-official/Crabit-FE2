@@ -58,7 +58,7 @@ function MyChallengeDetail({ challengeData }: IMyChallengeDetailProps) {
         <Flex column="center" className="relative w-full gap-4">
           <Typography
             size="h5"
-            className="absolute right-[-20px] top-10 rounded-xl border border-solid border-gray-100 bg-gray-500 px-2 py-1 text-xs text-white lg:right-[-60px]"
+            className="absolute right-[-20px] top-10 hidden rounded-xl border border-solid border-gray-100 bg-gray-500 px-2 py-1 text-xs text-white sm:block lg:right-[-60px]"
           >
             {!challengeData.studentChallenge.hasTodayChallengeLog && '🧐 오늘의 인증글을 올리지 않았어요'}
           </Typography>
@@ -83,7 +83,7 @@ function MyChallengeDetail({ challengeData }: IMyChallengeDetailProps) {
                 </label>
                 <input type="file" id="file" {...register('file')} onChange={handleChangeFile} className="hidden" />
               </Flex>
-              <Button type="submit" className="font-medium text-white" disabled={challengeData.studentChallenge.hasTodayChallengeLog}>
+              <Button type="submit" className="break-keep font-medium text-white" disabled={challengeData.studentChallenge.hasTodayChallengeLog}>
                 {challengeData.studentChallenge.hasTodayChallengeLog ? '오늘의 챌린지를 이미 제출 하였습니다' : '제출하기'}
               </Button>
             </Flex>
