@@ -1,17 +1,20 @@
-import { Suspense } from 'react';
+import React from 'react';
 import { dehydrate, QueryClient } from '@tanstack/query-core';
 import { HydrationBoundary } from '@tanstack/react-query';
 
-import MyChallengeList from '@/features/academy/(workspace)/components/my-challenge-list';
+import StudentAllChallengeContents from '@/app/academy/(workspace)/[id]/dashboard/components/StudentAllChallengeContents';
 import { getStudentChallengeList } from '@/shared/apis/challenge';
-import Flex from '@/shared/components/Flex';
 import { queryKeys } from '@/shared/constants/query-keys';
 
-async function MyChallengePage({ params }: { params: { id: string } }) {
+interface IDashboardProps {
+  academyId: number;
+}
+
+async function StudentDashBoardUI({ academyId }: IDashboardProps) {
   const queryClient = new QueryClient();
   await queryClient.prefetchInfiniteQuery({
-    queryKey: [queryKeys.CHALLENGE_LIST],
-    queryFn: () => getStudentChallengeList({ cursor: 0, take: 5, academyId: Number(params.id) }),
+    queryKey: [queryKeys.STUDENT_CHALLENGE_LIST],
+    queryFn: () => getStudentChallengeList({ cursor: 0, take: 6, academyId }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => (lastPage.result.hasNext ? allPages.length + 1 : undefined),
     pages: 1,
@@ -20,13 +23,8 @@ async function MyChallengePage({ params }: { params: { id: string } }) {
 
   return (
     <HydrationBoundary state={dehydratedState}>
-      <Flex rowColumn="center" className="w-full gap-4 px-4 pt-14">
-        <Suspense fallback={<div>Loading</div>}>
-          <MyChallengeList academyId={Number(params.id)} />
-        </Suspense>
-      </Flex>
+      <StudentAllChallengeContents academyId={academyId} />
     </HydrationBoundary>
   );
 }
-
-export default MyChallengePage;
+export default StudentDashBoardUI;

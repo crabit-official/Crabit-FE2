@@ -292,30 +292,28 @@ export type IRevokeAcademyResponse = CommonResponse<{
 }>;
 
 // 특정챌린지 학생 상세보기
-export interface IMyChallengeProgressResult {
-  result: {
-    releasedChallenge: {
-      challengeCategory: CHALLENGE_CATEGORY;
-      challengeCoreCreatorAcademyName: string;
-      challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
-      challengeType: CHALLENGE_TYPE;
-      content: string;
-      points: number;
-      releasedChallengeId: number;
-      thumbnailImageUrl: string;
-      title: string;
-      totalDays: number;
-    };
-    studentChallenge: {
-      challengeLogApprovalStatus: CHALLENGE_LOG_APPROVAL_STATUS;
-      challengeLogSubmissionStatus: CHALLENGE_LOG_SUBMISSION_STATUS;
-      endedAt: Date;
-      hasTodayChallengeLog: boolean;
-      startedAt: Date;
-      studentChallengeId: number;
-    };
+export type TMyChallengeProgressResult = CommonResponse<{
+  releasedChallenge: {
+    challengeCategory: CHALLENGE_CATEGORY;
+    challengeCoreCreatorAcademyName: string;
+    challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
+    challengeType: CHALLENGE_TYPE;
+    content: string;
+    points: number;
+    releasedChallengeId: number;
+    thumbnailImageUrl: string;
+    title: string;
+    totalDays: number;
   };
-}
+  studentChallenge: {
+    challengeLogApprovalStatus: CHALLENGE_LOG_APPROVAL_STATUS;
+    challengeLogSubmissionStatus: CHALLENGE_LOG_SUBMISSION_STATUS;
+    endedAt: Date;
+    hasTodayChallengeLog: boolean;
+    startedAt: Date;
+    studentChallengeId: number;
+  };
+}>;
 
 // 학생 챌린지 승인/반려 처리
 export interface IChallengeApprovalResults {

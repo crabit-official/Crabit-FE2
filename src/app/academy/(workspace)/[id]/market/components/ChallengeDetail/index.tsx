@@ -138,14 +138,14 @@ function ChallengeDetail({ challenge, teacher, academy, academyId, challengeCore
             {challenge?.title}
           </Typography>
         </Flex>
-        <Flex column="center" className="gap-4">
+        <Flex column="center" className="w-full gap-4">
           {challenge?.thumbnailImageUrl ? (
             <Image
               src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challenge.thumbnailImageUrl}`}
               alt="thumbnail img"
               width={400}
               height={400}
-              className="size-full h-96 rounded-2xl object-cover"
+              className="size-full h-96 rounded-2xl border border-solid border-gray-100 object-contain shadow-custom"
             />
           ) : (
             <Image src="/images/test.jpeg" alt="default thumbnail img" width={300} height={300} className="h-96 w-full rounded-2xl object-cover" />
