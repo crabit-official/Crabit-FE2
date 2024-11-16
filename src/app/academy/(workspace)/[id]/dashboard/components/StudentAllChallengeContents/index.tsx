@@ -16,7 +16,6 @@ interface IStudentAllChallengeContentsProps {
 }
 
 // 학생 대시보드
-// TODO: isEmpty router 경로 수정
 function StudentAllChallengeContents({ academyId }: IStudentAllChallengeContentsProps) {
   const { data: challenge, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteStudentChallengeList(academyId);
   const router = useRouter();
@@ -47,7 +46,7 @@ function StudentAllChallengeContents({ academyId }: IStudentAllChallengeContents
   if (isEmpty) {
     return (
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <PlusChallengeCard onClick={() => router.push('dashboard/create')} content={'참여할\n챌린지 찾기'} />
+        <PlusChallengeCard onClick={() => router.push(`/academy/${academyId}/public-challenge`)} content={'참여할\n챌린지 찾기'} />
       </div>
     );
   }
