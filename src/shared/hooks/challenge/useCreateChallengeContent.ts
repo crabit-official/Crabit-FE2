@@ -1,13 +1,20 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { createChallengeContent } from '@/shared/apis/challenge';
+import { queryKeys } from '@/shared/constants/query-keys';
 
-function useCreateChallengeContent() {
+interface ICreateChallengeContentProps {
+  academyId: number;
+  studentChallengeId: number;
+}
+
+function useCreateChallengeContent({ academyId, studentChallengeId }: ICreateChallengeContentProps) {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: createChallengeContent,
-    onSuccess: () => {
-      // TODO: 글 다시 불러오기 (fetch)
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: [queryKeys.MY_CHALLENGE_CONTENTS, { academyId }, { studentChallengeId }] });
       toast.success('인증 글이 생성되었습니다.');
     },
     onError: (error) => {
