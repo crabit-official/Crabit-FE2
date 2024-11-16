@@ -3,13 +3,13 @@ import type { Session } from 'next-auth';
 
 import { getAllChallengeContents } from '@/shared/apis/challenge';
 import { queryKeys } from '@/shared/constants/query-keys';
-import type { IAllChallengeResult } from '@/shared/types/acadmy';
+import type { TAllChallengeResult } from '@/shared/types/acadmy';
 
 function useGetInfiniteAllChallengeContents(
   session: Session,
   academyId: number,
 
-  queryOptions?: UseInfiniteQueryOptions<IAllChallengeResult, DefaultError, InfiniteData<IAllChallengeResult, number>, IAllChallengeResult, QueryKey, number>,
+  queryOptions?: UseInfiniteQueryOptions<TAllChallengeResult, DefaultError, InfiniteData<TAllChallengeResult, number>, TAllChallengeResult, QueryKey, number>,
 ) {
   return useInfiniteQuery({
     queryFn: ({ pageParam }) => getAllChallengeContents({ session, cursor: pageParam, take: 5, academyId }),

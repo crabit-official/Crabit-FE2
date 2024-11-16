@@ -1,27 +1,22 @@
 'use client';
 
 import React from 'react';
-import { type FieldValues, useForm } from 'react-hook-form';
-import { IoMdPhotos } from 'react-icons/io';
 import Image from 'next/image';
 
+import CreateChallengeForm from '@/app/academy/(workspace)/[id]/dashboard/components/(student)/CreateChallengeForm';
 import Toggle from '@/app/academy/(workspace)/[id]/dashboard/components/Toggle';
-import { useImage } from '@/features/academy/(workspace)/hooks/use-image';
 import { getChallengeCategory, getChallengeType } from '@/features/academy/(workspace)/utils/challengeState';
-import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import type { TMyChallengeProgressResult } from '@/shared/types/acadmy';
 
 interface IMyChallengeDetailProps {
+  academyId: number;
   challengeData: TMyChallengeProgressResult['result'];
+  studentChallengeId: number;
 }
 
-function MyChallengeDetail({ challengeData }: IMyChallengeDetailProps) {
-  const { filePreview, handleChangeFile } = useImage();
-
-  const { register } = useForm<FieldValues>({});
-
+function MyChallengeDetail({ challengeData, studentChallengeId, academyId }: IMyChallengeDetailProps) {
   return (
     <Flex rowColumn="center" className="w-full gap-10 px-4">
       <div className="w-full">
@@ -56,38 +51,15 @@ function MyChallengeDetail({ challengeData }: IMyChallengeDetailProps) {
           파일뷰어 자리입니당... <br /> 아직 미완성 ..
         </Flex>
         <Flex column="center" className="relative w-full gap-4">
-          <Typography
-            size="h5"
-            className="absolute right-[-20px] top-10 hidden rounded-xl border border-solid border-gray-100 bg-gray-500 px-2 py-1 text-xs text-white sm:block lg:right-[-60px]"
-          >
-            {!challengeData.studentChallenge.hasTodayChallengeLog && '🧐 오늘의 인증글을 올리지 않았어요'}
-          </Typography>
-          <form className="flex flex-col gap-4 rounded-xl border border-solid border-gray-100 p-5 shadow-custom">
-            <Flex column="start" className="gap-2">
-              <Typography size="h3" className="opacity-80">
-                챌린지 인증글 올리기
-              </Typography>
-              <Typography size="h5" as="p" className="text-xs opacity-60">
-                tip ) 어찌고 저찌고 어찌고 저찌고...
-              </Typography>
-              <Flex as="figure" row="start" className="mt-4">
-                <label
-                  htmlFor="file"
-                  className="flex h-52 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border border-solid border-gray-100 bg-neutral-50"
-                >
-                  {filePreview ? (
-                    <Image src={filePreview} width={200} height={200} className="h-52 w-full overflow-hidden rounded-xl object-contain" alt="img" />
-                  ) : (
-                    <IoMdPhotos size={30} />
-                  )}
-                </label>
-                <input type="file" id="file" {...register('file')} onChange={handleChangeFile} className="hidden" />
-              </Flex>
-              <Button type="submit" className="break-keep font-medium text-white" disabled={challengeData.studentChallenge.hasTodayChallengeLog}>
-                {challengeData.studentChallenge.hasTodayChallengeLog ? '오늘의 챌린지를 이미 제출 하였습니다' : '제출하기'}
-              </Button>
-            </Flex>
-          </form>
+          {!challengeData.studentChallenge.hasTodayChallengeLog && (
+            <Typography
+              size="h5"
+              className="absolute right-[-20px] top-10 hidden rounded-xl border border-solid border-gray-100 bg-gray-500 px-2 py-1 text-xs text-white sm:block lg:right-[-60px]"
+            >
+              🧐 오늘의 인증글을 올리지 않았어요
+            </Typography>
+          )}
+          <CreateChallengeForm academyId={academyId} studentChallengeId={studentChallengeId} challengeData={challengeData} />
         </Flex>
       </div>
     </Flex>

@@ -14,13 +14,23 @@ function StudentChallengeContent({ challengeLog, studentProfile }: IStudentChall
         DAY {challengeLog.day}
       </Typography>
       <Flex column="around" className="w-full cursor-pointer gap-3 rounded-lg border border-solid border-gray-100 bg-white px-4 py-5 shadow-custom">
-        <Image
-          src="/images/test.jpeg"
-          alt="test"
-          width={480}
-          height={100}
-          className="h-40 w-full rounded-lg border border-solid border-gray-100 object-cover"
-        />
+        {challengeLog.fileUrl ? (
+          <Image
+            src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challengeLog.fileUrl}`}
+            alt="test"
+            width={480}
+            height={100}
+            className="h-40 w-full rounded-lg border border-solid border-gray-100 bg-gray-50 object-contain"
+          />
+        ) : (
+          <Image
+            src="/images/test.jpeg"
+            alt="test"
+            width={480}
+            height={100}
+            className="h-40 w-full rounded-lg border border-solid border-gray-100 object-cover"
+          />
+        )}
         <Flex column="start" className="gap-4">
           <Typography size="h5" as="p" className="text-sm font-normal opacity-80">
             {challengeLog.content}

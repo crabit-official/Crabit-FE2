@@ -122,6 +122,7 @@ export type IChallengeResult = CommonResponse<{
 }>;
 
 export interface IStudentChallengeDTO {
+  content: string;
   releasedChallengeId: number;
   thumbnailImageUrl: string;
   title: string;
@@ -392,16 +393,14 @@ export interface IAllChallengeLogDTO {
   studentChallengeLogId: number;
 }
 
-export interface IAllChallengeResult {
-  result: {
-    challengeLogList: {
-      challengeLog: IAllChallengeLogDTO;
-      studentProfile: IStudentProfileDTO;
-    }[];
-    hasNext: boolean;
-    nextCursor: number;
-  };
-}
+export type TAllChallengeResult = CommonResponse<{
+  challengeLogList: {
+    challengeLog: IAllChallengeLogDTO;
+    studentProfile: IStudentProfileDTO;
+  }[];
+  hasNext: boolean;
+  nextCursor: number;
+}>;
 
 // 학원 정보조회
 export type TAcademyInfoResult = CommonResponse<{
@@ -419,3 +418,7 @@ export type TAcademyInfoResult = CommonResponse<{
 export type TChallengeResult = CommonResponse<{
   releasedChallengeId: number;
 }>;
+
+export type TError = {
+  error: string;
+};

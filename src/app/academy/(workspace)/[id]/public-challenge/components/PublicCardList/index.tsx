@@ -58,7 +58,7 @@ function PublicCardList({ academyId, category }: IPublicCardListProps) {
           <AnimateCard
             onClick={() => toast.message('준비중 입니다. 잠시만 기다려주세요')}
             title={item.title}
-            subTitle="예원이가 데이터 넣어주면 수정할 예정"
+            subTitle={item.content}
             key={item.releasedChallengeId}
             imageUrl={item.thumbnailImageUrl}
             leftLabel={

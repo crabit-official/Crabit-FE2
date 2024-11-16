@@ -5,15 +5,16 @@ import type {
   IAcademyInstructorListResult,
   IAcademyMemberListResult,
   IAcademyStudentListResult,
-  IAllChallengeResult,
   IChallengeApprovalResults,
   IChallengeParticipateResult,
   IChallengeResult,
   IGetAcademyMemberDetailList,
   IStudentChallengeContentsResults,
   IStudentChallengeResult,
+  TAllChallengeResult,
   TChallengeResult,
   TDetailChallengeResult,
+  TError,
   TMyChallengeProgressResult,
 } from '@/shared/types/acadmy';
 
@@ -147,29 +148,28 @@ export async function getStudentChallengeContents({ releasedChallengeId, academy
 export async function createChallengeContent({
   academyId,
   studentChallengeId,
-  session,
   content,
-  imageUrl,
+  fileUrl,
 }: {
   academyId: number;
   content: string;
-  imageUrl: string;
-  session: Session;
+  fileUrl: string | null;
   studentChallengeId: number;
 }) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/${studentChallengeId}/logs`, {
+  const res = await fetch(`/api/challenge/student/logs?academyId=${academyId}&studentChallengeId=${studentChallengeId}`, {
     method: 'POST',
-    headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
-    },
     body: JSON.stringify({
       content,
-      imageUrl,
+      fileUrl,
     }),
   });
-  const data: TMyChallengeProgressResult = await res.json();
 
-  return data.result;
+  if (!res.ok) {
+    const errorData: TError = await res.json();
+    throw new Error(errorData.error);
+  }
+
+  return (await res.json()) as TMyChallengeProgressResult;
 }
 
 // (원장/강사) 챌린지 도전결과 최종 승인/반려 처리
@@ -200,7 +200,7 @@ export async function approvalStudentChallengeResult({
   return data;
 }
 
-// 학생 & 다른 친구 진행중인 챌린지 인증 게시글 조회
+// 다른 친구 진행중인 챌린지 인증 게시글 조회
 export async function getAllChallengeContents({ academyId, session, cursor, take }: { academyId: number; cursor: number; session: Session; take: number }) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/logs?cursor=${cursor}&take=${take}`, {
     method: 'GET',
@@ -209,7 +209,7 @@ export async function getAllChallengeContents({ academyId, session, cursor, take
     },
   });
 
-  const data: IAllChallengeResult = await res.json();
+  const data: TAllChallengeResult = await res.json();
 
   return data;
 }
@@ -227,4 +227,27 @@ export async function deleteChallenge({ academyId, releasedChallengeId }: { acad
   }
 
   return data;
+}
+
+export async function getMyChallengeContents({
+  academyId,
+  studentChallengeId,
+  cursor,
+  take,
+}: {
+  academyId: number;
+  cursor: number;
+  studentChallengeId: number;
+  take: number;
+}) {
+  const res = await fetch(`/api/challenge/student/logs/my?academyId=${academyId}&studentChallengeId=${studentChallengeId}&cursor=${cursor}&take=${take}`, {
+    method: 'GET',
+  });
+
+  if (!res.ok) {
+    const errorData: TError = await res.json();
+    throw new Error(errorData.error);
+  }
+
+  return (await res.json()) as TAllChallengeResult;
 }
