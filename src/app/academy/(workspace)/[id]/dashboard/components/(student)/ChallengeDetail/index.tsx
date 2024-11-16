@@ -1,5 +1,6 @@
 import React from 'react';
 
+import MyChallenge from '@/app/academy/(workspace)/[id]/dashboard/components/(student)/MyChallenge';
 import MyChallengeDetail from '@/app/academy/(workspace)/[id]/dashboard/components/(student)/MyChallengeDetail';
 import { fetchData } from '@/shared/apis/fetch-data';
 import Flex from '@/shared/components/Flex';
@@ -19,7 +20,7 @@ async function StudentChallengeDetail({ tabName, academyId, studentChallengeId }
       {(tabName === 'create' || !tabName) && (
         <MyChallengeDetail challengeData={challengeData.result} academyId={academyId} studentChallengeId={studentChallengeId} />
       )}
-      {tabName === 'my-challenge' && <div>여기엔 내 인증글</div>}
+      {tabName === 'my-challenge' && <MyChallenge academyId={academyId} studentChallengeId={studentChallengeId} />}
       {tabName === 'feed' && <div>여기엔 친구들 인증글</div>}
     </Flex>
   );

@@ -5,13 +5,13 @@ import type {
   IAcademyInstructorListResult,
   IAcademyMemberListResult,
   IAcademyStudentListResult,
-  IAllChallengeResult,
   IChallengeApprovalResults,
   IChallengeParticipateResult,
   IChallengeResult,
   IGetAcademyMemberDetailList,
   IStudentChallengeContentsResults,
   IStudentChallengeResult,
+  TAllChallengeResult,
   TChallengeResult,
   TDetailChallengeResult,
   TError,
@@ -166,7 +166,6 @@ export async function createChallengeContent({
 
   if (!res.ok) {
     const errorData: TError = await res.json();
-    console.log(errorData, '여기이이', errorData.error);
     throw new Error(errorData.error);
   }
 
@@ -201,7 +200,7 @@ export async function approvalStudentChallengeResult({
   return data;
 }
 
-// 학생 & 다른 친구 진행중인 챌린지 인증 게시글 조회
+// 다른 친구 진행중인 챌린지 인증 게시글 조회
 export async function getAllChallengeContents({ academyId, session, cursor, take }: { academyId: number; cursor: number; session: Session; take: number }) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/logs?cursor=${cursor}&take=${take}`, {
     method: 'GET',
@@ -210,7 +209,7 @@ export async function getAllChallengeContents({ academyId, session, cursor, take
     },
   });
 
-  const data: IAllChallengeResult = await res.json();
+  const data: TAllChallengeResult = await res.json();
 
   return data;
 }
@@ -228,4 +227,27 @@ export async function deleteChallenge({ academyId, releasedChallengeId }: { acad
   }
 
   return data;
+}
+
+export async function getMyChallengeContents({
+  academyId,
+  studentChallengeId,
+  cursor,
+  take,
+}: {
+  academyId: number;
+  cursor: number;
+  studentChallengeId: number;
+  take: number;
+}) {
+  const res = await fetch(`/api/challenge/student/logs/my?academyId=${academyId}&studentChallengeId=${studentChallengeId}&cursor=${cursor}&take=${take}`, {
+    method: 'GET',
+  });
+
+  if (!res.ok) {
+    const errorData: TError = await res.json();
+    throw new Error(errorData.error);
+  }
+
+  return (await res.json()) as TAllChallengeResult;
 }

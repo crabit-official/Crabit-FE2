@@ -393,16 +393,14 @@ export interface IAllChallengeLogDTO {
   studentChallengeLogId: number;
 }
 
-export interface IAllChallengeResult {
-  result: {
-    challengeLogList: {
-      challengeLog: IAllChallengeLogDTO;
-      studentProfile: IStudentProfileDTO;
-    }[];
-    hasNext: boolean;
-    nextCursor: number;
-  };
-}
+export type TAllChallengeResult = CommonResponse<{
+  challengeLogList: {
+    challengeLog: IAllChallengeLogDTO;
+    studentProfile: IStudentProfileDTO;
+  }[];
+  hasNext: boolean;
+  nextCursor: number;
+}>;
 
 // 학원 정보조회
 export type TAcademyInfoResult = CommonResponse<{
