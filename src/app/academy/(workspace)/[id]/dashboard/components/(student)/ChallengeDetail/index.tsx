@@ -16,7 +16,9 @@ async function StudentChallengeDetail({ tabName, academyId, studentChallengeId }
 
   return (
     <Flex rowColumn="center" className="z-10 mt-1 w-full gap-20 py-10">
-      {(tabName === 'create' || !tabName) && <MyChallengeDetail challengeData={challengeData.result} />}
+      {(tabName === 'create' || !tabName) && (
+        <MyChallengeDetail challengeData={challengeData.result} academyId={academyId} studentChallengeId={studentChallengeId} />
+      )}
       {tabName === 'my-challenge' && <div>여기엔 내 인증글</div>}
       {tabName === 'friend' && <div>여기엔 친구들 인증글</div>}
     </Flex>

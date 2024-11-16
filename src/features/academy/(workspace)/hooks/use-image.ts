@@ -19,5 +19,6 @@ export const useImage = () => {
     filePreview,
     handleChangeFile,
     setFile,
+    setFilePreview,
   };
 };

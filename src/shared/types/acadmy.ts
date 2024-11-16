@@ -420,3 +420,7 @@ export type TAcademyInfoResult = CommonResponse<{
 export type TChallengeResult = CommonResponse<{
   releasedChallengeId: number;
 }>;
+
+export type TError = {
+  error: string;
+};

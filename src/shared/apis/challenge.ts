@@ -14,6 +14,7 @@ import type {
   IStudentChallengeResult,
   TChallengeResult,
   TDetailChallengeResult,
+  TError,
   TMyChallengeProgressResult,
 } from '@/shared/types/acadmy';
 
@@ -147,29 +148,29 @@ export async function getStudentChallengeContents({ releasedChallengeId, academy
 export async function createChallengeContent({
   academyId,
   studentChallengeId,
-  session,
   content,
-  imageUrl,
+  fileUrl,
 }: {
   academyId: number;
   content: string;
-  imageUrl: string;
-  session: Session;
+  fileUrl: string | null;
   studentChallengeId: number;
 }) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/${studentChallengeId}/logs`, {
+  const res = await fetch(`/api/challenge/student/logs?academyId=${academyId}&studentChallengeId=${studentChallengeId}`, {
     method: 'POST',
-    headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
-    },
     body: JSON.stringify({
       content,
-      imageUrl,
+      fileUrl,
     }),
   });
-  const data: TMyChallengeProgressResult = await res.json();
 
-  return data.result;
+  if (!res.ok) {
+    const errorData: TError = await res.json();
+    console.log(errorData, '여기이이', errorData.error);
+    throw new Error(errorData.error);
+  }
+
+  return (await res.json()) as TMyChallengeProgressResult;
 }
 
 // (원장/강사) 챌린지 도전결과 최종 승인/반려 처리
