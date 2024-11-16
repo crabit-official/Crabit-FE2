@@ -22,7 +22,7 @@ interface ICreateChallengeFormProps {
 function CreateChallengeForm({ challengeData, academyId, studentChallengeId }: ICreateChallengeFormProps) {
   const { filePreview, handleChangeFile, file, setFile, setFilePreview } = useImage();
   const { data: image, isSuccess } = useGetPresignedUrl(file?.name as string);
-  const { mutate, isPending } = useCreateChallengeContent();
+  const { mutate, isPending } = useCreateChallengeContent({ academyId, studentChallengeId });
 
   const {
     register,
