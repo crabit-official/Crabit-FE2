@@ -20,7 +20,7 @@ async function StudentChallengeDetail({ tabName, academyId, studentChallengeId }
         <MyChallengeDetail challengeData={challengeData.result} academyId={academyId} studentChallengeId={studentChallengeId} />
       )}
       {tabName === 'my-challenge' && <div>여기엔 내 인증글</div>}
-      {tabName === 'friend' && <div>여기엔 친구들 인증글</div>}
+      {tabName === 'feed' && <div>여기엔 친구들 인증글</div>}
     </Flex>
   );
 }
