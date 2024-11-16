@@ -38,6 +38,7 @@ export interface IMarketChallenge {
   challengeCategory: CHALLENGE_CATEGORY;
   challengeCoreId: number;
   challengeType: CHALLENGE_TYPE;
+  content: string;
   thumbnailImageUrl: string;
   title: string;
 }

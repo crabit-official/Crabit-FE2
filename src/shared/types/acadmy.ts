@@ -122,6 +122,7 @@ export type IChallengeResult = CommonResponse<{
 }>;
 
 export interface IStudentChallengeDTO {
+  content: string;
   releasedChallengeId: number;
   thumbnailImageUrl: string;
   title: string;

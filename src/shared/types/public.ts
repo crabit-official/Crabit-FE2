@@ -9,6 +9,7 @@ export type TPublicChallengesResult = CommonResponse<{
 
 export interface IPublicChallengeList {
   challengeCategory: CHALLENGE_CATEGORY;
+  content: string;
   releasedChallengeId: number;
   thumbnailImageUrl: string;
   title: string;
