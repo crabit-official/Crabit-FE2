@@ -1,29 +1,6 @@
 import type { CommonResponse } from '@/shared/apis/dto/response';
 import type { CHALLENGE_CATEGORY, CHALLENGE_PARTICIPATION_METHODS, CHALLENGE_TYPE } from '@/shared/enums/challenge';
 
-export interface IPublicChallengeDetailResult {
-  result: {
-    academyPublicChallenge: {
-      challengeCategory: CHALLENGE_CATEGORY;
-      challengeCoreCreatorAcademyName: string;
-      challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
-      challengeType: CHALLENGE_TYPE;
-      content: string;
-      fileUrl: string;
-      points: number;
-      releasedChallengeId: number;
-      thumbnailImageUrl: string;
-      title: string;
-      totalDays: number;
-    };
-    releaseInstructorProfile: {
-      academyMemberId: number;
-      academyNickname: string;
-      academyProfileImageUrl: string;
-    };
-  };
-}
-
 // (학생) 자유 챌린지 신청
 export interface IApplyChallengeResult {
   isSuccess: boolean;

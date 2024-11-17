@@ -1,35 +1,5 @@
-import type { Session } from 'next-auth';
-
 import type { CHALLENGE_TYPE } from '@/shared/enums/challenge';
-import type {
-  IApplyChallengeResult,
-  IPublicChallengeDetailResult,
-  IReleaseChallengeDTO,
-  TChallengeMarketResult,
-  TReleasedChallengeResult,
-} from '@/shared/types/market';
-
-// 학원 공개 챌린지 상세 조회
-export async function getPublicChallengeDetail({
-  academyId,
-  session,
-  releasedChallengeId,
-}: {
-  academyId: number;
-  releasedChallengeId: number;
-  session: Session;
-}) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/public/${releasedChallengeId}`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
-    },
-  });
-
-  const data: IPublicChallengeDetailResult = await res.json();
-
-  return data.result;
-}
+import type { IApplyChallengeResult, IReleaseChallengeDTO, TChallengeMarketResult, TReleasedChallengeResult } from '@/shared/types/market';
 
 // (학생) 공개 챌린지 신청
 export async function applyPublicChallenge({ academyId, releasedChallengeId }: { academyId: number; releasedChallengeId: number }) {

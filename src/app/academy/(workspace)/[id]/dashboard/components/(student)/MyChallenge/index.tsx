@@ -19,7 +19,6 @@ interface IMyChallengeProps {
 function MyChallenge({ academyId, studentChallengeId }: IMyChallengeProps) {
   const { data: contents, isError, isFetching, hasNextPage, fetchNextPage } = useInfiniteMyChallengeContents(academyId, studentChallengeId);
   const isEmpty = contents?.pages.every((page) => page.result.challengeLogList.length === 0);
-  console.log(contents);
 
   const { ref, inView } = useInView({
     threshold: 0,
