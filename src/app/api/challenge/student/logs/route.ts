@@ -22,3 +22,18 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: errorMessage }, { status: 400, statusText: 'Error Failed' });
   }
 }
+
+export async function GET(req: NextRequest) {
+  const academyId = req.nextUrl.searchParams.get('academyId');
+  const cursor = req.nextUrl.searchParams.get('cursor') || '';
+  const take = req.nextUrl.searchParams.get('take') || '';
+
+  try {
+    const data = await fetchData(`/api/v1/academies/${academyId}/challenges/logs?cursor=${cursor}&take=${take}`, 'GET');
+    return NextResponse.json(data);
+  } catch (e) {
+    const errorMessage = e instanceof Error ? e.message : '알수없는 에러가 발생했습니다.';
+
+    return NextResponse.json({ error: errorMessage }, { status: 400, statusText: 'Error Failed' });
+  }
+}

@@ -201,17 +201,17 @@ export async function approvalStudentChallengeResult({
 }
 
 // 다른 친구 진행중인 챌린지 인증 게시글 조회
-export async function getAllChallengeContents({ academyId, session, cursor, take }: { academyId: number; cursor: number; session: Session; take: number }) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/logs?cursor=${cursor}&take=${take}`, {
+export async function getAllChallengeContents({ academyId, cursor, take }: { academyId: number; cursor: number; take: number }) {
+  const res = await fetch(`/api/challenge/student/logs?academyId=${academyId}&cursor=${cursor}&take=${take}`, {
     method: 'GET',
-    headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
-    },
   });
 
-  const data: TAllChallengeResult = await res.json();
+  if (!res.ok) {
+    const errorData: TError = await res.json();
+    throw new Error(errorData.error);
+  }
 
-  return data;
+  return (await res.json()) as TAllChallengeResult;
 }
 
 // (원장/강사) 챌린지 삭제
