@@ -12,7 +12,7 @@ const StateLabelVariants = cva('flex items-center px-2 py-1  text-white font-bol
       red: 'bg-main-deep-pink',
       green: 'bg-green-400',
       yellow: 'bg-[#FFF9DB] text-[#FAB007]',
-      purple: 'bg-purple-400',
+      purple: 'bg-purple-400/50',
       cyan: 'bg-cyan-500',
       lime: 'bg-teal-400',
     },
