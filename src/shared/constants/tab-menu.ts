@@ -14,7 +14,6 @@ const PRINCIPAL_TAB_MENU = [
 const STUDENT_TAB_MENU = [
   { tab: 'create', text: '챌린지' },
   { tab: 'my-challenge', text: 'MY 챌린지' },
-  { tab: 'feed', text: 'Feed' },
 ];
 
 const MARKET_TAB_MENU = [
