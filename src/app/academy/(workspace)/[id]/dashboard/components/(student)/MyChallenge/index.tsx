@@ -64,10 +64,7 @@ function MyChallenge({ academyId, studentChallengeId }: IMyChallengeProps) {
 
   return (
     <Flex column="center" className="w-full gap-4">
-      <div>
-        디자인 수정 예정입니다...
-        {isFetching && '데이터 불러오는 중...'}
-      </div>
+      <div>디자인 수정 예정입니다...</div>
       {contents?.pages.map((page) =>
         page.result.challengeLogList.map((content) => (
           <StudentChallengeContent
@@ -77,6 +74,11 @@ function MyChallenge({ academyId, studentChallengeId }: IMyChallengeProps) {
           />
         )),
       )}
+      {isFetching
+        ? Array(6)
+            .fill('')
+            .map((_, i) => <StudentChallengeContent.Skeleton key={i} />)
+        : null}
       <div ref={ref} className="h-14" />
     </Flex>
   );

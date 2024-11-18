@@ -3,6 +3,7 @@ import Image from 'next/image';
 
 import Avatar from '@/shared/components/Avatar';
 import Flex from '@/shared/components/Flex';
+import Skeleton from '@/shared/components/Skeleton/Skeleton';
 import Typography from '@/shared/components/Typography';
 import type { IStudentChallengeContents } from '@/shared/types/acadmy';
 
@@ -56,4 +57,20 @@ function StudentChallengeContent({ challengeLog, studentProfile }: IStudentChall
     </Flex>
   );
 }
+
+function StudentChallengeContentSkeleton() {
+  return (
+    <Flex column="start" className="w-full gap-2">
+      <Flex column="around" className="w-full cursor-pointer gap-3 rounded-lg border border-solid border-gray-100 bg-white px-4 py-5 shadow-custom">
+        <Skeleton height={160} className="rounded-md" />
+        <Flex column="start" className="gap-4">
+          <Skeleton height={40} className="rounded-md" />
+        </Flex>
+      </Flex>
+    </Flex>
+  );
+}
+
+StudentChallengeContent.Skeleton = StudentChallengeContentSkeleton;
+
 export default StudentChallengeContent;
