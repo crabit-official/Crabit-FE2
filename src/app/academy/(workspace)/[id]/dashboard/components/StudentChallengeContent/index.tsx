@@ -29,21 +29,13 @@ function StudentChallengeContent({ challengeLog, studentProfile }: IStudentChall
         <div className="absolute bottom-0 left-1/2 top-10 w-px bg-gray-200" />
       </Flex>
       <Flex column="around" className="w-full gap-3 rounded-lg border border-solid border-gray-100 bg-white px-4 py-5 shadow-custom">
-        {challengeLog.fileUrl ? (
+        {challengeLog.fileUrl && (
           <Image
             src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challengeLog.fileUrl}`}
             alt="test"
             width={480}
             height={100}
             className="h-40 w-full rounded-lg border border-solid border-gray-100 bg-gray-50 object-contain"
-          />
-        ) : (
-          <Image
-            src="/images/test.jpeg"
-            alt="test"
-            width={480}
-            height={100}
-            className="h-40 w-full rounded-lg border border-solid border-gray-100 object-cover"
           />
         )}
         <Flex column="start" className="gap-2">
