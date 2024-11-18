@@ -15,7 +15,7 @@ async function PublicChallengeDetailModal({ params }: IModalProps) {
     'GET',
   );
 
-  return <PublicModal challengeData={challengeData.result} />;
+  return <PublicModal challengeData={challengeData.result} academyId={Number(params.id)} releasedChallengeId={Number(params.releasedId)} />;
 }
 
 export default PublicChallengeDetailModal;

@@ -11,14 +11,23 @@ import Avatar from '@/shared/components/Avatar';
 import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
+import useApplyChallenge from '@/shared/hooks/market/useApplyChallenge';
 import type { TPublicChallengeDetailResult } from '@/shared/types/public';
 
 interface IModalProps {
+  academyId: number;
   challengeData: TPublicChallengeDetailResult['result'];
+  releasedChallengeId: number;
 }
 
-function PublicModal({ challengeData }: IModalProps) {
+function PublicModal({ challengeData, academyId, releasedChallengeId }: IModalProps) {
   const router = useRouter();
+  const { mutate } = useApplyChallenge(academyId);
+
+  const handleApply = () => {
+    mutate({ academyId, releasedChallengeId });
+  };
+
   return (
     <div className="fixed left-0 top-0 z-50 size-full bg-black/60 backdrop-blur-sm" onClick={() => router.back()}>
       <Flex rowColumn="center" className="size-full px-4">
@@ -39,7 +48,7 @@ function PublicModal({ challengeData }: IModalProps) {
                 className="h-56 w-full rounded-xl border border-solid border-gray-200 bg-gray-100 object-contain"
               />
             ) : (
-              <Image src="/images/test.jpeg" alt="default img" width={480} height={100} className="h-56 w-full object-cover" />
+              <Image src="/images/test.jpeg" alt="default img" width={480} height={100} className="h-56 w-full rounded-xl object-cover" />
             )}
             <Flex row="start" className="absolute bottom-7 left-7 gap-1">
               <StateLabel
@@ -89,7 +98,9 @@ function PublicModal({ challengeData }: IModalProps) {
                 </Flex>
               </Flex>
             </Flex>
-            <Button className="font-medium text-white">첼린지 참여하기</Button>
+            <Button type="button" onClick={() => handleApply()} className="font-medium text-white">
+              첼린지 참여하기
+            </Button>
           </Flex>
         </div>
       </Flex>
