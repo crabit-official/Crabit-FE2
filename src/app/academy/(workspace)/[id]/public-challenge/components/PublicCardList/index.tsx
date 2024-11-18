@@ -2,6 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 import AnimateCard from '@/app/academy/(workspace)/[id]/dashboard/components/AnimateCard';
@@ -18,6 +19,7 @@ interface IPublicCardListProps {
 }
 
 function PublicCardList({ academyId, category }: IPublicCardListProps) {
+  const router = useRouter();
   const selectedCategory = PUBLIC_CATEGORY_NAME[category] ?? undefined;
   const { data: challenge, isFetching, hasNextPage, fetchNextPage, isError } = useGetInfinitePublicChallenge(academyId, selectedCategory);
   const isEmpty = challenge?.pages.every((page) => page.result.academyPublicChallengeList.length === 0);
@@ -56,9 +58,9 @@ function PublicCardList({ academyId, category }: IPublicCardListProps) {
       {challenge?.pages.map((page) =>
         page.result.academyPublicChallengeList.map((item) => (
           <AnimateCard
-            onClick={() => toast.message('준비중 입니다. 잠시만 기다려주세요')}
+            onClick={() => router.push(`public-challenge/${item.releasedChallengeId}`)}
             title={item.title}
-            subTitle="예원이가 데이터 넣어주면 수정할 예정"
+            subTitle={item.content}
             key={item.releasedChallengeId}
             imageUrl={item.thumbnailImageUrl}
             leftLabel={

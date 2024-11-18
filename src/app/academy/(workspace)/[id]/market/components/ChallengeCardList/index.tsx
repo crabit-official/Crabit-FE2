@@ -54,7 +54,7 @@ function ChallengeCardList({ academyId, challengeType }: IChallengeCardListProps
             }
             imageUrl={challenge.thumbnailImageUrl}
             onClick={() => router.push(`market/${challenge.challengeCoreId}`)}
-            subTitle="예원이가 넣어주면 추가"
+            subTitle={challenge.content}
             title={challenge.title}
             key={challenge.challengeCoreId}
           />

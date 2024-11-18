@@ -3,7 +3,6 @@
 import { type FieldValues, type SubmitHandler, useForm } from 'react-hook-form';
 import { IoMdPhotos } from 'react-icons/io';
 import Image from 'next/image';
-import type { Session } from 'next-auth';
 import { toast } from 'sonner';
 
 import { useImage } from '@/features/academy/(workspace)/hooks/use-image';
@@ -16,11 +15,10 @@ import useGetPresignedUrl from '@/shared/hooks/images/use-get-presigned-url';
 
 interface IMyChallengeContentFormProps {
   academyId: number;
-  session: Session;
   studentChallengeId: number;
 }
 
-function MyChallengeContentForm({ academyId, studentChallengeId, session }: IMyChallengeContentFormProps) {
+function MyChallengeContentForm({ academyId, studentChallengeId }: IMyChallengeContentFormProps) {
   const {
     register,
     handleSubmit,
@@ -33,7 +31,7 @@ function MyChallengeContentForm({ academyId, studentChallengeId, session }: IMyC
     },
   });
 
-  const { mutate } = useCreateChallengeContent();
+  const { mutate } = useCreateChallengeContent({ academyId, studentChallengeId });
   const { filePreview, handleChangeFile, file, setFile } = useImage();
   const { data: image } = useGetPresignedUrl(file?.name as string);
 
@@ -46,11 +44,10 @@ function MyChallengeContentForm({ academyId, studentChallengeId, session }: IMyC
 
       if (res?.ok) {
         mutate({
-          session,
           academyId,
           studentChallengeId,
           content: data.content,
-          imageUrl: image.result.keyName,
+          fileUrl: image.result.keyName,
         });
       }
     } else {
