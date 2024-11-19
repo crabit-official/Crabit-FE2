@@ -191,13 +191,12 @@ export async function approvalStudentChallengeResult({
     },
   );
 
-  const data = (await res.json()) as IChallengeApprovalResults;
-
-  if (!data.isSuccess) {
-    throw new Error(data.message);
+  if (!res.ok) {
+    const errorData: TError = await res.json();
+    throw new Error(errorData.error);
   }
 
-  return data;
+  return (await res.json()) as IChallengeApprovalResults;
 }
 
 // 다른 친구 진행중인 챌린지 인증 게시글 조회
