@@ -9,16 +9,19 @@ import PlusChallengeCard from '@/app/academy/(workspace)/[id]/dashboard/componen
 import { getChallengeCategory } from '@/features/academy/(workspace)/utils/challengeState';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
+import { PUBLIC_CATEGORY_NAME } from '@/shared/constants/tab-menu';
 import useGetInfiniteTeacherChallengeList from '@/shared/hooks/challenge/useGetInfiniteTeacherChallengeList';
 
 interface IAllChallengeContentsProps {
   academyId: number;
+  category: string;
 }
 
 // 원장/강사 대시보드 챌린지
-function AllChallengeContents({ academyId }: IAllChallengeContentsProps) {
+function AllChallengeContents({ academyId, category }: IAllChallengeContentsProps) {
   const router = useRouter();
-  const { data: challenge, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteTeacherChallengeList(academyId);
+  const selectedCategory = PUBLIC_CATEGORY_NAME[category] ?? undefined;
+  const { data: challenge, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteTeacherChallengeList(academyId, selectedCategory);
 
   const { ref, inView } = useInView({
     threshold: 0,

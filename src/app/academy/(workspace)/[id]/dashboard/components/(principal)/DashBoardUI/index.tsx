@@ -8,9 +8,10 @@ import { queryKeys } from '@/shared/constants/query-keys';
 
 interface IDashboardProps {
   academyId: number;
+  category: string;
 }
 
-async function PrincipalDashBoardUIl({ academyId }: IDashboardProps) {
+async function PrincipalDashBoardUIl({ academyId, category }: IDashboardProps) {
   const queryClient = new QueryClient();
   await queryClient.prefetchInfiniteQuery({
     queryKey: [queryKeys.CHALLENGE_LIST],
@@ -23,7 +24,7 @@ async function PrincipalDashBoardUIl({ academyId }: IDashboardProps) {
 
   return (
     <HydrationBoundary state={dehydratedState}>
-      <AllChallengeContents academyId={academyId} />
+      <AllChallengeContents academyId={academyId} category={category} />
     </HydrationBoundary>
   );
 }

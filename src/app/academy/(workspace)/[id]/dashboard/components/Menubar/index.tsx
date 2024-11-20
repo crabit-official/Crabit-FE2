@@ -4,7 +4,7 @@ import React from 'react';
 
 import MenuItem from '@/app/academy/(workspace)/[id]/dashboard/components/MenuItem';
 import Flex from '@/shared/components/Flex';
-import { DASHBOARD_MENU } from '@/shared/constants/tab-menu';
+import { PUBLIC_MENU } from '@/shared/constants/tab-menu';
 
 interface IMenubarProps {
   academyId: number;
@@ -15,8 +15,7 @@ function Menubar({ academyId, activeTab }: IMenubarProps) {
   return (
     <Flex column="start">
       <ul>
-        <MenuItem title="진행중인 챌린지" content={DASHBOARD_MENU} academyId={academyId} activeTab={activeTab} />
-        <MenuItem title="진행 예정 챌린지" content={DASHBOARD_MENU} academyId={academyId} activeTab={activeTab} />
+        <MenuItem title="카테고리" content={PUBLIC_MENU} academyId={academyId} activeTab={activeTab} />
       </ul>
     </Flex>
   );
