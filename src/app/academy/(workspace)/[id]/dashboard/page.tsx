@@ -44,9 +44,9 @@ async function AcademyDashBoardPage({ params, searchParams }: IAcademyDashBoardP
         />
       </Flex>
       <div className="flex flex-col gap-20 lg:grid lg:grid-cols-[180px,1fr] lg:gap-10 xl:gap-32">
-        <Menubar academyId={Number(params.id)} activeTab={searchParams.tab} />
+        <Menubar academyId={Number(params.id)} activeTab={searchParams.tab} role={AcademyProfile.result.academyRole} />
         {AcademyProfile.result.academyRole === ACADEMY_ROLE.STUDENT ? (
-          <StudentDashBoardUI academyId={Number(params.id)} />
+          <StudentDashBoardUI academyId={Number(params.id)} search={searchParams.search} category={searchParams.tab} />
         ) : (
           <PrincipalDashBoardUIl academyId={Number(params.id)} category={searchParams.tab} search={searchParams.search} />
         )}

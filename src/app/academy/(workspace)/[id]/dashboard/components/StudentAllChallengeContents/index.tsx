@@ -9,15 +9,20 @@ import PlusChallengeCard from '@/app/academy/(workspace)/[id]/dashboard/componen
 import { getStatusName } from '@/features/academy/(workspace)/utils/challengeState';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
+import { LOG_SUBMISSION_NAME } from '@/shared/constants/tab-menu';
 import useGetInfiniteStudentChallengeList from '@/shared/hooks/challenge/useGetInfiniteStudentChallengeList';
 
 interface IStudentAllChallengeContentsProps {
   academyId: number;
+  category: string;
+  search: string;
 }
 
 // 학생 대시보드
-function StudentAllChallengeContents({ academyId }: IStudentAllChallengeContentsProps) {
-  const { data: challenge, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteStudentChallengeList(academyId);
+function StudentAllChallengeContents({ academyId, category, search }: IStudentAllChallengeContentsProps) {
+  const selectedCategory = LOG_SUBMISSION_NAME[category] ?? undefined;
+
+  const { data: challenge, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteStudentChallengeList(academyId, selectedCategory, search);
   const router = useRouter();
 
   const { ref, inView } = useInView({
@@ -45,14 +50,14 @@ function StudentAllChallengeContents({ academyId }: IStudentAllChallengeContents
 
   if (isEmpty) {
     return (
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
         <PlusChallengeCard onClick={() => router.push(`/academy/${academyId}/public-challenge`)} content={'참여할\n챌린지 찾기'} />
       </div>
     );
   }
 
   return (
-    <div className="relative grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="relative grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
       {challenge?.pages.map((page) =>
         page.result.studentChallengeList.map((item) => (
           <AnimateCard

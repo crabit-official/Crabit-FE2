@@ -49,12 +49,26 @@ export async function getTeachersChallengeList({ cursor, take, academyId, catego
     method: 'GET',
   });
 
+  if (!res.ok) {
+    throw new Error('챌린지를 불러오지 못했습니다.');
+  }
+
   return (await res.json()) as IChallengeResult;
 }
 
 // 학생이 참여하는 챌린지 목록 전체 조회
-export async function getStudentChallengeList({ cursor, take, academyId }: IGetChallengeList) {
-  const res = await fetch(`/api/challenge/student/list?cursor=${cursor}&take=${take}&academyId=${academyId}`, {
+export async function getStudentChallengeList({ cursor, take, academyId, category, search }: IGetChallengeList) {
+  let url = `/api/challenge/student/list?cursor=${cursor}&take=${take}&academyId=${academyId}`;
+
+  if (category) {
+    url += `&challengeLogSubmissionStatus=${category}`;
+  }
+
+  if (search) {
+    url += `&title=${search}`;
+  }
+
+  const res = await fetch(url, {
     method: 'GET',
   });
 
