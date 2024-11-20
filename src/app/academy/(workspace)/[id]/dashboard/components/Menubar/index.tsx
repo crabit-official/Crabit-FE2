@@ -17,7 +17,7 @@ interface IMenubarProps {
 function Menubar({ academyId, activeTab }: IMenubarProps) {
   const router = useRouter();
   const [search, setSearch] = useState<string>('');
-  const debounceSearch = useDebounce(search, 500);
+  const debounceSearch = useDebounce(search.trim(), 500);
 
   useEffect(() => {
     let url = `/academy/${academyId}/dashboard?search=${debounceSearch}`;
@@ -35,7 +35,7 @@ function Menubar({ academyId, activeTab }: IMenubarProps) {
       </ul>
       <Flex row="between" className="w-full items-center rounded-xl border border-solid border-gray-200 bg-gray-50 px-3 py-2">
         <input
-          className="w-5/6 bg-transparent text-sm"
+          className="w-5/6 bg-transparent text-sm outline-none"
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
