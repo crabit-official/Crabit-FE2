@@ -15,13 +15,14 @@ import useGetInfiniteTeacherChallengeList from '@/shared/hooks/challenge/useGetI
 interface IAllChallengeContentsProps {
   academyId: number;
   category: string;
+  search: string;
 }
 
 // 원장/강사 대시보드 챌린지
-function AllChallengeContents({ academyId, category }: IAllChallengeContentsProps) {
+function AllChallengeContents({ academyId, category, search }: IAllChallengeContentsProps) {
   const router = useRouter();
   const selectedCategory = PUBLIC_CATEGORY_NAME[category] ?? undefined;
-  const { data: challenge, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteTeacherChallengeList(academyId, selectedCategory);
+  const { data: challenge, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteTeacherChallengeList(academyId, selectedCategory, search);
 
   const { ref, inView } = useInView({
     threshold: 0,
@@ -45,7 +46,7 @@ function AllChallengeContents({ academyId, category }: IAllChallengeContentsProp
   }
 
   return (
-    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
       <PlusChallengeCard onClick={() => router.push('dashboard/create')} content={'새로운\n챌린지 추가하기'} />
       {challenge?.pages?.map((page) =>
         page.result.challengeList.map((item) => (

@@ -23,6 +23,7 @@ interface IGetChallengeList {
   category?: string;
   cursor: number;
   releasedChallengeId?: number;
+  search?: string;
   studentChallengeId?: number;
   take: number;
 }
@@ -34,13 +35,16 @@ interface IGetChallengeDetails {
 }
 
 // 원장/강사가 배포한 챌린지 목록 전체 조회
-export async function getTeachersChallengeList({ cursor, take, academyId, category }: IGetChallengeList) {
+export async function getTeachersChallengeList({ cursor, take, academyId, category, search }: IGetChallengeList) {
   let url = `/api/challenge/list?cursor=${cursor}&take=${take}&academyId=${academyId}`;
 
   if (category) {
     url += `&challengeCategory=${category}`;
   }
 
+  if (search) {
+    url += `&title=${search}`;
+  }
   const res = await fetch(url, {
     method: 'GET',
   });

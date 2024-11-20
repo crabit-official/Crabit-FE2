@@ -9,13 +9,15 @@ import type { IChallengeResult } from '@/shared/types/acadmy';
 function useGetInfiniteTeacherChallengeList(
   academyId: number,
   category?: CHALLENGE_CATEGORY,
+  search?: string,
   queryOptions?: UseInfiniteQueryOptions<IChallengeResult, DefaultError, InfiniteData<IChallengeResult, number>, IChallengeResult, QueryKey, number>,
 ) {
   const categoryKey = category || 'ALL';
+  const searchKey = search || 'ALL';
 
   return useInfiniteQuery({
-    queryFn: ({ pageParam }) => getTeachersChallengeList({ cursor: pageParam, take: 6, academyId, category }),
-    queryKey: [queryKeys.CHALLENGE_LIST, { academyId }, categoryKey],
+    queryFn: ({ pageParam }) => getTeachersChallengeList({ cursor: pageParam, take: 6, academyId, category, search }),
+    queryKey: [queryKeys.CHALLENGE_LIST, { academyId }, categoryKey, searchKey],
     initialPageParam: 0,
     getNextPageParam: (lastPage) => (lastPage.result.hasNext ? lastPage.result.nextCursor : undefined),
     ...queryOptions,
