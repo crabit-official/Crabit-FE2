@@ -26,7 +26,7 @@ async function AcademyDashBoardPage({ params, searchParams }: IAcademyDashBoardP
 
   return (
     <Flex column="start" className="min-h-screen items-center gap-2">
-      <Flex row="start" className="relative h-40 w-full max-w-[1100px] px-6 md:h-60 md:px-0">
+      <Flex row="start" className="relative h-40 w-full max-w-[1100px] px-6 md:h-60 md:px-0 2xl:px-36">
         <Flex column="center" className="w-full gap-1">
           <Typography size="h5" className="text-main-deep-pink">
             매일의 작은 성취를 통한 습관 형성
