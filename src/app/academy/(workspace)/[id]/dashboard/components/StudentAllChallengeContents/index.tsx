@@ -9,15 +9,20 @@ import PlusChallengeCard from '@/app/academy/(workspace)/[id]/dashboard/componen
 import { getStatusName } from '@/features/academy/(workspace)/utils/challengeState';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
+import { LOG_SUBMISSION_NAME } from '@/shared/constants/tab-menu';
 import useGetInfiniteStudentChallengeList from '@/shared/hooks/challenge/useGetInfiniteStudentChallengeList';
 
 interface IStudentAllChallengeContentsProps {
   academyId: number;
+  category: string;
+  search: string;
 }
 
 // 학생 대시보드
-function StudentAllChallengeContents({ academyId }: IStudentAllChallengeContentsProps) {
-  const { data: challenge, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteStudentChallengeList(academyId);
+function StudentAllChallengeContents({ academyId, category, search }: IStudentAllChallengeContentsProps) {
+  const selectedCategory = LOG_SUBMISSION_NAME[category] ?? undefined;
+
+  const { data: challenge, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteStudentChallengeList(academyId, selectedCategory, search);
   const router = useRouter();
 
   const { ref, inView } = useInView({
