@@ -15,7 +15,13 @@ export async function GET(req: NextRequest) {
   if (challengeCategory) url += `&challengeCategory=${challengeCategory}`;
   if (title) url += `&title=${title}`;
 
-  const data = await fetchData<IChallengeResult>(url, 'GET');
+  try {
+    const data = await fetchData<IChallengeResult>(url, 'GET');
 
-  return NextResponse.json(data);
+    return NextResponse.json(data);
+  } catch (e) {
+    const errorMessage = e instanceof Error ? e.message : '알수없는 에러가 발생했습니다.';
+
+    return NextResponse.json({ error: errorMessage }, { status: 400, statusText: 'Error Failed' });
+  }
 }

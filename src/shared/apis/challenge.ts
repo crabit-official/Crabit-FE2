@@ -49,6 +49,10 @@ export async function getTeachersChallengeList({ cursor, take, academyId, catego
     method: 'GET',
   });
 
+  if (!res.ok) {
+    throw new Error('챌린지를 불러오지 못했습니다.');
+  }
+
   return (await res.json()) as IChallengeResult;
 }
 
