@@ -15,7 +15,7 @@ export default function PlusChallengeCard({ onClick, content }: IPlusChallengeCa
     <Framer
       onClick={onClick}
       whileHover={{ scale: 1.01 }}
-      className="flex min-h-80 w-64 cursor-pointer flex-col justify-center gap-20 overflow-hidden rounded-lg border border-solid border-gray-100 bg-main-gradient px-6 shadow-custom transition-shadow duration-300 hover:shadow-hover-custom"
+      className="flex h-fit min-h-80 w-64 cursor-pointer flex-col justify-center gap-20 overflow-hidden rounded-lg border border-solid border-gray-100 bg-main-gradient px-6 shadow-custom transition-shadow duration-300 hover:shadow-hover-custom"
     >
       <Typography size="h2" className="whitespace-pre-wrap break-keep text-white">
         {content}
