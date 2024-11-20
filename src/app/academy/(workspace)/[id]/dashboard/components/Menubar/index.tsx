@@ -20,11 +20,10 @@ function Menubar({ academyId, activeTab }: IMenubarProps) {
   const debounceSearch = useDebounce(search.trim(), 500);
 
   useEffect(() => {
-    let url = `/academy/${academyId}/dashboard?search=${debounceSearch}`;
+    let url = `/academy/${academyId}/dashboard?tab=${activeTab ?? 'all'}`;
 
-    if (activeTab) {
-      url += `&tab=${activeTab}`;
-    }
+    if (debounceSearch) url += `&search=${debounceSearch}`;
+
     router.push(url);
   }, [debounceSearch, activeTab, academyId, router]);
 
