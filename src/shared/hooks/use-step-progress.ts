@@ -23,7 +23,7 @@ function useStepProgress(maxSteps: number) {
   };
 
   const addSteps = () => {
-    if (currentProgress < maxSteps) {
+    if (currentProgress <= maxSteps) {
       setCurrentProgress((prev) => {
         const newProgress = prev + 1;
         updateProgressBar(newProgress);

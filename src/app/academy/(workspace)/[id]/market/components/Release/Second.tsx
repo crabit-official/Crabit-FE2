@@ -1,17 +1,17 @@
 import React from 'react';
 import { type FieldValues, useForm } from 'react-hook-form';
 
-import type { IChallengeValue } from '@/app/academy/(workspace)/[id]/market/components/ModalDetail';
 import BoxContainer from '@/shared/components/BoxContainer';
 import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
 import TextArea from '@/shared/components/Textarea';
 import Typography from '@/shared/components/Typography';
+import type { IReleaseChallengeDTO } from '@/shared/types/market';
 
 interface ISecondProps {
   content: string;
   onBack: () => void;
-  onNext: (data: Partial<IChallengeValue>) => void;
+  onNext: (data: Partial<IReleaseChallengeDTO>) => void;
 }
 export default function SecondStep({ onNext, onBack, content }: ISecondProps) {
   const {

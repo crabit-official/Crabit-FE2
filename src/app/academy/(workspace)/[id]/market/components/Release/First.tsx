@@ -3,7 +3,6 @@ import { type FieldValues, useForm } from 'react-hook-form';
 import { useInView } from 'react-intersection-observer';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import type { IChallengeValue } from '@/app/academy/(workspace)/[id]/market/components/ModalDetail';
 import Students from '@/features/academy/(workspace)/components/dashboard/Students';
 import BoxContainer from '@/shared/components/BoxContainer';
 import Button from '@/shared/components/Button';
@@ -19,7 +18,7 @@ import { marketSchema } from '@/shared/utils/schema';
 
 interface IFirstStep {
   academyId: number;
-  onNext: (data: Partial<IChallengeValue>) => void;
+  onNext: (data: Partial<IReleaseChallengeDTO>) => void;
 }
 
 function FirstStep({ academyId, onNext }: IFirstStep) {
