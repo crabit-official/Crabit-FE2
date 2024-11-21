@@ -4,7 +4,7 @@ function useStepProgress(maxSteps: number) {
   const [currentProgress, setCurrentProgress] = useState(1);
   const circle = useRef<HTMLDivElement | null>(null);
   const progressBar = useRef<HTMLSpanElement | null>(null);
-  const progressArr = Array.from({ length: maxSteps - 1 }, (_, index) => index + 2);
+  const progressArr = Array.from({ length: maxSteps }, (_, index) => index + 2);
 
   const updateProgressBar = (step: number) => {
     if (progressBar.current) {
@@ -23,12 +23,14 @@ function useStepProgress(maxSteps: number) {
   };
 
   const addSteps = () => {
-    if (currentProgress <= maxSteps) {
+    if (currentProgress < maxSteps) {
       setCurrentProgress((prev) => {
         const newProgress = prev + 1;
         updateProgressBar(newProgress);
         return newProgress;
       });
+    } else if (currentProgress === maxSteps) {
+      setCurrentProgress((prev) => prev + 1);
     }
   };
 
