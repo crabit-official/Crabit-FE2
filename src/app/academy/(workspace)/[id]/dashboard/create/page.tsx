@@ -86,7 +86,7 @@ function ChallengeCreatePage({ params }: { params: { id: string } }) {
         <MultiStepProgress {...step}>
           {step.currentProgress === 1 && <First onNext={(data) => handleNext({ ...data })} />}
           {step.currentProgress === 2 && <Second onNext={(data) => handleNext({ ...data })} onBack={handleBack} />}
-          {step.currentProgress === 3 && <Third onNext={(data) => handleNext({ ...data })} onBack={handleBack} academyId={1} />}
+          {step.currentProgress === 3 && <Third onNext={(data) => handleNext({ ...data })} onBack={handleBack} academyId={Number(params.id)} />}
           {step.currentProgress === 4 && <LastStep />}
         </MultiStepProgress>
       </Flex>
