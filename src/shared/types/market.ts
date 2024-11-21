@@ -57,6 +57,7 @@ export type TReleasedChallengeResult = CommonResponse<{
 
 export interface IReleaseChallengeDTO {
   challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
+  description: string | null;
   points: number;
   studentIdList: number[] | [];
   totalDays: number;

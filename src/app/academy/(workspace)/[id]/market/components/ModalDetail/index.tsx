@@ -1,27 +1,26 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { type FieldValues, useForm } from 'react-hook-form';
 import { GoX } from 'react-icons/go';
-import { useInView } from 'react-intersection-observer';
-import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import Students from '@/features/academy/(workspace)/components/dashboard/Students';
+import FirstStep from '@/app/academy/(workspace)/[id]/market/components/Release/First';
+import SecondStep from '@/app/academy/(workspace)/[id]/market/components/Release/Second';
 import StateLabel from '@/features/academy/(workspace)/components/state-label';
 import { getChallengeCategory, getChallengeType, getVariantByStatus } from '@/features/academy/(workspace)/utils/challengeState';
 import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
-import Input from '@/shared/components/Input';
-import SelectDropdown from '@/shared/components/SelectDropdown';
+import ProgressBar from '@/shared/components/ProgressBar';
 import Typography from '@/shared/components/Typography';
-import { METHOD_CATEGORIES } from '@/shared/constants/challenge-cataegrories';
 import { CHALLENGE_PARTICIPATION_METHODS } from '@/shared/enums/challenge';
-import useGetInfiniteAcademyMemberDetailList from '@/shared/hooks/academy/useGetInfiniteAcademyStudentList';
 import useReleaseChallenge from '@/shared/hooks/market/useReleaseChallenge';
+import useStepProgress from '@/shared/hooks/use-step-progress';
 import type { IReleaseChallengeDTO, TChallengeDetail } from '@/shared/types/market';
-import { marketSchema } from '@/shared/utils/schema';
+
+export interface IChallengeValue extends IReleaseChallengeDTO {
+  step: number;
+}
 
 type TModalDetailProps = TChallengeDetail['result'] & {
   academyId: number;
@@ -31,96 +30,67 @@ type TModalDetailProps = TChallengeDetail['result'] & {
 function ModalDetail({ challenge, teacher, academy, academyId, challengeCoreId }: TModalDetailProps) {
   let content;
   const router = useRouter();
+  const step = useStepProgress(2);
   const [release, setRelease] = useState<boolean>(false);
-  const { mutate, isPending } = useReleaseChallenge(academyId);
-  const { data: studentData, isFetching, hasNextPage, fetchNextPage, isError } = useGetInfiniteAcademyMemberDetailList(10, academyId);
-  const [selectedStudentIdList, setSelectedStudentIdList] = useState<number[]>([]);
-  const { ref, inView } = useInView({
-    threshold: 0,
-    delay: 0,
+  const { mutate } = useReleaseChallenge(academyId);
+  const [values, setValues] = useState<IChallengeValue>({
+    challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS.SELF_PARTICIPATING,
+    description: null,
+    points: 0,
+    studentIdList: [],
+    totalDays: 0,
+    step: 1,
   });
 
-  useEffect(() => {
-    if (inView) {
-      if (!isFetching && hasNextPage) {
-        void fetchNextPage();
-      }
-    }
-  }, [inView, isFetching, hasNextPage, fetchNextPage]);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    watch,
-  } = useForm<FieldValues>({
-    resolver: zodResolver(marketSchema),
-    mode: 'onBlur',
-    defaultValues: {
-      challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS.SELF_PARTICIPATING,
-    },
-  });
-  const watchCategory = watch('challengeParticipationMethod');
-
-  const handleRelease = (data: FieldValues) => {
-    const challengeData: IReleaseChallengeDTO = {
-      points: data.points,
-      totalDays: data.totalDays,
-      challengeParticipationMethod: data.challengeParticipationMethod,
-      studentIdList: [],
-    };
-
-    if (data.challengeParticipationMethod === CHALLENGE_PARTICIPATION_METHODS.ASSIGNED) {
-      challengeData.studentIdList = selectedStudentIdList;
-    }
-
-    mutate({
-      academyId,
-      challengeCoreId,
-      challengeData,
-    });
-
-    reset();
+  const handleInfoChange = (infoValues: Partial<IChallengeValue>) => {
+    setValues((prev) => ({
+      ...prev,
+      ...infoValues,
+      step: prev.step + 1,
+    }));
   };
 
-  if (isError) {
-    return (
-      <Flex>
-        <Typography size="h5">에러가 발생했습니다.</Typography>
-      </Flex>
-    );
-  }
+  const handleNext = (currentData: Partial<IChallengeValue>) => {
+    handleInfoChange(currentData);
+    step.addSteps();
+  };
+
+  const handleBack = () => {
+    step.minusSteps();
+    setValues((prev) => ({
+      ...prev,
+      step: prev.step - 1,
+    }));
+  };
+
+  useEffect(() => {
+    if (values.step === 3) {
+      mutate({
+        academyId,
+        challengeCoreId,
+        challengeData: {
+          description: values.description,
+          challengeParticipationMethod: values.challengeParticipationMethod,
+          points: Number(values.points),
+          studentIdList: values.studentIdList ?? [],
+          totalDays: Number(values.totalDays),
+        },
+      });
+    }
+  }, [values, academyId, challengeCoreId, mutate]);
 
   if (release) {
     content = (
-      <form onSubmit={handleSubmit(handleRelease)} className="flex h-full flex-col justify-center gap-4 p-6">
-        <Typography size="h2">우리 학원에 배포</Typography>
-        <Typography className="w-full pl-1 text-start text-xs font-medium text-neutral-300" size="h5">
-          Tip ) 챌린지 진행 기간은 최소 3일에서 최대 31일까지 설정할 수 있습니다.
-        </Typography>
-        <Input id="totalDays" type="number" label="챌린지 기간" register={register} errors={errors} required valueAsNumber />
-        <Input id="points" type="number" label="포인트" register={register} errors={errors} required valueAsNumber />
-        <SelectDropdown id="challengeParticipationMethod" label="챌린지 참여 방식" register={register} errors={errors} options={METHOD_CATEGORIES} />
-        {watchCategory === CHALLENGE_PARTICIPATION_METHODS.ASSIGNED && (
-          <div className="flex max-h-48 flex-wrap gap-2 overflow-y-auto">
-            {studentData?.pages.map((page) =>
-              page.result.studentList.map((student) => (
-                <Students
-                  key={student.academyMemberId}
-                  {...student}
-                  selectedStudentIdList={selectedStudentIdList}
-                  setSelectedStudentIdList={setSelectedStudentIdList}
-                />
-              )),
-            )}
-            <div ref={ref} className="h-14" />
-          </div>
-        )}
-        <Button type="submit" className="font-medium text-white" disabled={isPending}>
-          {isPending ? '학원에 배포중..' : '배포 하기'}
-        </Button>
-      </form>
+      <Flex column="between" className="size-full gap-10 px-4 py-6">
+        <ProgressBar progress={step.currentProgress / 2} />
+        <Flex column="start" className="gap-4">
+          <Typography size="h2" className="px-2 opacity-80">
+            우리 학원에 배포
+          </Typography>
+          {step.currentProgress === 1 && <FirstStep academyId={academyId} onNext={(data) => handleNext({ ...data })} />}
+          {step.currentProgress === 2 && <SecondStep content={challenge.content} onNext={(data) => handleNext({ ...data })} onBack={handleBack} />}
+        </Flex>
+      </Flex>
     );
   } else {
     content = (
@@ -178,7 +148,7 @@ function ModalDetail({ challenge, teacher, academy, academyId, challengeCoreId }
     <div className="fixed left-0 top-0 z-50 size-full bg-black/60 backdrop-blur-sm" onClick={() => router.back()}>
       <Flex rowColumn="center" className="size-full px-4">
         <div
-          className="relative flex min-h-[500px] w-full max-w-[500px] flex-col overflow-hidden rounded-2xl bg-white sm:w-2/3"
+          className="relative flex w-full max-w-[500px] flex-col overflow-hidden rounded-2xl bg-white sm:w-2/3"
           onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
         >
           {content}
