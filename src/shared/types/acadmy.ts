@@ -65,6 +65,7 @@ export interface IAcademyChallenges {
   challengeMarketVisibility: MARKET_VISIBILITY_CATEGORIES;
   challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
   content: string;
+  description: string | null;
   fileUrl: string | null;
   points: number;
   studentIdList: number[] | [];
@@ -230,6 +231,7 @@ export type TDetailChallengeResult = CommonResponse<{
     challengeSource: CHALLENGE_SOURCE_TYPE;
     challengeType: CHALLENGE_TYPE;
     content: string;
+    description: string;
     fileUrl: string;
     points: number;
     releasedChallengeId: number;
@@ -300,6 +302,7 @@ export type TMyChallengeProgressResult = CommonResponse<{
     challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
     challengeType: CHALLENGE_TYPE;
     content: string;
+    description: string;
     points: number;
     releasedChallengeId: number;
     thumbnailImageUrl: string;
