@@ -130,6 +130,11 @@ export async function getAcademyStudentList({ cursor, take, academyId, nickname 
   }
   const res = await fetch(url);
 
+  if (!res.ok) {
+    const errorData: TError = await res.json();
+    throw new Error(errorData.error);
+  }
+
   return (await res.json()) as IAcademyStudentListResult;
 }
 

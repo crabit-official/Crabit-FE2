@@ -2,7 +2,6 @@ import React from 'react';
 import { type FieldValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import type { IChallengeValue } from '@/app/academy/(workspace)/[id]/dashboard/create/page';
 import { useImage } from '@/features/academy/(workspace)/hooks/use-image';
 import BoxContainer from '@/shared/components/BoxContainer';
 import Button from '@/shared/components/Button';
@@ -10,11 +9,12 @@ import Flex from '@/shared/components/Flex';
 import Input from '@/shared/components/Input';
 import Typography from '@/shared/components/Typography';
 import useGetPresignedUrl from '@/shared/hooks/images/use-get-presigned-url';
+import type { IAcademyChallenges } from '@/shared/types/acadmy';
 import { challengeTwoSchema } from '@/shared/utils/schema';
 
 interface ISecondProps {
   onBack: () => void;
-  onNext: (data: Partial<IChallengeValue>) => void;
+  onNext: (data: Partial<IAcademyChallenges>) => void;
 }
 
 function Second({ onNext, onBack }: ISecondProps) {

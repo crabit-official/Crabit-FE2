@@ -4,7 +4,6 @@ import { IoMdPhotos } from 'react-icons/io';
 import Image from 'next/image';
 import { toast } from 'sonner';
 
-import type { IChallengeValue } from '@/app/academy/(workspace)/[id]/dashboard/create/page';
 import { useImage } from '@/features/academy/(workspace)/hooks/use-image';
 import BoxContainer from '@/shared/components/BoxContainer';
 import Button from '@/shared/components/Button';
@@ -13,9 +12,10 @@ import Input from '@/shared/components/Input';
 import TextArea from '@/shared/components/Textarea';
 import Typography from '@/shared/components/Typography';
 import useGetPresignedUrl from '@/shared/hooks/images/use-get-presigned-url';
+import type { IAcademyChallenges } from '@/shared/types/acadmy';
 
 interface IFirstProps {
-  onNext: (data: Partial<IChallengeValue>) => void;
+  onNext: (data: Partial<IAcademyChallenges>) => void;
 }
 
 function First({ onNext }: IFirstProps) {

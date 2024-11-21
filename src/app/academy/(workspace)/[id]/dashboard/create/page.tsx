@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import First from '@/app/academy/(workspace)/[id]/dashboard/create/components/First';
 import LastStep from '@/app/academy/(workspace)/[id]/dashboard/create/components/Last';
@@ -10,27 +10,19 @@ import Third from '@/app/academy/(workspace)/[id]/dashboard/create/components/Th
 import useCreateChallenges from '@/features/academy/(workspace)/hooks/challenges/use-create-challenges';
 import Flex from '@/shared/components/Flex';
 import { CHALLENGE_CATEGORY, CHALLENGE_PARTICIPATION_METHODS, MARKET_VISIBILITY_CATEGORIES } from '@/shared/enums/challenge';
-import useStepProgress from '@/shared/hooks/use-step-progress';
+import useHandleStepChallenge from '@/shared/hooks/useHandleStepChallenge';
 import type { IAcademyChallenges } from '@/shared/types/acadmy';
 
-export interface IChallengeValue extends IAcademyChallenges {
-  step: number;
-}
-
-const LAST_STEP = 4;
-
 function ChallengeCreatePage({ params }: { params: { id: string } }) {
-  const step = useStepProgress(LAST_STEP);
+  const LAST_STEP = 4;
   const { mutate } = useCreateChallenges(Number(params.id));
-
-  const [values, setValues] = useState<IChallengeValue>({
+  const { values, step, handleBack, handleNext } = useHandleStepChallenge<IAcademyChallenges>(LAST_STEP, {
     challengeCategory: CHALLENGE_CATEGORY.ETC,
     challengeMarketVisibility: MARKET_VISIBILITY_CATEGORIES.PUBLIC,
     challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS.SELF_PARTICIPATING,
     content: '',
     fileUrl: '',
     points: 0,
-    step: 1,
     studentIdList: [],
     thumbnailImageUrl: '',
     title: '',
@@ -38,29 +30,8 @@ function ChallengeCreatePage({ params }: { params: { id: string } }) {
     description: null,
   });
 
-  const handleInfoChange = (infoValues: Partial<IChallengeValue>) => {
-    setValues((prev) => ({
-      ...prev,
-      ...infoValues,
-      step: prev.step + 1,
-    }));
-  };
-
-  const handleNext = (currentData: Partial<IChallengeValue>) => {
-    handleInfoChange(currentData);
-    step.addSteps();
-  };
-
-  const handleBack = () => {
-    step.minusSteps();
-    setValues((prev) => ({
-      ...prev,
-      step: prev.step - 1,
-    }));
-  };
-
   useEffect(() => {
-    if (values.step === LAST_STEP) {
+    if (step.currentProgress === LAST_STEP) {
       mutate({
         academyId: Number(params.id),
         challengeData: {
@@ -78,7 +49,7 @@ function ChallengeCreatePage({ params }: { params: { id: string } }) {
         },
       });
     }
-  }, [values, params.id, mutate]);
+  }, [values, params.id, mutate, step.currentProgress]);
 
   return (
     <Flex className="w-full">

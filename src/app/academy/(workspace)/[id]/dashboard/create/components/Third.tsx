@@ -1,9 +1,10 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import { type FieldValues, useForm } from 'react-hook-form';
 import { useInView } from 'react-intersection-observer';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import type { IChallengeValue } from '@/app/academy/(workspace)/[id]/dashboard/create/page';
 import Students from '@/features/academy/(workspace)/components/dashboard/Students';
 import BoxContainer from '@/shared/components/BoxContainer';
 import Button from '@/shared/components/Button';
@@ -13,12 +14,13 @@ import Typography from '@/shared/components/Typography';
 import { CHALLENGE_CATEGORIES, METHOD_CATEGORIES, VISIBILITY_CATEGORIES } from '@/shared/constants/challenge-cataegrories';
 import { CHALLENGE_PARTICIPATION_METHODS } from '@/shared/enums/challenge';
 import useGetInfiniteAcademyMemberDetailList from '@/shared/hooks/academy/useGetInfiniteAcademyStudentList';
+import type { IAcademyChallenges } from '@/shared/types/acadmy';
 import { challengeSchema } from '@/shared/utils/schema';
 
 interface IThirdProps {
   academyId: number;
   onBack: () => void;
-  onNext: (data: Partial<IChallengeValue>) => void;
+  onNext: (data: Partial<IAcademyChallenges>) => void;
 }
 
 function Third({ onBack, onNext, academyId }: IThirdProps) {
@@ -30,7 +32,7 @@ function Third({ onBack, onNext, academyId }: IThirdProps) {
   } = useForm<FieldValues>({
     resolver: zodResolver(challengeSchema),
   });
-  const { data: studentData, isFetching, hasNextPage, fetchNextPage } = useGetInfiniteAcademyMemberDetailList(10, academyId);
+  const { data: studentData, isFetching, hasNextPage, fetchNextPage, isError } = useGetInfiniteAcademyMemberDetailList(10, academyId);
 
   const [selectedStudentIdList, setSelectedStudentIdList] = useState<number[]>([]);
   const watchCategory = watch('challengeParticipationMethod');
@@ -46,6 +48,10 @@ function Third({ onBack, onNext, academyId }: IThirdProps) {
       }
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
+
+  if (isError) {
+    return <div>에러가 발생했습니다. 다시 시도해주세요.</div>;
+  }
 
   const onSubmit = (data: FieldValues) => {
     if (data.challengeParticipationMethod === CHALLENGE_PARTICIPATION_METHODS.SELF_PARTICIPATING) {
@@ -90,7 +96,8 @@ function Third({ onBack, onNext, academyId }: IThirdProps) {
         </Flex>
         <Flex column="center" className="w-full gap-4">
           <SelectDropdown id="challengeParticipationMethod" label="챌린지 참여 방식" register={register} errors={errors} options={METHOD_CATEGORIES} />
-          {watchCategory === 'ASSIGNED' && (
+
+          {watchCategory === CHALLENGE_PARTICIPATION_METHODS.ASSIGNED && (
             <>
               <Typography size="h5" className="mt-2 border-t border-solid border-gray-100 pt-4 text-sm font-normal opacity-80">
                 챌린지에 참여할 학생을 선택해주세요.
@@ -106,7 +113,7 @@ function Third({ onBack, onNext, academyId }: IThirdProps) {
                     />
                   )),
                 )}
-                <div ref={ref} className="h-10" />
+                <div ref={ref} className="h-5" />
               </div>
             </>
           )}
