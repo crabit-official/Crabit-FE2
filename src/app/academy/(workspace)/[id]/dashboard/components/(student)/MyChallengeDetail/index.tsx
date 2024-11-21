@@ -34,13 +34,23 @@ function MyChallengeDetail({ challengeData, studentChallengeId, academyId }: IMy
                 height={500}
                 className="h-80 w-full rounded-2xl border border-solid border-gray-100 object-contain shadow-custom"
               />
-              <Flex column="center" className="gap-1">
-                <Typography size="h7" className="break-keep font-medium text-main-deep-pink">
+              <Flex column="center" className="gap-2">
+                <Typography size="h7" className="break-keep font-medium text-main-deep-pink" as="p">
                   DAY {challengeData.releasedChallenge.totalDays} • Ⓟ {challengeData.releasedChallenge.points}
                 </Typography>
-                <Typography size="h7" className="break-keep font-normal opacity-80">
+                <Typography size="h6" className="break-keep font-normal opacity-80" as="p">
                   {challengeData.releasedChallenge.content}
                 </Typography>
+                {challengeData?.releasedChallenge.description && (
+                  <>
+                    <Typography size="h5" as="p" className="mt-4 text-xs opacity-60">
+                      챌린지 추가 설명
+                    </Typography>
+                    <Typography size="h6" className="break-keep font-normal opacity-80" as="p">
+                      {challengeData.releasedChallenge.description}
+                    </Typography>
+                  </>
+                )}
               </Flex>
             </Flex>
           }
