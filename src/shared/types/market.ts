@@ -38,6 +38,7 @@ export type TChallengeDetail = CommonResponse<{
     challengeCoreId: number;
     challengeType: CHALLENGE_TYPE;
     content: string;
+    description: string;
     fileUrl: string;
     thumbnailImageUrl: string;
     title: string;
