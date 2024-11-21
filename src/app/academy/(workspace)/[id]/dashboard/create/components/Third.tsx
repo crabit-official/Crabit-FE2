@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import type { IChallengeValue } from '@/app/academy/(workspace)/[id]/dashboard/create/page';
 import Students from '@/features/academy/(workspace)/components/dashboard/Students';
+import BoxContainer from '@/shared/components/BoxContainer';
 import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
 import SelectDropdown from '@/shared/components/SelectDropdown';
@@ -65,13 +66,13 @@ function Third({ onBack, onNext, academyId }: IThirdProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex w-full flex-col gap-5">
-      <Flex column="start" className="gap-4 rounded-xl border border-solid border-gray-100 p-5 shadow-custom">
+      <BoxContainer>
         <Flex column="start" className="gap-1">
           <Typography size="h3">챌린지 종류</Typography>
         </Flex>
         <SelectDropdown id="challengeCategory" label="챌린지 종류" register={register} errors={errors} options={CHALLENGE_CATEGORIES} />
-      </Flex>
-      <Flex column="start" className="gap-4 rounded-xl border border-solid border-gray-100 p-5 shadow-custom">
+      </BoxContainer>
+      <BoxContainer>
         <Flex column="start" className="gap-1">
           <Typography size="h3">챌린지 마켓 업로드 여부</Typography>
           <Typography size="h5" as="p" className="text-xs opacity-60">
@@ -79,8 +80,8 @@ function Third({ onBack, onNext, academyId }: IThirdProps) {
           </Typography>
         </Flex>
         <SelectDropdown id="challengeMarketVisibility" label="챌린지 마켓 업로드 여부" register={register} errors={errors} options={VISIBILITY_CATEGORIES} />
-      </Flex>
-      <Flex column="start" className="gap-4 rounded-xl border border-solid border-gray-100 p-5 shadow-custom">
+      </BoxContainer>
+      <BoxContainer>
         <Flex column="start" className="gap-1">
           <Typography size="h3">챌린지 참여 방식</Typography>
           <Typography size="h5" as="p" className="text-xs opacity-60">
@@ -110,7 +111,7 @@ function Third({ onBack, onNext, academyId }: IThirdProps) {
             </>
           )}
         </Flex>
-      </Flex>
+      </BoxContainer>
       <div className="mt-4 flex gap-4">
         <Button type="button" onClick={onBack} className="text-white">
           이전
