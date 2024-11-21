@@ -11,8 +11,8 @@ import Flex from '@/shared/components/Flex';
 import ProgressBar from '@/shared/components/ProgressBar';
 import Typography from '@/shared/components/Typography';
 import { CHALLENGE_PARTICIPATION_METHODS } from '@/shared/enums/challenge';
-import useRelease from '@/shared/hooks/market/useRelease';
 import useReleaseChallenge from '@/shared/hooks/market/useReleaseChallenge';
+import useHandleStepChallenge from '@/shared/hooks/useHandleStepChallenge';
 import type { IReleaseChallengeDTO, TChallengeDetail } from '@/shared/types/market';
 
 type TModalDetailProps = TChallengeDetail['result'] & {
@@ -26,7 +26,7 @@ function ModalDetail({ challenge, teacher, academy, academyId, challengeCoreId }
   const router = useRouter();
   const [release, setRelease] = useState<boolean>(false);
   const { mutate } = useReleaseChallenge(academyId);
-  const { values, handleBack, handleNext, step } = useRelease<IReleaseChallengeDTO>(MAX_STEP, {
+  const { values, handleBack, handleNext, step } = useHandleStepChallenge<IReleaseChallengeDTO>(MAX_STEP, {
     challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS.SELF_PARTICIPATING,
     description: null,
     points: 0,
