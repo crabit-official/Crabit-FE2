@@ -65,6 +65,7 @@ export interface IAcademyChallenges {
   challengeMarketVisibility: MARKET_VISIBILITY_CATEGORIES;
   challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
   content: string;
+  description: string | null;
   fileUrl: string | null;
   points: number;
   studentIdList: number[] | [];

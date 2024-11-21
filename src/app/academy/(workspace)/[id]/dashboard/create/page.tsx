@@ -35,6 +35,7 @@ function ChallengeCreatePage({ params }: { params: { id: string } }) {
     thumbnailImageUrl: '',
     title: '',
     totalDays: 0,
+    description: null,
   });
 
   const handleInfoChange = (infoValues: Partial<IChallengeValue>) => {
@@ -63,6 +64,7 @@ function ChallengeCreatePage({ params }: { params: { id: string } }) {
       mutate({
         academyId: Number(params.id),
         challengeData: {
+          description: values.description,
           fileUrl: values.fileUrl,
           title: values.title,
           challengeCategory: values.challengeCategory,
