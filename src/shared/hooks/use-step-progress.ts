@@ -8,7 +8,7 @@ function useStepProgress(maxSteps: number) {
 
   const updateProgressBar = (step: number) => {
     if (progressBar.current) {
-      progressBar.current.style.width = `${(step - 1) * (100 / (maxSteps - 1))}%`;
+      progressBar.current.style.width = `${(step - 1) * (100 / maxSteps)}%`;
     }
   };
 
@@ -23,14 +23,12 @@ function useStepProgress(maxSteps: number) {
   };
 
   const addSteps = () => {
-    if (currentProgress < maxSteps) {
+    if (currentProgress <= maxSteps) {
       setCurrentProgress((prev) => {
         const newProgress = prev + 1;
         updateProgressBar(newProgress);
         return newProgress;
       });
-    } else if (currentProgress === maxSteps) {
-      setCurrentProgress((prev) => prev + 1);
     }
   };
 
