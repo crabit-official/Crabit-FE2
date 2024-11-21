@@ -231,6 +231,7 @@ export type TDetailChallengeResult = CommonResponse<{
     challengeSource: CHALLENGE_SOURCE_TYPE;
     challengeType: CHALLENGE_TYPE;
     content: string;
+    description: string;
     fileUrl: string;
     points: number;
     releasedChallengeId: number;
