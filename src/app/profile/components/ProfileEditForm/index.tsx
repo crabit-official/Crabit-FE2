@@ -83,13 +83,15 @@ function ProfileEditForm() {
     );
   } else {
     profileContent = profile?.profileImageUrl ? (
-      <Image
-        src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${profile.profileImageUrl}`}
-        width={200}
-        height={200}
-        className="size-52 rounded-xl border border-solid border-gray-200 object-cover"
-        alt="img"
-      />
+      <div className="flex size-52 cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-solid border-gray-200 bg-gray-50">
+        <Image
+          src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${profile.profileImageUrl}`}
+          width={200}
+          height={200}
+          className="size-52 rounded-xl border border-solid border-gray-200 object-cover"
+          alt="img"
+        />
+      </div>
     ) : (
       <div className="flex size-52 cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-solid border-gray-200 bg-gray-50">
         <PiUserSquareFill size={30} />
