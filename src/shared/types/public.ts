@@ -22,6 +22,7 @@ export type TPublicChallengeDetailResult = CommonResponse<{
     challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
     challengeType: CHALLENGE_TYPE;
     content: string;
+    description: string;
     fileUrl: string;
     points: number;
     releasedChallengeId: number;
