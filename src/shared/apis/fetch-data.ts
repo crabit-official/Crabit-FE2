@@ -35,11 +35,11 @@ export async function fetchData<T>(
 
   const data = await response.json();
 
+  console.log(response.status);
+
   if (!response.ok) {
     switch (response.status) {
-      case 401:
-      case 404: {
-        const cookieStore = cookies();
+      case 401: {
         const refreshToken = cookies().get('refreshToken')?.value;
 
         if (refreshToken) {
@@ -57,14 +57,11 @@ export async function fetchData<T>(
             // eslint-disable-next-line @typescript-eslint/no-shadow
             const data = (await refreshResponse.json()) as IAuthResponse;
 
-            cookieStore.set('accessToken', data.result.accessToken, {
+            cookies().set('accessToken', data.result.accessToken, {
               maxAge: 3600, // 1시간
               httpOnly: true,
               secure: true,
             });
-
-            // 재시도: 새로운 토큰으로 요청
-            return fetchData<T>(endpoint, method, body);
           }
         }
         throw new Error('에러가 발생하였습니다');
