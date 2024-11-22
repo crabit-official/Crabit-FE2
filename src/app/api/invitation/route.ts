@@ -13,6 +13,6 @@ export async function POST(req: NextRequest) {
   } catch (e) {
     const errorMessage = e instanceof Error ? e.message : '알수없는 에러가 발생했습니다.';
 
-    return NextResponse.json({ error: errorMessage }, { status: 400, statusText: 'Error Failed' });
+    return NextResponse.json({ isSuccess: false, message: errorMessage }, { status: 400, statusText: 'Error Failed' });
   }
 }
