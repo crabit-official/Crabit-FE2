@@ -47,7 +47,7 @@ function PublicCardList({ academyId, category }: IPublicCardListProps) {
 
   if (isEmpty) {
     return (
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
         <PlusChallengeCard onClick={() => toast.message('준비중 입니다.')} content="준비중..." />
       </div>
     );
