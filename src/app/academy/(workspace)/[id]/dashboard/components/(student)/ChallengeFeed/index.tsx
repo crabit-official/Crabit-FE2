@@ -19,8 +19,6 @@ function ChallengeFeed({ academyId }: IFeedProps) {
   const { data: contents, isFetching, hasNextPage, fetchNextPage, isError } = useGetInfiniteFeedChallengeContents(academyId);
   const isEmpty = contents?.pages.every((page) => page.result.challengeLogList.length === 0);
 
-  console.log(contents);
-
   const { ref, inView } = useInView({
     threshold: 0,
     delay: 0,
