@@ -7,11 +7,11 @@ import Flex from '@/shared/components/Flex';
 import Skeleton from '@/shared/components/Skeleton/Skeleton';
 import Typography from '@/shared/components/Typography';
 import type { IStudentChallengeContents } from '@/shared/types/acadmy';
+import formatDate from '@/shared/utils/date';
 
-// TODO: 첨부파일 처리 (이미지, 파일에 따라)
 function StudentChallengeContent({ challengeLog, studentProfile }: IStudentChallengeContents) {
   return (
-    <Flex row="start" className="w-full gap-2">
+    <Flex row="start" className="w-full cursor-pointer gap-4">
       <Flex column="start" className="relative gap-2">
         <Flex>
           {studentProfile.academyProfileImageUrl ? (
@@ -28,28 +28,33 @@ function StudentChallengeContent({ challengeLog, studentProfile }: IStudentChall
         </Flex>
         <div className="absolute bottom-0 left-1/2 top-10 w-px bg-gray-200" />
       </Flex>
-      <Flex column="around" className="w-full gap-3 rounded-lg border border-solid border-gray-100 bg-white px-4 py-5 shadow-custom">
-        {challengeLog.fileUrl && (
-          <Image
-            src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challengeLog.fileUrl}`}
-            alt="test"
-            width={480}
-            height={100}
-            className="h-40 w-full rounded-lg border border-solid border-gray-100 bg-gray-50 object-contain"
-          />
-        )}
-        <Flex column="start" className="gap-2">
-          <Flex column="start">
-            <Typography size="h7" as="p" className="text-xs font-normal opacity-60">
-              DAY {challengeLog.day}
-            </Typography>
-            <Typography size="h5" as="p" className="text-sm font-normal opacity-80">
-              {challengeLog.content}
-            </Typography>
+      <Flex column="start" className="w-full gap-2 py-2">
+        <Typography size="h7" as="p" className="px-1 text-xs font-normal opacity-60">
+          {studentProfile.academyNickname} • {formatDate(challengeLog.createdAt)}
+        </Typography>
+        <Flex
+          column="around"
+          className="w-full gap-3 rounded-lg border border-solid border-gray-100 bg-white px-4 py-5 shadow-custom transition duration-700 ease-in-out hover:shadow-hover-custom"
+        >
+          {challengeLog.fileUrl && (
+            <Image
+              src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challengeLog.fileUrl}`}
+              alt="test"
+              width={480}
+              height={100}
+              className="h-52 w-full rounded-lg border border-solid border-gray-100 bg-gray-50 object-contain"
+            />
+          )}
+          <Flex column="start" className="gap-2">
+            <Flex column="start">
+              <Typography size="h5" as="p" className="text-sm font-normal opacity-80">
+                {challengeLog.content}
+              </Typography>
+            </Flex>
           </Flex>
-        </Flex>
-        <Flex row="end">
-          <FaRegComment className="cursor-pointer opacity-50 hover:text-main-deep-pink" />
+          <Flex row="end">
+            <FaRegComment className="cursor-pointer opacity-50 hover:text-main-deep-pink" />
+          </Flex>
         </Flex>
       </Flex>
     </Flex>

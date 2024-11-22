@@ -11,7 +11,7 @@ interface IFeedPageProps {
 
 export default function ChallengeFeedPage({ params }: IFeedPageProps) {
   return (
-    <Flex className="w-full px-4 py-10 md:w-3/5">
+    <Flex column="start" className="min-h-screen w-full px-4 pt-20 md:w-3/5">
       <ChallengeFeed academyId={Number(params.id)} />
     </Flex>
   );
