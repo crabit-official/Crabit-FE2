@@ -124,7 +124,13 @@ function UserMenu() {
                   }}
                   label="내 학원"
                 />
-
+                <MenuItem
+                  onClick={() => {
+                    setIsOpen(false);
+                    router.push('/profile');
+                  }}
+                  label="마이페이지"
+                />
                 <MenuItem
                   onClick={() => {
                     handleLogout();
