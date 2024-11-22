@@ -24,13 +24,11 @@ async function Layout({ children, params }: ILayoutProps) {
 
   const res = await response.json();
 
-  if (!res?.result?.academyRole) {
-    return <div>학원에 접근할 수 없습니다.</div>;
-  }
+  console.log(res);
 
   return (
     <>
-      <WorkspaceTab role={res.result.academyRole} />
+      <WorkspaceTab role={res?.result?.academyRole} />
       <div className="xl:px-30 max-w-8xl container mx-auto h-full">
         <div className="grid">
           <div className="col-span-4 place-items-center border-x lg:col-span-3">{children}</div>
