@@ -13,7 +13,7 @@ export async function getInvitationCode({ academyId, session, academyRole }: { a
   });
 
   if (!response.ok) {
-    throw new Error('가입 코드를 조회하는데 에러가 발생했습니다.ㄴ');
+    throw new Error('가입 코드를 조회하는데 에러가 발생했습니다.');
   }
 
   const data: IInvitationResult = await response.json();

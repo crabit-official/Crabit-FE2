@@ -213,6 +213,7 @@ const config: Config = {
       },
       backgroundImage: {
         'main-gradient': 'linear-gradient(240deg, #F06485 0%, #ff9a9e 100%)',
+        'second-gradient': 'linear-gradient(180deg, #fff 0% ,#FDF0F3 50%, #fff 100%)',
       },
     },
   },
