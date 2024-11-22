@@ -14,10 +14,6 @@ export const isTokenExpired = (token: string): boolean => {
     const decoded = jwt.decode(token) as IDecodedToken | null;
 
     if (decoded) {
-      // decoded 객체에서 exp(만료 시간)를 확인하여 만료 여부를 판단
-      console.log(`Token expiration time (in seconds since epoch): ${decoded.exp}`);
-      console.log(`Current time (in seconds since epoch): ${Math.floor(Date.now() / 1000)}`);
-      console.log(`Is token expired? ${decoded.exp < Date.now() / 1000}`);
       return decoded.exp < Date.now() / 1000;
     }
     // 디코딩 실패 시에도 처리
