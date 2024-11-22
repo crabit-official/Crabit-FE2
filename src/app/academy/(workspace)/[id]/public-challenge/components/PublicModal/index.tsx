@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import StateLabel from '@/features/academy/(workspace)/components/state-label';
 import { getChallengeCategory, getChallengeType, getVariantByStatus } from '@/features/academy/(workspace)/utils/challengeState';
 import Avatar from '@/shared/components/Avatar';
+import BoxContainer from '@/shared/components/BoxContainer';
 import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
@@ -45,7 +46,7 @@ function PublicModal({ challengeData, academyId, releasedChallengeId }: IModalPr
                 alt="thumbnail img"
                 width={480}
                 height={100}
-                className="h-56 w-full rounded-xl border border-solid border-gray-200 bg-gray-100 object-contain"
+                className="h-56 w-full rounded-xl border border-solid border-gray-100 bg-gray-50 object-contain"
               />
             ) : (
               <Image src="/images/test.jpeg" alt="default img" width={480} height={100} className="h-56 w-full rounded-xl object-cover" />
@@ -63,17 +64,19 @@ function PublicModal({ challengeData, academyId, releasedChallengeId }: IModalPr
           </Flex>
 
           <Flex column="between" className="h-full gap-4 px-4 pb-4">
-            <Flex column="between" className="size-full p-2">
-              <div>
-                <Typography size="h4" as="p" className="break-keep opacity-80">
-                  {challengeData.academyPublicChallenge.title}
-                </Typography>
-                <Typography size="h7" as="p" className="break-keep font-normal opacity-60">
-                  {challengeData.academyPublicChallenge.content}
-                </Typography>
-              </div>
+            <Flex column="between" className="size-full">
+              <BoxContainer variant="border">
+                <div>
+                  <Typography size="h4" as="p" className="break-keep opacity-80">
+                    {challengeData.academyPublicChallenge.title}
+                  </Typography>
+                  <Typography size="h7" as="p" className="break-keep font-normal opacity-60">
+                    {challengeData.academyPublicChallenge.content}
+                  </Typography>
+                </div>
+              </BoxContainer>
 
-              <Flex row="between" className="gap-20 py-2">
+              <Flex row="between" className="gap-20 p-2">
                 <Flex>
                   <Typography size="h7" as="p" className="break-keep text-xs font-normal opacity-60 sm:text-sm">
                     챌린지 기간 {challengeData?.academyPublicChallenge.totalDays}일 • 포인트 {challengeData?.academyPublicChallenge.totalDays}일
@@ -92,7 +95,7 @@ function PublicModal({ challengeData, academyId, releasedChallengeId }: IModalPr
                   ) : (
                     <Avatar size="xs" />
                   )}
-                  <Typography size="h7" className="break-keep text-xs font-normal sm:text-sm">
+                  <Typography size="h7" className="break-keep text-xs font-normal opacity-80 sm:text-sm">
                     {challengeData?.releaseInstructorProfile.academyNickname}
                   </Typography>
                 </Flex>
