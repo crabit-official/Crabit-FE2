@@ -22,7 +22,7 @@ function InvitationModal() {
   const [isLoading, setIsLoading] = useState(false);
 
   console.log(activeTab);
-  const { mutate } = useEnrollInvitation();
+  const { mutateAsync } = useEnrollInvitation();
 
   const {
     register,
@@ -38,10 +38,10 @@ function InvitationModal() {
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = (data: FieldValues) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data: FieldValues) => {
     setIsLoading(true);
 
-    mutate(
+    await mutateAsync(
       {
         joinCode: data.joinCode,
         academyRole: activeTab === 0 ? 'STUDENT' : 'INSTRUCTOR',
