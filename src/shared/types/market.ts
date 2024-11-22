@@ -38,6 +38,7 @@ export type TChallengeDetail = CommonResponse<{
     challengeCoreId: number;
     challengeType: CHALLENGE_TYPE;
     content: string;
+    description: string;
     fileUrl: string;
     thumbnailImageUrl: string;
     title: string;
@@ -57,6 +58,7 @@ export type TReleasedChallengeResult = CommonResponse<{
 
 export interface IReleaseChallengeDTO {
   challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
+  description: string | null;
   points: number;
   studentIdList: number[] | [];
   totalDays: number;

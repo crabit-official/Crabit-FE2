@@ -9,10 +9,15 @@ export async function PUT(req: NextRequest) {
   const studentChallengeId = req.nextUrl.searchParams.get('studentChallengeId') || '';
   const challengeLogApprovalStatus = req.nextUrl.searchParams.get('challengeLogApprovalStatus') || '';
 
-  const data = await fetchData<IChallengeApprovalResults>(
-    `/api/v1/academies/${academyId}/challenges/${releasedChallengeId}/participants/${studentChallengeId}?challengeLogApprovalStatus=${challengeLogApprovalStatus}`,
-    'PUT',
-  );
+  try {
+    const data = await fetchData<IChallengeApprovalResults>(
+      `/api/v1/academies/${academyId}/challenges/${releasedChallengeId}/participants/${studentChallengeId}?challengeLogApprovalStatus=${challengeLogApprovalStatus}`,
+      'PUT',
+    );
+    return NextResponse.json(data);
+  } catch (e) {
+    const errorMessage = e instanceof Error ? e.message : '알수없는 에러가 발생했습니다.';
 
-  return NextResponse.json(data);
+    return NextResponse.json({ error: errorMessage }, { status: 400, statusText: 'Error Failed' });
+  }
 }

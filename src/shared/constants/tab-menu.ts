@@ -1,4 +1,4 @@
-import { CHALLENGE_CATEGORY } from '@/shared/enums/challenge';
+import { CHALLENGE_CATEGORY, CHALLENGE_LOG_SUBMISSION_STATUS } from '@/shared/enums/challenge';
 
 export interface ITabMenu {
   tab: string;
@@ -21,18 +21,26 @@ const MARKET_TAB_MENU = [
   { tab: 'academy', text: '학원 챌린지' },
 ];
 
-const DASHBOARD_MENU = [
+const SUBMISSION_STATU_MENU = [
   {
-    tab: 'crabit',
-    text: '크래빗 공개',
+    tab: 'all',
+    text: '모든 챌린지',
   },
   {
-    tab: 'public',
-    text: '우리 학원 공개',
+    tab: 'not-started',
+    text: '시작 전',
   },
   {
-    tab: 'private',
-    text: '비공개 챌린지',
+    tab: 'progress',
+    text: '진행 중',
+  },
+  {
+    tab: 'submit',
+    text: '제출 완료',
+  },
+  {
+    tab: 'failed',
+    text: '제출 실패',
   },
 ];
 
@@ -87,4 +95,11 @@ const PUBLIC_CATEGORY_NAME: Record<string, CHALLENGE_CATEGORY> = {
   'etc': CHALLENGE_CATEGORY.ETC,
 };
 
-export { DASHBOARD_MENU, MARKET_TAB_MENU, PRINCIPAL_TAB_MENU, PUBLIC_CATEGORY_NAME, PUBLIC_MENU, STUDENT_TAB_MENU };
+const LOG_SUBMISSION_NAME: Record<string, CHALLENGE_LOG_SUBMISSION_STATUS> = {
+  'not-started': CHALLENGE_LOG_SUBMISSION_STATUS.NOT_STARTED,
+  'progress': CHALLENGE_LOG_SUBMISSION_STATUS.IN_PROGRESS,
+  'submit': CHALLENGE_LOG_SUBMISSION_STATUS.ALL_LOGS_SUBMITTED,
+  'failed': CHALLENGE_LOG_SUBMISSION_STATUS.SUBMISSION_FAILED,
+};
+
+export { LOG_SUBMISSION_NAME, MARKET_TAB_MENU, PRINCIPAL_TAB_MENU, PUBLIC_CATEGORY_NAME, PUBLIC_MENU, STUDENT_TAB_MENU, SUBMISSION_STATU_MENU };

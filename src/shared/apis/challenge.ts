@@ -20,8 +20,10 @@ import type {
 
 interface IGetChallengeList {
   academyId: number;
+  category?: string;
   cursor: number;
   releasedChallengeId?: number;
+  search?: string;
   studentChallengeId?: number;
   take: number;
 }
@@ -33,17 +35,40 @@ interface IGetChallengeDetails {
 }
 
 // 원장/강사가 배포한 챌린지 목록 전체 조회
-export async function getTeachersChallengeList({ cursor, take, academyId }: IGetChallengeList) {
-  const res = await fetch(`/api/challenge/list?cursor=${cursor}&take=${take}&academyId=${academyId}`, {
+export async function getTeachersChallengeList({ cursor, take, academyId, category, search }: IGetChallengeList) {
+  let url = `/api/challenge/list?cursor=${cursor}&take=${take}&academyId=${academyId}`;
+
+  if (category) {
+    url += `&challengeCategory=${category}`;
+  }
+
+  if (search) {
+    url += `&title=${search}`;
+  }
+  const res = await fetch(url, {
     method: 'GET',
   });
+
+  if (!res.ok) {
+    throw new Error('챌린지를 불러오지 못했습니다.');
+  }
 
   return (await res.json()) as IChallengeResult;
 }
 
 // 학생이 참여하는 챌린지 목록 전체 조회
-export async function getStudentChallengeList({ cursor, take, academyId }: IGetChallengeList) {
-  const res = await fetch(`/api/challenge/student/list?cursor=${cursor}&take=${take}&academyId=${academyId}`, {
+export async function getStudentChallengeList({ cursor, take, academyId, category, search }: IGetChallengeList) {
+  let url = `/api/challenge/student/list?cursor=${cursor}&take=${take}&academyId=${academyId}`;
+
+  if (category) {
+    url += `&challengeLogSubmissionStatus=${category}`;
+  }
+
+  if (search) {
+    url += `&title=${search}`;
+  }
+
+  const res = await fetch(url, {
     method: 'GET',
   });
 
@@ -104,6 +129,11 @@ export async function getAcademyStudentList({ cursor, take, academyId, nickname 
     url += `&nickname=${nickname}`;
   }
   const res = await fetch(url);
+
+  if (!res.ok) {
+    const errorData: TError = await res.json();
+    throw new Error(errorData.error);
+  }
 
   return (await res.json()) as IAcademyStudentListResult;
 }
@@ -191,13 +221,12 @@ export async function approvalStudentChallengeResult({
     },
   );
 
-  const data = (await res.json()) as IChallengeApprovalResults;
-
-  if (!data.isSuccess) {
-    throw new Error(data.message);
+  if (!res.ok) {
+    const errorData: TError = await res.json();
+    throw new Error(errorData.error);
   }
 
-  return data;
+  return (await res.json()) as IChallengeApprovalResults;
 }
 
 // 다른 친구 진행중인 챌린지 인증 게시글 조회

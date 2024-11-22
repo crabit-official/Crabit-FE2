@@ -18,7 +18,7 @@ function Toggle({ title, content }: IToggleProps) {
   return (
     <motion.ul className="w-full border-b border-solid border-gray-300" layout onClick={toggleOpen}>
       <motion.div layout className="flex w-full cursor-pointer items-center justify-between gap-10 py-4 text-lg font-bold">
-        <Typography size="h2">{title}</Typography>
+        <Typography size="h3">{title}</Typography>
         <GoTriangleDown className={`${isOpen ? 'rotate-180' : 'rotate-0'} transition-transform duration-500`} />
       </motion.div>
       <ul>

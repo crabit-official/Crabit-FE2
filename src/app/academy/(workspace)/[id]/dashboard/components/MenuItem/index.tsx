@@ -34,6 +34,7 @@ function MenuItem({ title, content, type = 'dashboard', academyId, activeTab }: 
                 <Link
                   href={`/academy/${academyId}/${type}?tab=${tab.tab}`}
                   key={tab.tab}
+                  onClick={(e) => e.stopPropagation()}
                   className={`${selectedTab === tab.tab ? 'text-main-deep-pink' : 'text-gray-700'} cursor-pointer pb-3 pl-5 hover:text-main-deep-pink`}
                 >
                   {tab.text}

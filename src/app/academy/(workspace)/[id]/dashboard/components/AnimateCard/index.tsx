@@ -24,7 +24,7 @@ function AnimateCard({ imageUrl, onClick, subTitle, title, leftLabel }: IAnimate
     <Framer
       onClick={onClick}
       whileHover={{ scale: 1.01 }}
-      className="relative flex h-fit min-h-80 w-[300px] cursor-pointer flex-col items-center justify-between overflow-hidden rounded-lg border border-solid border-gray-100 bg-white shadow-custom transition-shadow duration-300 hover:shadow-hover-custom sm:w-64"
+      className="relative flex h-fit min-h-80 w-64 cursor-pointer flex-col items-center justify-between overflow-hidden rounded-lg border border-solid border-gray-100 bg-white shadow-custom transition-shadow duration-300 hover:shadow-hover-custom sm:w-64"
     >
       {imageUrl ? (
         <Image src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${imageUrl}`} alt="thumbnail img" width={480} height={100} className="h-40 w-full object-cover" />

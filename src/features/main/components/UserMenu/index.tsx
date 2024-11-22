@@ -59,8 +59,17 @@ function UserMenu() {
         >
           <AiOutlineMenu />
           <div className="hidden md:flex md:items-center md:gap-2">
-            {/* 프로필있을 때 경로 수정 */}
-            {profile?.profileImageUrl ? <Image alt="profile" src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${profile?.profileImageUrl}`} /> : <Avatar />}
+            {profile?.profileImageUrl ? (
+              <Image
+                alt="profile"
+                src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${profile?.profileImageUrl}`}
+                width={100}
+                height={100}
+                className="size-[30px] rounded-full object-cover"
+              />
+            ) : (
+              <Avatar />
+            )}
             {profile ? (
               <Typography size="h5" as="p" className="text-xs">
                 {profile?.name}
@@ -70,7 +79,7 @@ function UserMenu() {
         </div>
       </div>
       {isOpen && (
-        <div className="absolute right-0 top-12 w-[40vw] overflow-hidden rounded-xl bg-white text-sm shadow-md md:w-3/4">
+        <div onMouseLeave={() => setIsOpen(false)} className="absolute right-0 top-12 w-[40vw] overflow-hidden rounded-xl bg-white text-sm shadow-md md:w-3/4">
           <div className="flex cursor-pointer flex-col">
             {!profile ? (
               <>
@@ -124,7 +133,13 @@ function UserMenu() {
                   }}
                   label="내 학원"
                 />
-
+                <MenuItem
+                  onClick={() => {
+                    setIsOpen(false);
+                    router.push('/profile');
+                  }}
+                  label="마이페이지"
+                />
                 <MenuItem
                   onClick={() => {
                     handleLogout();

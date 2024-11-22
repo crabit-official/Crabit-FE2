@@ -2,18 +2,19 @@ import React from 'react';
 import { type FieldValues, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import type { IChallengeValue } from '@/app/academy/(workspace)/[id]/dashboard/create/page';
 import { useImage } from '@/features/academy/(workspace)/hooks/use-image';
+import BoxContainer from '@/shared/components/BoxContainer';
 import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
 import Input from '@/shared/components/Input';
 import Typography from '@/shared/components/Typography';
 import useGetPresignedUrl from '@/shared/hooks/images/use-get-presigned-url';
+import type { IAcademyChallenges } from '@/shared/types/acadmy';
 import { challengeTwoSchema } from '@/shared/utils/schema';
 
 interface ISecondProps {
   onBack: () => void;
-  onNext: (data: Partial<IChallengeValue>) => void;
+  onNext: (data: Partial<IAcademyChallenges>) => void;
 }
 
 function Second({ onNext, onBack }: ISecondProps) {
@@ -44,7 +45,7 @@ function Second({ onNext, onBack }: ISecondProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex w-full flex-col gap-5">
-      <Flex column="start" className="gap-4 rounded-xl border border-solid border-gray-100 p-5 shadow-custom">
+      <BoxContainer>
         <Flex column="start" className="gap-1">
           <Typography size="h3" className="opacity-80">
             파일
@@ -59,15 +60,15 @@ function Second({ onNext, onBack }: ISecondProps) {
             <input type="file" id="file" {...register('file')} onChange={handleChangeFile} className="hidden" />
           </Flex>
         </Flex>
-      </Flex>
-      <Flex column="start" className="gap-4 rounded-xl border border-solid border-gray-100 p-5 shadow-custom">
+      </BoxContainer>
+      <BoxContainer>
         <Flex column="start" className="gap-1">
           <Typography size="h3">포인트</Typography>
         </Flex>
         <Input id="points" type="number" label="포인트" register={register} errors={errors} required valueAsNumber />
-      </Flex>
+      </BoxContainer>
 
-      <Flex column="start" className="gap-4 rounded-xl border border-solid border-gray-100 p-5 shadow-custom">
+      <BoxContainer>
         <Flex column="start" className="gap-1">
           <Typography size="h3" className="opacity-80">
             총 챌린지 기간
@@ -77,7 +78,7 @@ function Second({ onNext, onBack }: ISecondProps) {
           </Typography>
         </Flex>
         <Input id="totalDays" label="챌린지 기간" type="number" register={register} errors={errors} required valueAsNumber />
-      </Flex>
+      </BoxContainer>
       <div className="mt-4 flex gap-4">
         <Button type="button" onClick={onBack} className="text-white">
           이전
