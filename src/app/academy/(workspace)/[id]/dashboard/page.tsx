@@ -1,14 +1,13 @@
 import React from 'react';
+import { cookies } from 'next/headers';
 import Image from 'next/image';
 
 import PrincipalDashBoardUIl from '@/app/academy/(workspace)/[id]/dashboard/components/(principal)/DashBoardUI';
 import StudentDashBoardUI from '@/app/academy/(workspace)/[id]/dashboard/components/(student)/DashBoardUI';
 import Menubar from '@/app/academy/(workspace)/[id]/dashboard/components/Menubar';
-import { fetchData } from '@/shared/apis/fetch-data';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import { ACADEMY_ROLE } from '@/shared/enums/academy';
-import type { IAcademyProfile, IAcademyResponse, TAcademyInfoResult } from '@/shared/types/acadmy';
 
 interface IAcademyDashBoardProps {
   params: {
@@ -21,8 +20,28 @@ interface IAcademyDashBoardProps {
 }
 
 async function AcademyDashBoardPage({ params, searchParams }: IAcademyDashBoardProps) {
-  const academyData = await fetchData<TAcademyInfoResult>(`/api/v1/academies/${Number(params.id)}/details`, 'GET');
-  const AcademyProfile = await fetchData<IAcademyResponse<IAcademyProfile>>(`/api/v1/academies/${Number(params.id)}`, 'GET');
+  const cookieStore = cookies();
+
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${Number(params.id)}/details`, {
+    method: 'GET',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+      'Cookie': `accessToken=${cookieStore.get('accessToken')?.value}`,
+    },
+  });
+
+  const response2 = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${Number(params.id)}`, {
+    method: 'GET',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+      'Cookie': `accessToken=${cookieStore.get('accessToken')?.value}`,
+    },
+  });
+
+  const academyData = await response.json();
+  const AcademyProfile = await response2.json();
 
   return (
     <Flex column="start" className="min-h-screen items-center gap-2">
@@ -44,8 +63,8 @@ async function AcademyDashBoardPage({ params, searchParams }: IAcademyDashBoardP
         />
       </Flex>
       <div className="flex flex-col gap-20 lg:grid lg:grid-cols-[180px,1fr] lg:gap-10 xl:gap-32">
-        <Menubar academyId={Number(params.id)} activeTab={searchParams.tab} role={AcademyProfile.result.academyRole} />
-        {AcademyProfile.result.academyRole === ACADEMY_ROLE.STUDENT ? (
+        <Menubar academyId={Number(params.id)} activeTab={searchParams.tab} role={AcademyProfile.result?.academyRole} />
+        {AcademyProfile.result?.academyRole === ACADEMY_ROLE.STUDENT ? (
           <StudentDashBoardUI academyId={Number(params.id)} search={searchParams.search} category={searchParams.tab} />
         ) : (
           <PrincipalDashBoardUIl academyId={Number(params.id)} category={searchParams.tab} search={searchParams.search} />

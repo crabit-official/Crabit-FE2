@@ -16,6 +16,7 @@ interface IWorkspaceTabProps {
 function WorkspaceTab({ role }: IWorkspaceTabProps) {
   const pathname = usePathname();
   const params = useParams();
+
   const id = params.id as string;
 
   let content;
