@@ -15,6 +15,7 @@ const AvatarVariants = cva('object-cover ', {
       xs: 'size-5',
       sm: 'size-[30px]',
       md: 'size-10',
+      lg: 'size-20',
     },
   },
   defaultVariants: {
