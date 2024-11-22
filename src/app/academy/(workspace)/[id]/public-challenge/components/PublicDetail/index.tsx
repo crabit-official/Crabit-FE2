@@ -47,7 +47,7 @@ function PublicDetail({ challengeData, academyId, releasedChallengeId }: IPublic
             alt="thumbnail img"
             width={400}
             height={400}
-            className="size-full h-96 rounded-2xl border border-solid border-gray-100 object-contain shadow-custom"
+            className="size-full h-60 rounded-2xl border border-solid border-gray-100 object-contain shadow-custom"
           />
         ) : (
           <Image src="/images/test.jpeg" alt="default thumbnail img" width={300} height={300} className="h-96 w-full rounded-2xl object-cover" />

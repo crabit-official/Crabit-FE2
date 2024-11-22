@@ -32,7 +32,7 @@ function PublicModal({ challengeData, academyId, releasedChallengeId }: IModalPr
     <div className="fixed left-0 top-0 z-50 size-full bg-black/60 backdrop-blur-sm" onClick={() => router.back()}>
       <Flex rowColumn="center" className="size-full px-4">
         <div
-          className="relative flex min-h-[500px] w-full max-w-[500px] flex-col overflow-hidden rounded-2xl bg-white sm:w-2/3"
+          className="relative flex min-h-[550px] w-full max-w-[600px] flex-col overflow-hidden rounded-2xl bg-white sm:w-2/3"
           onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
         >
           <Flex className="relative p-4">
@@ -73,9 +73,9 @@ function PublicModal({ challengeData, academyId, releasedChallengeId }: IModalPr
                 </Typography>
               </div>
 
-              <Flex row="between" className="py-2">
+              <Flex row="between" className="gap-20 py-2">
                 <Flex>
-                  <Typography size="h7" as="p" className="font-normal opacity-60">
+                  <Typography size="h7" as="p" className="break-keep text-xs font-normal opacity-60 sm:text-sm">
                     챌린지 기간 {challengeData?.academyPublicChallenge.totalDays}일 • 포인트 {challengeData?.academyPublicChallenge.totalDays}일
                     {challengeData?.academyPublicChallenge.fileUrl && ' • 파일 포함'}
                   </Typography>
@@ -92,7 +92,7 @@ function PublicModal({ challengeData, academyId, releasedChallengeId }: IModalPr
                   ) : (
                     <Avatar size="xs" />
                   )}
-                  <Typography size="h7" className="font-normal">
+                  <Typography size="h7" className="break-keep text-xs font-normal sm:text-sm">
                     {challengeData?.releaseInstructorProfile.academyNickname}
                   </Typography>
                 </Flex>
