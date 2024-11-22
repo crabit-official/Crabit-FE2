@@ -35,6 +35,8 @@ export async function fetchData<T>(
 
   const data = await response.json();
 
+  console.log(response.status);
+
   if (!response.ok) {
     switch (response.status) {
       case 401: {
