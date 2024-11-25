@@ -15,7 +15,6 @@ import Heading from '@/shared/components/Heading';
 import Input from '@/shared/components/Input';
 import Modal from '@/shared/components/Modal';
 import { queryKeys } from '@/shared/constants/query-keys';
-import type { ICommonResponse } from '@/shared/types/auth';
 import { loginSchema } from '@/shared/utils/schema';
 
 function LoginModal() {
@@ -56,8 +55,7 @@ function LoginModal() {
       loginModal.onClose();
       reset();
     } else {
-      const errorData: ICommonResponse = await res.json();
-      toast.error(errorData.message || '로그인에 실패하였습니다.');
+      toast.error('로그인에 실패하였습니다.');
     }
 
     setIsLoading(false);
@@ -79,7 +77,7 @@ function LoginModal() {
       </Button>
       {/* 소셜로그인 추가 될 떄 마다 아래 버튼 추가 */}
       <div className="flex flex-row items-center justify-center gap-2">
-        <div>이미 크래빗 계정이 없으신가요?</div>
+        <div>아직 크래빗 계정이 없으신가요?</div>
         <div
           onClick={() => {
             loginModal.onClose();
