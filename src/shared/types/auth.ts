@@ -19,6 +19,7 @@ export type TPostSignupRequest = {
   termsOfServiceAllowed: 'AGREE' | 'DISAGREE';
 };
 
+// 회원가입 Response
 export type TPostSignupResponse = TCommonResponse<{
   accessToken: string;
   globalRole: GLOBAL_ROLE;
@@ -26,6 +27,31 @@ export type TPostSignupResponse = TCommonResponse<{
   profileImageUrl: string;
   refreshToken: string;
   socialType: SOCIAL_TYPE;
+}>;
+
+// 이메일 인증 코드 전송 Request
+export type TSendVerifyCodeRequest = {
+  email: string;
+  emailVerificationPurpose: 'JOIN_VERIFIED' | 'UPDATE_PASSWORD_VERIFIED' | 'ACADEMY_REGISTRATION_VERIFIED';
+};
+
+// 이메일 인증 코드 전송 Response
+export type TSendVerifyCodeResponse = TCommonResponse<{
+  code: string;
+  email: string;
+}>;
+
+// 이메일 인증 코드 확인 Request
+export type TCheckVerifyCodeRequest = {
+  code: string;
+  email: string;
+  emailVerificationPurpose: 'JOIN_VERIFIED' | 'UPDATE_PASSWORD_VERIFIED' | 'ACADEMY_REGISTRATION_VERIFIED';
+};
+// 이메일 인증 코드 확인 Response
+
+export type TCheckVerifyCodeResponse = TCommonResponse<{
+  email: string;
+  isCodeValid: boolean;
 }>;
 
 // 회원가입 Response
