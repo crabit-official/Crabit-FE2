@@ -66,6 +66,7 @@ function ChallengeFeed({ academyId }: IFeedProps) {
       {contents?.pages.map((page) =>
         page.result.challengeLogList.map((content) => (
           <StudentChallengeContent
+            academyId={academyId}
             key={content.challengeLog.studentChallengeLogId}
             challengeLog={content.challengeLog}
             studentProfile={content.studentProfile}
