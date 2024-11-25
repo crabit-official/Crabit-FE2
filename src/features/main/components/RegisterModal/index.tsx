@@ -28,8 +28,8 @@ function RegisterModal() {
   const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
   const { mutate: postSignup } = usePostSignupMutation();
-  const { mutate: postSendVerifyCode } = usePostSendVerifyCode();
-  const { mutate: postCheckVerifyCode } = usePostCheckVerifyCode();
+  const { mutate: postSendVerifyCode, isPending: postSendVerifyCodeLoading } = usePostSendVerifyCode();
+  const { mutate: postCheckVerifyCode, isPending: postCheckVerifyCodeLoading } = usePostCheckVerifyCode();
 
   const [isShownVerifyInput, setIsShownVerifyInput] = useState(false);
   const [verifyCode, setVerifyCode] = useState('');
@@ -57,8 +57,6 @@ function RegisterModal() {
       globalRole: 'ROLE_USER',
     },
   });
-
-  console.log(getValues());
 
   const onSubmit: SubmitHandler<FieldValues> = (data: FieldValues) => {
     setIsLoading(true);
@@ -99,6 +97,7 @@ function RegisterModal() {
         errors={errors}
         required
         actionButton="이메일 인증"
+        actionButtonLoading={postSendVerifyCodeLoading}
         onClickButton={() => {
           if (getValues('email').trim().length !== 0) {
             postSendVerifyCode(
@@ -120,7 +119,8 @@ function RegisterModal() {
           id="verifyCode"
           label="인증번호"
           disabled={isLoading}
-          actionButton="번호 인증"
+          actionButton="인증하기"
+          actionButtonLoading={postCheckVerifyCodeLoading}
           onClickButton={() => {
             if (verifyCode.trim().length !== 0) {
               postCheckVerifyCode(

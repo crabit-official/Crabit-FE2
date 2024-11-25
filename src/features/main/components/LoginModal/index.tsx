@@ -77,7 +77,7 @@ function LoginModal() {
       </Button>
       {/* 소셜로그인 추가 될 떄 마다 아래 버튼 추가 */}
       <div className="flex flex-row items-center justify-center gap-2">
-        <div>이미 크래빗 계정이 없으신가요?</div>
+        <div>아직 크래빗 계정이 없으신가요?</div>
         <div
           onClick={() => {
             loginModal.onClose();

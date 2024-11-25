@@ -10,6 +10,7 @@ import cn from '@/shared/utils/style';
 
 interface IInputProps {
   actionButton?: React.ReactNode;
+  actionButtonLoading?: boolean;
   className?: string;
   disabled?: boolean;
   errors: FieldErrors;
@@ -23,7 +24,21 @@ interface IInputProps {
   valueAsNumber?: boolean;
 }
 
-function Input({ id, label, type, disabled, formatPrice, required, register, errors, className, valueAsNumber, actionButton, onClickButton }: IInputProps) {
+function Input({
+  id,
+  label,
+  type,
+  disabled,
+  formatPrice,
+  required,
+  register,
+  errors,
+  className,
+  valueAsNumber,
+  actionButton,
+  onClickButton,
+  actionButtonLoading,
+}: IInputProps) {
   return (
     <div className={cn(`relative w-full`, className)}>
       {formatPrice && <BiWon size={24} className="absolute left-2 top-5 text-neutral-700" />}
@@ -37,7 +52,7 @@ function Input({ id, label, type, disabled, formatPrice, required, register, err
       />
       {actionButton && (
         <div className="transform-[50%] absolute right-[50px] top-1/2 -translate-y-1/2 translate-x-1/2">
-          <Button onClick={onClickButton} type="button" size="sm" className="p-2 text-sm font-bold text-white">
+          <Button onClick={onClickButton} type="button" size="sm" className="p-2 text-sm font-bold text-white" disabled={actionButtonLoading}>
             {actionButton}
           </Button>
         </div>
