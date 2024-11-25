@@ -1,6 +1,9 @@
+'use client';
+
 import React from 'react';
 import { FaRegComment } from 'react-icons/fa6';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 import Avatar from '@/shared/components/Avatar';
 import Flex from '@/shared/components/Flex';
@@ -9,7 +12,12 @@ import Typography from '@/shared/components/Typography';
 import type { IStudentChallengeContents } from '@/shared/types/acadmy';
 import formatDate from '@/shared/utils/date';
 
-function StudentChallengeContent({ challengeLog, studentProfile }: IStudentChallengeContents) {
+interface IContentProps extends IStudentChallengeContents {
+  academyId: number;
+}
+
+function StudentChallengeContent({ challengeLog, studentProfile, academyId }: IContentProps) {
+  const router = useRouter();
   return (
     <Flex row="start" className="w-full cursor-pointer gap-4">
       <Flex column="start" className="relative gap-2">
@@ -33,6 +41,7 @@ function StudentChallengeContent({ challengeLog, studentProfile }: IStudentChall
           {studentProfile.academyNickname} • {formatDate(challengeLog.createdAt)}
         </Typography>
         <Flex
+          onClick={() => router.push(`/academy/${academyId}/feed/${challengeLog.releasedChallengeId}?log=${challengeLog.studentChallengeLogId}`)}
           column="around"
           className="w-full gap-3 rounded-lg border border-solid border-gray-100 bg-white px-4 py-5 shadow-custom transition duration-700 ease-in-out hover:shadow-hover-custom"
         >

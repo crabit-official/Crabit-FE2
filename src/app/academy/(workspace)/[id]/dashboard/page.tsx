@@ -24,8 +24,6 @@ async function AcademyDashBoardPage({ params, searchParams }: IAcademyDashBoardP
 
   const cookieStore = cookies();
 
-  console.log(`accessToken=${cookieStore.get('accessToken')?.value}`);
-
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${Number(params.id)}/details`, {
     method: 'GET',
     headers: {
