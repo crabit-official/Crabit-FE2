@@ -44,7 +44,7 @@ function PasswordForm({ email }: IEmailProps) {
         </Button>
       </form>
       {errors.password && (
-        <Typography size="h6" as="p" className="mt-1 text-xs text-red-500">
+        <Typography size="h6" as="p" className="pl-1 text-xs text-red-500">
           {errors.password.message as string}
         </Typography>
       )}

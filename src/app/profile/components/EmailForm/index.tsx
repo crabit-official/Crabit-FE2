@@ -74,14 +74,14 @@ function EmailForm() {
             <FaArrowRight />
           </Button>
         </form>
-        <Typography size="h5" as="p" className="text-xs opacity-60">
+        <Typography size="h5" as="p" className="pl-1 text-xs opacity-60">
           코드 전송 후 10분 이내에 입력해주세요
         </Typography>
       </Flex>
 
       {codeSuccess && (
         <Framer>
-          <div className="mb-10 h-px w-full bg-gray-200" />
+          <div className="mb-5 h-px w-full bg-gray-200" />
           <PasswordForm email={email} />
         </Framer>
       )}
