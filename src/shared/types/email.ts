@@ -4,3 +4,5 @@ export type TEmailVerifiedResponse = CommonResponse<{
   code: string;
   email: string;
 }>;
+
+export type TVerifiedCode = CommonResponse<{ email: string; isCodeValid: boolean }>;
