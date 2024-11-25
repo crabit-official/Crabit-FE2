@@ -15,12 +15,15 @@ import Heading from '@/shared/components/Heading';
 import Input from '@/shared/components/Input';
 import Modal from '@/shared/components/Modal';
 import Typography from '@/shared/components/Typography';
+import { GLOBAL_ROLE, SOCIAL_TYPE } from '@/shared/enums/auth';
+import usePostSignupMutation from '@/shared/hooks/auth/queries/usePostSignupMutation';
 import { signUpSchema } from '@/shared/utils/schema';
 
 function RegisterModal() {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
+  const { mutate: postSignup } = usePostSignupMutation();
 
   const {
     register,
@@ -35,41 +38,36 @@ function RegisterModal() {
       password: '',
       privacyPolicyAllowed: false,
       termsOfServiceAllowed: false,
+      socialType: 'LOCAL',
+      globalRole: 'ROLE_USER',
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = async (data: FieldValues) => {
+  const onSubmit: SubmitHandler<FieldValues> = (data: FieldValues) => {
     setIsLoading(true);
-    // 데이터 요청, 성공시 registerModal.onClose
-    // onSettled setIsLoading(false);
 
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/join`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+    postSignup(
+      {
+        email: data.email,
+        globalRole: GLOBAL_ROLE.ROLE_USER,
+        marketingEmailAllowed: 'DISAGREE',
+        name: data.name,
+        password: data.password,
+        privacyPolicyAllowed: data.privacyPolicyAllowed ? 'AGREE' : 'DISAGREE',
+        socialType: SOCIAL_TYPE.LOCAL,
+        termsOfServiceAllowed: data.termsOfServiceAllowed ? 'AGREE' : 'DISAGREE',
+      },
+      {
+        onSuccess: () => {
+          registerModal.onClose();
+          loginModal.onOpen();
+          reset();
         },
-        body: JSON.stringify({
-          name: data.name,
-          email: data.email,
-          password: data.password,
-          socialType: 'LOCAL',
-          globalRole: 'ROLE_USER',
-          privacyPolicyAllowed: 'AGREE',
-          termsOfServiceAllowed: 'AGREE',
-        }),
-      });
-
-      if (res.ok) {
-        registerModal.onClose();
-        loginModal.onOpen();
-        reset();
-      }
-    } catch {
-      // console.error('Error:', error);
-    } finally {
-      setIsLoading(false);
-    }
+        onSettled: () => {
+          setIsLoading(false);
+        },
+      },
+    );
   };
 
   const bodyContent = (

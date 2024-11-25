@@ -15,7 +15,6 @@ import Heading from '@/shared/components/Heading';
 import Input from '@/shared/components/Input';
 import Modal from '@/shared/components/Modal';
 import { queryKeys } from '@/shared/constants/query-keys';
-import type { ICommonResponse } from '@/shared/types/auth';
 import { loginSchema } from '@/shared/utils/schema';
 
 function LoginModal() {
@@ -56,8 +55,7 @@ function LoginModal() {
       loginModal.onClose();
       reset();
     } else {
-      const errorData: ICommonResponse = await res.json();
-      toast.error(errorData.message || '로그인에 실패하였습니다.');
+      toast.error('로그인에 실패하였습니다.');
     }
 
     setIsLoading(false);
