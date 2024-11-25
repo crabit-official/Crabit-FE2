@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
 import { setAuthCookies } from '@/shared/apis/set-auth-cookie';
-import type { IAuthResponse, ICommonResponse } from '@/shared/types/auth';
+import type { IAuthResponse } from '@/shared/types/auth';
 
 export async function POST(req: NextRequest) {
   const { email, password } = await req.json();
@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
   });
 
   if (!res.ok) {
-    const errorData: ICommonResponse = await res.json();
+    const errorData = await res.json();
     return NextResponse.json(
       {
         success: errorData.isSuccess,
