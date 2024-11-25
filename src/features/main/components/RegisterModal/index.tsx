@@ -18,6 +18,8 @@ import Modal from '@/shared/components/Modal';
 import NonRegisterInput from '@/shared/components/NonRegisterInput';
 import Typography from '@/shared/components/Typography';
 import { GLOBAL_ROLE, SOCIAL_TYPE } from '@/shared/enums/auth';
+import usePostCheckVerifyCode from '@/shared/hooks/auth/queries/usePostCheckVerifyCode';
+import usePostSendVerifyCode from '@/shared/hooks/auth/queries/usePostSendVerifyCode';
 import usePostSignupMutation from '@/shared/hooks/auth/queries/usePostSignupMutation';
 import { signUpSchema } from '@/shared/utils/schema';
 
@@ -26,6 +28,8 @@ function RegisterModal() {
   const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
   const { mutate: postSignup } = usePostSignupMutation();
+  const { mutate: postSendVerifyCode } = usePostSendVerifyCode();
+  const { mutate: postCheckVerifyCode } = usePostCheckVerifyCode();
 
   const [isShownVerifyInput, setIsShownVerifyInput] = useState(false);
   const [verifyCode, setVerifyCode] = useState('');
@@ -38,6 +42,7 @@ function RegisterModal() {
     register,
     handleSubmit,
     reset,
+    getValues,
     formState: { errors },
   } = useForm<FieldValues>({
     resolver: zodResolver(signUpSchema),
@@ -47,10 +52,13 @@ function RegisterModal() {
       password: '',
       privacyPolicyAllowed: false,
       termsOfServiceAllowed: false,
+      marketingEmailAllowed: false,
       socialType: 'LOCAL',
       globalRole: 'ROLE_USER',
     },
   });
+
+  console.log(getValues());
 
   const onSubmit: SubmitHandler<FieldValues> = (data: FieldValues) => {
     setIsLoading(true);
@@ -59,12 +67,12 @@ function RegisterModal() {
       {
         email: data.email,
         globalRole: GLOBAL_ROLE.ROLE_USER,
-        marketingEmailAllowed: 'DISAGREE',
         name: data.name,
         password: data.password,
         privacyPolicyAllowed: data.privacyPolicyAllowed ? 'AGREE' : 'DISAGREE',
         socialType: SOCIAL_TYPE.LOCAL,
         termsOfServiceAllowed: data.termsOfServiceAllowed ? 'AGREE' : 'DISAGREE',
+        marketingEmailAllowed: data.marketingEmailAllowed ? 'AGREE' : 'DISAGREE',
       },
       {
         onSuccess: () => {
@@ -92,7 +100,19 @@ function RegisterModal() {
         required
         actionButton="이메일 인증"
         onClickButton={() => {
-          setIsShownVerifyInput(true);
+          if (getValues('email').trim().length !== 0) {
+            postSendVerifyCode(
+              {
+                email: getValues('email') as string,
+                emailVerificationPurpose: 'JOIN_VERIFIED',
+              },
+              {
+                onSuccess: () => {
+                  setIsShownVerifyInput(true);
+                },
+              },
+            );
+          }
         }}
       />
       {isShownVerifyInput && (
@@ -102,7 +122,20 @@ function RegisterModal() {
           disabled={isLoading}
           actionButton="번호 인증"
           onClickButton={() => {
-            console.log(verifyCode);
+            if (verifyCode.trim().length !== 0) {
+              postCheckVerifyCode(
+                {
+                  code: verifyCode,
+                  email: getValues('email') as string,
+                  emailVerificationPurpose: 'JOIN_VERIFIED',
+                },
+                {
+                  onSuccess: () => {
+                    setIsShownVerifyInput(false);
+                  },
+                },
+              );
+            }
           }}
           value={verifyCode}
           onChange={handleChangeVerifyInput}
@@ -111,6 +144,7 @@ function RegisterModal() {
       <Input id="password" type="password" label="비밀번호" disabled={isLoading} register={register} errors={errors} required />
       <CheckBox label="개인정보 처리 방침 동의" id="privacyPolicyAllowed" disabled={isLoading} register={register} errors={errors} required />
       <CheckBox label=" 서비스 약관 동의" id="termsOfServiceAllowed" disabled={isLoading} register={register} errors={errors} required />
+      <CheckBox label=" 마케팅 약관 동의" id="marketingEmailAllowed" disabled={isLoading} register={register} errors={errors} required />
     </div>
   );
 

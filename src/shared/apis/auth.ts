@@ -17,6 +17,7 @@ export const postSignup = async (request: TPostSignupRequest): Promise<TPostSign
     globalRole: request.globalRole,
     privacyPolicyAllowed: request.privacyPolicyAllowed,
     termsOfServiceAllowed: request.termsOfServiceAllowed,
+    marketingEmailAllowed: request.marketingEmailAllowed,
   });
 
   return data.result as TPostSignupResponse;
