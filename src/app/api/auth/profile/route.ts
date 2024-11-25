@@ -7,7 +7,7 @@ import type { IProfileResponse } from '@/shared/types/auth';
 
 export async function GET() {
   try {
-    const data: IProfileResponse = await fetchData('/api/v1/member/profile', 'GET');
+    const data = await fetchData<IProfileResponse>('/api/v1/member/profile', 'GET');
 
     return NextResponse.json(data);
   } catch (e) {
@@ -22,6 +22,18 @@ export async function PUT(req: NextRequest) {
 
   try {
     const data = await fetchData<CommonResponse<{ memberId: number }>>('/api/v1/member/profile', 'PUT', body);
+    return NextResponse.json(data);
+  } catch (e) {
+    const errorMessage = e instanceof Error ? e.message : '알수없는 에러가 발생했습니다.';
+
+    return NextResponse.json({ error: errorMessage }, { status: 400, statusText: 'Error Failed' });
+  }
+}
+
+export async function DELETE() {
+  try {
+    const data = await fetchData<{ memberId: string }>('/api/v1/auth/quit', 'DELETE');
+
     return NextResponse.json(data);
   } catch (e) {
     const errorMessage = e instanceof Error ? e.message : '알수없는 에러가 발생했습니다.';
