@@ -273,6 +273,7 @@ export interface IStudentChallengeContents {
     createdAt: Date;
     day: number;
     fileUrl: string;
+    releasedChallengeId: number;
     studentChallengeId: number;
     studentChallengeLogId: number;
   };
@@ -392,6 +393,7 @@ export interface IAllChallengeLogDTO {
   createdAt: Date;
   day: number;
   fileUrl: string;
+  releasedChallengeId: number;
   studentChallengeId: number;
   studentChallengeLogId: number;
 }
@@ -425,3 +427,8 @@ export type TChallengeResult = CommonResponse<{
 export type TError = {
   error: string;
 };
+
+export type TChallengeDetailResult = CommonResponse<{
+  studentAcademyProfile: IStudentProfileDTO;
+  studentChallengeLog: IAllChallengeLogDTO;
+}>;
