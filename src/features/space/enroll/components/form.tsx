@@ -172,12 +172,12 @@ function Form() {
             disabled={isLoading}
             className="peer w-full rounded-md border-2 border-neutral-300 bg-main-white p-4 pt-6 font-light outline-none transition focus:border-main-black disabled:cursor-not-allowed disabled:opacity-70"
           >
-            <option value="10명 이하">10명 이하</option>
-            <option value="10~30명">10~30명</option>
-            <option value="30~50명">30~50명</option>
-            <option value="50~100명">50~100명</option>
-            <option value="100~150명">100~150명</option>
-            <option value="150명 이상">150명 이상</option>
+            <option value="GROUP_ONE">1~10명</option>
+            <option value="GROUP_TWO">11~30명</option>
+            <option value="GROUP_THREE">30~50명</option>
+            <option value="GROUP_FOUR">51~100명</option>
+            <option value="GROUP_FIVE">101~150명</option>
+            <option value="GROUP_SIX">151명 이상</option>
           </select>
           <PhoneInput id="contactNumber" label="대표자 번호" disabled={isLoading} control={control} errors={errors} required />
         </Flex>
