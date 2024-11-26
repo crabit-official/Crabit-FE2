@@ -166,7 +166,19 @@ function Form() {
         <Input disabled={isLoading} id="academyAddressDetail" label="학원 상세 주소" register={register} errors={errors} required />
         <Spacing direction="vertical" size={24} />
         <Flex className="w-full flex-col gap-5 md:flex-row">
-          <Input type="number" className="w-full" id="studentCount" label="학생 수" disabled={isLoading} register={register} errors={errors} required />
+          <select
+            id="studentCount"
+            {...register('studentCount', { required: true })}
+            disabled={isLoading}
+            className="peer w-full rounded-md border-2 border-neutral-300 bg-main-white p-4 pt-6 font-light outline-none transition focus:border-main-black disabled:cursor-not-allowed disabled:opacity-70"
+          >
+            <option value="10명 이하">10명 이하</option>
+            <option value="10~30명">10~30명</option>
+            <option value="30~50명">30~50명</option>
+            <option value="50~100명">50~100명</option>
+            <option value="100~150명">100~150명</option>
+            <option value="150명 이상">150명 이상</option>
+          </select>
           <PhoneInput id="contactNumber" label="대표자 번호" disabled={isLoading} control={control} errors={errors} required />
         </Flex>
         <Spacing direction="vertical" size={24} />
