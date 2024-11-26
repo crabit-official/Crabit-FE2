@@ -50,10 +50,7 @@ function Form() {
       <Flex rowColumn="center">
         <Input id="academyName" label="학원명" disabled={isLoading} register={register} errors={errors} required />
         <Spacing direction="vertical" size={24} />
-        <Flex className="w-full">
-          <Input id="academyEmail" type="email" label="학원 이메일" disabled={isLoading} register={register} errors={errors} required />
-          <Button className="ml-4 w-[150px]">이메일 인증</Button>
-        </Flex>
+        <Input id="academyEmail" type="email" label="학원 이메일" disabled={isLoading} register={register} errors={errors} required />
         <Spacing direction="vertical" size={24} />
         <AddressSearch setValue={setValue} id="academyAddress" label="학원 주소" register={register} errors={errors} required />
         <Spacing direction="vertical" size={24} />

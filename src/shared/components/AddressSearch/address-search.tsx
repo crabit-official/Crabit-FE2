@@ -40,7 +40,7 @@ function AddressSearch({ register, errors, setValue, id, label, required }: IAdd
     <>
       <Flex className="w-full">
         <Input errors={errors} id={id} label={label} register={register} disabled required={required} />
-        <Button className="ml-4 w-[150px]" onClick={() => setIsOpen((prev) => !prev)}>
+        <Button className="ml-4 w-[150px] font-bold text-white" onClick={() => setIsOpen((prev) => !prev)}>
           주소 검색
         </Button>
       </Flex>
