@@ -3,10 +3,20 @@ import Avatar from '@/shared/components/Avatar';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 
-export default function Comment() {
+interface ICommentProps {
+  params: {
+    feedId: string;
+    id: string;
+  };
+  searchParams: {
+    log: string;
+  };
+}
+
+export default function Comment({ params, searchParams }: ICommentProps) {
   return (
     <Flex column="start">
-      <CommentForm />
+      <CommentForm academyId={Number(params.id)} releasedChallengeId={Number(params.feedId)} studentChallengeLogId={Number(searchParams.log)} />
       <Flex column="start" className="mt-10 w-full gap-2">
         <Flex row="start" className="w-full items-center gap-2">
           <Avatar />
