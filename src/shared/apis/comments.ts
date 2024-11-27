@@ -57,3 +57,26 @@ export async function getCommentList({
 
   return (await res.json()) as TCommentResponse;
 }
+
+export async function reportComment({
+  academyId,
+  releasedChallengeId,
+  commentId,
+  reason,
+}: {
+  academyId: number;
+  commentId: number;
+  reason: string;
+  releasedChallengeId: number;
+}) {
+  const res = await fetch(`/api/comment/report?academyId=${academyId}&releasedChallengeId=${releasedChallengeId}&commentId=${commentId}`, {
+    method: 'POST',
+    body: JSON.stringify({ reason }),
+  });
+  if (!res.ok) {
+    const errorData: TError = await res.json();
+    throw new Error(errorData.error);
+  }
+
+  return (await res.json()) as CommonResponse<{ commentReportId: number }>;
+}

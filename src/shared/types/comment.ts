@@ -1,5 +1,6 @@
 import type { CommonResponse } from '@/shared/apis/dto/response';
 import type { COMMENT_STATUS } from '@/shared/enums/comment';
+import type { IStudentProfileDTO } from '@/shared/types/acadmy';
 
 export type TCommentResponse = CommonResponse<{
   commentList: ICommentList[];
@@ -12,7 +13,7 @@ export interface ICommentList extends IComment {
 }
 
 export interface IComment {
-  academyMember: { academyMemberId: number; academyProfileImageUrl: string; nickname: string };
+  academyMember: IStudentProfileDTO;
   comment: ICommentDetail;
 }
 

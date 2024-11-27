@@ -12,11 +12,12 @@ import useCreateComment from '@/shared/hooks/comments/useCreateComment';
 
 interface ICommentProps {
   academyId: number;
+  parentId?: number;
   releasedChallengeId: number;
   studentChallengeLogId: number;
 }
 
-function CommentForm({ releasedChallengeId, studentChallengeLogId, academyId }: ICommentProps) {
+function CommentForm({ releasedChallengeId, studentChallengeLogId, academyId, parentId }: ICommentProps) {
   const { data: profile } = useGetAcademyProfile(academyId);
 
   const [content, setContent] = useState<string>('');
@@ -29,7 +30,7 @@ function CommentForm({ releasedChallengeId, studentChallengeLogId, academyId }: 
       studentChallengeLogId,
       academyId,
       content,
-      parentId: null,
+      parentId: parentId ?? null,
     });
     setContent('');
   };

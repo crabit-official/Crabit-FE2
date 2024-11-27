@@ -44,16 +44,35 @@ function CommentList({ academyId, releasedChallengeId, studentChallengeLogId }: 
     );
   }
   return (
-    <div>
-      {commentList?.pages.map((page) => page.result.commentList.map((comment) => <Comment key={comment.comment.commentId} {...comment} />))}
+    <Flex column="start" className="gap-4">
+      {commentList?.pages.map((page) =>
+        page.result.commentList.map((comment) => (
+          <Flex column="start" className="gap-4" key={comment.comment.commentId}>
+            <Comment {...comment} academyId={academyId} releasedChallengeId={releasedChallengeId} studentChallengeLogId={studentChallengeLogId} />
+            <Flex column="start" className="ml-4 gap-3">
+              {comment.commentCommentList.map((reply) => (
+                <Comment
+                  parent={false}
+                  key={reply.comment.commentId}
+                  {...reply}
+                  academyId={academyId}
+                  releasedChallengeId={releasedChallengeId}
+                  studentChallengeLogId={studentChallengeLogId}
+                />
+              ))}
+            </Flex>
+          </Flex>
+        )),
+      )}
       {isPending && <Comment.Skeleton />}
       {isFetching
         ? Array(5)
             .fill('')
             .map((_, i) => <Comment.Skeleton key={i} />)
         : null}
-      <div ref={ref} className="h-5" />
-    </div>
+      <div ref={ref} className="h-3" />
+    </Flex>
   );
 }
+
 export default CommentList;
