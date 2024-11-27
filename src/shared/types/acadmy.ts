@@ -256,8 +256,8 @@ export interface IChallengeParticipant {
 
 export interface IStudentProfileDTO {
   academyMemberId: number;
-  academyNickname: string;
-  academyProfileImageUrl: string;
+  nickname: string;
+  profileImageUrl: string;
 }
 
 export type IChallengeParticipateResult = CommonResponse<{

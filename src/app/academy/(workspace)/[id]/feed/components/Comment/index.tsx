@@ -48,9 +48,9 @@ function Comment({ comment, academyMember, academyId, releasedChallengeId }: ICo
         body={<Textarea register={register} errors={errors} required label="신고 이유" id="reason" />}
       />
       <Flex row="start" className="w-full items-center gap-2">
-        {academyMember?.academyProfileImageUrl ? (
+        {academyMember?.profileImageUrl ? (
           <Image
-            src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${academyMember.academyProfileImageUrl}`}
+            src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${academyMember.profileImageUrl}`}
             alt="profile"
             width={100}
             height={100}
