@@ -17,10 +17,11 @@ interface ICommentBoxProps {
 function CommentList({ academyId, releasedChallengeId, studentChallengeLogId }: ICommentBoxProps) {
   const {
     data: commentList,
-    isPending,
     isFetching,
+    isLoading,
     hasNextPage,
     fetchNextPage,
+    isFetchingNextPage,
     isError,
   } = useGetInfiniteComments(academyId, releasedChallengeId, studentChallengeLogId);
   const { ref, inView } = useInView({
@@ -44,7 +45,7 @@ function CommentList({ academyId, releasedChallengeId, studentChallengeLogId }: 
     );
   }
   return (
-    <Flex column="start" className="gap-4">
+    <Flex column="start" className="gap-3">
       {commentList?.pages.map((page) =>
         page.result.commentList.map((comment) => (
           <Flex column="start" className="gap-4" key={comment.comment.commentId}>
@@ -64,8 +65,7 @@ function CommentList({ academyId, releasedChallengeId, studentChallengeLogId }: 
           </Flex>
         )),
       )}
-      {isPending && <Comment.Skeleton />}
-      {isFetching
+      {isLoading || isFetchingNextPage
         ? Array(5)
             .fill('')
             .map((_, i) => <Comment.Skeleton key={i} />)
