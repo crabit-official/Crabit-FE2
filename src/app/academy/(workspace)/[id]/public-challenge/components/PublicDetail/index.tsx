@@ -74,14 +74,14 @@ function PublicDetail({ challengeData, academyId, releasedChallengeId }: IPublic
         />
 
         <Typography size="h7" as="p" className="break-keep font-normal opacity-60">
-          챌린지 기간 {challengeData?.academyPublicChallenge.totalDays}일 • 포인트 {challengeData?.academyPublicChallenge.totalDays}일
+          챌린지 기간 {challengeData?.academyPublicChallenge.totalDays}일 • 포인트 {challengeData?.academyPublicChallenge.totalDays}
         </Typography>
         <Typography size="h5" as="p" className="break-keep text-base opacity-80">
           {challengeData?.academyPublicChallenge.content}
         </Typography>
       </Flex>
       <Button type="button" className="mt-4 bg-main-deep-pink font-medium text-white" onClick={() => handleApply()}>
-        첼린지 참여하기
+        챌린지 참여하기
       </Button>
     </Flex>
   );

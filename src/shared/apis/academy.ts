@@ -1,6 +1,7 @@
 import type { Session } from 'next-auth';
 
-import type { IAcademyResult, IStatisticsResult, ITop5StudentsResult } from '@/shared/types/acadmy';
+import type { CommonResponse } from '@/shared/apis/dto/response';
+import type { IAcademyProfile, IAcademyResult, IStatisticsResult, ITop5StudentsResult, TError } from '@/shared/types/acadmy';
 
 interface IGetAcademyList {
   cursor: number;
@@ -86,4 +87,18 @@ export async function getStatistics({ academyId, session }: { academyId: number;
   const data: IStatisticsResult = await res.json();
 
   return data.result;
+}
+
+// 학원 프로필
+export async function getAcademyProfile(academyId: number) {
+  const res = await fetch(`/api/academy/profile?academyId=${academyId}`, {
+    method: 'GET',
+  });
+
+  if (!res.ok) {
+    const errorData: TError = await res.json();
+    throw new Error(errorData.error);
+  }
+
+  return (await res.json()) as CommonResponse<IAcademyProfile>;
 }
