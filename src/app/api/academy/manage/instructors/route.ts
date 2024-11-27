@@ -11,8 +11,6 @@ export async function GET(req: NextRequest) {
   const academyId = req.nextUrl.searchParams.get('academyId') || '';
   const nickname = req.nextUrl.searchParams.get('nickname') || '';
 
-  console.log(cursor, take, academyId, nickname);
-
   let url = `/api/v1/academies/${academyId}/instructors?cursor=${cursor}&take=${take}`;
 
   if (nickname) {

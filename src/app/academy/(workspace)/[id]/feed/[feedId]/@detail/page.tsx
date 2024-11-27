@@ -28,8 +28,6 @@ export default async function FeedDetailPage({ params, searchParams }: IFeedDeta
 
   const challengeData = (await res.json()) as TChallengeDetailResult;
 
-  console.log(challengeData);
-
   if (!res.ok) {
     return <div>에러가 발생했습니다.</div>;
   }

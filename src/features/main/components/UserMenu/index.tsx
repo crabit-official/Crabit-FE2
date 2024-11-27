@@ -26,7 +26,6 @@ function UserMenu() {
   const queryClient = useQueryClient();
 
   const { data: profile } = useGetProfile();
-  console.log(profile);
 
   const handleLogout = async () => {
     await fetch('/api/auth/logout', {

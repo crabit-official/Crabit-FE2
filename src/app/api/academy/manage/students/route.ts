@@ -17,7 +17,6 @@ export async function GET(req: NextRequest) {
 
   try {
     const data = await fetchData<IAcademyStudentListResult>(url, 'GET');
-    console.log(data);
     return NextResponse.json(data);
   } catch (e) {
     const errorMessage = e instanceof Error ? e.message : '알수없는 에러가 발생했습니다.';
