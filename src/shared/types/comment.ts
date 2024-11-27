@@ -23,3 +23,8 @@ export interface ICommentDetail {
   content: string;
   createdAt: Date;
 }
+
+export interface IBlockCommentResponse {
+  blocked: boolean;
+  commentBlockId: number;
+}

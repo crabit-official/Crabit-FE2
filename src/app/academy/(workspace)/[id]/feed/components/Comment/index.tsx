@@ -3,10 +3,14 @@
 import React, { useState } from 'react';
 import { type FieldValues, useForm } from 'react-hook-form';
 import { AiFillAlert } from 'react-icons/ai';
-import { IoArrowUndo } from 'react-icons/io5';
+import { HiOutlineDotsHorizontal } from 'react-icons/hi';
+import { MdOutlineBlock } from 'react-icons/md';
+import { PiArrowBendDownRightBold } from 'react-icons/pi';
 import Image from 'next/image';
+import { toast } from 'sonner';
 
 import CommentForm from '@/app/academy/(workspace)/[id]/feed/components/CommentForm';
+import CommentIcon from '@/app/academy/(workspace)/[id]/feed/components/CommentIcon';
 import Avatar from '@/shared/components/Avatar';
 import Flex from '@/shared/components/Flex';
 import Modal from '@/shared/components/Modal';
@@ -14,6 +18,8 @@ import Skeleton from '@/shared/components/Skeleton/Skeleton';
 import Textarea from '@/shared/components/Textarea';
 import Typography from '@/shared/components/Typography';
 import { COMMENT_STATUS } from '@/shared/enums/comment';
+import useGetAcademyProfile from '@/shared/hooks/academy/useGetAcademyProfile';
+import useBlockComment from '@/shared/hooks/comments/useBlockComment';
 import useReportComment from '@/shared/hooks/comments/useReportComment';
 import type { IComment } from '@/shared/types/comment';
 import formatDate from '@/shared/utils/date';
@@ -29,6 +35,8 @@ function Comment({ comment, academyMember, academyId, releasedChallengeId, stude
   const [reply, setReply] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const { mutate } = useReportComment();
+  const { mutate: blockMutate } = useBlockComment({ academyId, releasedChallengeId, studentChallengeLogId });
+  const { data: profile } = useGetAcademyProfile(academyId);
   const {
     register,
     handleSubmit,
@@ -38,6 +46,10 @@ function Comment({ comment, academyMember, academyId, releasedChallengeId, stude
   const handleReport = (data: FieldValues) => {
     mutate({ academyId, releasedChallengeId, commentId: comment.commentId, reason: data.reason });
     setOpen((prev) => !prev);
+  };
+
+  const handleBlock = () => {
+    blockMutate({ academyId, releasedChallengeId, commentId: comment.commentId });
   };
 
   return (
@@ -75,27 +87,19 @@ function Comment({ comment, academyMember, academyId, releasedChallengeId, stude
           }`}
         >
           {comment?.commentStatus === COMMENT_STATUS.ACTIVE && comment.content}
-          {comment?.commentStatus === COMMENT_STATUS.DELETED && '삭제된 댓글 입니다.'}
-          {comment?.commentStatus === COMMENT_STATUS.BLOCKED && '차단된 댓글 입니다.'}
-          {comment?.commentStatus === COMMENT_STATUS.REPORTED && '신고된 댓글 입니다.'}
+          {comment?.commentStatus === COMMENT_STATUS.DELETED && '삭제된 댓글입니다.'}
+          {comment?.commentStatus === COMMENT_STATUS.BLOCKED && '차단된 댓글입니다.'}
+          {comment?.commentStatus === COMMENT_STATUS.REPORTED && '신고된 댓글입니다.'}
         </Typography>
         <Flex row="start" className="gap-2">
-          <button
-            onClick={() => setOpen(true)}
-            type="button"
-            className="group w-fit rounded-full border border-solid border-gray-100 bg-gray-100 p-1 transition duration-200 ease-in-out hover:border-main-deep-pink"
-          >
-            <AiFillAlert className="text-gray-500 group-hover:text-main-deep-pink" size={13} />
-          </button>
-          {parent && (
-            <button
-              onClick={() => setReply((prev) => !prev)}
-              type="button"
-              className="group w-fit rounded-full border border-solid border-gray-100 bg-gray-100 p-1 transition duration-200 ease-in-out hover:border-main-deep-pink"
-            >
-              <IoArrowUndo className="rotate-180 text-gray-500 group-hover:text-main-deep-pink" size={13} />
-            </button>
+          {profile?.result.academyMemberId !== academyMember.academyMemberId && (
+            <>
+              <CommentIcon icon={AiFillAlert} onClick={() => setOpen(true)} />
+              <CommentIcon icon={MdOutlineBlock} onClick={handleBlock} />
+            </>
           )}
+          {parent && <CommentIcon icon={PiArrowBendDownRightBold} onClick={() => setReply((prev) => !prev)} />}
+          {profile?.result.academyMemberId === academyMember.academyMemberId && <CommentIcon icon={HiOutlineDotsHorizontal} onClick={() => toast('준비중')} />}
         </Flex>
       </Flex>
       {reply && (
