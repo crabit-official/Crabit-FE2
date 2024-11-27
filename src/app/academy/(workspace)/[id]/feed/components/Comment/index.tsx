@@ -1,4 +1,6 @@
 import React from 'react';
+import { AiFillAlert } from 'react-icons/ai';
+import { IoArrowUndo } from 'react-icons/io5';
 import Image from 'next/image';
 
 import Avatar from '@/shared/components/Avatar';
@@ -28,10 +30,26 @@ function Comment({ comment, academyMember }: ICommentList) {
           <strong className="font-semibold">{academyMember?.nickname}</strong> • {formatDate(comment.createdAt)}
         </Typography>
       </Flex>
-      <Typography size="h7" className="ml-5 w-fit rounded-xl bg-main-deep-pink/20 px-4 py-2 font-normal">
-        {comment?.commentStatus === COMMENT_STATUS.ACTIVE && comment.content}
-        {comment?.commentStatus === COMMENT_STATUS.DELETED && '삭제된 댓글 입니다. 색상 변경할것'}
-      </Typography>
+      <Flex column="start" className="ml-5 gap-2">
+        <Typography size="h7" className="w-fit rounded-xl bg-main-deep-pink/20 px-4 py-2 font-normal">
+          {comment?.commentStatus === COMMENT_STATUS.ACTIVE && comment.content}
+          {comment?.commentStatus === COMMENT_STATUS.DELETED && '삭제된 댓글 입니다. 색상 변경할것'}
+        </Typography>
+        <Flex row="start" className="gap-2">
+          <button
+            type="button"
+            className="w-fit rounded-full border border-solid border-gray-100 bg-gray-100 p-1 transition duration-200 ease-in-out hover:border-main-deep-pink"
+          >
+            <AiFillAlert className="text-gray-500" size={13} />
+          </button>
+          <button
+            type="button"
+            className="w-fit rounded-full border border-solid border-gray-100 bg-gray-100 p-1 transition duration-200 ease-in-out hover:border-main-deep-pink"
+          >
+            <IoArrowUndo className="rotate-180 text-gray-500" size={13} />
+          </button>
+        </Flex>
+      </Flex>
     </Flex>
   );
 }
