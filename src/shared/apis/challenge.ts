@@ -102,7 +102,7 @@ export async function getAcademyMemberDetailList({ cursor, take, academyId, nick
 
 // [원장 선생님] 학원 전체 강사 리스트 조회
 export async function getAcademyInstructorList({ cursor, take, academyId, nickname }: IGetAcademyMemberDetailList) {
-  let url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/instructors?cursor=${cursor}&take=${take}`;
+  let url = `/api/academy/manage/instructors?academyId=${academyId}&cursor=${cursor}&take=${take}`;
 
   if (nickname) {
     url += `&nickname=${nickname}`;
@@ -123,7 +123,7 @@ export async function getAcademyInstructorList({ cursor, take, academyId, nickna
 
 // [원장 선생님, 강사] 학원 전체 학생 리스트 조회
 export async function getAcademyStudentList({ cursor, take, academyId, nickname }: IGetAcademyMemberDetailList) {
-  let url = `/api/academy/students?academyId=${academyId}&cursor=${cursor}&take=${take}`;
+  let url = `/api/academy/manage/students?academyId=${academyId}&cursor=${cursor}&take=${take}`;
 
   if (nickname) {
     url += `&nickname=${nickname}`;

@@ -22,9 +22,9 @@ function StudentChallengeContent({ challengeLog, studentProfile, academyId }: IC
     <Flex row="start" className="w-full cursor-pointer gap-4">
       <Flex column="start" className="relative gap-2">
         <Flex>
-          {studentProfile.academyProfileImageUrl ? (
+          {studentProfile.profileImageUrl ? (
             <Image
-              src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${studentProfile.academyProfileImageUrl}`}
+              src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${studentProfile.profileImageUrl}`}
               alt="profile img"
               width={50}
               height={50}
@@ -38,7 +38,7 @@ function StudentChallengeContent({ challengeLog, studentProfile, academyId }: IC
       </Flex>
       <Flex column="start" className="w-full gap-2 py-2">
         <Typography size="h7" as="p" className="px-1 text-xs font-normal opacity-60">
-          {studentProfile.academyNickname} • {formatDate(challengeLog.createdAt)}
+          {studentProfile.nickname} • {formatDate(challengeLog.createdAt)}
         </Typography>
         <Flex
           onClick={() => router.push(`/academy/${academyId}/feed/${challengeLog.releasedChallengeId}?log=${challengeLog.studentChallengeLogId}`)}

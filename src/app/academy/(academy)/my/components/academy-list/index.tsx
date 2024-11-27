@@ -54,7 +54,7 @@ function AcademyList() {
               router.push(`/academy/${academy.academyId}/dashboard`);
             }}
             title={academy.academyName}
-            subTitle={academy.academyMemberNickname}
+            subTitle={academy.nickname}
             imageUrl={academy.academyMainImageUrl}
             leftLabel={
               <Typography color="main-white" size="h7">

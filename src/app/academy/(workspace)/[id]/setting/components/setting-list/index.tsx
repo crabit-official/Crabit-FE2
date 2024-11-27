@@ -38,7 +38,7 @@ function SettingList({ id, academyRole }: { academyRole: ACADEMY_ROLE; id: strin
           />
         </Link>
       ) : null}
-      {academyRole === ACADEMY_ROLE.PRINCIPAL || ACADEMY_ROLE.INSTRUCTOR ? (
+      {academyRole === ACADEMY_ROLE.PRINCIPAL || academyRole === ACADEMY_ROLE.INSTRUCTOR ? (
         <Link href={`/academy/${id}/members/student`}>
           <ListRow
             contents={
