@@ -1,7 +1,9 @@
+import React from 'react';
 import Image from 'next/image';
 
 import Avatar from '@/shared/components/Avatar';
 import Flex from '@/shared/components/Flex';
+import Skeleton from '@/shared/components/Skeleton/Skeleton';
 import Typography from '@/shared/components/Typography';
 import { COMMENT_STATUS } from '@/shared/enums/comment';
 import type { ICommentList } from '@/shared/types/comment';
@@ -33,4 +35,19 @@ function Comment({ comment, academyMember }: ICommentList) {
     </Flex>
   );
 }
+
+function CommentSkeleton() {
+  return (
+    <Flex column="start" className="mt-10 w-full gap-2">
+      <Flex row="start" className="items-center gap-2">
+        <Skeleton height={30} width={30} className="rounded-full" />
+        <Skeleton height={20} width={150} className="rounded-xl" />
+      </Flex>
+      <Skeleton height={40} className="ml-5 rounded-xl" />
+    </Flex>
+  );
+}
+
+Comment.Skeleton = CommentSkeleton;
+
 export default Comment;

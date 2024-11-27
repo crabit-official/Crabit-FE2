@@ -37,7 +37,7 @@ function ChallengeDetail({ studentAcademyProfile, studentChallengeLog }: TChalle
           className="h-48 w-full rounded-lg border border-solid border-gray-100 bg-gray-50 object-contain"
         />
       )}
-      <Typography size="h5" className="font-medium opacity-80">
+      <Typography size="h6" className="font-medium opacity-80">
         {studentChallengeLog.content}
       </Typography>
     </Flex>
