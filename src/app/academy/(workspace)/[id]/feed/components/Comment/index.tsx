@@ -64,9 +64,16 @@ function Comment({ comment, academyMember, academyId, releasedChallengeId }: ICo
         </Typography>
       </Flex>
       <Flex column="start" className="ml-5 gap-2">
-        <Typography size="h7" className="w-fit rounded-xl bg-main-deep-pink/20 px-4 py-2 font-normal">
+        <Typography
+          size="h7"
+          className={`w-fit rounded-xl bg-main-deep-pink/20 px-4 py-2 font-normal ${
+            comment?.commentStatus === COMMENT_STATUS.ACTIVE ? 'bg-main-deep-pink/20' : 'bg-gray-100'
+          }`}
+        >
           {comment?.commentStatus === COMMENT_STATUS.ACTIVE && comment.content}
-          {comment?.commentStatus === COMMENT_STATUS.DELETED && '삭제된 댓글 입니다. 색상 변경할것'}
+          {comment?.commentStatus === COMMENT_STATUS.DELETED && '삭제된 댓글 입니다.'}
+          {comment?.commentStatus === COMMENT_STATUS.BLOCKED && '차단된 댓글 입니다.'}
+          {comment?.commentStatus === COMMENT_STATUS.REPORTED && '신고된 댓글 입니다.'}
         </Typography>
         <Flex row="start" className="gap-2">
           <button
