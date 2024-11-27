@@ -24,8 +24,6 @@ async function Layout({ children, params }: ILayoutProps) {
 
   const res = await response.json();
 
-  console.log(res);
-
   return (
     <>
       <WorkspaceTab role={res?.result?.academyRole} />

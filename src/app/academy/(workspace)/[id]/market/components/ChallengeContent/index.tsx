@@ -23,7 +23,7 @@ function ChallengeContent({ challenge, teacher, academy, setRelease }: TChalleng
           </Typography>
           {teacher && academy && (
             <Typography size="h5" as="p" className="py-2 text-xs opacity-60">
-              {academy?.academyName} • {teacher?.academyNickname}/{teacher?.memberName}
+              {academy?.academyName} • {teacher?.nickname}/{teacher?.name}
             </Typography>
           )}
         </Flex>

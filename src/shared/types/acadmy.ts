@@ -95,10 +95,10 @@ export interface IAcademy {
   academyId: number;
   academyMainImageUrl: string;
   academyMemberId: number;
-  academyMemberNickname: string;
-  academyMemberProfileImageUrl: string;
   academyName: string;
   academyRole: string;
+  nickname: string;
+  profileImageUrl: string;
 }
 
 export type IAcademyResult = CommonResponse<{
@@ -279,8 +279,8 @@ export interface IStudentChallengeContents {
   };
   studentProfile: {
     academyMemberId: number;
-    academyNickname: string;
-    academyProfileImageUrl: string;
+    nickname: string;
+    profileImageUrl: string;
   };
 }
 
