@@ -33,7 +33,7 @@ function PublicDetail({ challengeData, academyId, releasedChallengeId }: IPublic
           </Typography>
 
           <Typography size="h5" as="p" className="py-2 text-xs opacity-60">
-            by. {challengeData.releaseInstructorProfile.academyNickname}
+            by. {challengeData.releaseInstructorProfile.nickname}
           </Typography>
         </Flex>
         <Typography size="h1" className="break-keep text-3xl font-bold md:text-4xl">

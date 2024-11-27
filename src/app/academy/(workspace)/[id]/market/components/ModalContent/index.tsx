@@ -19,6 +19,7 @@ type TContentProps = TChallengeDetail['result'] & {
 
 function ModalContent({ challenge, teacher, academy, setRelease }: TContentProps) {
   const router = useRouter();
+
   return (
     <>
       <button type="button" className="absolute right-4 top-4 cursor-pointer font-bold text-black hover:text-main-pink" onClick={() => router.back()}>
@@ -44,7 +45,7 @@ function ModalContent({ challenge, teacher, academy, setRelease }: TContentProps
             </Flex>
             {teacher && academy && (
               <Typography size="h5" as="p" className="text-xs text-blue-950">
-                {academy?.academyName} • {teacher?.academyNickname}/{teacher?.memberName}
+                {academy?.academyName} • {teacher?.nickname}/{teacher?.name}
               </Typography>
             )}
           </Flex>

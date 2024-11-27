@@ -21,7 +21,6 @@ function InvitationModal() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log(activeTab);
   const { mutateAsync } = useEnrollInvitation();
 
   const {

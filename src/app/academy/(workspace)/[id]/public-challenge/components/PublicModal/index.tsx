@@ -84,9 +84,9 @@ function PublicModal({ challengeData, academyId, releasedChallengeId }: IModalPr
                   </Typography>
                 </Flex>
                 <Flex row="start" className="items-center gap-2">
-                  {challengeData?.releaseInstructorProfile.academyProfileImageUrl ? (
+                  {challengeData?.releaseInstructorProfile.profileImageUrl ? (
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challengeData.releaseInstructorProfile.academyProfileImageUrl}`}
+                      src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challengeData.releaseInstructorProfile.profileImageUrl}`}
                       alt="profile img"
                       width={100}
                       height={100}
@@ -96,7 +96,7 @@ function PublicModal({ challengeData, academyId, releasedChallengeId }: IModalPr
                     <Avatar size="xs" />
                   )}
                   <Typography size="h7" className="break-keep text-xs font-normal opacity-80 sm:text-sm">
-                    {challengeData?.releaseInstructorProfile.academyNickname}
+                    {challengeData?.releaseInstructorProfile.nickname}
                   </Typography>
                 </Flex>
               </Flex>

@@ -27,6 +27,6 @@ export const GET_MOCK_PARTICIPATE_ACADEMY_LIST = {
   },
 };
 
-export const getParticipateAcademyList: HttpHandler = http.get(`${process.env.NEXT_PUBLIC_DEV_BASE_URL}/api/v1/member`, () =>
+export const getParticipateAcademyList: HttpHandler = http.get(`${process.env.NEXT_PUBLIC_DEV_BASE_URL}/api/v1/members`, () =>
   HttpResponse.json(GET_MOCK_PARTICIPATE_ACADEMY_LIST.success),
 );
