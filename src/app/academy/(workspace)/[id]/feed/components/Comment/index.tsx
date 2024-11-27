@@ -26,8 +26,8 @@ function Comment({ comment, academyMember }: ICommentList) {
         ) : (
           <Avatar />
         )}
-        <Typography size="h7" as="p" className="font-normal opacity-80">
-          <strong className="font-semibold">{academyMember?.nickname}</strong> • {formatDate(comment.createdAt)}
+        <Typography size="h7" as="p" className="text-xs font-normal opacity-80">
+          <strong className="text-sm font-semibold">{academyMember?.nickname}</strong> • {formatDate(comment.createdAt)}
         </Typography>
       </Flex>
       <Flex column="start" className="ml-5 gap-2">

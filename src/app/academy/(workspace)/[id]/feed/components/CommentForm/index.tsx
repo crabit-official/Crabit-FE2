@@ -7,8 +7,8 @@ import Image from 'next/image';
 
 import Avatar from '@/shared/components/Avatar';
 import Flex from '@/shared/components/Flex';
+import useGetAcademyProfile from '@/shared/hooks/academy/useGetAcademyProfile';
 import useCreateComment from '@/shared/hooks/comments/useCreateComment';
-import useGetProfile from '@/shared/hooks/main/useGetProfile';
 
 interface ICommentProps {
   academyId: number;
@@ -17,7 +17,8 @@ interface ICommentProps {
 }
 
 function CommentForm({ releasedChallengeId, studentChallengeLogId, academyId }: ICommentProps) {
-  const { data: profile } = useGetProfile();
+  const { data: profile } = useGetAcademyProfile(academyId);
+
   const [content, setContent] = useState<string>('');
   const { mutate } = useCreateComment({ academyId, releasedChallengeId, studentChallengeLogId });
 
@@ -35,9 +36,9 @@ function CommentForm({ releasedChallengeId, studentChallengeLogId, academyId }: 
 
   return (
     <Flex className="w-full items-center gap-3">
-      {profile?.profileImageUrl ? (
+      {profile?.result.profileImageUrl ? (
         <Image
-          src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${profile?.profileImageUrl}`}
+          src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${profile?.result.profileImageUrl}`}
           alt="profile"
           width={50}
           height={50}
