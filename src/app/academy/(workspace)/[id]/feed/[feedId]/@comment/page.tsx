@@ -33,7 +33,7 @@ export default async function Comment({ params, searchParams }: ICommentProps) {
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <Flex column="start">
+    <Flex column="start" className="gap-7">
       <CommentForm academyId={academyId} releasedChallengeId={releasedChallengeId} studentChallengeLogId={studentChallengeLogId} />
       <HydrationBoundary state={dehydratedState}>
         <CommentList academyId={academyId} releasedChallengeId={releasedChallengeId} studentChallengeLogId={studentChallengeLogId} />

@@ -6,6 +6,7 @@ import { AiFillAlert } from 'react-icons/ai';
 import { IoArrowUndo } from 'react-icons/io5';
 import Image from 'next/image';
 
+import CommentForm from '@/app/academy/(workspace)/[id]/feed/components/CommentForm';
 import Avatar from '@/shared/components/Avatar';
 import Flex from '@/shared/components/Flex';
 import Modal from '@/shared/components/Modal';
@@ -14,17 +15,20 @@ import Textarea from '@/shared/components/Textarea';
 import Typography from '@/shared/components/Typography';
 import { COMMENT_STATUS } from '@/shared/enums/comment';
 import useReportComment from '@/shared/hooks/comments/useReportComment';
-import type { ICommentList } from '@/shared/types/comment';
+import type { IComment } from '@/shared/types/comment';
 import formatDate from '@/shared/utils/date';
 
-interface ICommentProps extends ICommentList {
+interface ICommentProps extends IComment {
   academyId: number;
+  parent?: boolean;
   releasedChallengeId: number;
+  studentChallengeLogId: number;
 }
 
-function Comment({ comment, academyMember, academyId, releasedChallengeId }: ICommentProps) {
-  const { mutate } = useReportComment();
+function Comment({ comment, academyMember, academyId, releasedChallengeId, studentChallengeLogId, parent = true }: ICommentProps) {
+  const [reply, setReply] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
+  const { mutate } = useReportComment();
   const {
     register,
     handleSubmit,
@@ -37,7 +41,7 @@ function Comment({ comment, academyMember, academyId, releasedChallengeId }: ICo
   };
 
   return (
-    <Flex column="start" className="mt-10 w-full gap-2">
+    <Flex column="start" className="w-full gap-2">
       <Modal
         onClose={() => setOpen(false)}
         onSubmit={handleSubmit(handleReport)}
@@ -83,14 +87,27 @@ function Comment({ comment, academyMember, academyId, releasedChallengeId }: ICo
           >
             <AiFillAlert className="text-gray-500 group-hover:text-main-deep-pink" size={13} />
           </button>
-          <button
-            type="button"
-            className="group w-fit rounded-full border border-solid border-gray-100 bg-gray-100 p-1 transition duration-200 ease-in-out hover:border-main-deep-pink"
-          >
-            <IoArrowUndo className="rotate-180 text-gray-500 group-hover:text-main-deep-pink" size={13} />
-          </button>
+          {parent && (
+            <button
+              onClick={() => setReply((prev) => !prev)}
+              type="button"
+              className="group w-fit rounded-full border border-solid border-gray-100 bg-gray-100 p-1 transition duration-200 ease-in-out hover:border-main-deep-pink"
+            >
+              <IoArrowUndo className="rotate-180 text-gray-500 group-hover:text-main-deep-pink" size={13} />
+            </button>
+          )}
         </Flex>
       </Flex>
+      {reply && (
+        <div className="ml-4">
+          <CommentForm
+            academyId={academyId}
+            releasedChallengeId={releasedChallengeId}
+            studentChallengeLogId={studentChallengeLogId}
+            parentId={comment.commentId}
+          />
+        </div>
+      )}
     </Flex>
   );
 }
