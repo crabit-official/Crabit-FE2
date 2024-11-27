@@ -45,7 +45,11 @@ function CommentList({ academyId, releasedChallengeId, studentChallengeLogId }: 
   }
   return (
     <div>
-      {commentList?.pages.map((page) => page.result.commentList.map((comment) => <Comment key={comment.comment.commentId} {...comment} />))}
+      {commentList?.pages.map((page) =>
+        page.result.commentList.map((comment) => (
+          <Comment key={comment.comment.commentId} {...comment} academyId={academyId} releasedChallengeId={releasedChallengeId} />
+        )),
+      )}
       {isPending && <Comment.Skeleton />}
       {isFetching
         ? Array(5)

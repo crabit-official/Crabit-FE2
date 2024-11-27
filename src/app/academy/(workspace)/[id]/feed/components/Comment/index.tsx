@@ -1,19 +1,52 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
+import { type FieldValues, useForm } from 'react-hook-form';
 import { AiFillAlert } from 'react-icons/ai';
 import { IoArrowUndo } from 'react-icons/io5';
 import Image from 'next/image';
 
 import Avatar from '@/shared/components/Avatar';
 import Flex from '@/shared/components/Flex';
+import Modal from '@/shared/components/Modal';
 import Skeleton from '@/shared/components/Skeleton/Skeleton';
+import Textarea from '@/shared/components/Textarea';
 import Typography from '@/shared/components/Typography';
 import { COMMENT_STATUS } from '@/shared/enums/comment';
+import useReportComment from '@/shared/hooks/comments/useReportComment';
 import type { ICommentList } from '@/shared/types/comment';
 import formatDate from '@/shared/utils/date';
 
-function Comment({ comment, academyMember }: ICommentList) {
+interface ICommentProps extends ICommentList {
+  academyId: number;
+  releasedChallengeId: number;
+}
+
+function Comment({ comment, academyMember, academyId, releasedChallengeId }: ICommentProps) {
+  const { mutate } = useReportComment();
+  const [open, setOpen] = useState<boolean>(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FieldValues>();
+
+  const handleReport = (data: FieldValues) => {
+    mutate({ academyId, releasedChallengeId, commentId: comment.commentId, reason: data.reason });
+    setOpen((prev) => !prev);
+  };
+
   return (
     <Flex column="start" className="mt-10 w-full gap-2">
+      <Modal
+        onClose={() => setOpen(false)}
+        onSubmit={handleSubmit(handleReport)}
+        actionLabel="신고하기"
+        isOpen={open}
+        title="신고하기"
+        disabled={false}
+        body={<Textarea register={register} errors={errors} required label="신고 이유" id="reason" />}
+      />
       <Flex row="start" className="w-full items-center gap-2">
         {academyMember?.academyProfileImageUrl ? (
           <Image
@@ -37,16 +70,17 @@ function Comment({ comment, academyMember }: ICommentList) {
         </Typography>
         <Flex row="start" className="gap-2">
           <button
+            onClick={() => setOpen(true)}
             type="button"
-            className="w-fit rounded-full border border-solid border-gray-100 bg-gray-100 p-1 transition duration-200 ease-in-out hover:border-main-deep-pink"
+            className="group w-fit rounded-full border border-solid border-gray-100 bg-gray-100 p-1 transition duration-200 ease-in-out hover:border-main-deep-pink"
           >
-            <AiFillAlert className="text-gray-500" size={13} />
+            <AiFillAlert className="text-gray-500 group-hover:text-main-deep-pink" size={13} />
           </button>
           <button
             type="button"
-            className="w-fit rounded-full border border-solid border-gray-100 bg-gray-100 p-1 transition duration-200 ease-in-out hover:border-main-deep-pink"
+            className="group w-fit rounded-full border border-solid border-gray-100 bg-gray-100 p-1 transition duration-200 ease-in-out hover:border-main-deep-pink"
           >
-            <IoArrowUndo className="rotate-180 text-gray-500" size={13} />
+            <IoArrowUndo className="rotate-180 text-gray-500 group-hover:text-main-deep-pink" size={13} />
           </button>
         </Flex>
       </Flex>
