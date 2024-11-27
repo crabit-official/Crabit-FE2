@@ -19,7 +19,7 @@ interface ICommentProps {
 function CommentForm({ releasedChallengeId, studentChallengeLogId, academyId }: ICommentProps) {
   const { data: profile } = useGetProfile();
   const [content, setContent] = useState<string>('');
-  const { mutate } = useCreateComment();
+  const { mutate } = useCreateComment({ academyId, releasedChallengeId, studentChallengeLogId });
 
   const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
