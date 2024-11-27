@@ -20,8 +20,6 @@ interface IAcademyDashBoardProps {
 }
 
 async function AcademyDashBoardPage({ params, searchParams }: IAcademyDashBoardProps) {
-  // const academyData = await fetchData<TAcademyInfoResult>(`/api/v1/academies/${Number(params.id)}/details`, 'GET');
-
   const cookieStore = cookies();
 
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${Number(params.id)}/details`, {
@@ -43,8 +41,6 @@ async function AcademyDashBoardPage({ params, searchParams }: IAcademyDashBoardP
   const academyData = await response.json();
 
   const AcademyProfile = await response2.json();
-
-  // const AcademyProfile = await fetchData<IAcademyResponse<IAcademyProfile>>(`/api/v1/academies/${Number(params.id)}`, 'GET');
 
   return (
     <Flex column="start" className="min-h-screen items-center gap-2">
