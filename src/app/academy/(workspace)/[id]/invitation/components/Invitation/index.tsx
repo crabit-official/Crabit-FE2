@@ -5,8 +5,6 @@ import { RiRefreshLine } from 'react-icons/ri';
 import { QueryClient } from '@tanstack/query-core';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
-import type { Session } from 'next-auth';
-import { useSession } from 'next-auth/react';
 
 import { getInvitationCode, postInvitationCode } from '@/shared/apis/invitation';
 import Button from '@/shared/components/Button';
@@ -17,7 +15,6 @@ import { queryKeys } from '@/shared/constants/query-keys';
 
 function InvitationTab() {
   const [tab, setTab] = useState<'INSTRUCTOR' | 'STUDENT'>('STUDENT');
-  const { data: session } = useSession();
   const params = useParams();
   const queryClient = new QueryClient();
 
@@ -25,7 +22,6 @@ function InvitationTab() {
     queryFn: () =>
       getInvitationCode({
         academyId: Number(params.id),
-        session: session as Session,
         academyRole: tab,
       }),
     queryKey: [queryKeys.INVITATION_CODE, tab],
@@ -75,7 +71,6 @@ function InvitationTab() {
             onClick={() => {
               mutate({
                 academyId: Number(params.id),
-                session: session as Session,
                 academyRole: tab,
               });
             }}

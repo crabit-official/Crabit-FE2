@@ -1,15 +1,8 @@
-import { revalidateTag } from 'next/cache';
-import type { Session } from 'next-auth';
-
 import type { IInvitationResult, IJoinInvitation, IJoinInvitationResponse } from '@/shared/types/invitation';
 
-export async function getInvitationCode({ academyId, session, academyRole }: { academyId: number; academyRole: 'INSTRUCTOR' | 'STUDENT'; session: Session }) {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/join/code?academyRole=${academyRole}`, {
+export async function getInvitationCode({ academyId, academyRole }: { academyId: number; academyRole: 'INSTRUCTOR' | 'STUDENT' }) {
+  const response = await fetch(`/api/academy/invitation?academyRole=${academyRole}&academyId=${academyId}`, {
     method: 'GET',
-    headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
-    },
-    next: { tags: ['invitation'] },
   });
 
   if (!response.ok) {
@@ -21,12 +14,9 @@ export async function getInvitationCode({ academyId, session, academyRole }: { a
   return data;
 }
 
-export async function postInvitationCode({ academyId, session, academyRole }: { academyId: number; academyRole: 'INSTRUCTOR' | 'STUDENT'; session: Session }) {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/join/code?academyRole=${academyRole}`, {
+export async function postInvitationCode({ academyId, academyRole }: { academyId: number; academyRole: 'INSTRUCTOR' | 'STUDENT' }) {
+  const response = await fetch(`/api/academy/invitation?academyRole=${academyRole}&academyId=${academyId}`, {
     method: 'POST',
-    headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
-    },
   });
 
   if (!response.ok) {
@@ -34,7 +24,6 @@ export async function postInvitationCode({ academyId, session, academyRole }: { 
   }
 
   const data: IInvitationResult = await response.json();
-  revalidateTag('invitation');
 
   return data;
 }
