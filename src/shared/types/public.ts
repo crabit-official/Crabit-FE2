@@ -20,6 +20,7 @@ export type TPublicChallengeDetailResult = CommonResponse<{
     challengeCategory: CHALLENGE_CATEGORY;
     challengeCoreCreatorAcademyName: string;
     challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
+    challengeSource: string;
     challengeType: CHALLENGE_TYPE;
     content: string;
     description: string;
@@ -30,9 +31,10 @@ export type TPublicChallengeDetailResult = CommonResponse<{
     title: string;
     totalDays: number;
   };
+
   releaseInstructorProfile: {
     academyMemberId: number;
-    academyNickname: string;
-    academyProfileImageUrl: string;
+    nickname: string;
+    profileImageUrl: string;
   };
 }>;

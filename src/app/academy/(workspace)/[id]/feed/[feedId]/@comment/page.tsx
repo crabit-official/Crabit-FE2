@@ -1,29 +1,43 @@
-import CommentForm from '@/app/academy/(workspace)/[id]/feed/components/CommentForm';
-import Avatar from '@/shared/components/Avatar';
-import Flex from '@/shared/components/Flex';
-import Typography from '@/shared/components/Typography';
+import { dehydrate, QueryClient } from '@tanstack/query-core';
+import { HydrationBoundary } from '@tanstack/react-query';
 
-export default function Comment() {
+import CommentForm from '@/app/academy/(workspace)/[id]/feed/components/CommentForm';
+import CommentList from '@/app/academy/(workspace)/[id]/feed/components/CommentList';
+import { getCommentList } from '@/shared/apis/comments';
+import Flex from '@/shared/components/Flex';
+import { queryKeys } from '@/shared/constants/query-keys';
+
+interface ICommentProps {
+  params: {
+    feedId: string;
+    id: string;
+  };
+  searchParams: {
+    log: string;
+  };
+}
+
+export default async function Comment({ params, searchParams }: ICommentProps) {
+  const academyId = Number(params.id);
+  const releasedChallengeId = Number(params.feedId);
+  const studentChallengeLogId = Number(searchParams.log);
+
+  const queryClient = new QueryClient();
+  await queryClient.prefetchInfiniteQuery({
+    queryKey: [queryKeys.COMMENT_LIST, { academyId }, { releasedChallengeId }],
+    queryFn: ({ pageParam }) => getCommentList({ academyId, cursor: pageParam, take: 10, studentChallengeLogId, releasedChallengeId }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => (lastPage.result.hasNext ? lastPage.result.nextCursor : undefined),
+    pages: 1,
+  });
+  const dehydratedState = dehydrate(queryClient);
+
   return (
-    <Flex column="start">
-      <CommentForm />
-      <Flex column="start" className="mt-10 w-full gap-2">
-        <Flex row="start" className="w-full items-center gap-2">
-          <Avatar />
-          <Typography size="h7" as="p" className="font-normal opacity-80">
-            <strong className="font-semibold">안예원</strong> • 2024.11.12
-          </Typography>
-        </Flex>
-        <Typography size="h7" className="ml-5 w-fit rounded-xl bg-main-deep-pink/20 px-4 py-2 font-normal">
-          댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf
-          댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf
-          댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf
-          댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf
-          댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf
-          댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf
-          댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf 댓글dsfdf
-        </Typography>
-      </Flex>
+    <Flex column="start" className="gap-7">
+      <CommentForm academyId={academyId} releasedChallengeId={releasedChallengeId} studentChallengeLogId={studentChallengeLogId} />
+      <HydrationBoundary state={dehydratedState}>
+        <CommentList academyId={academyId} releasedChallengeId={releasedChallengeId} studentChallengeLogId={studentChallengeLogId} />
+      </HydrationBoundary>
     </Flex>
   );
 }

@@ -14,4 +14,6 @@ export const queryKeys = {
   STUDENT_CHALLENGE_LIST: 'studentChallengeList',
   CHALLENGE_MARKET: 'challengeMarket',
   MY_CHALLENGE_CONTENTS: 'myChallengeContents',
+  COMMENT_LIST: 'commentList',
+  ACADEMY_PROFILE: 'academyProfile',
 } as const;

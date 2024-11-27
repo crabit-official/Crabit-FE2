@@ -45,9 +45,9 @@ export type TChallengeDetail = CommonResponse<{
   };
   teacher: {
     academyMemberId: number;
-    academyNickname: string;
     memberId: number;
-    memberName: string;
+    name: string;
+    nickname: string;
   };
 }>;
 

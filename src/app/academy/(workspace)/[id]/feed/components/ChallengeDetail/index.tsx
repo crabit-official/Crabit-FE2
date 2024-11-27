@@ -10,9 +10,9 @@ function ChallengeDetail({ studentAcademyProfile, studentChallengeLog }: TChalle
   return (
     <Flex column="center" className="w-full gap-4">
       <Flex row="start" className="items-center">
-        {studentAcademyProfile.academyProfileImageUrl ? (
+        {studentAcademyProfile.profileImageUrl ? (
           <Image
-            src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${studentAcademyProfile.academyProfileImageUrl}`}
+            src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${studentAcademyProfile.profileImageUrl}`}
             alt="profile"
             width={50}
             height={50}
@@ -23,7 +23,7 @@ function ChallengeDetail({ studentAcademyProfile, studentChallengeLog }: TChalle
         )}
         <Flex row="between" className="w-full px-2">
           <Typography size="h7" className="font-normal">
-            <strong className="font-semibold">{studentAcademyProfile.academyNickname}</strong> 님의 챌린지 • {formatDate(studentChallengeLog.createdAt)}
+            <strong className="font-semibold">{studentAcademyProfile.nickname}</strong> 님의 챌린지 • {formatDate(studentChallengeLog.createdAt)}
           </Typography>
         </Flex>
       </Flex>
@@ -34,10 +34,10 @@ function ChallengeDetail({ studentAcademyProfile, studentChallengeLog }: TChalle
           alt="file image"
           width={300}
           height={300}
-          className="h-48 w-full rounded-lg border border-solid border-gray-100 bg-gray-50 object-contain"
+          className="size-full rounded-lg border border-solid border-gray-100 bg-gray-50 object-contain"
         />
       )}
-      <Typography size="h5" className="font-medium opacity-80">
+      <Typography size="h6" className="font-medium opacity-80">
         {studentChallengeLog.content}
       </Typography>
     </Flex>

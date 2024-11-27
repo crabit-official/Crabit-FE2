@@ -7,7 +7,7 @@ export async function GET(req: NextRequest) {
   const cursor = req.nextUrl.searchParams.get('cursor') || '';
   const take = req.nextUrl.searchParams.get('take') || '';
 
-  const data = await fetchData<IAcademyResult>(`/api/v1/member?cursor=${cursor}&take=${take}`, 'GET');
+  const data = await fetchData<IAcademyResult>(`/api/v1/members?cursor=${cursor}&take=${take}`, 'GET');
 
   return NextResponse.json(data);
 }

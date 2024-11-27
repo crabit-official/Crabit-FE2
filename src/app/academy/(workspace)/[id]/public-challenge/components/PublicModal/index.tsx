@@ -79,14 +79,14 @@ function PublicModal({ challengeData, academyId, releasedChallengeId }: IModalPr
               <Flex row="between" className="gap-20 p-2">
                 <Flex>
                   <Typography size="h7" as="p" className="break-keep text-xs font-normal opacity-60 sm:text-sm">
-                    챌린지 기간 {challengeData?.academyPublicChallenge.totalDays}일 • 포인트 {challengeData?.academyPublicChallenge.totalDays}일
+                    챌린지 기간 {challengeData?.academyPublicChallenge.totalDays}일 • 포인트 {challengeData?.academyPublicChallenge.totalDays}
                     {challengeData?.academyPublicChallenge.fileUrl && ' • 파일 포함'}
                   </Typography>
                 </Flex>
                 <Flex row="start" className="items-center gap-2">
-                  {challengeData?.releaseInstructorProfile.academyProfileImageUrl ? (
+                  {challengeData?.releaseInstructorProfile.profileImageUrl ? (
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challengeData.releaseInstructorProfile.academyProfileImageUrl}`}
+                      src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challengeData.releaseInstructorProfile.profileImageUrl}`}
                       alt="profile img"
                       width={100}
                       height={100}
@@ -96,13 +96,13 @@ function PublicModal({ challengeData, academyId, releasedChallengeId }: IModalPr
                     <Avatar size="xs" />
                   )}
                   <Typography size="h7" className="break-keep text-xs font-normal opacity-80 sm:text-sm">
-                    {challengeData?.releaseInstructorProfile.academyNickname}
+                    {challengeData?.releaseInstructorProfile.nickname}
                   </Typography>
                 </Flex>
               </Flex>
             </Flex>
             <Button type="button" onClick={() => handleApply()} className="font-medium text-white">
-              첼린지 참여하기
+              챌린지 참여하기
             </Button>
           </Flex>
         </div>
