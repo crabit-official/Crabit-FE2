@@ -50,7 +50,7 @@ function ChallengeDetail({ academyId, releasedChallengeId, releasedChallenge }: 
             alt="test"
             width={500}
             height={500}
-            className="h-96 w-full rounded-2xl border border-solid border-gray-100 object-contain shadow-custom"
+            className="h-64 w-full rounded-2xl border border-solid border-gray-100 object-contain shadow-custom"
           />
         ) : (
           <Image
@@ -58,28 +58,47 @@ function ChallengeDetail({ academyId, releasedChallengeId, releasedChallenge }: 
             alt="test"
             width={500}
             height={500}
-            className="h-96 w-full rounded-2xl border border-solid border-gray-100 object-cover shadow-custom"
+            className="h-64 w-full rounded-2xl border border-solid border-gray-100 object-cover shadow-custom"
           />
         )}
-        <Toggle
-          content={
-            releasedChallenge?.fileUrl ? (
-              <Image
-                src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${releasedChallenge.fileUrl}`}
-                alt="file"
-                width={400}
-                height={400}
-                className="size-full h-96 rounded-2xl border border-solid border-gray-200 bg-gray-50/50 object-contain"
-              />
-            ) : (
-              '첨부파일이 없습니다.'
-            )
-          }
-          title="첨부파일"
-        />
+        <Flex column="start" className="gap-2 p-2">
+          <Typography size="h3">챌린지 설명</Typography>
+          <Typography size="h5" className="w-full text-start font-normal opacity-80" as="p">
+            {releasedChallenge?.content}
+          </Typography>
+          {releasedChallenge?.description && (
+            <>
+              <hr className="my-4 h-1 w-full" />
+              <Typography size="h5" as="p">
+                추가 설명
+              </Typography>
+              <Typography size="h5" className="w-full text-start font-normal opacity-80" as="p">
+                {releasedChallenge.description}
+              </Typography>
+            </>
+          )}
+        </Flex>
+        <div className="px-2">
+          <Toggle
+            content={
+              releasedChallenge?.fileUrl ? (
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${releasedChallenge.fileUrl}`}
+                  alt="file"
+                  width={400}
+                  height={400}
+                  className="size-full h-96 rounded-2xl border border-solid border-gray-200 bg-gray-50/50 object-contain"
+                />
+              ) : (
+                '첨부파일이 없습니다.'
+              )
+            }
+            title="첨부파일"
+          />
+        </div>
         <Flex className="gap-4">
           <BoxContainer variant="border" className="flex w-full flex-col items-center px-4 py-5">
-            <Typography size="h3" className="w-full text-start opacity-80">
+            <Typography size="h3" className="w-full text-start">
               배정된 포인트
             </Typography>
             <Typography size="h5" className="w-full text-end text-main-deep-pink">
@@ -87,7 +106,7 @@ function ChallengeDetail({ academyId, releasedChallengeId, releasedChallenge }: 
             </Typography>
           </BoxContainer>
           <BoxContainer variant="border" className="flex w-full flex-col items-center px-4 py-5">
-            <Typography size="h3" className="w-full text-start opacity-80">
+            <Typography size="h3" className="w-full text-start">
               총 일수
             </Typography>
             <Typography size="h5" className="w-full text-end text-main-deep-pink">
@@ -95,26 +114,6 @@ function ChallengeDetail({ academyId, releasedChallengeId, releasedChallenge }: 
             </Typography>
           </BoxContainer>
         </Flex>
-        <BoxContainer variant="border" className="px-4 py-5">
-          <Typography size="h4" className="opacity-80">
-            챌린지 설명
-          </Typography>
-          <Typography size="h5" className="w-full text-start font-normal opacity-80" as="p">
-            {releasedChallenge?.content}
-          </Typography>
-
-          {releasedChallenge?.description && (
-            <>
-              <hr className="my-4 h-1 w-full" />
-              <Typography size="h5" as="p" className="text-xs opacity-60">
-                챌린지 추가 설명
-              </Typography>
-              <Typography size="h5" className="w-full text-start font-normal opacity-80" as="p">
-                {releasedChallenge.description}
-              </Typography>
-            </>
-          )}
-        </BoxContainer>
       </Flex>
     </Flex>
   );

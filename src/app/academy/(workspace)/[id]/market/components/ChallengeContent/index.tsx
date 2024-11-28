@@ -43,33 +43,15 @@ function ChallengeContent({ challenge, teacher, academy, setRelease }: TChalleng
         ) : (
           <Image src="/images/test.jpeg" alt="default thumbnail img" width={300} height={300} className="h-96 w-full rounded-2xl object-cover" />
         )}
-        <Toggle
-          content={
-            challenge?.fileUrl ? (
-              <Image
-                src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challenge.fileUrl}`}
-                alt="file"
-                width={400}
-                height={400}
-                className="size-full h-96 rounded-2xl border border-solid border-gray-200 bg-gray-50/50 object-contain"
-              />
-            ) : (
-              '첨부파일이 없습니다.'
-            )
-          }
-          title="첨부파일"
-        />
         <BoxContainer variant="border" className="px-4 py-5">
-          <Typography size="h4" className="opacity-80">
-            챌린지 설명
-          </Typography>
+          <Typography size="h3">챌린지 설명</Typography>
           <Typography size="h5" className="w-full text-start font-normal opacity-80" as="p">
             {challenge?.content}
           </Typography>
           {challenge?.description && (
             <>
               <hr className="my-4 h-1 w-full" />
-              <Typography size="h5" as="p" className="text-xs opacity-60">
+              <Typography size="h5" as="p" className="text-sm">
                 챌린지 추가 설명
               </Typography>
               <Typography size="h5" className="w-full text-start font-normal opacity-80" as="p">
@@ -78,6 +60,24 @@ function ChallengeContent({ challenge, teacher, academy, setRelease }: TChalleng
             </>
           )}
         </BoxContainer>
+        <div className="px-2">
+          <Toggle
+            content={
+              challenge?.fileUrl ? (
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challenge.fileUrl}`}
+                  alt="file"
+                  width={400}
+                  height={400}
+                  className="size-full h-96 rounded-2xl border border-solid border-gray-200 bg-gray-50/50 object-contain"
+                />
+              ) : (
+                '첨부파일이 없습니다.'
+              )
+            }
+            title="첨부파일"
+          />
+        </div>
       </Flex>
       <Button onClick={() => setRelease(true)} className="mt-4 bg-main-deep-pink font-medium text-white" disabled={challenge?.alreadyReleasedInAcademy}>
         {challenge?.alreadyReleasedInAcademy ? '이미 학원에 배포된 챌린지입니다.' : '우리 학원에 배포'}
