@@ -13,6 +13,7 @@ function useGetProfile() {
       return data.result;
     },
     retry: false,
+    staleTime: Infinity,
   });
 }
 export default useGetProfile;
