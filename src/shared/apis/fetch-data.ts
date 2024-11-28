@@ -52,7 +52,6 @@ export async function fetchData<T>(
           });
 
           if (refreshResponse.ok) {
-            // eslint-disable-next-line @typescript-eslint/no-shadow
             const data = (await refreshResponse.json()) as IAuthResponse;
 
             cookies().set('accessToken', data.result.accessToken, {
