@@ -33,7 +33,7 @@ function MyChallengeDetail({ challengeData, studentChallengeId, academyId }: IMy
                   alt="thumbnail image"
                   width={500}
                   height={500}
-                  className="h-80 w-full rounded-2xl border border-solid border-gray-100 object-contain shadow-custom"
+                  className="h-64 w-full rounded-2xl border border-solid border-gray-100 object-contain shadow-custom"
                 />
               ) : null}
               <Flex column="center" className="gap-2">
