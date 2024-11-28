@@ -24,7 +24,14 @@ function Toggle({ title, content }: IToggleProps) {
       <ul>
         <AnimatePresence>
           {isOpen && (
-            <motion.div className="w-full pb-3" layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <motion.div
+              className="w-full pb-3"
+              layout
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
+            >
               {content}
             </motion.div>
           )}

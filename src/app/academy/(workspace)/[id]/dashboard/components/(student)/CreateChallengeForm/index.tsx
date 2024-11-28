@@ -73,15 +73,16 @@ function CreateChallengeForm({ challengeData, academyId, studentChallengeId }: I
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 rounded-xl border border-solid border-gray-100 p-5 shadow-custom">
-      <Flex column="start" className="gap-2">
+      <Flex column="start" className="gap-1">
         <Typography size="h3" className="opacity-80">
           챌린지 인증글 올리기
         </Typography>
-        <Typography size="h5" as="p" className="text-xs opacity-60">
-          tip ) 어찌고 저찌고 어찌고 저찌고...
-        </Typography>
-
-        <Flex as="figure" column="center" className="mt-4 gap-2">
+        {!challengeData.studentChallenge.hasTodayChallengeLog && (
+          <Typography size="h5" className="w-fit rounded-xl text-xs text-gray-500">
+            🧐 오늘의 인증글을 올리지 않았어요
+          </Typography>
+        )}
+        <Flex as="figure" column="center" className="mt-2 gap-2">
           <label
             htmlFor="file"
             className="flex h-52 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border border-solid border-gray-100 bg-neutral-50"
