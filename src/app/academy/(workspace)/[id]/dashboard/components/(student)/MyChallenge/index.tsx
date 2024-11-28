@@ -64,7 +64,6 @@ function MyChallenge({ academyId, studentChallengeId }: IMyChallengeProps) {
 
   return (
     <Flex column="center" className="w-full gap-4">
-      <div>디자인 수정 예정입니다...</div>
       {contents?.pages.map((page) =>
         page.result.challengeLogList.map((content) => (
           <StudentChallengeContent

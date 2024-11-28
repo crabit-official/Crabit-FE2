@@ -28,3 +28,15 @@ export interface IBlockCommentResponse {
   blocked: boolean;
   commentBlockId: number;
 }
+
+export interface IDeleteCommentResponse {
+  commentId: number;
+  commentStatus: COMMENT_STATUS;
+  deleteAt: Date;
+}
+
+export interface ICommentProps {
+  academyId: number;
+  commentId: number;
+  releasedChallengeId: number;
+}

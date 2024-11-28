@@ -1,6 +1,6 @@
 import type { CommonResponse } from '@/shared/apis/dto/response';
 import type { TError } from '@/shared/types/acadmy';
-import type { IBlockCommentResponse, TCommentResponse } from '@/shared/types/comment';
+import type { IBlockCommentResponse, ICommentProps, IDeleteCommentResponse, TCommentResponse } from '@/shared/types/comment';
 
 export async function postComment({
   academyId,
@@ -81,7 +81,7 @@ export async function reportComment({
   return (await res.json()) as CommonResponse<{ commentReportId: number }>;
 }
 
-export async function blockComment({ academyId, releasedChallengeId, commentId }: { academyId: number; commentId: number; releasedChallengeId: number }) {
+export async function blockComment({ academyId, releasedChallengeId, commentId }: ICommentProps) {
   const res = await fetch(`/api/comment/block?academyId=${academyId}&releasedChallengeId=${releasedChallengeId}&commentId=${commentId}`, {
     method: 'POST',
   });
@@ -92,4 +92,17 @@ export async function blockComment({ academyId, releasedChallengeId, commentId }
   }
 
   return (await res.json()) as CommonResponse<IBlockCommentResponse>;
+}
+
+export async function deleteComment({ academyId, releasedChallengeId, commentId }: ICommentProps) {
+  const res = await fetch(`/api/comment?academyId=${academyId}&releasedChallengeId=${releasedChallengeId}&commentId=${commentId}`, {
+    method: 'DELETE',
+  });
+
+  if (!res.ok) {
+    const errorData: TError = await res.json();
+    throw new Error(errorData.error);
+  }
+
+  return (await res.json()) as CommonResponse<IDeleteCommentResponse>;
 }

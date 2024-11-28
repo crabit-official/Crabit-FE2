@@ -8,7 +8,7 @@ import { toast } from 'sonner';
 
 import Button from '@/shared/components/Button';
 import Input from '@/shared/components/Input';
-import Modal from '@/shared/components/Modal';
+import SmallModal from '@/shared/components/SmallModal';
 import Typography from '@/shared/components/Typography';
 import useGetProfile from '@/shared/hooks/main/useGetProfile';
 import useDeleteAccount from '@/shared/hooks/profile/useDeleteAccount';
@@ -33,8 +33,8 @@ function DeleteForm() {
   };
 
   const bodyContent = (
-    <div className="flex flex-col gap-4">
-      <Typography size="h3" className="break-keep opacity-80">
+    <div className="mt-4 flex flex-col gap-4">
+      <Typography size="h6" className="break-keep font-normal opacity-60">
         탈퇴 진행을 위해 자신의 이메일을 입력해주세요
       </Typography>
       <Input register={register} errors={errors} required label="이메일" id="email" />
@@ -46,7 +46,9 @@ function DeleteForm() {
       <Button onClick={() => setOpen(true)} className="gap-2 text-white" icon={FaUserXmark}>
         탈퇴 하기
       </Button>
-      <Modal
+      <SmallModal
+        secondaryActionLabel="취소"
+        secondaryAction={() => setOpen(false)}
         onClose={() => setOpen(false)}
         onSubmit={handleSubmit(onSubmit)}
         actionLabel="탈퇴하기"

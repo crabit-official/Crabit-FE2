@@ -43,7 +43,7 @@ function StudentChallengeContent({ challengeLog, studentProfile, academyId }: IC
         <Flex
           onClick={() => router.push(`/academy/${academyId}/feed/${challengeLog.releasedChallengeId}?log=${challengeLog.studentChallengeLogId}`)}
           column="around"
-          className="w-full gap-3 rounded-lg border border-solid border-gray-100 bg-white px-4 py-5 shadow-custom transition duration-700 ease-in-out hover:shadow-hover-custom"
+          className="group w-full gap-3 rounded-lg border border-solid border-gray-100 bg-white px-4 py-5 shadow-custom transition duration-700 ease-in-out hover:shadow-hover-custom"
         >
           {challengeLog.fileUrl && (
             <Image
@@ -62,7 +62,7 @@ function StudentChallengeContent({ challengeLog, studentProfile, academyId }: IC
             </Flex>
           </Flex>
           <Flex row="end">
-            <FaRegComment className="cursor-pointer opacity-50 hover:text-main-deep-pink" />
+            <FaRegComment className="cursor-pointer opacity-50 group-hover:text-main-deep-pink" />
           </Flex>
         </Flex>
       </Flex>

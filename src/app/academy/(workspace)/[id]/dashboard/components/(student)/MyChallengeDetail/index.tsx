@@ -27,13 +27,15 @@ function MyChallengeDetail({ challengeData, studentChallengeId, academyId }: IMy
               <Typography size="h5" className="break-keep text-main-deep-pink">
                 {getChallengeType(challengeData.releasedChallenge.challengeType)} • {getChallengeCategory(challengeData.releasedChallenge.challengeCategory)}
               </Typography>
-              <Image
-                src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challengeData.releasedChallenge.thumbnailImageUrl}`}
-                alt="thumbnail image"
-                width={500}
-                height={500}
-                className="h-80 w-full rounded-2xl border border-solid border-gray-100 object-contain shadow-custom"
-              />
+              {challengeData.releasedChallenge.thumbnailImageUrl ? (
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challengeData.releasedChallenge.thumbnailImageUrl}`}
+                  alt="thumbnail image"
+                  width={500}
+                  height={500}
+                  className="h-64 w-full rounded-2xl border border-solid border-gray-100 object-contain shadow-custom"
+                />
+              ) : null}
               <Flex column="center" className="gap-2">
                 <Typography size="h7" className="break-keep font-medium text-main-deep-pink" as="p">
                   DAY {challengeData.releasedChallenge.totalDays} • Ⓟ {challengeData.releasedChallenge.points}
@@ -60,15 +62,7 @@ function MyChallengeDetail({ challengeData, studentChallengeId, academyId }: IMy
         <Flex column="start" className="gap-4 rounded-xl border border-solid border-gray-100 bg-neutral-50 p-5 shadow-custom">
           파일뷰어 자리입니당... <br /> 아직 미완성 ..
         </Flex>
-        <Flex column="center" className="relative w-full gap-4">
-          {!challengeData.studentChallenge.hasTodayChallengeLog && (
-            <Typography
-              size="h5"
-              className="absolute right-[-20px] top-10 hidden rounded-xl border border-solid border-gray-100 bg-gray-500 px-2 py-1 text-xs text-white sm:block lg:right-[-60px]"
-            >
-              🧐 오늘의 인증글을 올리지 않았어요
-            </Typography>
-          )}
+        <Flex column="center" className="w-full gap-4">
           <CreateChallengeForm academyId={academyId} studentChallengeId={studentChallengeId} challengeData={challengeData} />
         </Flex>
       </div>
