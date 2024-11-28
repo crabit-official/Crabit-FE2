@@ -60,9 +60,9 @@ function StudentDetailList({ academyId }: IStudentDetailList) {
               />
             }
             right={
-              <div>
+              <Flex rowColumn="center">
                 <StateLabel label={String(member.point)} variant="green" />
-              </div>
+              </Flex>
             }
             withArrow
           />
