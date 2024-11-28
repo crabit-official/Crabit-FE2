@@ -69,8 +69,8 @@ function ChallengeDetail({ academyId, releasedChallengeId, releasedChallenge }: 
           {releasedChallenge?.description && (
             <>
               <hr className="my-4 h-1 w-full" />
-              <Typography size="h5" as="p" className="text-xs opacity-60">
-                챌린지 추가 설명
+              <Typography size="h5" as="p">
+                추가 설명
               </Typography>
               <Typography size="h5" className="w-full text-start font-normal opacity-80" as="p">
                 {releasedChallenge.description}
