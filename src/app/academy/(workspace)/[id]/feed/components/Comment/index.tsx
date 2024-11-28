@@ -3,11 +3,10 @@
 import React, { useState } from 'react';
 import { type FieldValues, useForm } from 'react-hook-form';
 import { AiFillAlert } from 'react-icons/ai';
-import { HiOutlineDotsHorizontal } from 'react-icons/hi';
+import { GoTrash } from 'react-icons/go';
 import { MdOutlineBlock } from 'react-icons/md';
 import { PiArrowBendDownRightBold } from 'react-icons/pi';
 import Image from 'next/image';
-import { toast } from 'sonner';
 
 import CommentForm from '@/app/academy/(workspace)/[id]/feed/components/CommentForm';
 import CommentIcon from '@/app/academy/(workspace)/[id]/feed/components/CommentIcon';
@@ -15,11 +14,13 @@ import Avatar from '@/shared/components/Avatar';
 import Flex from '@/shared/components/Flex';
 import Modal from '@/shared/components/Modal';
 import Skeleton from '@/shared/components/Skeleton/Skeleton';
+import SmallModal from '@/shared/components/SmallModal';
 import Textarea from '@/shared/components/Textarea';
 import Typography from '@/shared/components/Typography';
 import { COMMENT_STATUS } from '@/shared/enums/comment';
 import useGetAcademyProfile from '@/shared/hooks/academy/useGetAcademyProfile';
 import useBlockComment from '@/shared/hooks/comments/useBlockComment';
+import useDeleteComment from '@/shared/hooks/comments/useDeleteComment';
 import useReportComment from '@/shared/hooks/comments/useReportComment';
 import type { IComment } from '@/shared/types/comment';
 import formatDate from '@/shared/utils/date';
@@ -34,8 +35,10 @@ interface ICommentProps extends IComment {
 function Comment({ comment, academyMember, academyId, releasedChallengeId, studentChallengeLogId, parent = true }: ICommentProps) {
   const [reply, setReply] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
   const { mutate } = useReportComment();
   const { mutate: blockMutate } = useBlockComment({ academyId, releasedChallengeId, studentChallengeLogId });
+  const { mutate: deleteMutate } = useDeleteComment({ academyId, releasedChallengeId, studentChallengeLogId });
   const { data: profile } = useGetAcademyProfile(academyId);
   const {
     register,
@@ -52,6 +55,11 @@ function Comment({ comment, academyMember, academyId, releasedChallengeId, stude
     blockMutate({ academyId, releasedChallengeId, commentId: comment.commentId });
   };
 
+  const handleDelete = () => {
+    deleteMutate({ academyId, releasedChallengeId, commentId: comment.commentId });
+    setDeleteModalOpen((prev) => !prev);
+  };
+
   return (
     <Flex column="start" className="w-full gap-2">
       <Modal
@@ -62,6 +70,25 @@ function Comment({ comment, academyMember, academyId, releasedChallengeId, stude
         title="신고하기"
         disabled={false}
         body={<Textarea register={register} errors={errors} required label="신고 이유" id="reason" />}
+      />
+      <SmallModal
+        onClose={() => setDeleteModalOpen(false)}
+        onSubmit={handleSubmit(handleDelete)}
+        actionLabel="삭제하기"
+        secondaryAction={() => setDeleteModalOpen(false)}
+        secondaryActionLabel="취소하기"
+        isOpen={deleteModalOpen}
+        disabled={false}
+        title={
+          <Typography size="h3" className="text-center opacity-80">
+            댓글을 삭제하기
+          </Typography>
+        }
+        body={
+          <Typography size="h6" className="text-center font-normal opacity-60">
+            댓글을 삭제할까요 ?
+          </Typography>
+        }
       />
       <Flex row="start" className="w-full items-center gap-2">
         {academyMember?.profileImageUrl ? (
@@ -99,7 +126,9 @@ function Comment({ comment, academyMember, academyId, releasedChallengeId, stude
             </>
           )}
           {parent && <CommentIcon icon={PiArrowBendDownRightBold} onClick={() => setReply((prev) => !prev)} />}
-          {profile?.result.academyMemberId === academyMember.academyMemberId && <CommentIcon icon={HiOutlineDotsHorizontal} onClick={() => toast('준비중')} />}
+          {profile?.result.academyMemberId === academyMember.academyMemberId && comment.commentStatus !== COMMENT_STATUS.DELETED && (
+            <CommentIcon icon={GoTrash} onClick={() => setDeleteModalOpen(true)} />
+          )}
         </Flex>
       </Flex>
       {reply && (
