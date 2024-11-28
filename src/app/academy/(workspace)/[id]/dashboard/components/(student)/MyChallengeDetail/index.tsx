@@ -27,13 +27,15 @@ function MyChallengeDetail({ challengeData, studentChallengeId, academyId }: IMy
               <Typography size="h5" className="break-keep text-main-deep-pink">
                 {getChallengeType(challengeData.releasedChallenge.challengeType)} • {getChallengeCategory(challengeData.releasedChallenge.challengeCategory)}
               </Typography>
-              <Image
-                src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challengeData.releasedChallenge.thumbnailImageUrl}`}
-                alt="thumbnail image"
-                width={500}
-                height={500}
-                className="h-80 w-full rounded-2xl border border-solid border-gray-100 object-contain shadow-custom"
-              />
+              {challengeData.releasedChallenge.thumbnailImageUrl ? (
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challengeData.releasedChallenge.thumbnailImageUrl}`}
+                  alt="thumbnail image"
+                  width={500}
+                  height={500}
+                  className="h-80 w-full rounded-2xl border border-solid border-gray-100 object-contain shadow-custom"
+                />
+              ) : null}
               <Flex column="center" className="gap-2">
                 <Typography size="h7" className="break-keep font-medium text-main-deep-pink" as="p">
                   DAY {challengeData.releasedChallenge.totalDays} • Ⓟ {challengeData.releasedChallenge.points}
