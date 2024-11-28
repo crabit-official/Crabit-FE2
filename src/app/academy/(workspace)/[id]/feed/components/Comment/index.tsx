@@ -12,7 +12,6 @@ import CommentForm from '@/app/academy/(workspace)/[id]/feed/components/CommentF
 import CommentIcon from '@/app/academy/(workspace)/[id]/feed/components/CommentIcon';
 import Avatar from '@/shared/components/Avatar';
 import Flex from '@/shared/components/Flex';
-import Modal from '@/shared/components/Modal';
 import Skeleton from '@/shared/components/Skeleton/Skeleton';
 import SmallModal from '@/shared/components/SmallModal';
 import Textarea from '@/shared/components/Textarea';
@@ -44,11 +43,13 @@ function Comment({ comment, academyMember, academyId, releasedChallengeId, stude
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FieldValues>();
 
   const handleReport = (data: FieldValues) => {
     mutate({ academyId, releasedChallengeId, commentId: comment.commentId, reason: data.reason });
     setOpen((prev) => !prev);
+    reset();
   };
 
   const handleBlock = () => {
@@ -62,14 +63,21 @@ function Comment({ comment, academyMember, academyId, releasedChallengeId, stude
 
   return (
     <Flex column="start" className="w-full gap-2">
-      <Modal
+      <SmallModal
         onClose={() => setOpen(false)}
         onSubmit={handleSubmit(handleReport)}
         actionLabel="신고하기"
         isOpen={open}
         title="신고하기"
         disabled={false}
-        body={<Textarea register={register} errors={errors} required label="신고 이유" id="reason" />}
+        body={
+          <Flex column="start" className="mt-2 gap-2">
+            <Typography size="h7" className="font-normal text-gray-500">
+              🧐 댓글을 신고하는 이유를 적어주세요
+            </Typography>
+            <Textarea register={register} errors={errors} required label="신고 이유" id="reason" />
+          </Flex>
+        }
       />
       <SmallModal
         onClose={() => setDeleteModalOpen(false)}
@@ -79,11 +87,7 @@ function Comment({ comment, academyMember, academyId, releasedChallengeId, stude
         secondaryActionLabel="취소하기"
         isOpen={deleteModalOpen}
         disabled={false}
-        title={
-          <Typography size="h3" className="text-center opacity-80">
-            댓글을 삭제하기
-          </Typography>
-        }
+        title="댓글을 삭제하기"
         body={
           <Typography size="h6" className="text-center font-normal opacity-60">
             댓글을 삭제할까요 ?
