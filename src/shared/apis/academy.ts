@@ -1,5 +1,21 @@
 import type { Session } from 'next-auth';
 
+import type {
+  TGetAcademyInfoRequest,
+  TGetAcademyInfoResponse,
+  TLeaveAcademyRequest,
+  TLeaveAcademyResponse,
+  TRevokeInstructorRequest,
+  TRevokeInstructorResponse,
+  TRevokeStudentResponse,
+  TUpdateAcademyInfoRequest,
+  TUpdateAcademyInfoResponse,
+  TUpdateInstructorIntroductionRequest,
+  TUpdateInstructorIntroductionResponse,
+  TUpdateStudentIntroductionRequest,
+  TUpdateStudentIntroductionResponse,
+} from '../types/manage';
+
 import type { CommonResponse } from '@/shared/apis/dto/response';
 import type { IAcademyProfile, IAcademyResult, IStatisticsResult, ITop5StudentsResult, TError } from '@/shared/types/acadmy';
 
@@ -101,4 +117,108 @@ export async function getAcademyProfile(academyId: number) {
   }
 
   return (await res.json()) as CommonResponse<IAcademyProfile>;
+}
+
+// 학원 정보 수정
+export async function updateAcademyInfo({
+  academyId,
+  address,
+  addressDetail,
+  contactNumber,
+  email,
+  mainImageUrl,
+  name,
+  studentCountRange,
+}: TUpdateAcademyInfoRequest) {
+  const res = await fetch(`/api/manage/academy?academyId=${academyId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      address,
+      addressDetail,
+      contactNumber,
+      email,
+      mainImageUrl,
+      name,
+      studentCountRange,
+    }),
+  });
+
+  return (await res.json()) as TUpdateAcademyInfoResponse;
+}
+
+// 학원 스페이스 탈퇴
+export async function leaveAcademy({ academyId }: TLeaveAcademyRequest) {
+  const res = await fetch(`/api/manage/academy?academyId=${academyId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return (await res.json()) as TLeaveAcademyResponse;
+}
+
+// 특정 학생 닉네임, 부가 설명 수정
+export async function updateStudentIntroduction({ academyId, academyMemberId, description, nickname }: TUpdateStudentIntroductionRequest) {
+  const res = await fetch(`/api/manage/student/edit?academyId=${academyId}&academyMemberId=${academyMemberId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ description, nickname }),
+  });
+
+  return (await res.json()) as TUpdateStudentIntroductionResponse;
+}
+
+// 학원생 탈퇴
+export async function revokeStudent({ academyId, academyMemberId }: TRevokeInstructorRequest) {
+  const res = await fetch(`/api/manage/student/revoke?academyId=${academyId}&academyMemberId=${academyMemberId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return (await res.json()) as TRevokeStudentResponse;
+}
+
+// 특정 강사에 대한 부가 설명 수정
+export async function updateInstructorIntroduction({ academyId, academyMemberId, description }: TUpdateInstructorIntroductionRequest) {
+  const res = await fetch(`/api/manage/instructor/edit?academyId=${academyId}&academyMemberId=${academyMemberId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ description }),
+  });
+
+  return (await res.json()) as TUpdateInstructorIntroductionResponse;
+}
+
+// 강사 강퇴 기능
+export async function revokeInstructor({ academyId, academyMemberId }: TRevokeInstructorRequest) {
+  const res = await fetch(`/api/manage/instructor/revoke?academyId=${academyId}&academyMemberId=${academyMemberId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return (await res.json()) as TRevokeInstructorResponse;
+}
+
+// 학원 정보 조회기능
+export async function getAcademyInfo({ academyId }: TGetAcademyInfoRequest) {
+  const res = await fetch(`/api/manage/academy?academyId=${academyId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return (await res.json()) as TGetAcademyInfoResponse;
 }
