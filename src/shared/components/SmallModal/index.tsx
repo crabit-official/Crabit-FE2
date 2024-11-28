@@ -14,7 +14,7 @@ interface IModalProps {
   onSubmit: () => void;
   secondaryAction?: () => void;
   secondaryActionLabel?: React.ReactNode;
-  title?: React.ReactNode;
+  title?: string;
 }
 
 function SmallModal({ isOpen = true, onClose, onSubmit, body, actionLabel, disabled, secondaryAction, secondaryActionLabel, title }: IModalProps) {
