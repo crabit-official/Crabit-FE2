@@ -31,6 +31,8 @@ module.exports = {
 
     '@typescript-eslint/no-explicit-any': 'off',
 
-    'react-hooks/rules-of-hooks': 'off', // 이 규칙을 비활성화
+    'react-hooks/rules-of-hooks': 'off', // 이 규칙을 비활성화/
+
+    '@typescript-eslint/no-shadow': 'off', // no-shadow 규칙 비활성화
   },
 };

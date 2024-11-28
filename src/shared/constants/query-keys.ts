@@ -16,4 +16,5 @@ export const queryKeys = {
   MY_CHALLENGE_CONTENTS: 'myChallengeContents',
   COMMENT_LIST: 'commentList',
   ACADEMY_PROFILE: 'academyProfile',
+  ACADEMY_INFO: 'academyInfo',
 } as const;
