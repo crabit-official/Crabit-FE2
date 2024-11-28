@@ -46,7 +46,7 @@ function SmallModal({ isOpen = true, onClose, onSubmit, body, actionLabel, disab
     >
       <div onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}>
         <Framer duration={0.5} className="relative mx-auto my-6 w-11/12 max-w-[450px] sm:w-2/3">
-          <Flex column="between" className="relative size-full gap-2 rounded-2xl bg-white py-2">
+          <Flex column="between" className="relative size-full gap-4 rounded-2xl bg-white py-2">
             <button type="button" onClick={onClose} className="absolute right-5 top-5 hover:opacity-60">
               <IoMdClose size={18} />
             </button>
@@ -54,7 +54,7 @@ function SmallModal({ isOpen = true, onClose, onSubmit, body, actionLabel, disab
               {title}
               {body}
             </Flex>
-            <div className="flex flex-col gap-2 p-6">
+            <div className="flex flex-col gap-2 px-10 py-6">
               <Flex className="w-full gap-4">
                 {secondaryAction && secondaryActionLabel && (
                   <Button variant="secondary" disabled={disabled} onClick={handleSecondaryAction}>
