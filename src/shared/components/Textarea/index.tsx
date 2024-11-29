@@ -7,7 +7,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import cn from '@/shared/utils/style';
 
 const TextAreaVariants = cva(
-  'size-full peer rounded-md p-4 pt-6 outline-none transition disabled:cursor-not-allowed disabled:opacity-70 resize-none overflow-y-auto min-h-44',
+  'size-full peer rounded-md p-4 pt-7 outline-none transition disabled:cursor-not-allowed disabled:opacity-70 resize-none overflow-y-auto min-h-44',
   {
     variants: {
       variant: {
@@ -22,7 +22,7 @@ const TextAreaVariants = cva(
   },
 );
 
-interface IInputProps extends VariantProps<typeof TextAreaVariants> {
+interface IInputProps extends VariantProps<typeof TextAreaVariants>, React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   className?: string;
   disabled?: boolean;
   errors: FieldErrors;
@@ -33,7 +33,7 @@ interface IInputProps extends VariantProps<typeof TextAreaVariants> {
   type?: string;
 }
 
-function TextArea({ id, label, disabled, required, register, errors, className, variant }: IInputProps) {
+function TextArea({ id, label, disabled, required, register, errors, className, variant, ...props }: IInputProps) {
   return (
     <div className={cn(`relative w-full`, className)}>
       <textarea
@@ -41,7 +41,8 @@ function TextArea({ id, label, disabled, required, register, errors, className, 
         disabled={disabled}
         {...register(id, { required })}
         placeholder=" "
-        className={cn(TextAreaVariants({ variant }), `${errors[id] && "focus:border-main-pink'} border-main-pink"} `)}
+        className={cn(TextAreaVariants({ variant }), `${errors[id] && "focus:border-main-pink' border-main-pink"} `)}
+        {...props}
       />
       <label
         className={`absolute left-4 top-5 z-10 origin-[0] -translate-y-3 text-h6 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 ${errors[id] ? 'text-main-pink' : 'text-zinc-400'} `}
