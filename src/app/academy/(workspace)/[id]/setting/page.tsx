@@ -1,9 +1,15 @@
 import React from 'react';
 
+import AcademyProfileForm from './components/AcademyProfileForm';
+
 import Flex from '@/shared/components/Flex';
 
 function AcademySettingBoardPage() {
-  return <Flex> 여기 바뀌는 내용 자리 임니다.</Flex>;
+  return (
+    <Flex>
+      <AcademyProfileForm />
+    </Flex>
+  );
 }
 
 export default AcademySettingBoardPage;

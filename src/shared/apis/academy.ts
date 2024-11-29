@@ -17,7 +17,19 @@ import type {
 } from '../types/manage';
 
 import type { CommonResponse } from '@/shared/apis/dto/response';
-import type { IAcademyProfile, IAcademyResult, IStatisticsResult, ITop5StudentsResult, TAcademyStudentDetailResponse, TError } from '@/shared/types/acadmy';
+import type {
+  IAcademyProfile,
+  IAcademyResult,
+  IStatisticsResult,
+  ITop5StudentsResult,
+  TAcademyInstructorDetailRequest,
+  TAcademyInstructorDetailResponse,
+  TAcademyMemberEditProfileRequest,
+  TAcademyMemberProfileRequest,
+  TAcademyMemberProfileResponse,
+  TAcademyStudentDetailResponse,
+  TError,
+} from '@/shared/types/acadmy';
 
 interface IGetAcademyList {
   cursor: number;
@@ -230,4 +242,35 @@ export async function getStudentDetail({ academyId, academyMemberId }: TRevokeIn
   });
 
   return (await res.json()) as TAcademyStudentDetailResponse;
+}
+
+// [학원 모든 멤버] 특정 학원 스페이스 유저 프로필 조회
+export async function getAcademyMemberProfile({ academyId }: TAcademyMemberProfileRequest) {
+  const res = await fetch(`/api/academy/profile?academyId=${academyId}`, {
+    method: 'GET',
+  });
+
+  return (await res.json()) as TAcademyMemberProfileResponse;
+}
+
+// [학원 모든 멤버] 특정 학원 스페이스 유저 프로필 수정
+export async function editAcademyMemberProfile({ academyId, nickname, introduction, school, profileImageUrl }: TAcademyMemberEditProfileRequest) {
+  const res = await fetch(`/api/academy/profile?academyId=${academyId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ nickname, introduction, school, profileImageUrl }),
+  });
+
+  return (await res.json()) as TAcademyMemberProfileResponse;
+}
+
+// [원장 선생님] 학원 특정 강사 상세 정보 조회
+export async function getAcademyInstructorDetail({ academyId, academyMemberId }: TAcademyInstructorDetailRequest) {
+  const res = await fetch(`/api/academy/profile/instructors?academyId=${academyId}&academyMemberId=${academyMemberId}`, {
+    method: 'GET',
+  });
+
+  return (await res.json()) as TAcademyInstructorDetailResponse;
 }
