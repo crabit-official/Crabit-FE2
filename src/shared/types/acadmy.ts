@@ -199,8 +199,10 @@ export interface IAcademyStudentListDTO {
   academyMemberId: number;
   description: string;
   introduction: string;
+  memberId: number;
   name: string;
   nickname: string;
+  point: number;
   profileImageUrl: string;
   school: string;
 }
@@ -433,4 +435,21 @@ export type TError = {
 export type TChallengeDetailResult = CommonResponse<{
   studentAcademyProfile: IStudentProfileDTO;
   studentChallengeLog: IAllChallengeLogDTO;
+}>;
+
+export interface IStudentChallengeStatistics {
+  allLogsSubmittedChallenges: number;
+  approvedChallenges: number;
+  inProgressChallenges: number;
+  incompleteChallengeChallenges: number;
+  notStartedChallenges: number;
+  pendingChallenges: number;
+  rejectedChallenges: number;
+  submissionFailedChallenges: number;
+  totalParticipateChallenges: number;
+}
+
+export type TAcademyStudentDetailResponse = CommonResponse<{
+  student: IAcademyStudentListDTO;
+  studentChallengeStatistics: IStudentChallengeStatistics;
 }>;

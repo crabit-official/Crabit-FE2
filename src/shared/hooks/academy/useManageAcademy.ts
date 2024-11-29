@@ -1,7 +1,15 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { getAcademyInfo, leaveAcademy, revokeInstructor, revokeStudent, updateAcademyInfo, updateInstructorIntroduction } from '@/shared/apis/academy';
+import {
+  getAcademyInfo,
+  leaveAcademy,
+  revokeInstructor,
+  revokeStudent,
+  updateAcademyInfo,
+  updateInstructorIntroduction,
+  updateStudentIntroduction,
+} from '@/shared/apis/academy';
 import { queryKeys } from '@/shared/constants/query-keys';
 import type { UseMutationCustomOptions } from '@/shared/types/common';
 import type { TGetAcademyInfoRequest } from '@/shared/types/manage';
@@ -33,9 +41,12 @@ function useLeaveAcademy(mutationOptions?: UseMutationCustomOptions) {
 }
 
 function useUpdateStudentIntroduction(mutationOptions?: UseMutationCustomOptions) {
+  const queryClient = useQueryClient();
+
   return useMutation({
-    mutationFn: updateAcademyInfo,
-    onSuccess: () => {
+    mutationFn: updateStudentIntroduction,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: [queryKeys.ACADEMY_STUDENT_DETAIL_LIST] });
       toast.success('학생 소개글 수정을 성공적으로 완료했습니다.');
     },
     onError: (error) => {
@@ -46,9 +57,12 @@ function useUpdateStudentIntroduction(mutationOptions?: UseMutationCustomOptions
 }
 
 function useRevokeStudent(mutationOptions?: UseMutationCustomOptions) {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: revokeStudent,
-    onSuccess: () => {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: [queryKeys.ACADEMY_STUDENT_DETAIL_LIST] });
       toast.success('학생 탈퇴를 성공적으로 완료했습니다.');
     },
     onError: (error) => {
