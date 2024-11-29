@@ -22,6 +22,6 @@ async function MemberDetailPage({ params }: IMemberDetailProps) {
 
   const memberProfile = (await res.json()) as TAcademyStudentDetailResponse;
 
-  return <MemberDetail member={memberProfile.result.student} />;
+  return <MemberDetail member={memberProfile.result.student} academyId={Number(params.id)} academyMemberId={Number(params.memberId)} />;
 }
 export default MemberDetailPage;
