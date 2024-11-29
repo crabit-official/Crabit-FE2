@@ -1,10 +1,12 @@
 import type { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 
-function FramerScale({ children }: { children: ReactNode }) {
+import cn from '@/shared/utils/style';
+
+function FramerScale({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <motion.div
-      className="size-full"
+      className={cn(className, 'size-full')}
       whileInView={{ opacity: 1, scale: 1 }}
       initial={{
         opacity: 0,

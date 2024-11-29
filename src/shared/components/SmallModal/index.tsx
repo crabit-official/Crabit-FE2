@@ -8,7 +8,7 @@ import Typography from '@/shared/components/Typography';
 interface IModalProps {
   actionLabel: React.ReactNode;
   body?: React.ReactNode;
-  disabled: boolean;
+  disabled?: boolean;
   isOpen?: boolean;
   onClose: () => void;
   onSubmit: () => void;

@@ -17,7 +17,7 @@ import type {
 } from '../types/manage';
 
 import type { CommonResponse } from '@/shared/apis/dto/response';
-import type { IAcademyProfile, IAcademyResult, IStatisticsResult, ITop5StudentsResult, TError } from '@/shared/types/acadmy';
+import type { IAcademyProfile, IAcademyResult, IStatisticsResult, ITop5StudentsResult, TAcademyStudentDetailResponse, TError } from '@/shared/types/acadmy';
 
 interface IGetAcademyList {
   cursor: number;
@@ -221,4 +221,13 @@ export async function getAcademyInfo({ academyId }: TGetAcademyInfoRequest) {
   });
 
   return (await res.json()) as TGetAcademyInfoResponse;
+}
+
+// 학생 관리 상세
+export async function getStudentDetail({ academyId, academyMemberId }: TRevokeInstructorRequest) {
+  const res = await fetch(`/api/manage/student?academyId=${academyId}&academyMemberId=${academyMemberId}`, {
+    method: 'GET',
+  });
+
+  return (await res.json()) as TAcademyStudentDetailResponse;
 }

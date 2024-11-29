@@ -3,12 +3,26 @@
 import React from 'react';
 import type { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 import { BiWon } from 'react-icons/bi';
+import { cva, type VariantProps } from 'class-variance-authority';
 
 import Button from '../Button';
 
 import cn from '@/shared/utils/style';
 
-interface IInputProps {
+const InputVariants = cva('peer w-full rounded-md p-4 pt-7 font-light outline-none transition disabled:cursor-not-allowed disabled:opacity-70', {
+  variants: {
+    variant: {
+      main: 'border-2 bg-main-white border-neutral-300 focus:border-main-black',
+      secondary: 'bg-gray-50 border border-solid border-gray-200 focus:border-gray-300',
+    },
+  },
+
+  defaultVariants: {
+    variant: 'main',
+  },
+});
+
+interface IInputProps extends VariantProps<typeof InputVariants> {
   actionButton?: React.ReactNode;
   actionButtonLoading?: boolean;
   className?: string;
@@ -38,6 +52,7 @@ function Input({
   actionButton,
   onClickButton,
   actionButtonLoading,
+  variant,
 }: IInputProps) {
   return (
     <div className={cn(`relative w-full`, className)}>
@@ -48,7 +63,7 @@ function Input({
         {...register(id, { required, valueAsNumber })}
         placeholder=" "
         type={type}
-        className={`peer w-full rounded-md border-2 bg-main-white p-4 pt-6 font-light outline-none transition disabled:cursor-not-allowed disabled:opacity-70 ${formatPrice ? 'pl-9' : 'pl-4'} ${errors[id] ? 'border-main-pink' : 'border-neutral-300'} ${errors[id] ? 'focus:border-main-pink' : 'focus:border-main-black'} `}
+        className={cn(InputVariants({ variant }), ` ${formatPrice ? 'pl-9' : 'pl-4'} ${errors[id] && "focus:border-main-pink' border-main-pink"} `)}
       />
       {actionButton && (
         <div className="transform-[50%] absolute right-[50px] top-1/2 -translate-y-1/2 translate-x-1/2">
