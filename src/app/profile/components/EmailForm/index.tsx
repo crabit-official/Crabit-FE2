@@ -2,10 +2,8 @@
 
 import React, { useState } from 'react';
 import { type FieldValues, useForm } from 'react-hook-form';
-import { FaArrowRight } from 'react-icons/fa';
+import { FaCheck } from 'react-icons/fa';
 import { LiaHourglassEndSolid } from 'react-icons/lia';
-import { RiMailSendLine } from 'react-icons/ri';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 import PasswordForm from '@/app/profile/components/PasswordForm';
 import BoxContainer from '@/shared/components/BoxContainer';
@@ -17,17 +15,11 @@ import Typography from '@/shared/components/Typography';
 import { EMAIL_VERIFIED_TYPE } from '@/shared/enums/email';
 import useSendEmail from '@/shared/hooks/email/useSendEmail';
 import useVerifyCode from '@/shared/hooks/email/useVerifyCode';
-import { emailSchema } from '@/shared/utils/schema';
+import useGetProfile from '@/shared/hooks/main/useGetProfile';
 
 function EmailForm() {
-  const [email, setEmail] = useState<string>('');
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FieldValues>({
-    resolver: zodResolver(emailSchema),
-  });
+  const [isInputVisible, setIsInputVisible] = useState(false);
+  const { data: profile, isPending: profileLoading } = useGetProfile();
 
   const {
     register: codeRegister,
@@ -36,19 +28,18 @@ function EmailForm() {
   } = useForm<FieldValues>({});
 
   const { mutate: codeMutate, isSuccess: codeSuccess } = useVerifyCode();
-  const { mutate, isPending, isSuccess } = useSendEmail();
+  const { mutate, isPending } = useSendEmail();
 
-  const sendEmail = (data: FieldValues) => {
-    setEmail(data.email as string);
+  const sendEmail = () => {
     mutate({
       emailVerificationPurpose: EMAIL_VERIFIED_TYPE.UPDATE_PASSWORD_VERIFIED,
-      email: data.email,
+      email: profile?.email as string,
     });
   };
 
   const onSubmit = (data: FieldValues) => {
     codeMutate({
-      email,
+      email: profile?.email as string,
       emailVerificationPurpose: EMAIL_VERIFIED_TYPE.UPDATE_PASSWORD_VERIFIED,
       code: data.code,
     });
@@ -60,29 +51,50 @@ function EmailForm() {
         이메일 인증
       </Typography>
       <Flex column="start" className="gap-4">
-        <form onSubmit={handleSubmit(sendEmail)} className="flex flex-col gap-4 sm:flex-row">
-          <Input register={register} id="email" errors={errors} label="이메일" disabled={isPending} />
-          <Button type="submit" className="w-full text-white sm:w-16" disabled={isPending}>
-            {isPending ? <LiaHourglassEndSolid className="animate-spin" /> : <RiMailSendLine />}
-          </Button>
-        </form>
-      </Flex>
-      <Flex column="start" className="gap-4">
         <form className="flex flex-col gap-4 sm:flex-row" onSubmit={codeSubmit(onSubmit)}>
-          <Input register={codeRegister} id="code" errors={codeErrors} label="인증코드" disabled={!isSuccess} />
-          <Button type="submit" className="w-full text-white sm:w-16" disabled={!isSuccess}>
-            <FaArrowRight />
-          </Button>
+          {isInputVisible ? (
+            <>
+              <Input register={codeRegister} id="code" errors={codeErrors} label="인증코드" />
+              {codeSuccess ? null : (
+                <Button type="submit" className="w-full text-white sm:w-16">
+                  {isPending ? <LiaHourglassEndSolid className="animate-spin" /> : <FaCheck />}
+                </Button>
+              )}
+            </>
+          ) : (
+            <Button
+              type="button"
+              className={`${isPending ? 'bg-gray-200' : 'bg-main-deep-pink'} `}
+              disabled={profileLoading || codeSuccess}
+              onClick={() => {
+                setIsInputVisible((prev) => !prev);
+                sendEmail();
+              }}
+            >
+              {isPending ? (
+                <LiaHourglassEndSolid className="animate-spin" />
+              ) : (
+                <Typography size="h4" className="text-white">
+                  이메일 인증하기
+                </Typography>
+              )}
+            </Button>
+          )}
         </form>
-        <Typography size="h5" as="p" className="pl-1 text-xs opacity-60">
-          코드 전송 후 10분 이내에 입력해주세요
-        </Typography>
+        <Flex column="start" className="gap-4">
+          <Typography size="h5" as="p" className="pl-1 text-xs opacity-60">
+            크래빗에 가입하신 이메일로, 인증번호가 전송됩니다.
+          </Typography>
+          <Typography size="h5" as="p" className="pl-1 text-xs opacity-60">
+            코드 전송 후 10분 이내에 입력해주세요
+          </Typography>
+        </Flex>
       </Flex>
 
       {codeSuccess && (
         <Framer>
           <div className="mb-5 h-px w-full bg-gray-200" />
-          <PasswordForm email={email} />
+          <PasswordForm email={profile?.email as string} />
         </Framer>
       )}
     </BoxContainer>

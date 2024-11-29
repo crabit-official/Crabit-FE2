@@ -1,6 +1,6 @@
 import React from 'react';
 import { type FieldValues, useForm } from 'react-hook-form';
-import { FiSave } from 'react-icons/fi';
+import { FaCheck } from 'react-icons/fa';
 import { LiaHourglassEndSolid } from 'react-icons/lia';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -40,7 +40,7 @@ function PasswordForm({ email }: IEmailProps) {
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 sm:flex-row">
         <Input type="password" register={register} id="password" errors={errors} label="새 비밀번호" disabled={isPending} />
         <Button type="submit" className="w-full text-white sm:w-16" disabled={isPending}>
-          {isPending ? <LiaHourglassEndSolid className="animate-spin" /> : <FiSave />}
+          {isPending ? <LiaHourglassEndSolid className="animate-spin" /> : <FaCheck />}
         </Button>
       </form>
       {errors.password && (
