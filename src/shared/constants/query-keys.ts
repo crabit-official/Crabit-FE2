@@ -17,4 +17,5 @@ export const queryKeys = {
   COMMENT_LIST: 'commentList',
   ACADEMY_PROFILE: 'academyProfile',
   ACADEMY_INFO: 'academyInfo',
+  STUDENT_DETAIL: 'studentDetail',
 } as const;

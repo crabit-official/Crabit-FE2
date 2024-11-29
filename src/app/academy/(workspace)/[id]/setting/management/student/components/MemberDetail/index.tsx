@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import { type FieldValues, useForm } from 'react-hook-form';
+import { FaRegPenToSquare } from 'react-icons/fa6';
+import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -11,36 +13,49 @@ import BoxContainer from '@/shared/components/BoxContainer';
 import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
 import FramerScale from '@/shared/components/FramerScale';
+import Input from '@/shared/components/Input';
 import SmallModal from '@/shared/components/SmallModal';
 import Textarea from '@/shared/components/Textarea';
 import Typography from '@/shared/components/Typography';
+import { queryKeys } from '@/shared/constants/query-keys';
+import useGetStudentDetail from '@/shared/hooks/academy/useGetStudentDetail';
 import useManageAcademy from '@/shared/hooks/academy/useManageAcademy';
-import type { IAcademyStudentListDTO } from '@/shared/types/acadmy';
 import { formatNumberWithCommas } from '@/shared/utils/number';
 
 interface IMemberDetailProps {
   academyId: number;
   academyMemberId: number;
-  member: IAcademyStudentListDTO;
 }
 
-function MemberDetail({ member, academyId, academyMemberId }: IMemberDetailProps) {
+function MemberDetail({ academyId, academyMemberId }: IMemberDetailProps) {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const [edit, setEdit] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const { updateStudentIntroduction, revokeStudent } = useManageAcademy();
+  const { data: member } = useGetStudentDetail({ academyId, academyMemberId });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      description: member.description || '',
+      description: member?.result.student.description || '',
+      nickname: member?.result.student.nickname || '',
     },
   });
 
   const handleUpdate = (data: FieldValues) => {
-    updateStudentIntroduction.mutate({ academyId, academyMemberId, description: data.description, nickname: member.nickname });
+    updateStudentIntroduction.mutate(
+      { academyId, academyMemberId, description: data.description, nickname: data.nickname },
+      {
+        onSuccess: () => {
+          void queryClient.invalidateQueries({ queryKey: [queryKeys.STUDENT_DETAIL, { academyId, academyMemberId }] });
+        },
+      },
+    );
+
     setEdit(false);
   };
 
@@ -49,6 +64,7 @@ function MemberDetail({ member, academyId, academyMemberId }: IMemberDetailProps
       academyId,
       academyMemberId,
     });
+
     setOpen(false);
     router.replace(`/academy/${academyId}/setting/management/student`);
   };
@@ -76,9 +92,9 @@ function MemberDetail({ member, academyId, academyMemberId }: IMemberDetailProps
       <BoxContainer className="w-full items-center gap-10 py-10 lg:ml-10">
         <Flex rowColumn="center" className="gap-6">
           <Flex className="relative">
-            {member.profileImageUrl ? (
+            {member?.result.student.profileImageUrl ? (
               <Image
-                src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${member.profileImageUrl}`}
+                src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${member?.result.student.profileImageUrl}`}
                 alt="profile"
                 width={80}
                 height={80}
@@ -87,20 +103,23 @@ function MemberDetail({ member, academyId, academyMemberId }: IMemberDetailProps
             ) : (
               <Avatar size="lg" />
             )}
-            {!!member.point && <StateLabel label={`Ⓟ ${formatNumberWithCommas(member.point)}`} variant="yellow" className="absolute bottom-[-10px]" />}
+            {!!member?.result.student.point && (
+              <StateLabel label={`Ⓟ ${formatNumberWithCommas(member?.result.student.point)}`} variant="yellow" className="absolute bottom-[-10px]" />
+            )}
           </Flex>
           <Flex rowColumn="center" className="gap-1">
-            <Typography size="h5">{member.name}</Typography>
+            <Typography size="h5">{member?.result.student.name}</Typography>
             <Typography size="h7" className="font-normal opacity-80">
-              {member.nickname} • {member.school}
+              {member?.result.student.nickname} • {member?.result.student.school}
             </Typography>
             <Typography size="h7" className="font-normal opacity-80">
-              {member.introduction ?? '한줄 소개가 없습니다.'}
+              {member?.result.student.introduction ?? '한줄 소개가 없습니다.'}
             </Typography>
           </Flex>
         </Flex>
         {edit ? (
           <form onSubmit={handleSubmit(handleUpdate)} className="flex size-full flex-col justify-between gap-2">
+            <Input variant="secondary" errors={errors} id="nickname" label="닉네임 변경" register={register} />
             <Textarea errors={errors} id="description" label="추가 설명" register={register} variant="secondary" />
             <Flex className="justify-end">
               <Button type="submit" className="w-fit px-2 py-1 text-sm">
@@ -113,19 +132,19 @@ function MemberDetail({ member, academyId, academyMemberId }: IMemberDetailProps
             <Flex column="start" className="gap-1">
               <Typography size="h5">추가 설명</Typography>
               <Typography size="h7" className="font-normal opacity-80">
-                {member.description ?? '학생에 대한 설명이 없습니다.'}
+                {member?.result.student.description ?? '학생에 대한 설명이 없습니다.'}
               </Typography>
             </Flex>
 
             <Flex className="justify-end">
-              <Button type="button" className="w-fit px-2 py-1 text-sm" onClick={() => setEdit((prev) => !prev)}>
-                수정하기
-              </Button>
+              <FaRegPenToSquare className="cursor-pointer text-gray-600 hover:text-main-deep-pink" onClick={() => setEdit((prev) => !prev)} />
             </Flex>
           </BoxContainer>
         )}
       </BoxContainer>
-      <BoxContainer className="flex w-full flex-row items-center justify-center gap-10 py-10 lg:ml-10">sfnsdjfnsdjkfnsknf</BoxContainer>
+      <BoxContainer className="flex w-full flex-row items-center justify-center gap-10 py-10 lg:ml-10">
+        학생 통계자료를 나타낼 것입니다. (11/30 커밍순...)
+      </BoxContainer>
       <button type="button" className="text-sm opacity-60 hover:opacity-80" onClick={() => setOpen((prev) => !prev)}>
         학생 강퇴
       </button>
