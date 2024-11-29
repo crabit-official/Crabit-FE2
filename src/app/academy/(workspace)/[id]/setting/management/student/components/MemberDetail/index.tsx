@@ -14,6 +14,7 @@ import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
 import FramerScale from '@/shared/components/FramerScale';
 import Input from '@/shared/components/Input';
+import Skeleton from '@/shared/components/Skeleton/Skeleton';
 import SmallModal from '@/shared/components/SmallModal';
 import Textarea from '@/shared/components/Textarea';
 import Typography from '@/shared/components/Typography';
@@ -33,7 +34,7 @@ function MemberDetail({ academyId, academyMemberId }: IMemberDetailProps) {
   const [edit, setEdit] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const { updateStudentIntroduction, revokeStudent } = useManageAcademy();
-  const { data: member } = useGetStudentDetail({ academyId, academyMemberId });
+  const { data: member, isFetching } = useGetStudentDetail({ academyId, academyMemberId });
 
   const {
     register,
@@ -108,6 +109,7 @@ function MemberDetail({ academyId, academyMemberId }: IMemberDetailProps) {
             )}
           </Flex>
           <Flex rowColumn="center" className="gap-1">
+            {isFetching && <Skeleton height={20} width={50} className="rounded-xl" />}
             <Typography size="h5">{member?.result.student.name}</Typography>
             <Typography size="h7" className="font-normal opacity-80">
               {member?.result.student.nickname} • {member?.result.student.school}
@@ -128,11 +130,11 @@ function MemberDetail({ academyId, academyMemberId }: IMemberDetailProps) {
             </Flex>
           </form>
         ) : (
-          <BoxContainer variant="border" className="size-full justify-between">
+          <BoxContainer variant="border" className="size-full min-h-24 justify-between">
             <Flex column="start" className="gap-1">
               <Typography size="h5">추가 설명</Typography>
               <Typography size="h7" className="font-normal opacity-80">
-                {member?.result.student.description ?? '학생에 대한 설명이 없습니다.'}
+                {member?.result.student.description ? member?.result.student.description : '학생에 대한 설명이 없습니다.'}
               </Typography>
             </Flex>
 
