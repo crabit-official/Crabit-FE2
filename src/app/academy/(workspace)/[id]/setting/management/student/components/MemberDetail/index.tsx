@@ -147,9 +147,14 @@ function MemberDetail({ academyId, academyMemberId }: IMemberDetailProps) {
       <BoxContainer className="flex w-full flex-row items-center justify-center gap-10 py-10 lg:ml-10">
         학생 통계자료를 나타낼 것입니다. (11/30 커밍순...)
       </BoxContainer>
-      <button type="button" className="text-sm opacity-60 hover:opacity-80" onClick={() => setOpen((prev) => !prev)}>
-        학생 강퇴
-      </button>
+
+      <div className="flex w-full justify-end">
+        <div className="w-20">
+          <Button type="button" className="text-sm opacity-60 hover:opacity-80" onClick={() => setOpen((prev) => !prev)}>
+            학생 강퇴
+          </Button>
+        </div>
+      </div>
     </FramerScale>
   );
 }
