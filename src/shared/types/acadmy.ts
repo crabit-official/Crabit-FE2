@@ -463,6 +463,7 @@ export type TAcademyMemberProfileResponse = CommonResponse<{
   academyId: number;
   academyMemberId: number;
   academyRole: string;
+  introduction: string;
   memberId: number;
   nickname: string;
   point: number;

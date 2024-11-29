@@ -14,11 +14,14 @@ import { useImage } from '@/features/academy/(workspace)/hooks/use-image';
 import BoxContainer from '@/shared/components/BoxContainer';
 import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
+import Skeleton from '@/shared/components/Skeleton/Skeleton';
 import Spacing from '@/shared/components/Spacing/spacing';
 import Typography from '@/shared/components/Typography';
 import { queryKeys } from '@/shared/constants/query-keys';
+import type { ACADEMY_ROLE } from '@/shared/enums/academy';
 import useManageAcademy from '@/shared/hooks/academy/useManageAcademy';
 import useGetPresignedUrl from '@/shared/hooks/images/use-get-presigned-url';
+import { getRoleName } from '@/shared/utils/academyRole';
 
 function AcademyProfileForm() {
   let profileContent;
@@ -29,7 +32,7 @@ function AcademyProfileForm() {
 
   const { useGetAcademyMemberProfile, editAcademyMemberProfile } = useManageAcademy();
 
-  const { data: profile, isPending } = useGetAcademyMemberProfile({ academyId: Number(params.id) });
+  const { data: profile, isPending: profileLoading } = useGetAcademyMemberProfile({ academyId: Number(params.id) });
   const { data: image, isSuccess } = useGetPresignedUrl(file?.name as string);
 
   const { register, handleSubmit } = useForm<FieldValues>({
@@ -42,8 +45,12 @@ function AcademyProfileForm() {
     },
   });
 
+  console.log(profile);
+
   const onSubmit = async (data: FieldValues) => {
     const editNickname = data.nickname ?? profile?.result.nickname;
+    const editIntroduction = data.introduction ?? profile?.result.introduction;
+    const editSchool = data.school ?? profile?.result.school;
 
     if (image) {
       if (isSuccess) {
@@ -60,9 +67,9 @@ function AcademyProfileForm() {
               {
                 profileImageUrl: image.result.keyName,
                 academyId: Number(params.id),
-                introduction: data.introduction,
+                introduction: editIntroduction,
                 nickname: editNickname,
-                school: data.school,
+                school: editSchool,
               },
               {
                 onSuccess: () => {
@@ -80,9 +87,9 @@ function AcademyProfileForm() {
         {
           profileImageUrl: profile?.result.profileImageUrl ?? null,
           academyId: Number(params.id),
-          introduction: data.introduction,
+          introduction: editIntroduction,
           nickname: editNickname,
-          school: data.school,
+          school: editSchool,
         },
         {
           onSuccess: () => {
@@ -137,6 +144,26 @@ function AcademyProfileForm() {
     );
   }
 
+  if (profileLoading) {
+    return (
+      <Flex column="start" className="w-full">
+        <Flex column="start" className="w-full">
+          <Skeleton width={80} height={20} className="rounded-sm" />
+          <Spacing direction="vertical" size={5} />
+          <Skeleton width={60} height={20} className="rounded-sm" />
+        </Flex>
+        <Spacing direction="vertical" size={20} />
+        <Flex row="end">
+          <Skeleton width={60} height={40} className="rounded-md" />
+        </Flex>
+        <Spacing direction="vertical" size={20} />
+        <Flex>
+          <Skeleton height={330} width={500} className="w-full rounded-md" />
+        </Flex>
+      </Flex>
+    );
+  }
+
   return (
     <Flex column="start" className="w-full gap-5">
       <Flex column="start" className="w-full gap-1">
@@ -156,7 +183,7 @@ function AcademyProfileForm() {
         )}
       </Flex>
       <section className="flex flex-col gap-4">
-        <BoxContainer variant="border" className="flex w-full flex-col gap-5 sm:flex-row">
+        <BoxContainer variant="border" className="flex w-[500px] flex-col gap-5 sm:flex-row">
           <Flex as="figure" row="start">
             {profileContent}
           </Flex>
@@ -168,7 +195,7 @@ function AcademyProfileForm() {
                   역할
                 </Typography>
                 <Typography size="h5" as="p" className="w-full p-2 text-sm font-normal opacity-80 lg:text-base">
-                  {profile?.result.academyRole}
+                  {getRoleName(profile?.result.academyRole as ACADEMY_ROLE)}
                 </Typography>
               </Flex>
               <Flex className="items-center gap-2">
@@ -178,7 +205,7 @@ function AcademyProfileForm() {
                 {edit ? (
                   <input
                     defaultValue={profile?.result.nickname}
-                    disabled={isPending}
+                    disabled={profileLoading}
                     id="nickname"
                     {...register('nickname', { required: true })}
                     placeholder="이름을 입력해주세요."
@@ -187,6 +214,25 @@ function AcademyProfileForm() {
                 ) : (
                   <Typography size="h5" as="p" className="w-full p-2 text-sm font-normal opacity-80 lg:text-base">
                     {profile?.result.nickname}
+                  </Typography>
+                )}
+              </Flex>
+              <Flex className="items-center gap-2">
+                <Typography size="h5" as="p" className="w-20 text-center text-sm font-semibold opacity-80 lg:text-base">
+                  소개
+                </Typography>
+                {edit ? (
+                  <input
+                    defaultValue={profile?.result.introduction}
+                    disabled={profileLoading}
+                    id="nickname"
+                    {...register('introduction', { required: true })}
+                    placeholder="소개를 입력해주세요."
+                    className="w-full border-b border-solid border-b-gray-200 bg-transparent p-2 text-sm focus:border-b-main-deep-pink focus:outline-none lg:text-base"
+                  />
+                ) : (
+                  <Typography size="h5" as="p" className="w-full p-2 text-sm font-normal opacity-80 lg:text-base">
+                    {profile?.result.introduction}
                   </Typography>
                 )}
               </Flex>
