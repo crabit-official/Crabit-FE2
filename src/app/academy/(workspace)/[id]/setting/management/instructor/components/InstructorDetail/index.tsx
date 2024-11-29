@@ -1,12 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import type { FieldValues } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { FaRegPenToSquare } from 'react-icons/fa6';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { z } from 'zod';
 
 import Avatar from '@/shared/components/Avatar';
 import BoxContainer from '@/shared/components/BoxContainer';
@@ -19,6 +20,12 @@ import TextArea from '@/shared/components/Textarea';
 import Typography from '@/shared/components/Typography';
 import { queryKeys } from '@/shared/constants/query-keys';
 import useManageAcademy from '@/shared/hooks/academy/useManageAcademy';
+
+const formSchema = z.object({
+  description: z.string(),
+});
+
+type FormValues = z.infer<typeof formSchema>;
 
 interface IInstructorDetailProps {
   academyId: number;
@@ -37,23 +44,31 @@ function InstructorDetail({ academyId, academyMemberId }: IInstructorDetailProps
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FieldValues>({
-    defaultValues: {
-      nickname: profile?.result.teacher.nickname || '',
-    },
+  } = useForm<FormValues>({
+    defaultValues: profile
+      ? {
+          description: profile?.result.teacher.description || '',
+        }
+      : undefined,
+    resolver: zodResolver(formSchema),
   });
 
-  const handleUpdate = (data: FieldValues) => {
-    updateInstructorIntroduction.mutate(
-      { academyId, academyMemberId, description: data.description },
-      {
-        onSuccess: () => {
-          void queryClient.invalidateQueries({ queryKey: [queryKeys.ACADEMY_INSTRUCTOR_PROFILE, academyMemberId] });
+  const onSubmit = (data: FormValues) => {
+    if (edit) {
+      updateInstructorIntroduction.mutate(
+        {
+          academyId,
+          academyMemberId,
+          description: data.description,
         },
-      },
-    );
-
-    setEdit(false);
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: [queryKeys.ACADEMY_INSTRUCTOR_PROFILE, academyMemberId] });
+            setEdit(false);
+          },
+        },
+      );
+    }
   };
 
   const handleRevoke = () => {
@@ -84,8 +99,6 @@ function InstructorDetail({ academyId, academyMemberId }: IInstructorDetailProps
     );
   }
 
-  console.log(profile?.result.teacher);
-
   return (
     <FramerScale className="ml-10 grid place-items-center gap-2">
       <BoxContainer className="w-full items-center gap-10 py-10 lg:ml-10">
@@ -115,8 +128,15 @@ function InstructorDetail({ academyId, academyMemberId }: IInstructorDetailProps
           </Flex>
         </Flex>
         {edit ? (
-          <form onSubmit={handleSubmit(handleUpdate)} className="flex size-full flex-col justify-between gap-2">
-            <TextArea errors={errors} id="description" label="추가 설명" register={register} variant="secondary" />
+          <form onSubmit={handleSubmit(onSubmit)} className="flex size-full flex-col justify-between gap-2">
+            <TextArea
+              defaultValue={edit ? profile?.result.teacher.description : undefined}
+              errors={errors}
+              id="description"
+              label="추가 설명"
+              register={register}
+              variant="secondary"
+            />
             <Flex className="justify-end">
               <Button type="submit" className="w-fit px-2 py-1 text-sm">
                 수정완료
