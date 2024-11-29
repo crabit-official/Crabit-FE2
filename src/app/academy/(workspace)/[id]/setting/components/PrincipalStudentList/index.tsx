@@ -2,6 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { useRouter } from 'next/navigation';
 
 import Flex from '@/shared/components/Flex';
 import ProfileCard from '@/shared/components/ProfileCard';
@@ -13,6 +14,7 @@ interface IStudentListProps {
 }
 
 function PrincipalStudentList({ academyId }: IStudentListProps) {
+  const router = useRouter();
   const { data: studentList, isFetching, hasNextPage, fetchNextPage, isError } = useGetInfiniteAcademyMemberDetailList(9, academyId);
 
   const { ref, inView } = useInView({
@@ -38,7 +40,15 @@ function PrincipalStudentList({ academyId }: IStudentListProps) {
 
   return (
     <div className="grid w-full grid-cols-1 gap-5 pl-0 md:pl-10 lg:grid-cols-2 xl:grid-cols-3">
-      {studentList?.pages.map((page) => page.result.studentList.map((student) => <ProfileCard {...student} key={student.academyMemberId} />))}
+      {studentList?.pages.map((page) =>
+        page.result.studentList.map((student) => (
+          <ProfileCard
+            {...student}
+            key={student.academyMemberId}
+            onClick={() => router.push(`/academy/${academyId}/setting/management/student/${student.academyMemberId}`)}
+          />
+        )),
+      )}
       {isFetching
         ? Array(9)
             .fill('')

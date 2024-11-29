@@ -2,18 +2,20 @@
 
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { useRouter } from 'next/navigation';
 
 import Flex from '@/shared/components/Flex';
 import ProfileCard from '@/shared/components/ProfileCard';
 import Typography from '@/shared/components/Typography';
-import useGetInfiniteAcademyMemberDetailList from '@/shared/hooks/academy/useGetInfiniteAcademyInstructorList';
+import useGetInfiniteAcademyInstructorList from '@/shared/hooks/academy/useGetInfiniteAcademyInstructorList';
 
 interface IInstructorListProps {
   academyId: number;
 }
 
 function InstructorList({ academyId }: IInstructorListProps) {
-  const { data: instructorData, hasNextPage, isFetching, fetchNextPage, isError } = useGetInfiniteAcademyMemberDetailList(6, academyId);
+  const router = useRouter();
+  const { data: instructorData, hasNextPage, isFetching, fetchNextPage, isError } = useGetInfiniteAcademyInstructorList(6, academyId);
 
   const { ref, inView } = useInView({
     threshold: 0,
@@ -38,7 +40,15 @@ function InstructorList({ academyId }: IInstructorListProps) {
 
   return (
     <div className="grid w-full grid-cols-1 gap-5 pl-0 md:pl-10 lg:grid-cols-2 xl:grid-cols-3">
-      {instructorData?.pages.map((page) => page.result.teacherList.map((teacher) => <ProfileCard {...teacher} key={teacher.academyMemberId} />))}
+      {instructorData?.pages.map((page) =>
+        page.result.teacherList.map((teacher) => (
+          <ProfileCard
+            {...teacher}
+            key={teacher.academyMemberId}
+            onClick={() => router.push(`/academy/${academyId}/setting/management/instructor/${teacher.academyMemberId}`)}
+          />
+        )),
+      )}
       {isFetching
         ? Array(6)
             .fill('')
