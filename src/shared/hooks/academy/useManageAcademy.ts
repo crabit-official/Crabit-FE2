@@ -41,9 +41,12 @@ function useLeaveAcademy(mutationOptions?: UseMutationCustomOptions) {
 }
 
 function useUpdateStudentIntroduction(mutationOptions?: UseMutationCustomOptions) {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: updateStudentIntroduction,
-    onSuccess: () => {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: [queryKeys.ACADEMY_STUDENT_DETAIL_LIST] });
       toast.success('학생 소개글 수정을 성공적으로 완료했습니다.');
     },
     onError: (error) => {
@@ -70,11 +73,9 @@ function useRevokeStudent(mutationOptions?: UseMutationCustomOptions) {
 }
 
 function useUpdateInstructorIntroduction(mutationOptions?: UseMutationCustomOptions) {
-  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updateInstructorIntroduction,
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: [queryKeys.ACADEMY_STUDENT_DETAIL_LIST] });
+    onSuccess: () => {
       toast.success('선생님 소개글 수정을 성공적으로 완료했습니다.');
     },
     onError: (error) => {

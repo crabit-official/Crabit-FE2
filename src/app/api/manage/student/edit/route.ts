@@ -10,7 +10,7 @@ export async function PUT(req: NextRequest) {
   const body = (await req.json()) as TUpdateStudentIntroductionRequest;
 
   try {
-    const res = await fetchData<TUpdateStudentIntroductionResponse>(`/api/v1/academies/${academyId}/instructors/${academyMemberId}`, 'PUT', {
+    const res = await fetchData<TUpdateStudentIntroductionResponse>(`/api/v1/academies/${academyId}/students/${academyMemberId}`, 'PUT', {
       nickname: body.nickname,
       description: body.description,
     });
