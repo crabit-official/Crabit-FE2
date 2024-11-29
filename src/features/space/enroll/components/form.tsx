@@ -4,6 +4,8 @@ import type { ChangeEvent } from 'react';
 import { useEffect, useState } from 'react';
 import type { FieldValues, SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
+import { LiaHourglassEndSolid } from 'react-icons/lia';
+import { RiMailSendLine } from 'react-icons/ri';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
@@ -151,10 +153,21 @@ function Form() {
           register={register}
           errors={errors}
           required
-          actionButton={showTimerButton ? (isTimerActive ? `${Math.floor(timer / 60)}:${(timer % 60).toString().padStart(2, '0')}` : '이메일 인증') : null}
+          actionButton={
+            postSendVerifyCodeLoading ? (
+              <LiaHourglassEndSolid className="animate-spin" />
+            ) : showTimerButton ? (
+              isTimerActive ? (
+                `${Math.floor(timer / 60)}:${(timer % 60).toString().padStart(2, '0')}`
+              ) : (
+                '이메일 인증'
+              )
+            ) : null
+          }
           actionButtonLoading={postSendVerifyCodeLoading}
           onClickButton={handleSendVerifyCode}
         />
+
         {isShownVerifyInput && (
           <>
             <Spacing direction="vertical" size={24} />
@@ -162,7 +175,7 @@ function Form() {
               id="verifyCode"
               label="인증번호"
               disabled={isLoading}
-              actionButton="인증하기"
+              actionButton={isLoading ? <LiaHourglassEndSolid className="animate-spin" /> : <RiMailSendLine />}
               actionButtonLoading={postCheckVerifyCodeLoading}
               onClickButton={handleVerifyCode}
               value={verifyCode}
