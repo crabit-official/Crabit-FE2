@@ -1,11 +1,25 @@
-import ProfileCard from '@/shared/components/ProfileCard';
+import { dehydrate, QueryClient } from '@tanstack/query-core';
+import { HydrationBoundary } from '@tanstack/react-query';
 
-function InstructorManagementPage() {
+import InstructorList from '@/app/academy/(workspace)/[id]/setting/components/InstructorList';
+import { getAcademyInstructorList } from '@/shared/apis/challenge';
+import { queryKeys } from '@/shared/constants/query-keys';
+
+async function InstructorManagementPage({ params }: { params: { id: string } }) {
+  const queryClient = new QueryClient();
+  await queryClient.prefetchInfiniteQuery({
+    queryKey: [queryKeys.ACADEMY_LIST],
+    queryFn: () => getAcademyInstructorList({ cursor: 0, take: 6, academyId: Number(params.id) }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => (lastPage.result.hasNext ? allPages.length + 1 : undefined),
+    pages: 1,
+  });
+  const dehydratedState = dehydrate(queryClient);
+
   return (
-    <div className="grid w-full grid-cols-1 gap-5 pl-0 md:pl-10 lg:grid-cols-2 xl:grid-cols-3">
-      <ProfileCard name="김현지" nickname="루피" description="고구마 아이스크림은 맛없어" />
-      <ProfileCard name="김용민" nickname="무지개" />
-    </div>
+    <HydrationBoundary state={dehydratedState}>
+      <InstructorList academyId={Number(params.id)} />
+    </HydrationBoundary>
   );
 }
 
