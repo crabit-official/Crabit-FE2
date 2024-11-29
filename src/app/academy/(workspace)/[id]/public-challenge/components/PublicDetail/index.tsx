@@ -10,6 +10,7 @@ import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import useApplyChallenge from '@/shared/hooks/market/useApplyChallenge';
 import type { TPublicChallengeDetailResult } from '@/shared/types/public';
+import { formatNumberWithCommas } from '@/shared/utils/number';
 
 interface IPublicDetailProps {
   academyId: number;
@@ -74,7 +75,7 @@ function PublicDetail({ challengeData, academyId, releasedChallengeId }: IPublic
         />
 
         <Typography size="h7" as="p" className="break-keep font-normal opacity-60">
-          챌린지 기간 {challengeData?.academyPublicChallenge.totalDays}일 • 포인트 {challengeData?.academyPublicChallenge.totalDays}
+          챌린지 기간 {challengeData?.academyPublicChallenge.totalDays}일 • 포인트 {formatNumberWithCommas(challengeData?.academyPublicChallenge.points)}
         </Typography>
         <Typography size="h5" as="p" className="break-keep text-base opacity-80">
           {challengeData?.academyPublicChallenge.content}
