@@ -9,6 +9,7 @@ import { getChallengeCategory, getChallengeType } from '@/features/academy/(work
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import type { TMyChallengeProgressResult } from '@/shared/types/acadmy';
+import { formatNumberWithCommas } from '@/shared/utils/number';
 
 interface IMyChallengeDetailProps {
   academyId: number;
@@ -38,7 +39,7 @@ function MyChallengeDetail({ challengeData, studentChallengeId, academyId }: IMy
               ) : null}
               <Flex column="center" className="gap-2">
                 <Typography size="h7" className="break-keep font-medium text-main-deep-pink" as="p">
-                  DAY {challengeData.releasedChallenge.totalDays} • Ⓟ {challengeData.releasedChallenge.points}
+                  DAY {challengeData.releasedChallenge.totalDays} • Ⓟ {formatNumberWithCommas(challengeData.releasedChallenge.points)}
                 </Typography>
                 <Typography size="h6" className="break-keep font-normal opacity-80" as="p">
                   {challengeData.releasedChallenge.content}
