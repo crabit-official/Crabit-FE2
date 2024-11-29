@@ -13,7 +13,7 @@ interface IStudentListProps {
   academyId: number;
 }
 
-function PrincipalStudentList({ academyId }: IStudentListProps) {
+function StudentList({ academyId }: IStudentListProps) {
   const router = useRouter();
   const { data: studentList, isFetching, hasNextPage, fetchNextPage, isError } = useGetInfiniteAcademyMemberDetailList(9, academyId);
 
@@ -59,4 +59,4 @@ function PrincipalStudentList({ academyId }: IStudentListProps) {
   );
 }
 
-export default PrincipalStudentList;
+export default StudentList;

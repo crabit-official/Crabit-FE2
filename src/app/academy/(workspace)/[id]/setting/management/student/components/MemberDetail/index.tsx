@@ -42,7 +42,7 @@ function MemberDetail({ member }: IMemberDetailProps) {
             ) : (
               <Avatar size="lg" />
             )}
-            <StateLabel label={`Ⓟ ${formatNumberWithCommas(member.point)}`} variant="yellow" className="absolute bottom-[-10px]" />
+            {member.point && <StateLabel label={`Ⓟ ${formatNumberWithCommas(member.point)}`} variant="yellow" className="absolute bottom-[-10px]" />}
           </Flex>
           <Flex rowColumn="center" className="gap-1">
             <Typography size="h5">{member.name}</Typography>
