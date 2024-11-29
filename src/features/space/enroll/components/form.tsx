@@ -14,9 +14,19 @@ import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
 import Input from '@/shared/components/Input';
 import NonRegisterInput from '@/shared/components/NonRegisterInput';
+import SelectDropdown from '@/shared/components/SelectDropdown';
 import Spacing from '@/shared/components/Spacing/spacing';
 import usePostCheckVerifyCode from '@/shared/hooks/auth/queries/usePostCheckVerifyCode';
 import usePostSendVerifyCode from '@/shared/hooks/auth/queries/usePostSendVerifyCode';
+
+const STUDENT_COUNT_RANGE = [
+  { value: 'GROUP_ONE', label: '1~10명' },
+  { value: 'GROUP_TWO', label: '11~30명' },
+  { value: 'GROUP_THREE', label: '30~50명' },
+  { value: 'GROUP_FOUR', label: '51~100명' },
+  { value: 'GROUP_FIVE', label: '101~150명' },
+  { value: 'GROUP_SIX', label: '151명 이상' },
+];
 
 function Form() {
   const router = useRouter();
@@ -166,19 +176,7 @@ function Form() {
         <Input disabled={isLoading} id="academyAddressDetail" label="학원 상세 주소" register={register} errors={errors} required />
         <Spacing direction="vertical" size={24} />
         <Flex className="w-full flex-col gap-5 md:flex-row">
-          <select
-            id="studentCount"
-            {...register('studentCount', { required: true })}
-            disabled={isLoading}
-            className="peer w-full rounded-md border-2 border-neutral-300 bg-main-white p-4 pt-6 font-light outline-none transition focus:border-main-black disabled:cursor-not-allowed disabled:opacity-70"
-          >
-            <option value="GROUP_ONE">1~10명</option>
-            <option value="GROUP_TWO">11~30명</option>
-            <option value="GROUP_THREE">30~50명</option>
-            <option value="GROUP_FOUR">51~100명</option>
-            <option value="GROUP_FIVE">101~150명</option>
-            <option value="GROUP_SIX">151명 이상</option>
-          </select>
+          <SelectDropdown id="studentCountRange" label="재학생 수" register={register} errors={errors} options={STUDENT_COUNT_RANGE} />
           <PhoneInput id="contactNumber" label="대표자 번호" disabled={isLoading} control={control} errors={errors} required />
         </Flex>
         <Spacing direction="vertical" size={24} />
