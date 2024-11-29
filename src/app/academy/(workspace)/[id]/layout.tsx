@@ -1,5 +1,6 @@
 import React from 'react';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 import WorkspaceTab from '@/features/academy/(workspace)/components/workspace-tab';
 
@@ -12,6 +13,11 @@ interface ILayoutProps {
 
 async function Layout({ children, params }: ILayoutProps) {
   const cookieStore = cookies();
+
+  const accessToken = cookies().get('accessToken')?.value;
+  if (!accessToken) {
+    redirect('/');
+  }
 
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${Number(params.id)}`, {
     method: 'GET',
