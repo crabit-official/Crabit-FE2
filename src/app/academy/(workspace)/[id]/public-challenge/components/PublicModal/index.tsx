@@ -14,6 +14,7 @@ import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import useApplyChallenge from '@/shared/hooks/market/useApplyChallenge';
 import type { TPublicChallengeDetailResult } from '@/shared/types/public';
+import { formatNumberWithCommas } from '@/shared/utils/number';
 
 interface IModalProps {
   academyId: number;
@@ -79,7 +80,8 @@ function PublicModal({ challengeData, academyId, releasedChallengeId }: IModalPr
               <Flex row="between" className="gap-20 p-2">
                 <Flex>
                   <Typography size="h7" as="p" className="break-keep text-xs font-normal opacity-60 sm:text-sm">
-                    챌린지 기간 {challengeData?.academyPublicChallenge.totalDays}일 • 포인트 {challengeData?.academyPublicChallenge.totalDays}
+                    챌린지 기간 {challengeData?.academyPublicChallenge.totalDays}일 • 포인트{' '}
+                    {formatNumberWithCommas(challengeData?.academyPublicChallenge.points)}
                     {challengeData?.academyPublicChallenge.fileUrl && ' • 파일 포함'}
                   </Typography>
                 </Flex>
