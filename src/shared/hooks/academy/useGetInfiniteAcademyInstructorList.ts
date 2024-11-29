@@ -5,7 +5,7 @@ import { getAcademyInstructorList } from '@/shared/apis/challenge';
 import { queryKeys } from '@/shared/constants/query-keys';
 import type { IAcademyInstructorListResult } from '@/shared/types/acadmy';
 
-function useGetInfiniteAcademyMemberDetailList(
+function useGetInfiniteAcademyInstructorList(
   take: number,
   academyId: number,
   nickname?: string,
@@ -27,4 +27,4 @@ function useGetInfiniteAcademyMemberDetailList(
   });
 }
 
-export default useGetInfiniteAcademyMemberDetailList;
+export default useGetInfiniteAcademyInstructorList;
