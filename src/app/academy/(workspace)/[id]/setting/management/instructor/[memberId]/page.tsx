@@ -1,4 +1,3 @@
-function InstructorDetailPage() {
-  return <>ddd</>;
+export default function InstructorDetailPage() {
+  return <div>준비중..</div>;
 }
-export default InstructorDetailPage;

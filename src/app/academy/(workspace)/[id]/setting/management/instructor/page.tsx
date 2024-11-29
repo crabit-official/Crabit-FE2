@@ -5,7 +5,13 @@ import InstructorList from '@/app/academy/(workspace)/[id]/setting/components/In
 import { getAcademyInstructorList } from '@/shared/apis/challenge';
 import { queryKeys } from '@/shared/constants/query-keys';
 
-async function InstructorManagementPage({ params }: { params: { id: string } }) {
+interface IManagementProps {
+  params: {
+    id: string;
+  };
+}
+
+async function InstructorManagementPage({ params }: IManagementProps) {
   const queryClient = new QueryClient();
   await queryClient.prefetchInfiniteQuery({
     queryKey: [queryKeys.ACADEMY_LIST],
