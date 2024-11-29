@@ -1,10 +1,9 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { type FieldValues, useForm } from 'react-hook-form';
 import { FaCheck } from 'react-icons/fa';
 import { LiaHourglassEndSolid } from 'react-icons/lia';
-import { RiMailSendLine } from 'react-icons/ri';
 
 import PasswordForm from '@/app/profile/components/PasswordForm';
 import BoxContainer from '@/shared/components/BoxContainer';
@@ -19,7 +18,8 @@ import useVerifyCode from '@/shared/hooks/email/useVerifyCode';
 import useGetProfile from '@/shared/hooks/main/useGetProfile';
 
 function EmailForm() {
-  const { data: profile } = useGetProfile();
+  const [isInputVisible, setIsInputVisible] = useState(false);
+  const { data: profile, isPending: profileLoading } = useGetProfile();
 
   const {
     register: codeRegister,
@@ -28,7 +28,7 @@ function EmailForm() {
   } = useForm<FieldValues>({});
 
   const { mutate: codeMutate, isSuccess: codeSuccess } = useVerifyCode();
-  const { mutate, isPending, isSuccess: sendEmailSuccess } = useSendEmail();
+  const { mutate, isPending } = useSendEmail();
 
   const sendEmail = () => {
     mutate({
@@ -52,16 +52,34 @@ function EmailForm() {
       </Typography>
       <Flex column="start" className="gap-4">
         <form className="flex flex-col gap-4 sm:flex-row" onSubmit={codeSubmit(onSubmit)}>
-          <Input register={codeRegister} id="code" errors={codeErrors} label="인증코드" />
-          {!sendEmailSuccess && (
-            <Button onClick={() => sendEmail()} className="w-full text-white sm:w-16" disabled={isPending}>
-              {isPending ? <LiaHourglassEndSolid className="animate-spin" /> : <RiMailSendLine />}
+          {isInputVisible ? (
+            <>
+              <Input register={codeRegister} id="code" errors={codeErrors} label="인증코드" />
+              {codeSuccess ? null : (
+                <Button type="submit" className="w-full text-white sm:w-16">
+                  {isPending ? <LiaHourglassEndSolid className="animate-spin" /> : <FaCheck />}
+                </Button>
+              )}
+            </>
+          ) : (
+            <Button
+              type="button"
+              className={`${isPending ? 'bg-gray-200' : 'bg-main-deep-pink'} `}
+              disabled={profileLoading || codeSuccess}
+              onClick={() => {
+                setIsInputVisible((prev) => !prev);
+                sendEmail();
+              }}
+            >
+              {isPending ? (
+                <LiaHourglassEndSolid className="animate-spin" />
+              ) : (
+                <Typography size="h4" className="text-white">
+                  이메일 인증하기
+                </Typography>
+              )}
             </Button>
           )}
-
-          <Button type="submit" className="w-full text-white sm:w-16">
-            <FaCheck />
-          </Button>
         </form>
         <Flex column="start" className="gap-4">
           <Typography size="h5" as="p" className="pl-1 text-xs opacity-60">
