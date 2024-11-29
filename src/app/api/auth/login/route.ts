@@ -1,3 +1,4 @@
+import { revalidatePath } from 'next/cache';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
@@ -28,6 +29,8 @@ export async function POST(req: NextRequest) {
       { status: res.status },
     );
   }
+
+  revalidatePath('/', 'page');
 
   const data: IAuthResponse = await res.json();
 
