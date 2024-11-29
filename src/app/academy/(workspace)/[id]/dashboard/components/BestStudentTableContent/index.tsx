@@ -1,6 +1,7 @@
 import React from 'react';
 
 import type { ITop5Students } from '@/shared/types/acadmy';
+import { formatNumberWithCommas } from '@/shared/utils/number';
 
 interface IBestStudentTableContentProps {
   rank: number;
@@ -20,7 +21,7 @@ function BestStudentTableContent({ rank, student }: IBestStudentTableContentProp
         {student.approvedChallengeCount} 개
       </td>
       <td className="p-4 text-center" colSpan={2}>
-        Ⓟ {student?.points}
+        Ⓟ {formatNumberWithCommas(student.points)}
       </td>
     </tr>
   );

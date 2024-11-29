@@ -5,6 +5,7 @@ import Avatar from '@/shared/components/Avatar';
 import BoxContainer from '@/shared/components/BoxContainer';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
+import { formatNumberWithCommas } from '@/shared/utils/number';
 
 interface IProfileCardProps {
   description?: string;
@@ -35,7 +36,7 @@ function ProfileCard({ name, nickname, description, point, school, profileImageU
         </Flex>
       </Flex>
       <BoxContainer variant="border" className="relative h-28 w-full gap-1">
-        {point && <StateLabel label={`Ⓟ ${point}`} variant="yellow" className="absolute right-[-10px] top-[-10px] rounded-full" />}
+        {point && <StateLabel label={`Ⓟ ${formatNumberWithCommas(point)}`} variant="yellow" className="absolute right-[-10px] top-[-10px] rounded-full" />}
         <Typography size="h7" className="font-medium opacity-80">
           추가 설명
         </Typography>
