@@ -1,9 +1,11 @@
+import React from 'react';
 import Image from 'next/image';
 
 import StateLabel from '@/features/academy/(workspace)/components/state-label';
 import Avatar from '@/shared/components/Avatar';
 import BoxContainer from '@/shared/components/BoxContainer';
 import Flex from '@/shared/components/Flex';
+import Skeleton from '@/shared/components/Skeleton/Skeleton';
 import Typography from '@/shared/components/Typography';
 import { formatNumberWithCommas } from '@/shared/utils/number';
 
@@ -25,7 +27,11 @@ function ProfileCard({ name, nickname, description, point, school, profileImageU
       className="h-[280px] w-full cursor-pointer gap-5 rounded-xl border border-solid border-gray-200 px-4 py-7 shadow-custom transition duration-500 hover:shadow-hover-custom"
     >
       <Flex rowColumn="center" className="gap-3">
-        {profileImageUrl ? <Image src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${profileImageUrl}`} alt="image" className="size-10" /> : <Avatar size="md" />}
+        {profileImageUrl ? (
+          <Image src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${profileImageUrl}`} alt="image" className="size-10" width={50} height={50} />
+        ) : (
+          <Avatar size="md" />
+        )}
         <Flex rowColumn="center" className="gap-1">
           <StateLabel label={name} />
           {school && (
@@ -47,4 +53,23 @@ function ProfileCard({ name, nickname, description, point, school, profileImageU
     </Flex>
   );
 }
+
+function ProfileCardSkeleton() {
+  return (
+    <Flex
+      rowColumn="center"
+      className="h-[280px] w-full cursor-pointer gap-10 rounded-xl border border-solid border-gray-200 px-4 py-7 shadow-custom transition duration-500"
+    >
+      <Flex rowColumn="center" className="gap-2">
+        <Skeleton height={40} width={40} className="rounded-full" />
+        <Skeleton height={25} width={45} className="rounded-2xl" />
+      </Flex>
+      <div className="w-full">
+        <Skeleton height={112} className="w-full rounded-lg" />
+      </div>
+    </Flex>
+  );
+}
+ProfileCard.Skeleton = ProfileCardSkeleton;
+
 export default ProfileCard;
