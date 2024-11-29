@@ -1,6 +1,8 @@
 import { Suspense } from 'react';
 import { dehydrate, QueryClient } from '@tanstack/query-core';
 import { HydrationBoundary } from '@tanstack/react-query';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 import AnimateCard from '../../(workspace)/[id]/dashboard/components/AnimateCard';
 
@@ -10,6 +12,12 @@ import { getAcademyList } from '@/shared/apis/academy';
 import { queryKeys } from '@/shared/constants/query-keys';
 
 async function MyAcademyPage() {
+  const accessToken = cookies().get('accessToken')?.value;
+
+  if (!accessToken) {
+    return redirect('/');
+  }
+
   const queryClient = new QueryClient();
   await queryClient.prefetchInfiniteQuery({
     queryKey: [queryKeys.ACADEMY_LIST],

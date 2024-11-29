@@ -22,7 +22,6 @@ const rotateRefreshToken = async (request: NextRequest) => {
       if (setCookieHeader) {
         const cookies = setCookieHeader.split(',').map((cookie) => cookie.trim());
         const newAccessToken = cookies.find((cookie) => cookie.startsWith('accessToken='));
-
         const newRefreshToken = cookies.find((cookie) => cookie.startsWith('refreshToken='));
 
         if (newAccessToken && newRefreshToken) {
@@ -41,9 +40,9 @@ const rotateRefreshToken = async (request: NextRequest) => {
 export async function middleware(request: NextRequest): Promise<NextResponse> {
   const { pathname } = request.nextUrl;
 
+  // 토큰 재발급 로직 실행
   if (pathname.startsWith('/')) {
     const res = await rotateRefreshToken(request);
-
     return res;
   }
 
