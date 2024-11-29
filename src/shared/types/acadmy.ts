@@ -160,7 +160,7 @@ export interface IAcademyMemberDetailListDTO {
   academyMemberId: number;
   introduction: string;
   memberId: number;
-  memberName: string;
+  name: string;
   nickname: string;
   point: number;
   profileImageUrl: string;
@@ -178,9 +178,10 @@ export interface IAcademyMemberListResult {
 // 학원 선생님 목록 조회
 export interface IAcademyInstructorListDTO {
   academyMemberId: number;
+  description: string;
   introduction: string;
   memberId: number;
-  memberName: string;
+  name: string;
   nickname: string;
   profileImageUrl: string;
 }
@@ -196,8 +197,9 @@ export interface IAcademyInstructorListResult {
 // 학원 학생 목록 조회
 export interface IAcademyStudentListDTO {
   academyMemberId: number;
+  description: string;
   introduction: string;
-  memberName: string;
+  name: string;
   nickname: string;
   profileImageUrl: string;
   school: string;
