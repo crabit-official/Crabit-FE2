@@ -49,7 +49,7 @@ function InstructorDetailList({ academyId }: IInstructorDetailList) {
               <ListRow.Texts
                 title={
                   <Typography size="h4">
-                    {instructor.memberName} | {instructor.nickname}
+                    {instructor.name} | {instructor.nickname}
                   </Typography>
                 }
                 subTitle={
