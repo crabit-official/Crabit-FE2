@@ -202,6 +202,7 @@ export interface IAcademyStudentListDTO {
   memberId: number;
   name: string;
   nickname: string;
+  point: number;
   profileImageUrl: string;
   school: string;
 }

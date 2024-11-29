@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { type FieldValues, useForm } from 'react-hook-form';
+import Image from 'next/image';
 
 import StateLabel from '@/features/academy/(workspace)/components/state-label';
 import Avatar from '@/shared/components/Avatar';
@@ -12,6 +13,7 @@ import FramerScale from '@/shared/components/FramerScale';
 import Textarea from '@/shared/components/Textarea';
 import Typography from '@/shared/components/Typography';
 import type { IAcademyStudentListDTO } from '@/shared/types/acadmy';
+import { formatNumberWithCommas } from '@/shared/utils/number';
 
 interface IMemberDetailProps {
   member: IAcademyStudentListDTO;
@@ -29,8 +31,18 @@ function MemberDetail({ member }: IMemberDetailProps) {
       <BoxContainer className="w-full items-center gap-10 py-10 lg:ml-10">
         <Flex rowColumn="center" className="gap-6">
           <Flex className="relative">
-            <Avatar size="lg" />
-            <StateLabel label="Ⓟ 4,000" variant="yellow" className="absolute bottom-[-10px]" />
+            {member.profileImageUrl ? (
+              <Image
+                src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${member.profileImageUrl}`}
+                alt="profile"
+                width={80}
+                height={80}
+                className="size-20 rounded-full border border-solid border-gray-100 object-cover"
+              />
+            ) : (
+              <Avatar size="lg" />
+            )}
+            <StateLabel label={`Ⓟ ${formatNumberWithCommas(member.point)}`} variant="yellow" className="absolute bottom-[-10px]" />
           </Flex>
           <Flex rowColumn="center" className="gap-1">
             <Typography size="h5">{member.name}</Typography>

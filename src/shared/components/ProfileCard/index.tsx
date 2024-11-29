@@ -28,7 +28,13 @@ function ProfileCard({ name, nickname, description, point, school, profileImageU
     >
       <Flex rowColumn="center" className="gap-3">
         {profileImageUrl ? (
-          <Image src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${profileImageUrl}`} alt="image" className="size-10" width={50} height={50} />
+          <Image
+            src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${profileImageUrl}`}
+            alt="image"
+            className="size-10 rounded-full border border-solid border-gray-100 object-cover"
+            width={50}
+            height={50}
+          />
         ) : (
           <Avatar size="md" />
         )}
