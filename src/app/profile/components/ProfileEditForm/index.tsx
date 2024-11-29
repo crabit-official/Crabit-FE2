@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { type FieldValues, useForm } from 'react-hook-form';
-import { FaArrowRight } from 'react-icons/fa';
+import { FaPencil } from 'react-icons/fa6';
 import { PiUserSquareFill } from 'react-icons/pi';
 import Image from 'next/image';
 import { toast } from 'sonner';
@@ -11,6 +11,7 @@ import { useImage } from '@/features/academy/(workspace)/hooks/use-image';
 import BoxContainer from '@/shared/components/BoxContainer';
 import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
+import Spacing from '@/shared/components/Spacing/spacing';
 import Typography from '@/shared/components/Typography';
 import useGetPresignedUrl from '@/shared/hooks/images/use-get-presigned-url';
 import useGetProfile from '@/shared/hooks/main/useGetProfile';
@@ -108,6 +109,14 @@ function ProfileEditForm() {
         <Typography size="h5" as="p" className="text-xs opacity-60">
           기본 프로필
         </Typography>
+        {edit && <Spacing direction="vertical" size={28} />}
+      </Flex>
+      <Flex row="end">
+        {!edit && (
+          <Button variant="secondary" type="button" className="w-16 font-medium text-slate-500" onClick={() => setEdit(true)}>
+            <FaPencil />
+          </Button>
+        )}
       </Flex>
       <section className="flex flex-col gap-4">
         <BoxContainer variant="border" className="flex w-full flex-col gap-5 sm:flex-row">
@@ -148,13 +157,9 @@ function ProfileEditForm() {
           </Flex>
         </BoxContainer>
         <Flex row="end">
-          {edit ? (
+          {edit && (
             <Button type="button" className="w-44 font-medium text-white" onClick={handleSubmit(onSubmit)}>
               수정하기
-            </Button>
-          ) : (
-            <Button type="button" className="w-16 font-medium text-white" onClick={() => setEdit(true)}>
-              <FaArrowRight />
             </Button>
           )}
         </Flex>
