@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
   const academyId = req.nextUrl.searchParams.get('academyId') || '';
   const nickname = req.nextUrl.searchParams.get('nickname') || '';
 
-  let url = `/api/v1/academies/${academyId}/students/detail?cursor=${cursor}&take=${take}`;
+  let url = `/api/v1/academies/${academyId}/students/details?cursor=${cursor}&take=${take}`;
 
   if (nickname) {
     url += `&nickname=${nickname}`;
