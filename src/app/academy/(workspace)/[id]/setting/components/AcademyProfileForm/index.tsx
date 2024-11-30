@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import type { FieldValues } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { FaPencil } from 'react-icons/fa6';
 import { PiUserSquareFill } from 'react-icons/pi';
@@ -9,6 +8,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { toast } from 'sonner';
+import { z } from 'zod';
 
 import { useImage } from '@/features/academy/(workspace)/hooks/use-image';
 import BoxContainer from '@/shared/components/BoxContainer';
@@ -18,10 +18,23 @@ import Skeleton from '@/shared/components/Skeleton/Skeleton';
 import Spacing from '@/shared/components/Spacing/spacing';
 import Typography from '@/shared/components/Typography';
 import { queryKeys } from '@/shared/constants/query-keys';
-import type { ACADEMY_ROLE } from '@/shared/enums/academy';
+import { ACADEMY_ROLE } from '@/shared/enums/academy';
 import useManageAcademy from '@/shared/hooks/academy/useManageAcademy';
 import useGetPresignedUrl from '@/shared/hooks/images/use-get-presigned-url';
 import { getRoleName } from '@/shared/utils/academyRole';
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+const formSchema = z.object({
+  academyRole: z.union([z.literal(ACADEMY_ROLE.PRINCIPAL), z.literal(ACADEMY_ROLE.INSTRUCTOR), z.literal(ACADEMY_ROLE.STUDENT)]),
+  nickname: z.string(),
+  profileImageUrl: z.string().url(),
+  school: z.string(),
+  point: z.number().int(),
+  file: z.string(),
+  introduction: z.string().max(500),
+});
+
+type FormValues = z.infer<typeof formSchema>;
 
 function AcademyProfileForm() {
   let profileContent;
@@ -35,19 +48,19 @@ function AcademyProfileForm() {
   const { data: profile, isPending: profileLoading } = useGetAcademyMemberProfile({ academyId: Number(params.id) });
   const { data: image, isSuccess } = useGetPresignedUrl(file?.name as string);
 
-  const { register, handleSubmit } = useForm<FieldValues>({
-    defaultValues: {
-      academyRole: profile?.result.academyRole,
-      nickname: profile?.result.nickname,
-      profileImageUrl: profile?.result.profileImageUrl,
-      school: profile?.result.school,
-      point: profile?.result.point,
-    },
+  const { register, handleSubmit } = useForm<FormValues>({
+    defaultValues: profile
+      ? {
+          academyRole: profile?.result.academyRole,
+          nickname: profile?.result.nickname,
+          profileImageUrl: profile?.result.profileImageUrl,
+          school: profile?.result.school,
+          point: profile?.result.point,
+        }
+      : undefined,
   });
 
-  console.log(profile);
-
-  const onSubmit = async (data: FieldValues) => {
+  const onSubmit = async (data: FormValues) => {
     const editNickname = data.nickname ?? profile?.result.nickname;
     const editIntroduction = data.introduction ?? profile?.result.introduction;
     const editSchool = data.school ?? profile?.result.school;
@@ -236,7 +249,7 @@ function AcademyProfileForm() {
                   </Typography>
                 )}
               </Flex>
-              {profile?.result.academyRole === 'STUDENT' && (
+              {profile?.result.academyRole === ACADEMY_ROLE.STUDENT && (
                 <Flex className="items-center gap-2">
                   <Typography size="h5" as="p" className="w-20 text-center text-sm font-semibold opacity-80 lg:text-base">
                     학교
@@ -246,7 +259,7 @@ function AcademyProfileForm() {
                   </Typography>
                 </Flex>
               )}
-              {profile?.result.academyRole === 'STUDENT' && (
+              {profile?.result.academyRole === ACADEMY_ROLE.STUDENT && (
                 <Flex className="items-center gap-2">
                   <Typography size="h5" as="p" className="w-20 text-center text-sm font-semibold opacity-80 lg:text-base">
                     포인트

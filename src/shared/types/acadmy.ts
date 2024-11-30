@@ -462,7 +462,7 @@ export type TAcademyMemberProfileRequest = {
 export type TAcademyMemberProfileResponse = CommonResponse<{
   academyId: number;
   academyMemberId: number;
-  academyRole: string;
+  academyRole: ACADEMY_ROLE;
   introduction: string;
   memberId: number;
   nickname: string;
@@ -475,7 +475,7 @@ export type TAcademyMemberProfileResponse = CommonResponse<{
 export type TAcademyMemberEditProfileRequest = {
   academyId: number;
   introduction: string;
-  nickname: number;
+  nickname: string;
   profileImageUrl: string | null;
   school: string;
 };
