@@ -1,4 +1,12 @@
-function academyManagementPage() {
-  return <>학원 정보 수정 페이지 입니다.</>;
+import AcademyEditForm from './components/AcademyEditForm';
+
+interface IAcademyManageProps {
+  params: {
+    id: string;
+  };
 }
-export default academyManagementPage;
+
+function AcademyManagementPage({ params }: IAcademyManageProps) {
+  return <AcademyEditForm academyId={Number(params.id)} />;
+}
+export default AcademyManagementPage;

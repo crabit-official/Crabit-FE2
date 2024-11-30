@@ -2,7 +2,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import {
+  editAcademyMemberProfile,
   getAcademyInfo,
+  getAcademyInstructorDetail,
+  getAcademyMemberProfile,
   leaveAcademy,
   revokeInstructor,
   revokeStudent,
@@ -11,6 +14,7 @@ import {
   updateStudentIntroduction,
 } from '@/shared/apis/academy';
 import { queryKeys } from '@/shared/constants/query-keys';
+import type { TAcademyInstructorDetailRequest, TAcademyMemberProfileRequest } from '@/shared/types/acadmy';
 import type { UseMutationCustomOptions } from '@/shared/types/common';
 import type { TGetAcademyInfoRequest } from '@/shared/types/manage';
 
@@ -105,6 +109,32 @@ function useGetAcademyInfo({ academyId }: TGetAcademyInfoRequest) {
   });
 }
 
+function useGetAcademyMemberProfile({ academyId }: TAcademyMemberProfileRequest) {
+  return useQuery({
+    queryFn: () => getAcademyMemberProfile({ academyId }),
+    queryKey: [queryKeys.ACADEMY_MEMBER_PROFILE, academyId],
+  });
+}
+
+function useEditAcademyMemberProfile(mutationOptions?: UseMutationCustomOptions) {
+  return useMutation({
+    mutationFn: editAcademyMemberProfile,
+    onSuccess: () => {
+      toast.success('프로필 수정에 성공하였습니다.');
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    ...mutationOptions,
+  });
+}
+function useGetAcademyInstructorDetailProfile({ academyId, academyMemberId }: TAcademyInstructorDetailRequest) {
+  return useQuery({
+    queryFn: () => getAcademyInstructorDetail({ academyId, academyMemberId }),
+    queryKey: [queryKeys.ACADEMY_INSTRUCTOR_PROFILE, academyMemberId],
+  });
+}
+
 function useManageAcademy() {
   const updateAcademyInfo = useUpdateAcademyInfo();
   const leaveAcademy = useLeaveAcademy();
@@ -112,8 +142,20 @@ function useManageAcademy() {
   const revokeStudent = useRevokeStudent();
   const updateInstructorIntroduction = useUpdateInstructorIntroduction();
   const revokeInstructor = useRevokeInstructor();
+  const editAcademyMemberProfile = useEditAcademyMemberProfile();
 
-  return { updateAcademyInfo, leaveAcademy, updateStudentIntroduction, revokeStudent, updateInstructorIntroduction, revokeInstructor, useGetAcademyInfo };
+  return {
+    updateAcademyInfo,
+    leaveAcademy,
+    updateStudentIntroduction,
+    revokeStudent,
+    updateInstructorIntroduction,
+    revokeInstructor,
+    useGetAcademyInfo,
+    useGetAcademyMemberProfile,
+    editAcademyMemberProfile,
+    useGetAcademyInstructorDetailProfile,
+  };
 }
 
 export default useManageAcademy;
