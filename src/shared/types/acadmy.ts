@@ -453,3 +453,51 @@ export type TAcademyStudentDetailResponse = CommonResponse<{
   student: IAcademyStudentListDTO;
   studentChallengeStatistics: IStudentChallengeStatistics;
 }>;
+
+// [학원 모든 멤버] 특정 학원 스페이스 유저 프로필 조회
+export type TAcademyMemberProfileRequest = {
+  academyId: number;
+};
+
+export type TAcademyMemberProfileResponse = CommonResponse<{
+  academyId: number;
+  academyMemberId: number;
+  academyRole: ACADEMY_ROLE;
+  introduction: string;
+  memberId: number;
+  nickname: string;
+  point: number;
+  profileImageUrl: string;
+  school: string;
+}>;
+
+// [학원 모든 멤버] 학원 프로필 수정
+export type TAcademyMemberEditProfileRequest = {
+  academyId: number;
+  introduction: string;
+  nickname: string;
+  profileImageUrl: string | null;
+  school: string;
+};
+
+export type TAcademyMemberEditProfileResponse = CommonResponse<{
+  academyId: number;
+}>;
+
+//  [원장 선생님] 특정 학원 강사, 상세 정보 조회
+export type TAcademyInstructorDetailRequest = {
+  academyId: number;
+  academyMemberId: number;
+};
+
+export type TAcademyInstructorDetailResponse = CommonResponse<{
+  teacher: {
+    academyMemberId: number;
+    description: string;
+    introduction: string;
+    memberId: number;
+    name: string;
+    nickname: string;
+    profileImageUrl: string | null;
+  };
+}>;

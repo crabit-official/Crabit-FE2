@@ -18,4 +18,6 @@ export const queryKeys = {
   ACADEMY_PROFILE: 'academyProfile',
   ACADEMY_INFO: 'academyInfo',
   STUDENT_DETAIL: 'studentDetail',
+  ACADEMY_MEMBER_PROFILE: 'academyMemberProfile',
+  ACADEMY_INSTRUCTOR_PROFILE: 'academyInstructorProfile',
 } as const;
