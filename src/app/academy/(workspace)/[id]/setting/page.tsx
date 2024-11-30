@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AcademyProfileForm from './components/AcademyProfileForm';
+import Flex from '@/shared/components/Flex';
 
 function AcademySettingBoardPage({ params }: { params: { id: string } }) {
   return <AcademyProfileForm academyId={Number(params.id)} />;
