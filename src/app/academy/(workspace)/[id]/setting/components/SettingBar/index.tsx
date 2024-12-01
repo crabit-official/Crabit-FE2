@@ -32,12 +32,12 @@ function SettingBar({ academyId, academyRole }: ISettingBarProps) {
           <Typography size="h4">학원</Typography>
           {ACADEMY_ROLE.PRINCIPAL === academyRole && (
             <>
-              <Link
-                href={`/academy/${academyId}/setting/management/academy`}
-                className={`${pathname === `/academy/${academyId}/setting/management/academy` ? 'text-main-deep-pink' : 'text-gray-700'} gap-1 font-normal text-gray-600 hover:opacity-60`}
-              >
-                학원 정보 수정
-              </Link>
+              {/* <Link */}
+              {/*  href={`/academy/${academyId}/setting/management/academy`} */}
+              {/*  className={`${pathname === `/academy/${academyId}/setting/management/academy` ? 'text-main-deep-pink' : 'text-gray-700'} gap-1 font-normal text-gray-600 hover:opacity-60`} */}
+              {/* > */}
+              {/*  학원 정보 수정 */}
+              {/* </Link> */}
               <Link
                 href={`/academy/${academyId}/setting/management/instructor`}
                 className={`${pathname === `/academy/${academyId}/setting/management/instructor` ? 'text-main-deep-pink' : 'text-gray-700'} gap-1 font-normal text-gray-600 hover:opacity-60`}
