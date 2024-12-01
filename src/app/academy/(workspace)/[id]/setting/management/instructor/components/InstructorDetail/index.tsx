@@ -100,7 +100,7 @@ function InstructorDetail({ academyId, academyMemberId }: IInstructorDetailProps
   }
 
   return (
-    <FramerScale className="ml-10 grid place-items-center gap-2">
+    <FramerScale className="grid place-items-center gap-2">
       <BoxContainer className="w-full items-center gap-10 py-10 lg:ml-10">
         <Flex rowColumn="center" className="gap-6">
           <Flex className="relative">

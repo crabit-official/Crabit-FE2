@@ -44,9 +44,9 @@ async function Layout({ params, children }: ILayoutProps) {
   return (
     <Container className="my-20 flex flex-col gap-14">
       <SettingInfo academyName={academy.result.academy.academyName} />
-      <div className="grid size-full min-h-[600px] grid-cols-1 px-10 lg:grid-cols-[min-content,min-content,auto]">
+      <div className="grid size-full min-h-[600px] grid-cols-1 px-2 lg:grid-cols-[min-content,min-content,auto] lg:px-10">
         <SettingBar academyId={Number(params.id)} academyRole={profile?.result.academyRole} />
-        <div className="hidden h-full w-px bg-gray-200 lg:block" />
+        <div className="mr-10 hidden h-full w-px bg-gray-200 lg:block" />
         <Flex className="py-5">{children}</Flex>
       </div>
     </Container>
