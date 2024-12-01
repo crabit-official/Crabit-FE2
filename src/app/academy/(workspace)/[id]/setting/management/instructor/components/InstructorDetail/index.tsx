@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaRegPenToSquare } from 'react-icons/fa6';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -100,8 +100,8 @@ function InstructorDetail({ academyId, academyMemberId }: IInstructorDetailProps
   }
 
   return (
-    <FramerScale className="grid place-items-center gap-2">
-      <BoxContainer className="w-full items-center gap-10 py-10 lg:ml-10">
+    <FramerScale className="grid gap-2">
+      <BoxContainer className="w-full items-center gap-10 py-10">
         <Flex rowColumn="center" className="gap-6">
           <Flex className="relative">
             {profile?.result.teacher.profileImageUrl ? (
@@ -158,13 +158,15 @@ function InstructorDetail({ academyId, academyMemberId }: IInstructorDetailProps
           </BoxContainer>
         )}
       </BoxContainer>
-
-      <div className="flex w-full justify-end">
-        <div className="w-20">
-          <Button type="button" className="text-sm opacity-60 hover:opacity-80" onClick={() => setOpen((prev) => !prev)}>
-            교사 강퇴
-          </Button>
-        </div>
+      <div className="flex h-fit w-full justify-end">
+        <Button
+          type="button"
+          variant="secondary"
+          className="w-fit px-2 py-1 text-sm hover:bg-main-deep-pink hover:text-white"
+          onClick={() => setOpen((prev) => !prev)}
+        >
+          교사 강퇴
+        </Button>
       </div>
     </FramerScale>
   );

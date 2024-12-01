@@ -9,7 +9,7 @@ import Typography from '@/shared/components/Typography';
 
 function SettingInfo({ academyName }: { academyName: string }) {
   return (
-    <Flex row="start" className="items-center gap-4 px-10">
+    <Flex row="start" className="items-center gap-4 lg:px-10">
       <motion.div whileInView={{ rotate: 270 }} transition={{ ease: 'easeOut', duration: 0.8 }} initial={{ rotate: 0 }} viewport={{ once: true }}>
         <IoMdSettings size={65} className="opacity-60" />
       </motion.div>
