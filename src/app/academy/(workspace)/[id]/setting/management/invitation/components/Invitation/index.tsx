@@ -1,10 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import { IoCopyOutline } from 'react-icons/io5';
 import { RiRefreshLine } from 'react-icons/ri';
 import { QueryClient } from '@tanstack/query-core';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
+import { toast } from 'sonner';
 
 import { getInvitationCode, postInvitationCode } from '@/shared/apis/invitation';
 import Button from '@/shared/components/Button';
@@ -33,6 +35,18 @@ function InvitationTab() {
       queryClient.invalidateQueries({ queryKey: [queryKeys.INVITATION_CODE] });
     },
   });
+
+  const handleCopy = async () => {
+    if (data?.result.joinCode) {
+      try {
+        await navigator.clipboard.writeText(data?.result.joinCode);
+
+        toast.success('코드가 복사되었습니다');
+      } catch {
+        toast.success('코드 복사에 실패하였습니다. 다시 시도해주세요');
+      }
+    }
+  };
 
   return (
     <div>
@@ -65,18 +79,23 @@ function InvitationTab() {
             </Typography>
             <Typography size="h4">{data?.result.joinCode}</Typography>
           </Flex>
-          <button
-            type="button"
-            className="hover:rounded-2xl hover:bg-slate-300"
-            onClick={() => {
-              mutate({
-                academyId: Number(params.id),
-                academyRole: tab,
-              });
-            }}
-          >
-            <RiRefreshLine size={24} />
-          </button>
+          <div className="flex gap-2">
+            <button type="button" className="hover:rounded-2xl hover:bg-slate-300" onClick={handleCopy}>
+              <IoCopyOutline size={20} />
+            </button>
+            <button
+              type="button"
+              className="hover:rounded-2xl hover:bg-slate-300"
+              onClick={() => {
+                mutate({
+                  academyId: Number(params.id),
+                  academyRole: tab,
+                });
+              }}
+            >
+              <RiRefreshLine size={20} />
+            </button>
+          </div>
         </Flex>
       </div>
     </div>
