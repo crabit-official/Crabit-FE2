@@ -39,6 +39,12 @@ function SettingBar({ academyId, academyRole }: ISettingBarProps) {
               {/*  학원 정보 수정 */}
               {/* </Link> */}
               <Link
+                href={`/academy/${academyId}/setting/management/invitation`}
+                className={`${pathname === `/academy/${academyId}/setting/management/invitation` ? 'text-main-deep-pink' : 'text-gray-700'} gap-1 font-normal text-gray-600 hover:opacity-60`}
+              >
+                초대 코드
+              </Link>
+              <Link
                 href={`/academy/${academyId}/setting/management/instructor`}
                 className={`${pathname === `/academy/${academyId}/setting/management/instructor` ? 'text-main-deep-pink' : 'text-gray-700'} gap-1 font-normal text-gray-600 hover:opacity-60`}
               >
