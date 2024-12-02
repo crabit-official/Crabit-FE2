@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { type FieldValues, useForm } from 'react-hook-form';
 import { FaRegPenToSquare } from 'react-icons/fa6';
 import { useQueryClient } from '@tanstack/react-query';
@@ -35,18 +35,28 @@ function MemberDetail({ academyId, academyMemberId }: IMemberDetailProps) {
   const [edit, setEdit] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const { updateStudentIntroduction, revokeStudent } = useManageAcademy();
-  const { data: member, isFetching } = useGetStudentDetail({ academyId, academyMemberId });
+  const { data: member, isPending: profileLoading } = useGetStudentDetail({ academyId, academyMemberId });
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FieldValues>({
     defaultValues: {
       description: member?.result.student.description || '',
       nickname: member?.result.student.nickname || '',
     },
   });
+
+  useEffect(() => {
+    if (member?.result) {
+      reset({
+        description: member?.result.student.description,
+        nickname: member?.result.student.nickname,
+      });
+    }
+  }, [member, reset]);
 
   const handleUpdate = (data: FieldValues) => {
     updateStudentIntroduction.mutate(
@@ -89,6 +99,21 @@ function MemberDetail({ academyId, academyMemberId }: IMemberDetailProps) {
     );
   }
 
+  if (profileLoading) {
+    return (
+      <Flex column="start" className="w-full gap-5 p-8">
+        <Flex rowColumn="center" className="w-full gap-6 pb-14">
+          <Skeleton height={80} width={80} className="rounded-full" />
+          <Flex rowColumn="center" className="w-full gap-1">
+            <Skeleton height={20} width={50} className="rounded-md" />
+            <Skeleton height={15} width={150} className="rounded-md" />
+          </Flex>
+        </Flex>
+        <Skeleton height={570} className="w-full rounded-md sm:w-2/3" />
+      </Flex>
+    );
+  }
+
   return (
     <FramerScale className="grid place-items-center gap-2">
       <BoxContainer className="w-full items-center gap-10 py-10">
@@ -110,7 +135,6 @@ function MemberDetail({ academyId, academyMemberId }: IMemberDetailProps) {
             )}
           </Flex>
           <Flex rowColumn="center" className="gap-1">
-            {isFetching && <Skeleton height={20} width={50} className="rounded-xl" />}
             <Typography size="h5">{member?.result.student.name}</Typography>
             <Typography size="h7" className="font-normal opacity-80">
               {member?.result.student.nickname} • {member?.result.student.school}
