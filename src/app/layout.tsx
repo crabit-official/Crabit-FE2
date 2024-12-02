@@ -55,11 +55,11 @@ export default async function RootLayout({
                 <Flex column="center" className="min-h-screen">
                   <Navbar />
                   <main className="flex-1 py-20">{children}</main>
-                  <Footer />
                   <LoginModal />
                   <RegisterModal />
                   <Toaster richColors />
                 </Flex>
+                <Footer />
               </QueryProvider>
             </MSWProvider>
           </AuthProvider>
