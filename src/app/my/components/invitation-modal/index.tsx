@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 
 import Tabs from './components/Tab';
 
-import useInvitationModal from '@/app/academy/(academy)/my/hooks/use-invitation-modal';
+import useInvitationModal from '@/app/my/hooks/use-invitation-modal';
 import Flex from '@/shared/components/Flex';
 import Heading from '@/shared/components/Heading';
 import Input from '@/shared/components/Input';

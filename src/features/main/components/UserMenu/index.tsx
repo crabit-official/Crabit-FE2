@@ -47,7 +47,7 @@ function UserMenu() {
         </div>
         <div
           onClick={() => {
-            router.push('/academy/my');
+            router.push('/my/academy');
           }}
           className="hidden cursor-pointer rounded-full px-4 py-3 text-sm font-semibold transition hover:bg-neutral-100 md:block"
         >
@@ -55,7 +55,7 @@ function UserMenu() {
         </div>
         <div
           onClick={toggleOpen}
-          className="flex cursor-pointer flex-row items-center gap-3 rounded-full border border-neutral-200 p-4 transition hover:shadow-md md:px-2 md:py-1"
+          className="flex cursor-pointer flex-row items-center gap-3 rounded-full border border-neutral-200 p-4 transition hover:shadow-custom md:px-2 md:py-1"
         >
           <AiOutlineMenu />
           <div className="hidden md:flex md:items-center md:gap-2">
@@ -79,7 +79,10 @@ function UserMenu() {
         </div>
       </div>
       {isOpen && (
-        <div onMouseLeave={() => setIsOpen(false)} className="absolute right-0 top-12 w-[40vw] overflow-hidden rounded-xl bg-white text-sm shadow-md md:w-3/4">
+        <div
+          onMouseLeave={() => setIsOpen(false)}
+          className="absolute right-0 top-12 w-[40vw] overflow-hidden rounded-xl bg-white text-sm shadow-custom md:w-3/4"
+        >
           <div className="flex cursor-pointer flex-col">
             {!profile ? (
               <>

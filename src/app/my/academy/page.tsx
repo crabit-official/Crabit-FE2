@@ -4,9 +4,9 @@ import { HydrationBoundary } from '@tanstack/react-query';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import AnimateCard from '../../(workspace)/[id]/dashboard/components/AnimateCard';
+import AnimateCard from '../../academy/(workspace)/[id]/dashboard/components/AnimateCard';
 
-import AcademyList from '@/app/academy/(academy)/my/components/academy-list';
+import AcademyList from '@/app/my/components/academy-list';
 import Container from '@/features/main/components/Container';
 import { getAcademyList } from '@/shared/apis/academy';
 import { queryKeys } from '@/shared/constants/query-keys';
