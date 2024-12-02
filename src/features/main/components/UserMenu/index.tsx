@@ -47,7 +47,7 @@ function UserMenu() {
         </div>
         <div
           onClick={() => {
-            router.push('/academy/my');
+            router.push('/my/academy');
           }}
           className="hidden cursor-pointer rounded-full px-4 py-3 text-sm font-semibold transition hover:bg-neutral-100 md:block"
         >
