@@ -5,7 +5,6 @@ import { AiOutlineMenu } from 'react-icons/ai';
 import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { toast } from 'sonner';
 
 import MenuItem from '@/features/main/components/MenuItem';
 import useLoginModal from '@/features/main/hooks/use-login-modal';
@@ -98,8 +97,7 @@ function UserMenu() {
                   className="block md:hidden"
                   onClick={() => {
                     setIsOpen(false);
-                    toast.success('하이');
-                    router.push('/academy/my');
+                    router.push('/my/academy');
                   }}
                   label="내 학원"
                 />
@@ -132,7 +130,7 @@ function UserMenu() {
                   className="block md:hidden"
                   onClick={() => {
                     setIsOpen(false);
-                    router.push('/academy/my');
+                    router.push('/my/academy');
                   }}
                   label="내 학원"
                 />
