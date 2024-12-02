@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaRegPenToSquare } from 'react-icons/fa6';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -38,7 +38,7 @@ function InstructorDetail({ academyId, academyMemberId }: IInstructorDetailProps
   const [edit, setEdit] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const { updateInstructorIntroduction, revokeInstructor, useGetAcademyInstructorDetailProfile } = useManageAcademy();
-  const { data: profile, isFetching } = useGetAcademyInstructorDetailProfile({ academyId, academyMemberId });
+  const { data: profile, isPending: profileLoading } = useGetAcademyInstructorDetailProfile({ academyId, academyMemberId });
 
   const {
     register,
@@ -99,9 +99,24 @@ function InstructorDetail({ academyId, academyMemberId }: IInstructorDetailProps
     );
   }
 
+  if (profileLoading) {
+    return (
+      <Flex column="start" className="w-full gap-5 p-8">
+        <Flex rowColumn="center" className="w-full gap-6 pb-14">
+          <Skeleton height={80} width={80} className="rounded-full" />
+          <Flex rowColumn="center" className="w-full gap-1">
+            <Skeleton height={20} width={50} className="rounded-md" />
+            <Skeleton height={15} width={150} className="rounded-md" />
+          </Flex>
+        </Flex>
+        <Skeleton height={150} className="w-full rounded-md" />
+      </Flex>
+    );
+  }
+
   return (
-    <FramerScale className="ml-10 grid place-items-center gap-2">
-      <BoxContainer className="w-full items-center gap-10 py-10 lg:ml-10">
+    <FramerScale className="grid gap-2">
+      <BoxContainer className="w-full items-center gap-10 py-10">
         <Flex rowColumn="center" className="gap-6">
           <Flex className="relative">
             {profile?.result.teacher.profileImageUrl ? (
@@ -117,7 +132,6 @@ function InstructorDetail({ academyId, academyMemberId }: IInstructorDetailProps
             )}
           </Flex>
           <Flex rowColumn="center" className="gap-1">
-            {isFetching && <Skeleton height={20} width={50} className="rounded-xl" />}
             <Typography size="h5">{profile?.result.teacher.name}</Typography>
             <Typography size="h7" className="font-normal opacity-80">
               {profile?.result.teacher.nickname} • {profile?.result.teacher.name}
@@ -158,13 +172,15 @@ function InstructorDetail({ academyId, academyMemberId }: IInstructorDetailProps
           </BoxContainer>
         )}
       </BoxContainer>
-
-      <div className="flex w-full justify-end">
-        <div className="w-20">
-          <Button type="button" className="text-sm opacity-60 hover:opacity-80" onClick={() => setOpen((prev) => !prev)}>
-            교사 강퇴
-          </Button>
-        </div>
+      <div className="flex h-fit w-full justify-end">
+        <Button
+          type="button"
+          variant="secondary"
+          className="w-fit px-2 py-1 text-sm hover:bg-main-deep-pink hover:text-white"
+          onClick={() => setOpen((prev) => !prev)}
+        >
+          교사 강퇴
+        </Button>
       </div>
     </FramerScale>
   );
