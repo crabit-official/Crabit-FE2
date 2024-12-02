@@ -46,16 +46,7 @@ function AcademyProfileForm({ academyId }: IProfileFormProps) {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<FieldValues>({
-    defaultValues: profile
-      ? {
-          nickname: profile?.result.nickname,
-          profileImageUrl: profile?.result.profileImageUrl,
-          introduction: profile?.result.introduction,
-          school: profile?.result.school,
-        }
-      : undefined,
-  });
+  } = useForm<FieldValues>();
 
   useEffect(() => {
     if (profile?.result) {

@@ -42,12 +42,7 @@ function MemberDetail({ academyId, academyMemberId }: IMemberDetailProps) {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<FieldValues>({
-    defaultValues: {
-      description: member?.result.student.description || '',
-      nickname: member?.result.student.nickname || '',
-    },
-  });
+  } = useForm<FieldValues>();
 
   useEffect(() => {
     if (member?.result) {
