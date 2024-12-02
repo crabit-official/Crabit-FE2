@@ -58,8 +58,10 @@ function AcademyMenu() {
             className="rounded-xl border border-solid border-gray-200 object-cover"
           />
         )}
-        <Typography size="h5">{academyInfo?.result.academy.academyName}</Typography>
-        <IoIosArrowDown />
+        <Typography size="h5" className="hidden md:block">
+          {academyInfo?.result.academy.academyName}
+        </Typography>
+        <IoIosArrowDown className="hidden md:block" />
       </Flex>
       <AnimatePresence>
         {isOpen && (
@@ -103,7 +105,7 @@ function AcademyMenu() {
                   />
                 )),
               )}
-              <div ref={ref} className="h-5" />
+              <div ref={ref} />
             </div>
           </motion.div>
         )}
