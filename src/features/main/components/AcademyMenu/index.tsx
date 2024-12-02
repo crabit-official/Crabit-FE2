@@ -47,7 +47,7 @@ function AcademyMenu() {
             alt="academy logo"
             width={35}
             height={35}
-            className="rounded-xl border border-solid border-gray-200 object-cover"
+            className="size-[35px] rounded-xl border border-solid border-gray-200 object-cover"
           />
         ) : (
           <Image
@@ -76,12 +76,13 @@ function AcademyMenu() {
                 page.result.memberAcademyList.map((academy) => (
                   <MenuItem
                     icon={
-                      academyInfo?.result.academy.mainImageUrl ? (
+                      academy?.academyMainImageUrl ? (
                         <Image
-                          src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${academyInfo?.result.academy.mainImageUrl}`}
+                          src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${academy.academyMainImageUrl}`}
                           alt="academy logo"
-                          width={20}
-                          height={20}
+                          width={25}
+                          height={25}
+                          className="size-[25px] rounded-lg border border-solid border-gray-200 object-cover"
                         />
                       ) : (
                         <Image
