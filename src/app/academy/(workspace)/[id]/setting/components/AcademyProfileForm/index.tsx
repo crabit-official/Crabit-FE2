@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { type FieldValues, useForm } from 'react-hook-form';
 import { FaPencil } from 'react-icons/fa6';
 import { PiUserSquareFill } from 'react-icons/pi';
@@ -45,6 +45,7 @@ function AcademyProfileForm({ academyId }: IProfileFormProps) {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FieldValues>({
     defaultValues: profile
       ? {
@@ -55,6 +56,17 @@ function AcademyProfileForm({ academyId }: IProfileFormProps) {
         }
       : undefined,
   });
+
+  useEffect(() => {
+    if (profile?.result) {
+      reset({
+        nickname: profile?.result.nickname,
+        profileImageUrl: profile?.result.profileImageUrl,
+        introduction: profile?.result.introduction,
+        school: profile?.result.school,
+      });
+    }
+  }, [profile, reset]);
 
   const onSubmit = async (data: FieldValues) => {
     const editNickname = data.nickname ?? profile?.result.nickname;
@@ -82,7 +94,7 @@ function AcademyProfileForm({ academyId }: IProfileFormProps) {
               },
               {
                 onSuccess: () => {
-                  queryClient.invalidateQueries({ queryKey: [queryKeys.ACADEMY_MEMBER_PROFILE, { academyId }] });
+                  queryClient.invalidateQueries({ queryKey: [queryKeys.ACADEMY_MEMBER_PROFILE, academyId] });
                 },
               },
             );
@@ -102,7 +114,7 @@ function AcademyProfileForm({ academyId }: IProfileFormProps) {
         },
         {
           onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: [queryKeys.ACADEMY_MEMBER_PROFILE, { academyId }] });
+            queryClient.invalidateQueries({ queryKey: [queryKeys.ACADEMY_MEMBER_PROFILE, academyId] });
           },
         },
       );
@@ -116,8 +128,11 @@ function AcademyProfileForm({ academyId }: IProfileFormProps) {
       <>
         <label
           htmlFor="file"
-          className="flex size-20 cursor-pointer flex-col items-center justify-center gap-2 rounded-full border border-solid border-gray-200 bg-gray-50"
+          className="relative flex size-20 cursor-pointer flex-col items-center justify-center gap-2 rounded-full border border-solid border-gray-200 bg-gray-50"
         >
+          <div className="absolute bottom-0 right-[-5px] w-fit rounded-full bg-gray-200 p-2 text-gray-500">
+            <FaPencil size={13} />
+          </div>
           {filePreview ? (
             <Image src={filePreview} width={200} height={200} className="size-20 rounded-full object-cover" alt="img" />
           ) : profile?.result.profileImageUrl ? (
@@ -233,7 +248,7 @@ function AcademyProfileForm({ academyId }: IProfileFormProps) {
                 소개
               </Typography>
               {edit ? (
-                <Input register={register} errors={errors} id="introduction" label="소개" variant="secondary" required />
+                <Input disabled={profileLoading} register={register} errors={errors} id="introduction" label="소개" variant="secondary" required />
               ) : (
                 <Typography size="h5" as="p" className="font-normal">
                   {profile?.result.introduction}
