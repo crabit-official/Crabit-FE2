@@ -10,7 +10,7 @@ interface IMenuItemProps {
 
 function MenuItem({ onClick, label, className }: IMenuItemProps) {
   return (
-    <div onClick={onClick} className={cn('px-4 py-3 font-semibold transition hover:bg-neutral-100', className)}>
+    <div onClick={onClick} className={cn('px-4 py-3 font-semibold transition hover:bg-gray-100', className)}>
       {label}
     </div>
   );
