@@ -168,17 +168,15 @@ function AcademyProfileForm({ academyId }: IProfileFormProps) {
 
   if (profileLoading) {
     return (
-      <Flex column="start" className="w-full">
-        <Flex column="start" className="w-full">
-          <Skeleton width={80} height={20} className="rounded-sm" />
-          <Spacing direction="vertical" size={5} />
-          <Skeleton width={60} height={20} className="rounded-sm" />
+      <Flex column="start" className="w-full gap-5 p-8">
+        <Flex column="start" className="w-full gap-1">
+          <Skeleton height={25} width={100} className="rounded-md" />
+          <Skeleton height={15} width={200} className="rounded-md" />
         </Flex>
-        <Spacing direction="vertical" size={20} />
-        <Spacing direction="vertical" size={20} />
-        <Flex>
-          <Skeleton height={330} width={500} className="w-full rounded-md" />
+        <Flex className="w-full pb-14">
+          <Skeleton height={80} width={80} className="rounded-full" />
         </Flex>
+        <Skeleton height={100} className="w-full rounded-md" />
       </Flex>
     );
   }
