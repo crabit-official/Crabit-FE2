@@ -35,8 +35,8 @@ function InvitationTab() {
   });
 
   return (
-    <>
-      <Flex row="between">
+    <div>
+      <Flex row="between" className="w-full">
         <Flex column="center" className="w-full">
           <Button variant="link" className="border-gray-800" onClick={() => setTab('STUDENT')}>
             학생
@@ -79,7 +79,7 @@ function InvitationTab() {
           </button>
         </Flex>
       </div>
-    </>
+    </div>
   );
 }
 
