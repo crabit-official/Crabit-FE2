@@ -69,12 +69,30 @@ function AcademyMenu() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute left-0 top-14 w-[40vw] overflow-hidden rounded-xl bg-white text-sm shadow-custom md:w-[150%]"
+            className="absolute left-0 top-14 max-h-64 w-[40vw] overflow-hidden overflow-y-auto rounded-xl bg-white text-sm shadow-custom md:w-[150%]"
           >
-            <div className="flex max-h-64 cursor-pointer flex-col overflow-y-auto">
+            <div className="flex max-h-64 cursor-pointer flex-col">
               {academies?.pages.map((page) =>
                 page.result.memberAcademyList.map((academy) => (
                   <MenuItem
+                    icon={
+                      academyInfo?.result.academy.mainImageUrl ? (
+                        <Image
+                          src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${academyInfo?.result.academy.mainImageUrl}`}
+                          alt="academy logo"
+                          width={20}
+                          height={20}
+                        />
+                      ) : (
+                        <Image
+                          src="/images/logo_app.png"
+                          alt="default academy logo"
+                          width={25}
+                          height={25}
+                          className="rounded-lg border border-solid border-gray-200 object-cover"
+                        />
+                      )
+                    }
                     key={academy.academyId}
                     onClick={() => {
                       setIsOpen(false);
