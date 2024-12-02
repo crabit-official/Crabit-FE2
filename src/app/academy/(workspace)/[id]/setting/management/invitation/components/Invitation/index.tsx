@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 import { getInvitationCode, postInvitationCode } from '@/shared/apis/invitation';
 import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
+import FramerScale from '@/shared/components/FramerScale';
 import Spacing from '@/shared/components/Spacing/spacing';
 import Typography from '@/shared/components/Typography';
 import { queryKeys } from '@/shared/constants/query-keys';
@@ -49,7 +50,7 @@ function InvitationTab() {
   };
 
   return (
-    <div>
+    <FramerScale>
       <Flex row="between" className="w-full">
         <Flex column="center" className="w-full">
           <Button variant="link" className="border-gray-800" onClick={() => setTab('STUDENT')}>
@@ -98,7 +99,7 @@ function InvitationTab() {
           </div>
         </Flex>
       </div>
-    </div>
+    </FramerScale>
   );
 }
 
