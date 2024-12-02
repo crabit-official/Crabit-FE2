@@ -119,7 +119,7 @@ function AcademyProfileForm({ academyId }: IProfileFormProps) {
           className="flex size-20 cursor-pointer flex-col items-center justify-center gap-2 rounded-full border border-solid border-gray-200 bg-gray-50"
         >
           {filePreview ? (
-            <Image src={filePreview} width={200} height={200} className="size-52 rounded-full object-cover" alt="img" />
+            <Image src={filePreview} width={200} height={200} className="size-20 rounded-full object-cover" alt="img" />
           ) : profile?.result.profileImageUrl ? (
             <Image
               src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${profile.result.profileImageUrl}`}
