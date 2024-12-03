@@ -1,7 +1,7 @@
 import type { Session } from 'next-auth';
 
 import type { CommonResponse } from '@/shared/apis/dto/response';
-import type { ACADEMY_ROLE } from '@/shared/enums/academy';
+import type { ACADEMY_ROLE, FREEMIUM_TIRE } from '@/shared/enums/academy';
 import type {
   CHALLENGE_CATEGORY,
   CHALLENGE_LOG_APPROVAL_STATUS,
@@ -28,7 +28,7 @@ export interface IPostEnrollAcademyDTO {
   academyEmail: string;
   academyName: string;
   contactNumber: string;
-  studentCount: number;
+  freemiumTier: FREEMIUM_TIRE;
 }
 
 export type IPostEnrollAcademyResponse = CommonResponse<IPostEnrollAcademyDTO>;
