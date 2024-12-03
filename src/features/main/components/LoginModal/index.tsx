@@ -8,6 +8,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
+import usePasswordChangeModal from '../../hooks/use-password-change-modal';
+
 import useLoginModal from '@/features/main/hooks/use-login-modal';
 import useRegisterModal from '@/features/main/hooks/use-register-modal';
 import Button from '@/shared/components/Button';
@@ -20,6 +22,7 @@ import { loginSchema } from '@/shared/utils/schema';
 function LoginModal() {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
+  const passwordChangeModal = usePasswordChangeModal();
   const [isLoading, setIsLoading] = useState(false);
   const queryClient = useQueryClient();
 
@@ -86,6 +89,17 @@ function LoginModal() {
           className="cursor-pointer text-neutral-800 hover:underline"
         >
           회원가입
+        </div>
+      </div>
+      <div className="flex flex-row items-center justify-center gap-2">
+        <div
+          onClick={() => {
+            loginModal.onClose();
+            passwordChangeModal.onOpen();
+          }}
+          className="cursor-pointer text-neutral-800 hover:underline"
+        >
+          비밀번호 찾기
         </div>
       </div>
     </div>

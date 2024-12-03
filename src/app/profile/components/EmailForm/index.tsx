@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { type FieldValues, useForm } from 'react-hook-form';
 import { FaCheck } from 'react-icons/fa';
 import { LiaHourglassEndSolid } from 'react-icons/lia';
+import { useRouter } from 'next/navigation';
 
 import PasswordForm from '@/app/profile/components/PasswordForm';
 import BoxContainer from '@/shared/components/BoxContainer';
@@ -20,6 +21,7 @@ import useGetProfile from '@/shared/hooks/main/useGetProfile';
 function EmailForm() {
   const [isInputVisible, setIsInputVisible] = useState(false);
   const { data: profile, isPending: profileLoading } = useGetProfile();
+  const router = useRouter();
 
   const {
     register: codeRegister,
@@ -38,11 +40,18 @@ function EmailForm() {
   };
 
   const onSubmit = (data: FieldValues) => {
-    codeMutate({
-      email: profile?.email as string,
-      emailVerificationPurpose: EMAIL_VERIFIED_TYPE.UPDATE_PASSWORD_VERIFIED,
-      code: data.code,
-    });
+    codeMutate(
+      {
+        email: profile?.email as string,
+        emailVerificationPurpose: EMAIL_VERIFIED_TYPE.UPDATE_PASSWORD_VERIFIED,
+        code: data.code,
+      },
+      {
+        onSuccess: () => {
+          router.push(`/profile/password?step=password`);
+        },
+      },
+    );
   };
 
   return (
