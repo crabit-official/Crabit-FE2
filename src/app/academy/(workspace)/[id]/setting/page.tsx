@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AcademyProfileForm from './components/AcademyProfileFOrm';
+import AcademyProfileForm from './components/AcademyProfileForm';
 
 function AcademySettingBoardPage({ params }: { params: { id: string } }) {
   return <AcademyProfileForm academyId={Number(params.id)} />;
