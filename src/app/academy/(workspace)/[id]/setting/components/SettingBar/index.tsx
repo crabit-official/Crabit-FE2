@@ -21,7 +21,7 @@ function SettingBar({ academyId, academyRole }: ISettingBarProps) {
       <Flex column="start" className="gap-2">
         <Typography size="h4">내 정보</Typography>
         <Link
-          href={`/academy/${academyId}/setting?tab=profile`}
+          href={`/academy/${academyId}/setting`}
           className={`${pathname === `/academy/${academyId}/setting` ? 'text-main-deep-pink' : 'text-gray-700'} gap-1 font-normal text-gray-600 hover:opacity-60`}
         >
           프로필 수정
