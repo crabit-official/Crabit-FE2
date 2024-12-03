@@ -63,7 +63,7 @@ function AcademyProfileMenu() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute right-0 top-12 w-[40vw] overflow-hidden rounded-xl bg-white text-sm shadow-custom md:w-full"
+            className="absolute right-0 top-12 w-[40vw] overflow-hidden rounded-xl bg-white text-sm shadow-custom md:w-[10vw]"
           >
             <div className="flex cursor-pointer flex-col">
               <MenuItem

@@ -21,11 +21,11 @@ function MenuItem({ title, content, type = 'dashboard', academyId, activeTab }: 
   const selectedTab = activeTab || 'all';
 
   return (
-    <motion.ul className="border-b border-solid border-gray-300" layout onClick={toggleOpen}>
-      <motion.div layout className="flex cursor-pointer items-center justify-between py-4 text-lg font-bold">
+    <div className="border-b border-solid border-gray-300" onClick={toggleOpen}>
+      <div className="flex cursor-pointer items-center justify-between py-4 text-lg font-bold">
         <p>{title}</p>
         <GoX className={`${isOpen ? 'rotate-180' : 'rotate-45'} transition-transform duration-500`} />
-      </motion.div>
+      </div>
       <ul>
         <AnimatePresence>
           {isOpen && (
@@ -44,7 +44,7 @@ function MenuItem({ title, content, type = 'dashboard', academyId, activeTab }: 
           )}
         </AnimatePresence>
       </ul>
-    </motion.ul>
+    </div>
   );
 }
 
