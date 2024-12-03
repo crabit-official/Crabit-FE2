@@ -29,7 +29,7 @@ function SettingBar({ academyId, academyRole }: ISettingBarProps) {
       </Flex>
       {ACADEMY_ROLE.STUDENT !== academyRole && (
         <Flex column="start" className="gap-2">
-          <Typography size="h4">학원</Typography>
+          <Typography size="h4">기관</Typography>
           {ACADEMY_ROLE.PRINCIPAL === academyRole && (
             <>
               {/* <Link */}
@@ -48,7 +48,7 @@ function SettingBar({ academyId, academyRole }: ISettingBarProps) {
                 href={`/academy/${academyId}/setting/management/instructor`}
                 className={`${pathname === `/academy/${academyId}/setting/management/instructor` ? 'text-main-deep-pink' : 'text-gray-700'} gap-1 font-normal text-gray-600 hover:opacity-60`}
               >
-                강사 관리
+                관리자 관리
               </Link>
             </>
           )}

@@ -5,9 +5,9 @@ export function getRoleName(role: ACADEMY_ROLE) {
     case ACADEMY_ROLE.STUDENT:
       return '학생';
     case ACADEMY_ROLE.PRINCIPAL:
-      return '원장';
+      return '대표';
     case ACADEMY_ROLE.INSTRUCTOR:
-      return '강사';
+      return '관리자';
     default:
       return '학생';
   }

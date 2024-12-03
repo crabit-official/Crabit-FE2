@@ -84,15 +84,15 @@ function InstructorDetail({ academyId, academyMemberId }: IInstructorDetailProps
   if (open) {
     return (
       <SmallModal
-        title="교사 강퇴"
-        actionLabel="교사강퇴"
+        title="관리자 강퇴"
+        actionLabel="관리자 강퇴"
         onClose={() => setOpen((prev) => !prev)}
         onSubmit={handleRevoke}
         secondaryAction={() => setOpen((prev) => !prev)}
         secondaryActionLabel="취소하기"
         body={
           <Typography size="h7" className="text-center font-normal text-gray-500">
-            ⚠️ 교사를 강퇴시킬 경우 교사는 학원에 접근할 수 없게 됩니다.
+            ⚠️ 관리자를 강퇴시킬 경우 관리자는 기관에 접근할 수 없게 됩니다.
           </Typography>
         }
       />
@@ -162,7 +162,7 @@ function InstructorDetail({ academyId, academyMemberId }: IInstructorDetailProps
             <Flex column="start" className="gap-1">
               <Typography size="h5">추가 설명</Typography>
               <Typography size="h7" className="font-normal opacity-80">
-                {profile?.result.teacher.description ? profile?.result.teacher.description : '교사에 대한 설명이 없습니다.'}
+                {profile?.result.teacher.description ? profile?.result.teacher.description : '관리자에 대한 설명이 없습니다.'}
               </Typography>
             </Flex>
 
@@ -179,7 +179,7 @@ function InstructorDetail({ academyId, academyMemberId }: IInstructorDetailProps
           className="w-fit px-2 py-1 text-sm hover:bg-main-deep-pink hover:text-white"
           onClick={() => setOpen((prev) => !prev)}
         >
-          교사 강퇴
+          관리자 강퇴
         </Button>
       </div>
     </FramerScale>

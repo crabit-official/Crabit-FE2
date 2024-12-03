@@ -59,7 +59,7 @@ function InvitationTab() {
         </Flex>
         <div className="w-full">
           <Button variant="link" className="border-gray-800" onClick={() => setTab('INSTRUCTOR')}>
-            선생님
+            관리자
           </Button>
           <div className={`${tab === 'INSTRUCTOR' ? 'h-[0.1rem] bg-gray-400' : ''}`} />
         </div>
@@ -67,7 +67,7 @@ function InvitationTab() {
       <Flex column="start" className="mt-10 gap-1">
         <Typography size="h5-2">초대 코드 발급</Typography>
         <Typography size="h5-2" color="neutral-300">
-          원장선생님께서, 초대코드를 통해, 학생과 선생님을 초대할 수 있어요!
+          초대코드를 통해, 학생과 관리자를 초대할 수 있어요!
         </Typography>
       </Flex>
       <Spacing direction="vertical" size={16} />
