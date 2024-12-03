@@ -8,6 +8,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
+import usePasswordChangeModal from '../../hooks/use-password-change-modal';
+
 import useLoginModal from '@/features/main/hooks/use-login-modal';
 import useRegisterModal from '@/features/main/hooks/use-register-modal';
 import Button from '@/shared/components/Button';
@@ -20,6 +22,7 @@ import { loginSchema } from '@/shared/utils/schema';
 function LoginModal() {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
+  const passwordChangeModal = usePasswordChangeModal();
   const [isLoading, setIsLoading] = useState(false);
   const queryClient = useQueryClient();
 
@@ -77,15 +80,26 @@ function LoginModal() {
       </Button>
       {/* 소셜로그인 추가 될 떄 마다 아래 버튼 추가 */}
       <div className="flex flex-row items-center justify-center gap-2">
-        <div>아직 크래빗 계정이 없으신가요?</div>
-        <div
-          onClick={() => {
-            loginModal.onClose();
-            registerModal.onOpen();
-          }}
-          className="cursor-pointer text-neutral-800 hover:underline"
-        >
-          회원가입
+        <div className="flex items-center justify-center gap-2">
+          <span
+            className="cursor-pointer text-neutral-800 hover:underline"
+            onClick={() => {
+              loginModal.onClose();
+              registerModal.onOpen();
+            }}
+          >
+            회원가입
+          </span>
+          <span>|</span>
+          <span
+            className="cursor-pointer text-neutral-800 hover:underline"
+            onClick={() => {
+              loginModal.onClose();
+              passwordChangeModal.onOpen();
+            }}
+          >
+            비밀번호 찾기
+          </span>
         </div>
       </div>
     </div>

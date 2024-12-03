@@ -72,3 +72,13 @@ export type IProfileResponse = TCommonResponse<{
   profileImageUrl: string;
   socialType: SOCIAL_TYPE;
 }>;
+
+// 비밀번호 변경 (로그인하지 않은 유저)
+export type TNonLoginPasswordChange = {
+  email: string;
+  password: string;
+};
+
+export type TNonLoginPasswordChangeResponse = TCommonResponse<{
+  memberId: number;
+}>;

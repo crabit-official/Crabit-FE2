@@ -16,10 +16,10 @@ export async function editProfile({ name, profileImageUrl }: { name: string; pro
   return (await res.json()) as CommonResponse<IProfileResponse>;
 }
 
-export async function changePassword({ email, password }: { email: string; password: string }) {
+export async function changePassword({ password }: { password: string }) {
   const res = await fetch(`/api/auth/password`, {
     method: 'PUT',
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ password }),
   });
 
   if (!res.ok) {
