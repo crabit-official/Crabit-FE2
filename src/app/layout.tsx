@@ -8,6 +8,7 @@ import { Toaster } from 'sonner';
 
 import LoginModal from '@/features/main/components/LoginModal';
 import Navbar from '@/features/main/components/Navbar';
+import PasswordChangeModal from '@/features/main/components/PasswordChangeModal';
 import RegisterModal from '@/features/main/components/RegisterModal';
 import Flex from '@/shared/components/Flex';
 import Footer from '@/shared/components/Footer';
@@ -57,6 +58,7 @@ export default async function RootLayout({
                   <main className="flex-1 py-20">{children}</main>
                   <LoginModal />
                   <RegisterModal />
+                  <PasswordChangeModal />
                   <Toaster richColors />
                 </Flex>
                 <Footer />

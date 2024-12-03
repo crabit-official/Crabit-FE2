@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import type { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
+import type { FieldErrors, FieldValues, Path, UseFormRegister } from 'react-hook-form';
 import { BiWon } from 'react-icons/bi';
 import { cva, type VariantProps } from 'class-variance-authority';
 
@@ -22,23 +22,23 @@ const InputVariants = cva('peer w-full rounded-md p-4 pt-7 font-light outline-no
   },
 });
 
-interface IInputProps extends VariantProps<typeof InputVariants> {
+interface IInputProps<T extends FieldValues> extends VariantProps<typeof InputVariants> {
   actionButton?: React.ReactNode;
   actionButtonLoading?: boolean;
   className?: string;
   disabled?: boolean;
-  errors: FieldErrors;
+  errors: FieldErrors<T>;
   formatPrice?: boolean;
-  id: string;
+  id: Path<T>;
   label: string;
   onClickButton?: () => void;
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegister<T>;
   required?: boolean;
   type?: string;
   valueAsNumber?: boolean;
 }
 
-function Input({
+function Input<T extends FieldValues>({
   id,
   label,
   type,
@@ -53,7 +53,7 @@ function Input({
   onClickButton,
   actionButtonLoading,
   variant,
-}: IInputProps) {
+}: IInputProps<T>) {
   return (
     <div className={cn(`relative w-full`, className)}>
       {formatPrice && <BiWon size={24} className="absolute left-2 top-5 text-neutral-700" />}

@@ -77,9 +77,11 @@ function Modal({ isOpen = true, onClose, onSubmit, title, body, footer, actionLa
                     {secondaryActionLabel}
                   </Button>
                 )}
-                <Button disabled={disabled} onClick={handleSubmit}>
-                  {actionLabel}
-                </Button>
+                {actionLabel && (
+                  <Button disabled={disabled} onClick={handleSubmit}>
+                    {actionLabel}
+                  </Button>
+                )}
               </div>
               {footer}
             </div>

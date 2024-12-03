@@ -2,6 +2,8 @@ import { axiosInstance } from '../libs/axios-instance';
 import type {
   TCheckVerifyCodeRequest,
   TCheckVerifyCodeResponse,
+  TNonLoginPasswordChange,
+  TNonLoginPasswordChangeResponse,
   TPostSignupRequest,
   TPostSignupResponse,
   TSendVerifyCodeRequest,
@@ -40,4 +42,14 @@ export const postCheckVerifyCode = async (request: TCheckVerifyCodeRequest) => {
   });
 
   return data.result as TCheckVerifyCodeResponse;
+};
+
+// 비밀번호 변경 (로그인하지 않은 유저)
+export const nonLoginPasswordChange = async (request: TNonLoginPasswordChange) => {
+  const { data } = await axiosInstance.put(`/api/v1/auth/password/non-login`, {
+    email: request.email,
+    password: request.password,
+  });
+
+  return data.result as TNonLoginPasswordChangeResponse;
 };

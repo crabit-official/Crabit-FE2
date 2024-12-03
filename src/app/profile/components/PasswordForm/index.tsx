@@ -11,11 +11,7 @@ import Typography from '@/shared/components/Typography';
 import useChangePassword from '@/shared/hooks/profile/useChangePassword';
 import { passwordSchema } from '@/shared/utils/schema';
 
-interface IEmailProps {
-  email: string;
-}
-
-function PasswordForm({ email }: IEmailProps) {
+function PasswordForm() {
   const {
     register,
     handleSubmit,
@@ -26,17 +22,14 @@ function PasswordForm({ email }: IEmailProps) {
   const { mutate, isPending } = useChangePassword();
 
   const onSubmit = (data: FieldValues) => {
+    console.log(data);
     mutate({
-      email,
       password: data.password,
     });
   };
 
   return (
     <Flex column="start" className="gap-4">
-      <Typography size="h3" as="p" className="opacity-80">
-        비밀번호 수정
-      </Typography>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 sm:flex-row">
         <Input type="password" register={register} id="password" errors={errors} label="새 비밀번호" disabled={isPending} />
         <Button type="submit" className="w-full text-white sm:w-16" disabled={isPending}>
