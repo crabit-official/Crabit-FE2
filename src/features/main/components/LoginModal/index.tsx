@@ -80,26 +80,26 @@ function LoginModal() {
       </Button>
       {/* 소셜로그인 추가 될 떄 마다 아래 버튼 추가 */}
       <div className="flex flex-row items-center justify-center gap-2">
-        <div>아직 크래빗 계정이 없으신가요?</div>
-        <div
-          onClick={() => {
-            loginModal.onClose();
-            registerModal.onOpen();
-          }}
-          className="cursor-pointer text-neutral-800 hover:underline"
-        >
-          회원가입
-        </div>
-      </div>
-      <div className="flex flex-row items-center justify-center gap-2">
-        <div
-          onClick={() => {
-            loginModal.onClose();
-            passwordChangeModal.onOpen();
-          }}
-          className="cursor-pointer text-neutral-800 hover:underline"
-        >
-          비밀번호 찾기
+        <div className="flex items-center justify-center gap-2">
+          <span
+            className="cursor-pointer text-neutral-800 hover:underline"
+            onClick={() => {
+              loginModal.onClose();
+              registerModal.onOpen();
+            }}
+          >
+            회원가입
+          </span>
+          <span>|</span>
+          <span
+            className="cursor-pointer text-neutral-800 hover:underline"
+            onClick={() => {
+              loginModal.onClose();
+              passwordChangeModal.onOpen();
+            }}
+          >
+            비밀번호 찾기
+          </span>
         </div>
       </div>
     </div>
