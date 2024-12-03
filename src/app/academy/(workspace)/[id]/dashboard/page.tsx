@@ -39,7 +39,6 @@ async function AcademyDashBoardPage({ params, searchParams }: IAcademyDashBoardP
   });
 
   const academyData = await response.json();
-
   const AcademyProfile = await response2.json();
 
   return (
