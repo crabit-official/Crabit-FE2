@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 // 공통 스키마
-const email = z.string().email({ message: '유효한 이메일을 입력하세요.' });
-const password = z.string().regex(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[\W_]).{8,16}$/, {
+export const email = z.string().email({ message: '유효한 이메일을 입력하세요.' });
+export const password = z.string().regex(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[\W_]).{8,16}$/, {
   message: '비밀번호는 8~16자이며, 영문자, 숫자, 특수문자를 포함해야 합니다.',
 });
 const name = z.string().min(1, { message: '이름을 입력해주세요.' });
