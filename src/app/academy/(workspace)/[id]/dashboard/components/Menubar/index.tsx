@@ -30,7 +30,7 @@ function Menubar({ academyId, activeTab, role }: IMenubarProps) {
   }, [debounceSearch, activeTab, academyId, router]);
 
   return (
-    <Flex column="start" className="gap-4">
+    <Flex column="start" className="w-full gap-4">
       <ul>
         {role === ACADEMY_ROLE.STUDENT ? (
           <MenuItem title="챌린지 상태" content={SUBMISSION_STATU_MENU} academyId={academyId} activeTab={activeTab} />
