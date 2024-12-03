@@ -11,6 +11,7 @@ import PlusChallengeCard from '@/app/academy/(workspace)/[id]/dashboard/componen
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import useGetInfiniteAcademyList from '@/shared/hooks/academy/useGetInfiniteAcademyList';
+import { getRoleName } from '@/shared/utils/academyRole';
 
 function AcademyList() {
   const router = useRouter();
@@ -41,7 +42,7 @@ function AcademyList() {
   return (
     <div className="grid h-full grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
       <PlusChallengeCard
-        content={`학원\n초대코드 가입`}
+        content={`기관\n초대코드 가입`}
         onClick={() => {
           invitationModal.onOpen();
         }}
@@ -58,7 +59,7 @@ function AcademyList() {
             imageUrl={academy.academyMainImageUrl}
             leftLabel={
               <Typography color="main-white" size="h7">
-                {getRoleLabel(academy.academyRole)}
+                {getRoleName(academy.academyRole)}
               </Typography>
             }
           />
@@ -75,16 +76,3 @@ function AcademyList() {
 }
 
 export default AcademyList;
-
-function getRoleLabel(role: string) {
-  switch (role) {
-    case 'PRINCIPAL':
-      return '원장님';
-    case 'INSTRUCTOR':
-      return '강사';
-    case 'STUDENT':
-      return '학생';
-    default:
-      return '유저';
-  }
-}

@@ -96,7 +96,7 @@ export interface IAcademy {
   academyMainImageUrl: string;
   academyMemberId: number;
   academyName: string;
-  academyRole: string;
+  academyRole: ACADEMY_ROLE;
   nickname: string;
   profileImageUrl: string;
 }
