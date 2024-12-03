@@ -40,24 +40,13 @@ function InvitationModal() {
   const onSubmit: SubmitHandler<FieldValues> = async (data: FieldValues) => {
     setIsLoading(true);
 
-    await mutateAsync(
-      {
-        joinCode: data.joinCode,
-        academyRole: activeTab === 0 ? 'STUDENT' : 'INSTRUCTOR',
-        nickname: data.nickname,
-        introduction: data.introduction,
-        school: data.school,
-      },
-      {
-        onSuccess: () => {
-          console.log('성공');
-        },
-        onError: (error) => {
-          console.log(error);
-          console.error('Error');
-        },
-      },
-    );
+    await mutateAsync({
+      joinCode: data.joinCode,
+      academyRole: activeTab === 0 ? 'STUDENT' : 'INSTRUCTOR',
+      nickname: data.nickname,
+      introduction: data.introduction,
+      school: data.school,
+    });
 
     setIsLoading(false);
   };
