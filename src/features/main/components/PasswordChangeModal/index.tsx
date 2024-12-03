@@ -12,6 +12,7 @@ import useRegisterModal from '../../hooks/use-register-modal';
 import BoxContainer from '@/shared/components/BoxContainer';
 import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
+import Framer from '@/shared/components/Framer';
 import Heading from '@/shared/components/Heading';
 import Input from '@/shared/components/Input';
 import Modal from '@/shared/components/Modal';
@@ -109,31 +110,35 @@ function PasswordChangeModal() {
           />
         )}
         {isVerifyCodeVisible && (
-          <Input
-            register={register}
-            id="code"
-            errors={errors}
-            label="인증코드"
-            actionButton="코드 인증"
-            onClickButton={() => {
-              codeMutate(
-                {
-                  code: getValues('code'),
-                  email: getValues('email'),
-                  emailVerificationPurpose: EMAIL_VERIFIED_TYPE.UPDATE_PASSWORD_VERIFIED,
-                },
-                {
-                  onSuccess: () => {
-                    setIsVerifyCode(false);
-                    setIsPasswordVisible(true);
+          <Framer>
+            <Input
+              register={register}
+              id="code"
+              errors={errors}
+              label="인증코드"
+              actionButton="코드 인증"
+              onClickButton={() => {
+                codeMutate(
+                  {
+                    code: getValues('code'),
+                    email: getValues('email'),
+                    emailVerificationPurpose: EMAIL_VERIFIED_TYPE.UPDATE_PASSWORD_VERIFIED,
                   },
-                },
-              );
-            }}
-          />
+                  {
+                    onSuccess: () => {
+                      setIsVerifyCode(false);
+                      setIsPasswordVisible(true);
+                    },
+                  },
+                );
+              }}
+            />
+          </Framer>
         )}
         {isPasswordVisible && (
-          <Input id="password" type="password" label="변경 할 비밀번호" disabled={isLoading} register={register} errors={errors} required />
+          <Framer>
+            <Input id="password" type="password" label="새 비밀번호" disabled={isLoading} register={register} errors={errors} required />
+          </Framer>
         )}
         {!isInputVisible && (
           <Button
