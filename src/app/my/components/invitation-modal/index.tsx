@@ -40,37 +40,26 @@ function InvitationModal() {
   const onSubmit: SubmitHandler<FieldValues> = async (data: FieldValues) => {
     setIsLoading(true);
 
-    await mutateAsync(
-      {
-        joinCode: data.joinCode,
-        academyRole: activeTab === 0 ? 'STUDENT' : 'INSTRUCTOR',
-        nickname: data.nickname,
-        introduction: data.introduction,
-        school: data.school,
-      },
-      {
-        onSuccess: () => {
-          console.log('성공');
-        },
-        onError: (error) => {
-          console.log(error);
-          console.error('Error');
-        },
-      },
-    );
+    await mutateAsync({
+      joinCode: data.joinCode,
+      academyRole: activeTab === 0 ? 'STUDENT' : 'INSTRUCTOR',
+      nickname: data.nickname,
+      introduction: data.introduction,
+      school: data.school,
+    });
 
     setIsLoading(false);
   };
 
   const bodyContent = (
     <>
-      <Heading title="크래빗에 오신 것을 환영합니다." subTitle="학원 초대 코드를 통해 학원에 가입해주세요!" />
+      <Heading title="크래빗에 오신 것을 환영합니다." subTitle="초대 코드를 통해 기관에 가입해주세요!" />
       <Tabs.TabList>
         <Tabs.Tab index={0} activeTab={activeTab} setActiveTab={setActiveTab}>
           학생으로 가입
         </Tabs.Tab>
         <Tabs.Tab index={1} activeTab={activeTab} setActiveTab={setActiveTab}>
-          선생님으로 가입
+          관리자로 가입
         </Tabs.Tab>
       </Tabs.TabList>
       <Tabs.TabPanels>
@@ -104,12 +93,12 @@ function InvitationModal() {
       onSubmit={handleSubmit(onSubmit)}
       actionLabel={
         <Typography size="h5" color="main-white">
-          학원 가입 신청하기
+          기관 가입 신청하기
         </Typography>
       }
       disabled={isLoading}
       isOpen={invitationModal.isOpen}
-      title="학원 가입 신청"
+      title="기관 가입 신청"
       body={bodyContent}
     />
   );

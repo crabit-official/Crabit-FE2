@@ -21,13 +21,12 @@ import Spacing from '@/shared/components/Spacing/spacing';
 import usePostCheckVerifyCode from '@/shared/hooks/auth/queries/usePostCheckVerifyCode';
 import usePostSendVerifyCode from '@/shared/hooks/auth/queries/usePostSendVerifyCode';
 
-const STUDENT_COUNT_RANGE = [
-  { value: 'GROUP_ONE', label: '1~10명' },
-  { value: 'GROUP_TWO', label: '11~30명' },
-  { value: 'GROUP_THREE', label: '30~50명' },
-  { value: 'GROUP_FOUR', label: '51~100명' },
-  { value: 'GROUP_FIVE', label: '101~150명' },
-  { value: 'GROUP_SIX', label: '151명 이상' },
+const FREEMIUM_TIER = [
+  { value: 'STARTER', label: '스타터' },
+  { value: 'BASIC', label: '베이직' },
+  { value: 'STANDARD', label: '스탠다드' },
+  { value: 'PREMIUM', label: '프리미엄' },
+  { value: 'ENTERPRISE', label: '엔터프라이즈' },
 ];
 
 function Form() {
@@ -130,7 +129,7 @@ function Form() {
       }
 
       if (response.ok) {
-        toast.success('학원 신청이 완료되었습니다. 내부적으로 검토 후 연락 예정입니다.');
+        toast.success('기관 신청이 완료되었습니다. 내부적으로 검토 후 연락 예정입니다.');
         reset();
         router.push('/');
       }
@@ -143,12 +142,12 @@ function Form() {
   return (
     <form>
       <Flex rowColumn="center">
-        <Input id="academyName" label="학원명" disabled={isLoading} register={register} errors={errors} required />
+        <Input id="academyName" label="기관명" disabled={isLoading} register={register} errors={errors} required />
         <Spacing direction="vertical" size={24} />
         <Input
           id="academyEmail"
           type="email"
-          label="학원 이메일"
+          label="기관 이메일"
           disabled={isLoading}
           register={register}
           errors={errors}
@@ -184,17 +183,17 @@ function Form() {
           </>
         )}
         <Spacing direction="vertical" size={24} />
-        <AddressSearch setValue={setValue} id="academyAddress" label="학원 주소" register={register} errors={errors} required />
+        <AddressSearch setValue={setValue} id="academyAddress" label="기관 주소" register={register} errors={errors} required />
         <Spacing direction="vertical" size={24} />
-        <Input disabled={isLoading} id="academyAddressDetail" label="학원 상세 주소" register={register} errors={errors} required />
+        <Input disabled={isLoading} id="academyAddressDetail" label="기관 상세 주소" register={register} errors={errors} required />
         <Spacing direction="vertical" size={24} />
         <Flex className="w-full flex-col gap-5 md:flex-row">
-          <SelectDropdown id="studentCountRange" label="재학생 수" register={register} errors={errors} options={STUDENT_COUNT_RANGE} />
+          <SelectDropdown id="freemiumTier" label="요금제" register={register} errors={errors} options={FREEMIUM_TIER} />
           <PhoneInput id="contactNumber" label="대표자 번호" disabled={isLoading} control={control} errors={errors} required />
         </Flex>
         <Spacing direction="vertical" size={24} />
         <Button onClick={handleSubmit(onSubmit)} type="submit" variant="outline" className="border-neutral-300 py-5 transition hover:bg-neutral-100">
-          학원 등록하기
+          기관 등록하기
         </Button>
       </Flex>
     </form>
