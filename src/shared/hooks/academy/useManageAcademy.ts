@@ -22,7 +22,7 @@ function useUpdateAcademyInfo(mutationOptions?: UseMutationCustomOptions) {
   return useMutation({
     mutationFn: updateAcademyInfo,
     onSuccess: () => {
-      toast.success('학원 정보 수정을 성공적으로 완료했습니다.');
+      toast.success('기관 정보 수정을 성공적으로 완료했습니다.');
     },
     onError: (error) => {
       toast.error(error.response?.data.message);
@@ -35,7 +35,7 @@ function useLeaveAcademy(mutationOptions?: UseMutationCustomOptions) {
   return useMutation({
     mutationFn: leaveAcademy,
     onSuccess: () => {
-      toast.success('학원 탈퇴를 성공적으로 완료했습니다.');
+      toast.success('기관 탈퇴를 성공적으로 완료했습니다.');
     },
     onError: (error) => {
       toast.error(error.message);
@@ -51,7 +51,7 @@ function useUpdateStudentIntroduction(mutationOptions?: UseMutationCustomOptions
     mutationFn: updateStudentIntroduction,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: [queryKeys.ACADEMY_STUDENT_DETAIL_LIST] });
-      toast.success('학생 소개글 수정을 성공적으로 완료했습니다.');
+      toast.success('학생 설명 수정을 성공적으로 완료했습니다.');
     },
     onError: (error) => {
       toast.error(error.message);
@@ -80,7 +80,7 @@ function useUpdateInstructorIntroduction(mutationOptions?: UseMutationCustomOpti
   return useMutation({
     mutationFn: updateInstructorIntroduction,
     onSuccess: () => {
-      toast.success('선생님 소개글 수정을 성공적으로 완료했습니다.');
+      toast.success('관리자 설명 수정을 성공적으로 완료했습니다.');
     },
     onError: (error) => {
       toast.error(error.message);
@@ -93,7 +93,7 @@ function useRevokeInstructor(mutationOptions?: UseMutationCustomOptions) {
   return useMutation({
     mutationFn: revokeInstructor,
     onSuccess: () => {
-      toast.success('선생님 탈퇴를 성공적으로 완료했습니다.');
+      toast.success('관리자 탈퇴를 성공적으로 완료했습니다.');
     },
     onError: (error) => {
       toast.error(error.message);

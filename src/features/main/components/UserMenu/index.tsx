@@ -50,7 +50,7 @@ function UserMenu() {
           }}
           className="hidden cursor-pointer rounded-full px-4 py-3 text-sm font-semibold transition hover:bg-neutral-100 md:block"
         >
-          내 학원
+          내 기관
         </div>
         <div
           onClick={toggleOpen}
@@ -132,7 +132,7 @@ function UserMenu() {
                     setIsOpen(false);
                     router.push('/my/academy');
                   }}
-                  label="내 학원"
+                  label="내 기관"
                 />
                 <MenuItem
                   onClick={() => {
