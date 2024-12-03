@@ -10,13 +10,15 @@ import { useParams, useRouter } from 'next/navigation';
 import MenuItem from '@/features/main/components/MenuItem';
 import Avatar from '@/shared/components/Avatar';
 import Typography from '@/shared/components/Typography';
-import useGetAcademyProfile from '@/shared/hooks/academy/useGetAcademyProfile';
+import useManageAcademy from '@/shared/hooks/academy/useManageAcademy';
 
 function AcademyProfileMenu() {
   const queryClient = useQueryClient();
   const router = useRouter();
   const params = useParams();
-  const { data: profile } = useGetAcademyProfile(Number(params.id));
+  const { useGetAcademyMemberProfile } = useManageAcademy();
+  const { data: profile } = useGetAcademyMemberProfile({ academyId: Number(params.id) });
+
   const [isOpen, setIsOpen] = useState(false);
   const toggleOpen = useCallback(() => {
     setIsOpen((open) => !open);

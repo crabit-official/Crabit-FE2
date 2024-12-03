@@ -3,8 +3,7 @@
 import { useState } from 'react';
 import { IoCopyOutline } from 'react-icons/io5';
 import { RiRefreshLine } from 'react-icons/ri';
-import { QueryClient } from '@tanstack/query-core';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import { toast } from 'sonner';
 
@@ -19,7 +18,7 @@ import { queryKeys } from '@/shared/constants/query-keys';
 function InvitationTab() {
   const [tab, setTab] = useState<'INSTRUCTOR' | 'STUDENT'>('STUDENT');
   const params = useParams();
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
 
   const { data } = useQuery({
     queryFn: () =>
@@ -60,7 +59,7 @@ function InvitationTab() {
         </Flex>
         <div className="w-full">
           <Button variant="link" className="border-gray-800" onClick={() => setTab('INSTRUCTOR')}>
-            선생님
+            관리자
           </Button>
           <div className={`${tab === 'INSTRUCTOR' ? 'h-[0.1rem] bg-gray-400' : ''}`} />
         </div>
@@ -68,7 +67,7 @@ function InvitationTab() {
       <Flex column="start" className="mt-10 gap-1">
         <Typography size="h5-2">초대 코드 발급</Typography>
         <Typography size="h5-2" color="neutral-300">
-          원장선생님께서, 초대코드를 통해, 학생과 선생님을 초대할 수 있어요!
+          초대코드를 통해, 학생과 관리자를 초대할 수 있어요!
         </Typography>
       </Flex>
       <Spacing direction="vertical" size={16} />

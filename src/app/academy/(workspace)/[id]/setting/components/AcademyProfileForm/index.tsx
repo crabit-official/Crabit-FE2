@@ -191,7 +191,7 @@ function AcademyProfileForm({ academyId }: IProfileFormProps) {
               {edit ? '프로필 수정' : '내 프로필'}
             </Typography>
             <Typography size="h5" as="p" className="text-xs opacity-60">
-              학원 내 프로필 수정
+              기관 내 프로필 수정
             </Typography>
             {edit && <Spacing direction="vertical" size={28} />}
           </Flex>
