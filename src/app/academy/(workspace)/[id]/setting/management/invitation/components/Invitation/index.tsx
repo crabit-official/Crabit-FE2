@@ -3,8 +3,7 @@
 import { useState } from 'react';
 import { IoCopyOutline } from 'react-icons/io5';
 import { RiRefreshLine } from 'react-icons/ri';
-import { QueryClient } from '@tanstack/query-core';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import { toast } from 'sonner';
 
@@ -19,7 +18,7 @@ import { queryKeys } from '@/shared/constants/query-keys';
 function InvitationTab() {
   const [tab, setTab] = useState<'INSTRUCTOR' | 'STUDENT'>('STUDENT');
   const params = useParams();
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
 
   const { data } = useQuery({
     queryFn: () =>
