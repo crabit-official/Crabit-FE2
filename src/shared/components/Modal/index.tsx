@@ -64,7 +64,7 @@ function Modal({ isOpen = true, onClose, onSubmit, title, body, footer, actionLa
         onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
       >
         {/* 컨텐츠 */}
-        <div className={`translate h-dvh duration-300 ${showModal ? 'translate-y-0' : 'translate-y-full'} ${showModal ? 'opacity-100' : 'opacity-0'} `}>
+        <div className={`translate h-full duration-300 ${showModal ? 'translate-y-0' : 'translate-y-full'} ${showModal ? 'opacity-100' : 'opacity-0'} `}>
           <div className="translate relative flex size-full flex-col rounded-lg border-0 bg-white shadow-lg outline-none focus:outline-none md:h-auto lg:h-auto">
             {/* 머리 */}
             <div className="relative flex items-center justify-center rounded-t border-b p-6">
