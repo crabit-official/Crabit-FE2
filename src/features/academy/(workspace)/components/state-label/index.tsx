@@ -4,7 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import Typography from '@/shared/components/Typography';
 import cn from '@/shared/utils/style';
 
-const StateLabelVariants = cva('flex items-center px-2 py-1  text-white font-bold rounded-2xl border border-solid border-gray-100 text-xs', {
+const StateLabelVariants = cva('flex  items-center px-2 py-1 text-white font-bold  border border-solid border-gray-100 text-xs', {
   variants: {
     variant: {
       blue: 'bg-blue-400',
@@ -16,9 +16,14 @@ const StateLabelVariants = cva('flex items-center px-2 py-1  text-white font-bol
       cyan: 'bg-cyan-500',
       lime: 'bg-teal-400',
     },
+    outline: {
+      round: 'rounded-2xl',
+      square: 'rounded-md',
+    },
   },
   defaultVariants: {
     variant: 'gray',
+    outline: 'round',
   },
 });
 
@@ -27,9 +32,9 @@ interface IStateLabelProps extends VariantProps<typeof StateLabelVariants> {
   label: string;
 }
 
-function StateLabel({ className, variant, label }: IStateLabelProps) {
+function StateLabel({ className, variant, label, outline }: IStateLabelProps) {
   return (
-    <Typography size="h5" className={cn(StateLabelVariants({ variant }), className)}>
+    <Typography size="h5" className={cn(StateLabelVariants({ variant, outline }), className)}>
       {label}
     </Typography>
   );
