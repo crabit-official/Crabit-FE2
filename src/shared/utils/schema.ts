@@ -19,6 +19,10 @@ const address = z.string();
 const addressDetail = z.string();
 const mainImageUrl = z.string();
 const contactNumber = z.string();
+const profileImageUrl = z.string();
+const introduction = z.string().max(500);
+const nickname = z.string();
+const school = z.string();
 
 const loginSchema = z.object({
   email,
@@ -68,4 +72,21 @@ const institutionSchema = z.object({
   contactNumber,
 });
 
-export { challengeSchema, challengeTwoSchema, emailSchema, institutionSchema, loginSchema, marketSchema, passwordSchema, signUpSchema };
+const institutionProfileSchema = z.object({
+  profileImageUrl,
+  school,
+  nickname,
+  introduction,
+});
+
+export {
+  challengeSchema,
+  challengeTwoSchema,
+  emailSchema,
+  institutionProfileSchema,
+  institutionSchema,
+  loginSchema,
+  marketSchema,
+  passwordSchema,
+  signUpSchema,
+};
