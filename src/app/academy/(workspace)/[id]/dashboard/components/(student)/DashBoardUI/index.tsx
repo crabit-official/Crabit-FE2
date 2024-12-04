@@ -29,4 +29,5 @@ async function StudentDashBoardUI({ academyId, search, category }: IDashboardPro
     </HydrationBoundary>
   );
 }
+
 export default StudentDashBoardUI;

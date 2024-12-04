@@ -19,7 +19,7 @@ function Tab({ children, index, activeTab, setActiveTab }: PropsWithChildren<{ i
   return (
     <button
       type="button"
-      className={cn('border-b-3 px-14 py-5', {
+      className={cn('border-b-3 flex py-10', {
         'font-bold text-main-deep-pink': activeTab === index,
         'border-transparent font-bold text-gray-500': activeTab !== index,
       })}
