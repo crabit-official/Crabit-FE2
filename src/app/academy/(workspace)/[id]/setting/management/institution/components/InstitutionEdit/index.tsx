@@ -76,7 +76,7 @@ function InstitutionEdit({ academyId }: IAcademyEditFormProps) {
                 variant={getVariantByStatus(academyInfo?.result?.academy?.freemiumTier as FREEMIUM_TIRE)}
                 outline="square"
               />
-              <Typography size="h5">{academyInfo?.result.academy.academyName}</Typography>
+              <Typography size="h4">{academyInfo?.result.academy.academyName}</Typography>
             </Flex>
             <BoxContainer variant="border" className="w-full gap-2 break-keep">
               <span className="flex items-center gap-1">
