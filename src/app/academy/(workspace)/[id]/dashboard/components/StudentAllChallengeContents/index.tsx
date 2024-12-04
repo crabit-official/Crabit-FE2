@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 import AnimateCard from '@/app/academy/(workspace)/[id]/dashboard/components/AnimateCard';
 import PlusChallengeCard from '@/app/academy/(workspace)/[id]/dashboard/components/PlusChallengeCard';
 import { getStatusName } from '@/features/academy/(workspace)/utils/challengeState';
-import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import { LOG_SUBMISSION_NAME } from '@/shared/constants/tab-menu';
 import useGetInfiniteStudentChallengeList from '@/shared/hooks/challenge/useGetInfiniteStudentChallengeList';
@@ -22,7 +21,7 @@ interface IStudentAllChallengeContentsProps {
 function StudentAllChallengeContents({ academyId, category, search }: IStudentAllChallengeContentsProps) {
   const selectedCategory = LOG_SUBMISSION_NAME[category] ?? undefined;
 
-  const { data: challenge, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteStudentChallengeList(academyId, selectedCategory, search);
+  const { data: challenge, fetchNextPage, hasNextPage, isFetching } = useGetInfiniteStudentChallengeList(academyId, selectedCategory, search);
   const router = useRouter();
 
   const { ref, inView } = useInView({
@@ -37,14 +36,6 @@ function StudentAllChallengeContents({ academyId, category, search }: IStudentAl
       }
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
-
-  if (isError) {
-    return (
-      <Flex>
-        <Typography size="h5">에러가 발생했습니다.</Typography>
-      </Flex>
-    );
-  }
 
   const isEmpty = challenge?.pages.every((page) => page.result.studentChallengeList.length === 0);
 
