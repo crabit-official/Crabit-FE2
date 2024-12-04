@@ -21,6 +21,7 @@ import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
 import FramerScale from '@/shared/components/FramerScale';
 import Input from '@/shared/components/Input';
+import Skeleton from '@/shared/components/Skeleton/Skeleton';
 import Typography from '@/shared/components/Typography';
 import { queryKeys } from '@/shared/constants/query-keys';
 import type { FREEMIUM_TIRE } from '@/shared/enums/academy';
@@ -112,6 +113,22 @@ function AcademyEditForm({ academyId }: IAcademyEditFormProps) {
     setIsEditing(false);
   };
 
+  if (isPending) {
+    return (
+      <Flex column="start" className="w-full gap-5 p-8">
+        <Flex rowColumn="center" className="w-full gap-4 pb-5">
+          <Skeleton height={128} width={128} className="rounded-xl" />
+          <Flex rowColumn="center" className="gap-2">
+            <Skeleton height={25} width={90} className="rounded-md" />
+            <Skeleton height={25} width={150} className="rounded-md" />
+          </Flex>
+        </Flex>
+        <Skeleton height={100} className="w-full rounded-md" />
+        <Skeleton height={100} className="w-full rounded-md" />
+      </Flex>
+    );
+  }
+
   let mainImage;
 
   if (isEditing) {
@@ -167,7 +184,7 @@ function AcademyEditForm({ academyId }: IAcademyEditFormProps) {
             <FaPencil size={15} />
           </Button>
         )}
-        <BoxContainer className="flex w-full flex-col items-center gap-4 p-8 pb-14">
+        <BoxContainer className="flex w-full flex-col items-center gap-4 break-keep p-8 pb-14">
           {mainImage}
           <Flex rowColumn="center" className="w-full gap-3">
             {isEditing ? (
@@ -196,14 +213,14 @@ function AcademyEditForm({ academyId }: IAcademyEditFormProps) {
                   />
                   <Typography size="h5">{academyInfo?.result.academy.academyName}</Typography>
                 </Flex>
-                <BoxContainer variant="border" className="w-full gap-2">
+                <BoxContainer variant="border" className="w-full gap-2 break-keep">
                   <span className="flex items-center gap-1">
                     <IoCall /> {academyInfo?.result.academy.contactNumber}
                   </span>
-                  <span className="flex items-center gap-1">
+                  <span className="flex items-center gap-1 break-keep">
                     <FaHouseChimney /> {academyInfo?.result.academy.address} | {academyInfo?.result.academy.addressDetail}
                   </span>
-                  <span className="flex items-center gap-1">
+                  <span className="flex items-center gap-1 break-keep">
                     <MdEmail /> {academyInfo?.result.academy.email}
                   </span>
                 </BoxContainer>
@@ -212,10 +229,10 @@ function AcademyEditForm({ academyId }: IAcademyEditFormProps) {
 
             <BoxContainer variant="border" className="w-full gap-4">
               <Flex column="start">
-                <Typography size="h5" className="text-neutral-700">
+                <Typography size="h5" className="break-keep text-neutral-700">
                   현재 <strong className="font-extrabold text-main-deep-pink">{academyInfo?.result.academy.freemiumTier}</strong> 요금제를 선택중입니다
                 </Typography>
-                <Typography size="h7" className="font-normal opacity-60">
+                <Typography size="h7" className="break-keep font-normal opacity-60">
                   학원의 요금제를 변경하시려면 관리자에게 문의해주세요
                 </Typography>
               </Flex>
