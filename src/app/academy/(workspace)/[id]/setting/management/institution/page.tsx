@@ -1,4 +1,4 @@
-import AcademyEditForm from './components/AcademyEditForm';
+import InstitutionEdit from './components/InstitutionEdit';
 
 interface IAcademyManageProps {
   params: {
@@ -6,7 +6,7 @@ interface IAcademyManageProps {
   };
 }
 
-function AcademyManagementPage({ params }: IAcademyManageProps) {
-  return <AcademyEditForm academyId={Number(params.id)} />;
+function InstitutionManagementPage({ params }: IAcademyManageProps) {
+  return <InstitutionEdit academyId={Number(params.id)} />;
 }
-export default AcademyManagementPage;
+export default InstitutionManagementPage;
