@@ -1,5 +1,7 @@
 import type { CommonResponse } from '../apis/dto/response';
 
+import type { FREEMIUM_TIRE } from '@/shared/enums/academy';
+
 // [원장 선생님] 학생 강퇴
 export type TRevokeStudentRequest = {
   academyId: number;
@@ -65,8 +67,10 @@ export type TGetAcademyInfoResponse = CommonResponse<{
     addressDetail: string;
     contactNumber: string;
     email: string;
+    freemiumTier: FREEMIUM_TIRE;
+    instructorCount: number;
     mainImageUrl: string;
-    studentCountRange: string;
+    studentCount: number;
   };
 }>;
 
