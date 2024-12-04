@@ -17,7 +17,7 @@ function SettingBar({ academyId, academyRole }: ISettingBarProps) {
   const pathname = usePathname();
 
   return (
-    <Flex column="start" className="w-40 gap-8 py-5">
+    <Flex row="start" className="mb-2 w-full gap-8 border-b border-solid border-gray-100 py-5 lg:w-40 lg:flex-col">
       <Flex column="start" className="gap-2">
         <Typography size="h4">내 정보</Typography>
         <Link

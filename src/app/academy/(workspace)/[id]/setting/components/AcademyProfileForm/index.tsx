@@ -190,7 +190,7 @@ function AcademyProfileForm({ academyId }: IProfileFormProps) {
             <Typography size="h3" className="opacity-80">
               {edit ? '프로필 수정' : '내 프로필'}
             </Typography>
-            <Typography size="h5" as="p" className="text-xs opacity-60">
+            <Typography size="h5" as="p" className="break-keep text-xs opacity-60">
               기관 내 프로필 수정
             </Typography>
             {edit && <Spacing direction="vertical" size={28} />}
@@ -227,7 +227,7 @@ function AcademyProfileForm({ academyId }: IProfileFormProps) {
               {edit ? (
                 <Input register={register} errors={errors} id="nickname" label="닉네임" variant="secondary" />
               ) : (
-                <Typography size="h5" as="p" className="font-normal">
+                <Typography size="h5" as="p" className="break-keep font-normal">
                   {profile?.result.nickname}
                 </Typography>
               )}
@@ -239,7 +239,7 @@ function AcademyProfileForm({ academyId }: IProfileFormProps) {
               {edit ? (
                 <Input disabled={profileLoading} register={register} errors={errors} id="introduction" label="소개" variant="secondary" required />
               ) : (
-                <Typography size="h5" as="p" className="font-normal">
+                <Typography size="h5" as="p" className="break-keep font-normal">
                   {profile?.result.introduction}
                 </Typography>
               )}
