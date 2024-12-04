@@ -17,7 +17,7 @@ function SettingBar({ academyId, academyRole }: ISettingBarProps) {
   const pathname = usePathname();
 
   return (
-    <Flex column="start" className="w-40 gap-8 py-5">
+    <Flex row="start" className="mb-2 w-full gap-8 border-b border-solid border-gray-100 py-5 lg:w-40 lg:flex-col">
       <Flex column="start" className="gap-2">
         <Typography size="h4">내 정보</Typography>
         <Link
@@ -32,12 +32,12 @@ function SettingBar({ academyId, academyRole }: ISettingBarProps) {
           <Typography size="h4">기관</Typography>
           {ACADEMY_ROLE.PRINCIPAL === academyRole && (
             <>
-              {/* <Link */}
-              {/*  href={`/academy/${academyId}/setting/management/academy`} */}
-              {/*  className={`${pathname === `/academy/${academyId}/setting/management/academy` ? 'text-main-deep-pink' : 'text-gray-700'} gap-1 font-normal text-gray-600 hover:opacity-60`} */}
-              {/* > */}
-              {/*  학원 정보 수정 */}
-              {/* </Link> */}
+              <Link
+                href={`/academy/${academyId}/setting/management/institution`}
+                className={`${pathname === `/academy/${academyId}/setting/management/institution` ? 'text-main-deep-pink' : 'text-gray-700'} gap-1 font-normal text-gray-600 hover:opacity-60`}
+              >
+                기관 정보 수정
+              </Link>
               <Link
                 href={`/academy/${academyId}/setting/management/invitation`}
                 className={`${pathname === `/academy/${academyId}/setting/management/invitation` ? 'text-main-deep-pink' : 'text-gray-700'} gap-1 font-normal text-gray-600 hover:opacity-60`}

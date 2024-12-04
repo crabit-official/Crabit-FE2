@@ -132,16 +132,7 @@ export async function getAcademyProfile(academyId: number) {
 }
 
 // 학원 정보 수정
-export async function updateAcademyInfo({
-  academyId,
-  address,
-  addressDetail,
-  contactNumber,
-  email,
-  mainImageUrl,
-  name,
-  studentCountRange,
-}: TUpdateAcademyInfoRequest) {
+export async function updateAcademyInfo({ academyId, address, addressDetail, contactNumber, academyName, mainImageUrl }: TUpdateAcademyInfoRequest) {
   const res = await fetch(`/api/manage/academy?academyId=${academyId}`, {
     method: 'PUT',
     headers: {
@@ -151,10 +142,8 @@ export async function updateAcademyInfo({
       address,
       addressDetail,
       contactNumber,
-      email,
       mainImageUrl,
-      name,
-      studentCountRange,
+      academyName,
     }),
   });
 

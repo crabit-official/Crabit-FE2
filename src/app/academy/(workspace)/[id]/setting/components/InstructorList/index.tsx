@@ -39,7 +39,7 @@ function InstructorList({ academyId }: IInstructorListProps) {
   }
 
   return (
-    <div className="grid w-full grid-cols-1 gap-5 pl-0 md:pl-10 lg:grid-cols-2 xl:grid-cols-3">
+    <div className="grid w-full grid-cols-1 gap-5 pl-0 md:pl-10 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
       {instructorData?.pages.map((page) =>
         page.result.teacherList.map((teacher) => (
           <ProfileCard

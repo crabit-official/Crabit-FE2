@@ -1,3 +1,4 @@
+import { FREEMIUM_TIRE } from '@/shared/enums/academy';
 import {
   CHALLENGE_CATEGORY,
   CHALLENGE_LOG_APPROVAL_STATUS,
@@ -7,14 +8,18 @@ import {
   MARKET_VISIBILITY_CATEGORIES,
 } from '@/shared/enums/challenge';
 
-export function getVariantByStatus(status: CHALLENGE_LOG_SUBMISSION_STATUS | CHALLENGE_TYPE | CHALLENGE_CATEGORY | CHALLENGE_LOG_APPROVAL_STATUS) {
+export function getVariantByStatus(
+  status: CHALLENGE_LOG_SUBMISSION_STATUS | CHALLENGE_TYPE | CHALLENGE_CATEGORY | CHALLENGE_LOG_APPROVAL_STATUS | FREEMIUM_TIRE,
+) {
   switch (status) {
     case CHALLENGE_LOG_SUBMISSION_STATUS.NOT_STARTED:
     case CHALLENGE_CATEGORY.NEWSPAPER:
     case CHALLENGE_LOG_APPROVAL_STATUS.INCOMPLETE_CHALLENGE:
+    case FREEMIUM_TIRE.BASIC:
       return 'gray';
     case CHALLENGE_LOG_SUBMISSION_STATUS.IN_PROGRESS:
     case CHALLENGE_CATEGORY.DIARY_WRITING:
+    case FREEMIUM_TIRE.STANDARD:
       return 'green';
     case CHALLENGE_LOG_SUBMISSION_STATUS.ALL_LOGS_SUBMITTED:
     case CHALLENGE_TYPE.ACADEMY:
@@ -27,13 +32,16 @@ export function getVariantByStatus(status: CHALLENGE_LOG_SUBMISSION_STATUS | CHA
     case CHALLENGE_LOG_APPROVAL_STATUS.REJECTED:
       return 'red';
     case CHALLENGE_CATEGORY.LIFESTYLE_HABITS:
+    case FREEMIUM_TIRE.ENTERPRISE:
       return 'purple';
     case CHALLENGE_CATEGORY.ETC:
+    case FREEMIUM_TIRE.PREMIUM:
       return 'yellow';
     case CHALLENGE_CATEGORY.STUDYING:
     case CHALLENGE_LOG_APPROVAL_STATUS.PENDING:
       return 'cyan';
     case CHALLENGE_CATEGORY.READING:
+    case FREEMIUM_TIRE.STARTER:
       return 'lime';
     default:
       return 'gray';
