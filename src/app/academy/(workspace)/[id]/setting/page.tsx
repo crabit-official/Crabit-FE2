@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Flex from '@/shared/components/Flex';
+import InstitutionProfile from '@/app/academy/(workspace)/[id]/setting/components/InstitutionProfile';
 
-function AcademySettingBoardPage({ params }: { params: { id: string } }) {
-  return <AcademyProfileForm academyId={Number(params.id)} />;
+function AcademySettingBoardPage() {
+  return <InstitutionProfile />;
 }
 
 export default AcademySettingBoardPage;
