@@ -26,12 +26,10 @@ export async function PUT(req: NextRequest) {
 
   try {
     const res = await fetchData<TUpdateAcademyInfoResponse>(`/api/v1/academies/${academyId}`, 'PUT', {
-      name: body.name,
-      email: body.email,
+      academyName: body.academyName,
       address: body.address,
       addressDetail: body.addressDetail,
       mainImageUrl: body.mainImageUrl,
-      studentCountRange: body.studentCountRange,
       contactNumber: body.contactNumber,
     });
 
