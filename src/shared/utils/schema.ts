@@ -14,6 +14,11 @@ const visibility = z.enum(['PUBLIC', 'PROTECTED']);
 const booleanAgreement = z.boolean().refine((e) => e, {
   message: '필수 동의 사항입니다.',
 });
+const academyName = z.string();
+const address = z.string();
+const addressDetail = z.string();
+const mainImageUrl = z.string();
+const contactNumber = z.string();
 
 const loginSchema = z.object({
   email,
@@ -55,4 +60,12 @@ const passwordSchema = z.object({
   password,
 });
 
-export { challengeSchema, challengeTwoSchema, emailSchema, loginSchema, marketSchema, passwordSchema, signUpSchema };
+const institutionSchema = z.object({
+  academyName,
+  address,
+  addressDetail,
+  mainImageUrl,
+  contactNumber,
+});
+
+export { challengeSchema, challengeTwoSchema, emailSchema, institutionSchema, loginSchema, marketSchema, passwordSchema, signUpSchema };

@@ -77,13 +77,11 @@ export type TGetAcademyInfoResponse = CommonResponse<{
 // [원장 선생님] 학원 정보 수정
 export type TUpdateAcademyInfoRequest = {
   academyId: number;
+  academyName: string;
   address: string;
   addressDetail: string;
   contactNumber: string;
-  email: string;
   mainImageUrl: string;
-  name: string;
-  studentCountRange: string;
 };
 
 export type TUpdateAcademyInfoResponse = CommonResponse<{
