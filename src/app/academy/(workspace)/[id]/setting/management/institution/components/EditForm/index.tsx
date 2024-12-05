@@ -72,6 +72,7 @@ function EditForm({ academyName, mainImageUrl, address, addressDetail, contactNu
       {
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: [queryKeys.ACADEMY_INFO, academyId] });
+          queryClient.invalidateQueries({ queryKey: [queryKeys.ACADEMY_LIST] });
         },
         onSettled: () => {
           setIsEditing(false);
