@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { type FieldValues, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useInView } from 'react-intersection-observer';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'sonner';
+import type { z } from 'zod';
 
 import Students from '@/features/academy/(workspace)/components/dashboard/Students';
 import BoxContainer from '@/shared/components/BoxContainer';
@@ -15,6 +17,8 @@ import { CHALLENGE_PARTICIPATION_METHODS } from '@/shared/enums/challenge';
 import useGetInfiniteAcademyMemberDetailList from '@/shared/hooks/academy/useGetInfiniteAcademyStudentList';
 import type { IReleaseChallengeDTO } from '@/shared/types/market';
 import { marketSchema } from '@/shared/utils/schema';
+
+type FormValues = z.infer<typeof marketSchema>;
 
 interface IFirstStep {
   academyId: number;
@@ -34,7 +38,7 @@ function FirstStep({ academyId, onNext }: IFirstStep) {
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<FieldValues>({
+  } = useForm<FormValues>({
     resolver: zodResolver(marketSchema),
     mode: 'onBlur',
     defaultValues: {
@@ -43,16 +47,20 @@ function FirstStep({ academyId, onNext }: IFirstStep) {
   });
   const watchCategory = watch('challengeParticipationMethod');
 
-  const handleRelease = (data: FieldValues) => {
+  const handleRelease = (data: FormValues) => {
     const challengeData: Partial<IReleaseChallengeDTO> = {
       totalDays: data.totalDays,
-      challengeParticipationMethod: data.challengeParticipationMethod,
+      challengeParticipationMethod: data.challengeParticipationMethod as CHALLENGE_PARTICIPATION_METHODS,
       studentIdList: [],
       points: data.points,
     };
 
     if (data.challengeParticipationMethod === CHALLENGE_PARTICIPATION_METHODS.ASSIGNED) {
-      challengeData.studentIdList = selectedStudentIdList;
+      if (selectedStudentIdList.length !== 0) challengeData.studentIdList = selectedStudentIdList;
+      else {
+        toast.error('배정형의 경우 학생을 선택해주세요');
+        return;
+      }
     }
 
     onNext({ ...challengeData });
