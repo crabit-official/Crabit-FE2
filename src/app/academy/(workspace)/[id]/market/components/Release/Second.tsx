@@ -28,7 +28,7 @@ export default function SecondStep({ onNext, onBack, content }: ISecondProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleNext)} className="flex flex-col justify-center gap-10">
+    <form onSubmit={handleSubmit(handleNext)} className="flex w-11/12 flex-col justify-center gap-10">
       <Flex column="start" className="gap-4">
         <BoxContainer variant="border">
           <Typography size="h5" as="p" className="opacity-80">

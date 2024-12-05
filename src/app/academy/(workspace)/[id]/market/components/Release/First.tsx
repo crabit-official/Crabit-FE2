@@ -83,7 +83,7 @@ function FirstStep({ academyId, onNext }: IFirstStep) {
   }
 
   return (
-    <form onSubmit={handleSubmit(handleRelease)} className="flex flex-col justify-center gap-10">
+    <form onSubmit={handleSubmit(handleRelease)} className="flex w-11/12 flex-col justify-center gap-10">
       <Flex column="start" className="gap-4">
         <BoxContainer variant="border" className="group transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink">
           <Input id="totalDays" type="number" label="챌린지 기간" register={register} errors={errors} required valueAsNumber />

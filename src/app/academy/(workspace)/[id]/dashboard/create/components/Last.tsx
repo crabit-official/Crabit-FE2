@@ -6,7 +6,7 @@ import Typography from '@/shared/components/Typography';
 
 function LastStep() {
   return (
-    <Flex rowColumn="center" className="w-full gap-10 rounded-xl p-5">
+    <Flex rowColumn="center" className="w-11/12 gap-10 rounded-xl p-5">
       <Framer location="top" duration={0.5}>
         <Image src="/images/icons/icon_check.webp" alt="check img" width={200} height={200} />
       </Framer>

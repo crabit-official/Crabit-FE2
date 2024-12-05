@@ -53,12 +53,14 @@ function ChallengeDetail({ challenge, teacher, academy, academyId, challengeCore
       <Flex column="between" className="size-full gap-10 px-4 py-6">
         <MultiStepProgress {...step}>
           <Flex column="start" className="gap-4">
-            <Typography size="h2" className="px-2 opacity-80">
-              내 기관에 배포
+            <Typography size="h2" className="px-9">
+              우리 기관에 배포
             </Typography>
-            {step.currentProgress === 1 && <FirstStep academyId={academyId} onNext={(data) => handleNext({ ...data })} />}
-            {step.currentProgress === 2 && <SecondStep content={challenge.content} onNext={(data) => handleNext({ ...data })} onBack={handleBack} />}
-            {step.currentProgress === 3 && <LastStep />}
+            <Flex rowColumn="center" className="w-full">
+              {step.currentProgress === 1 && <FirstStep academyId={academyId} onNext={(data) => handleNext({ ...data })} />}
+              {step.currentProgress === 2 && <SecondStep content={challenge.content} onNext={(data) => handleNext({ ...data })} onBack={handleBack} />}
+              {step.currentProgress === 3 && <LastStep />}
+            </Flex>
           </Flex>
         </MultiStepProgress>
       </Flex>
