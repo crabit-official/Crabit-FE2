@@ -59,10 +59,11 @@ function MyChallengeDetail({ challengeData, studentChallengeId, academyId }: IMy
           }
         />
       </div>
-      <div className="grid w-full grid-cols-1 gap-4 xl:grid-cols-2">
-        <Flex column="start" className="gap-4 rounded-xl border border-solid border-gray-100 bg-neutral-50 p-5 shadow-custom">
+      <div className="grid w-full grid-cols-1 gap-4">
+        {/* TODO: 파일 뷰어 제작 */}
+        {/* <Flex column="start" className="gap-4 rounded-xl border border-solid border-gray-100 bg-neutral-50 p-5 shadow-custom">
           파일뷰어 자리입니당... <br /> 아직 미완성 ..
-        </Flex>
+        </Flex> */}
         <Flex column="center" className="w-full gap-4">
           <CreateChallengeForm academyId={academyId} studentChallengeId={studentChallengeId} challengeData={challengeData} />
         </Flex>
