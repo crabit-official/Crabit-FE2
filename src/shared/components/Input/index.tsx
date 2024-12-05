@@ -9,10 +9,10 @@ import Button from '../Button';
 
 import cn from '@/shared/utils/style';
 
-const InputVariants = cva('peer w-full rounded-md p-4 pt-7 font-light outline-none transition disabled:cursor-not-allowed disabled:opacity-70', {
+const InputVariants = cva(' peer w-full rounded-md p-4 pt-7 font-light outline-none transition disabled:cursor-not-allowed disabled:opacity-70', {
   variants: {
     variant: {
-      main: 'border-2 bg-main-white border-neutral-300 focus:border-main-black',
+      main: 'border-2 bg-main-white border-neutral-300 focus:border-main-pink',
       secondary: 'bg-gray-50 border border-solid border-gray-200 focus:border-gray-300',
     },
   },
@@ -63,7 +63,7 @@ function Input<T extends FieldValues>({
         {...register(id, { required, valueAsNumber })}
         placeholder=" "
         type={type}
-        className={cn(InputVariants({ variant }), ` ${formatPrice ? 'pl-9' : 'pl-4'} ${errors[id] && "focus:border-main-pink' border-main-pink"} `)}
+        className={cn(InputVariants({ variant }), ` ${formatPrice ? 'pl-9' : 'pl-4'} ${errors[id] && 'border-main-pink focus:border-main-pink'} `)}
       />
       {actionButton && (
         <div className="transform-[50%] absolute right-[50px] top-1/2 -translate-y-1/2 translate-x-1/2">
@@ -73,7 +73,7 @@ function Input<T extends FieldValues>({
         </div>
       )}
       <label
-        className={`absolute top-5 z-10 origin-[0] -translate-y-3 text-h6 duration-150 ${formatPrice ? 'left-9' : 'left-4'} peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 ${errors[id] ? 'text-main-pink' : 'text-zinc-400'} `}
+        className={`absolute top-5 z-10 origin-[0] -translate-y-3 text-h6 duration-150 ${formatPrice ? 'left-9' : 'left-4'} peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-main-deep-pink ${errors[id] ? 'text-main-deep-pink' : 'text-zinc-400'} `}
       >
         {label}
       </label>

@@ -49,10 +49,9 @@ const challengeTwoSchema = z.object({
   totalDays: days,
 });
 
-const marketSchema = challengeSchema.merge(
+const marketSchema = challengeTwoSchema.merge(
   z.object({
-    points,
-    totalDays: days,
+    challengeParticipationMethod: participationMethod,
   }),
 );
 
