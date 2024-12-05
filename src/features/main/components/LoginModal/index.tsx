@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import type { FieldValues, SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import { FcGoogle } from 'react-icons/fc';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
@@ -12,7 +11,6 @@ import usePasswordChangeModal from '../../hooks/use-password-change-modal';
 
 import useLoginModal from '@/features/main/hooks/use-login-modal';
 import useRegisterModal from '@/features/main/hooks/use-register-modal';
-import Button from '@/shared/components/Button';
 import Heading from '@/shared/components/Heading';
 import Input from '@/shared/components/Input';
 import Modal from '@/shared/components/Modal';
@@ -75,9 +73,9 @@ function LoginModal() {
   const footerContent = (
     <div className="mt-3 flex flex-col gap-4">
       <hr />
-      <Button variant="outline" onClick={() => {}} icon={FcGoogle}>
+      {/* <Button variant="outline" onClick={() => {}} icon={FcGoogle}>
         구글로 로그인하기
-      </Button>
+      </Button> */}
       {/* 소셜로그인 추가 될 떄 마다 아래 버튼 추가 */}
       <div className="flex flex-row items-center justify-center gap-2">
         <div className="flex items-center justify-center gap-2">
