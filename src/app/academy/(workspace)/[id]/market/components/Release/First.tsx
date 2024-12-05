@@ -77,16 +77,16 @@ function FirstStep({ academyId, onNext }: IFirstStep) {
   return (
     <form onSubmit={handleSubmit(handleRelease)} className="flex flex-col justify-center gap-10">
       <Flex column="start" className="gap-4">
-        <BoxContainer variant="border">
+        <BoxContainer variant="border" className="group transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink">
           <Input id="totalDays" type="number" label="챌린지 기간" register={register} errors={errors} required valueAsNumber />
           <Typography size="h5" as="p" className="px-1 text-xs opacity-60">
             tip ) 챌린지 진행 기간은 최소 3일에서 최대 31일까지 설정할 수 있습니다.
           </Typography>
         </BoxContainer>
-        <BoxContainer variant="border">
+        <BoxContainer variant="border" className="group transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink">
           <Input id="points" type="number" label="포인트" register={register} errors={errors} required valueAsNumber />
         </BoxContainer>
-        <BoxContainer variant="border">
+        <BoxContainer variant="border" className="group transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink">
           <SelectDropdown id="challengeParticipationMethod" label="챌린지 참여 방식" register={register} errors={errors} options={METHOD_CATEGORIES} />
           <Typography size="h5" as="p" className="px-1 text-xs opacity-60">
             tip ) 배정형의 경우 참여 학생을 선택합니다.
