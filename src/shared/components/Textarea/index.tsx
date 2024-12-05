@@ -11,7 +11,7 @@ const TextAreaVariants = cva(
   {
     variants: {
       variant: {
-        main: 'border-2 bg-main-white border-neutral-300 focus:border-main-black',
+        main: 'border-2 bg-main-white border-neutral-300 focus:border-main-deep-pink',
         secondary: 'bg-gray-50 border border-solid border-gray-200 focus:border-gray-300',
       },
     },
@@ -35,7 +35,7 @@ function TextArea<T extends FieldValues>({ id, label, disabled, required, regist
   return (
     <div className={cn(`relative w-full`, className)}>
       <textarea
-        id={id as string} // 타입 강제 변환
+        id={id}
         disabled={disabled}
         {...register(id, { required })}
         placeholder=" "
@@ -43,7 +43,7 @@ function TextArea<T extends FieldValues>({ id, label, disabled, required, regist
         {...props}
       />
       <label
-        className={`absolute left-4 top-5 z-10 origin-[0] -translate-y-3 text-h6 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 ${
+        className={`absolute left-4 top-5 z-10 origin-[0] -translate-y-3 text-h6 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-main-deep-pink ${
           errors[id] ? 'text-main-pink' : 'text-zinc-400'
         }`}
       >

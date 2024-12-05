@@ -19,12 +19,12 @@ interface ISelectProps {
 function SelectDropdown({ id, label, disabled, required, register, errors, className, options }: ISelectProps) {
   return (
     <div className={cn(`relative w-full`, className)}>
-      <div className="relative">
+      <div className="group relative">
         <select
           id={id}
           disabled={disabled}
           {...register(id, { required })}
-          className={`w-full appearance-none rounded-md border-2 bg-main-white p-4 pt-6 font-light outline-none transition disabled:cursor-not-allowed disabled:opacity-70 ${errors[id] ? 'border-main-pink' : 'border-neutral-300'} ${errors[id] ? 'focus:border-main-pink' : 'focus:border-main-black'} `}
+          className={`w-full appearance-none rounded-md border-2 bg-main-white p-4 pt-6 font-light outline-none transition focus:border-main-deep-pink disabled:cursor-not-allowed disabled:opacity-70 ${errors[id] ? 'border-main-pink' : 'border-neutral-300'} ${errors[id] ? 'focus:border-main-pink' : 'focus:border-main-black'} `}
         >
           {options.map((option) => (
             <option key={option.value} value={option.value}>
@@ -37,8 +37,9 @@ function SelectDropdown({ id, label, disabled, required, register, errors, class
           <IoIosArrowDown />
         </div>
       </div>
-
-      <label className={`absolute left-4 top-5 z-10 origin-[0] -translate-y-3 scale-75 text-h6 ${errors[id] ? 'text-main-pink' : 'text-zinc-400'} `}>
+      <label
+        className={`absolute left-4 top-5 z-10 origin-[0] -translate-y-3 scale-75 text-h6 group-focus-within:text-main-deep-pink ${errors[id] ? 'text-main-pink' : 'text-zinc-400'} `}
+      >
         {label}
       </label>
     </div>
