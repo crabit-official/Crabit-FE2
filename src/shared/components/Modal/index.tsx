@@ -8,7 +8,7 @@ import Button from '@/shared/components/Button';
 interface IModalProps {
   actionLabel: React.ReactNode;
   body?: React.ReactNode;
-  disabled: boolean;
+  disabled?: boolean;
   footer?: React.ReactNode;
   isOpen?: boolean;
   onClose: () => void;
