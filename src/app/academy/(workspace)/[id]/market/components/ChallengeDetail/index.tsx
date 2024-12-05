@@ -54,7 +54,7 @@ function ChallengeDetail({ challenge, teacher, academy, academyId, challengeCore
         <MultiStepProgress {...step}>
           <Flex column="start" className="gap-4">
             <Typography size="h2" className="px-2 opacity-80">
-              우리 학원에 배포
+              내 기관에 배포
             </Typography>
             {step.currentProgress === 1 && <FirstStep academyId={academyId} onNext={(data) => handleNext({ ...data })} />}
             {step.currentProgress === 2 && <SecondStep content={challenge.content} onNext={(data) => handleNext({ ...data })} onBack={handleBack} />}
