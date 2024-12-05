@@ -1,22 +1,22 @@
 'use client';
 
-import type { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
+import type { FieldErrors, FieldValues, Path, UseFormRegister } from 'react-hook-form';
 import { IoIosArrowDown } from 'react-icons/io';
 
 import cn from '@/shared/utils/style';
 
-interface ISelectProps {
+interface ISelectProps<T extends FieldValues> {
   className?: string;
   disabled?: boolean;
-  errors: FieldErrors;
-  id: string;
+  errors: FieldErrors<T>;
+  id: Path<T>;
   label: string;
   options: { label: string; value: string }[];
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegister<T>;
   required?: boolean;
 }
 
-function SelectDropdown({ id, label, disabled, required, register, errors, className, options }: ISelectProps) {
+function SelectDropdown<T extends FieldValues>({ id, label, disabled, required, register, errors, className, options }: ISelectProps<T>) {
   return (
     <div className={cn(`relative w-full`, className)}>
       <div className="group relative">
