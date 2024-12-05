@@ -30,7 +30,7 @@ export default function SecondStep({ onNext, onBack, content }: ISecondProps) {
   return (
     <form onSubmit={handleSubmit(handleNext)} className="flex w-11/12 flex-col justify-center gap-10">
       <Flex column="start" className="gap-4">
-        <BoxContainer variant="border">
+        <BoxContainer variant="border" className="shadow-hover-gray">
           <Typography size="h5" as="p" className="opacity-80">
             원본 챌린지 내용
           </Typography>
@@ -39,7 +39,10 @@ export default function SecondStep({ onNext, onBack, content }: ISecondProps) {
           </Typography>
         </BoxContainer>
 
-        <BoxContainer variant="border" className="group transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink">
+        <BoxContainer
+          variant="border"
+          className="group shadow-hover-gray transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink"
+        >
           <TextArea id="description" label="챌린지 추가 설명" register={register} errors={errors} />
           <Typography size="h5" as="p" className="break-keep px-1 text-xs opacity-60">
             tip ) 원본 챌린지에 추가할 설명이 있다면 추가해주세요. 없다면, 다음을 눌러주세요
