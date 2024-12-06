@@ -28,6 +28,7 @@ async function ContentDetail({ params, searchParams }: IContentDetailProps) {
     content = (
       <>
         <DetailTab menu={STUDENT_TAB_MENU} academyId={Number(params.id)} releasedChallengeId={Number(params.challengeId)} type="dashboard" />
+        {/* @ts-expect-error Async Server Component */}
         <StudentChallengeDetail tabName={searchParams.tab} academyId={Number(params.id)} studentChallengeId={Number(params.challengeId)} />
       </>
     );
@@ -35,6 +36,7 @@ async function ContentDetail({ params, searchParams }: IContentDetailProps) {
     content = (
       <>
         <DetailTab menu={PRINCIPAL_TAB_MENU} academyId={Number(params.id)} releasedChallengeId={Number(params.challengeId)} type="dashboard" />
+        {/* @ts-expect-error Async Server Component */}
         <PrincipalChallengeDetail tabName={searchParams.tab} releasedChallengeId={Number(params.challengeId)} academyId={Number(params.id)} />
       </>
     );
