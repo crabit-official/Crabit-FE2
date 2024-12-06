@@ -11,11 +11,13 @@ import ChallengeEditForm from '@/app/academy/(workspace)/[id]/dashboard/componen
 import Toggle from '@/app/academy/(workspace)/[id]/dashboard/components/Toggle';
 import { getChallengeCategory, getChallengeType } from '@/features/academy/(workspace)/utils/challengeState';
 import BoxContainer from '@/shared/components/BoxContainer';
+import FallbackMessage from '@/shared/components/FallbackMessage';
 import Flex from '@/shared/components/Flex';
 import SmallModal from '@/shared/components/SmallModal';
 import Typography from '@/shared/components/Typography';
 import useDeleteChallenge from '@/shared/hooks/challenge/useDeleteChallenge';
 import useGetChallengeDetail from '@/shared/hooks/challenge/useGetChallengeDetail';
+import useGetInfiniteStudentChallengeProgressList from '@/shared/hooks/challenge/useGetInfiniteStudentChallengeProgressList';
 import { formatNumberWithCommas } from '@/shared/utils/number';
 
 type TChallengeDetailProps = {
@@ -24,6 +26,8 @@ type TChallengeDetailProps = {
 };
 
 function ChallengeDetail({ academyId, releasedChallengeId }: TChallengeDetailProps) {
+  const { data: students } = useGetInfiniteStudentChallengeProgressList(academyId, releasedChallengeId);
+  const isEmpty = students?.pages.every((page) => page.result.challengeParticipantList.length === 0);
   const { data: challengeData } = useGetChallengeDetail(academyId, releasedChallengeId);
   const { mutate } = useDeleteChallenge({ academyId });
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -33,15 +37,33 @@ function ChallengeDetail({ academyId, releasedChallengeId }: TChallengeDetailPro
     mutate({ academyId, releasedChallengeId });
   };
 
-  console.log(isEdit);
-
-  if (isEdit && challengeData) {
+  if (isEdit && challengeData && isEmpty) {
     return <ChallengeEditForm {...challengeData.result.releasedChallenge} setIsEdit={setIsEdit} />;
   }
 
   if (challengeData)
     return (
       <Flex className="w-full">
+        {isEdit && !isEmpty && (
+          <SmallModal
+            actionLabel="뒤로가기"
+            onClose={() => setIsEdit((prev) => !prev)}
+            onSubmit={() => setIsEdit((prev) => !prev)}
+            body={
+              <FallbackMessage
+                imageUrl="/images/icons/icon_cry.webp"
+                title="챌린지를 수정할 수 없어요"
+                content={
+                  <Typography as="p" size="h6" className="font-normal opacity-90">
+                    이미 참여중인 학생이 있을 경우
+                    <br />
+                    챌린지를 수정할 수 없습니다.
+                  </Typography>
+                }
+              />
+            }
+          />
+        )}
         {isOpen && (
           <SmallModal
             actionLabel="삭제하기"
