@@ -22,7 +22,7 @@ import useBlockComment from '@/shared/hooks/comments/useBlockComment';
 import useDeleteComment from '@/shared/hooks/comments/useDeleteComment';
 import useReportComment from '@/shared/hooks/comments/useReportComment';
 import type { IComment } from '@/shared/types/comment';
-import formatDate from '@/shared/utils/date';
+import timeForToday from '@/shared/utils/timeForToday';
 
 interface ICommentProps extends IComment {
   academyId: number;
@@ -107,7 +107,7 @@ function Comment({ comment, academyMember, academyId, releasedChallengeId, stude
           <Avatar />
         )}
         <Typography size="h7" as="p" className="text-xs font-normal opacity-80">
-          <strong className="text-sm font-semibold">{academyMember ? academyMember.nickname : '탈퇴한 회원'}</strong> • {formatDate(comment.createdAt)}
+          <strong className="text-sm font-semibold">{academyMember ? academyMember.nickname : '탈퇴한 회원'}</strong> • {timeForToday(comment.createdAt)}
         </Typography>
       </Flex>
       <Flex column="start" className="ml-5 gap-2">

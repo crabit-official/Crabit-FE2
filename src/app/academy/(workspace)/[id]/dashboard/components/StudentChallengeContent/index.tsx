@@ -10,7 +10,7 @@ import Flex from '@/shared/components/Flex';
 import Skeleton from '@/shared/components/Skeleton/Skeleton';
 import Typography from '@/shared/components/Typography';
 import type { IStudentChallengeContents } from '@/shared/types/acadmy';
-import formatDate from '@/shared/utils/date';
+import timeForToday from '@/shared/utils/timeForToday';
 
 interface IContentProps extends IStudentChallengeContents {
   academyId: number;
@@ -38,7 +38,7 @@ function StudentChallengeContent({ challengeLog, studentProfile, academyId }: IC
       </Flex>
       <Flex column="start" className="w-full gap-2 py-2">
         <Typography size="h7" as="p" className="px-1 text-xs font-normal opacity-60">
-          {studentProfile.nickname} • {formatDate(challengeLog.createdAt)}
+          {studentProfile.nickname} • {timeForToday(challengeLog.createdAt)}
         </Typography>
         <Flex
           onClick={() => router.push(`/academy/${academyId}/feed/${challengeLog.releasedChallengeId}?log=${challengeLog.studentChallengeLogId}`)}
