@@ -1,5 +1,4 @@
-import type { Session } from 'next-auth';
-
+import type { CommonResponse } from '@/shared/apis/dto/response';
 import type { CHALLENGE_LOG_APPROVAL_STATUS } from '@/shared/enums/challenge';
 import type {
   IAcademyInstructorListResult,
@@ -12,6 +11,7 @@ import type {
   IStudentChallengeContentsResults,
   IStudentChallengeResult,
   TAllChallengeResult,
+  TChallengeEditRequest,
   TChallengeResult,
   TDetailChallengeResult,
   TError,
@@ -31,7 +31,6 @@ interface IGetChallengeList {
 interface IGetChallengeDetails {
   academyId: number;
   releasedChallengeId: number;
-  session: Session;
 }
 
 // 원장/강사가 배포한 챌린지 목록 전체 조회
@@ -139,12 +138,9 @@ export async function getAcademyStudentList({ cursor, take, academyId, nickname 
 }
 
 // 원장/강사가 배포한 챌린지 상세 조회
-export async function getTeacherChallengeDetail({ session, releasedChallengeId, academyId }: IGetChallengeDetails) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${academyId}/challenges/teachers/${releasedChallengeId}`, {
+export async function getChallengeDetail({ releasedChallengeId, academyId }: IGetChallengeDetails) {
+  const res = await fetch(`/api/challenge/detail?academyId=${academyId}&releasedChallengeId=${releasedChallengeId}`, {
     method: 'GET',
-    headers: {
-      Authorization: `Bearer ${session?.accessToken}`,
-    },
   });
 
   if (!res.ok) {
@@ -249,13 +245,12 @@ export async function deleteChallenge({ academyId, releasedChallengeId }: { acad
     method: 'DELETE',
   });
 
-  const data = (await res.json()) as TChallengeResult;
-
-  if (!data.isSuccess) {
-    throw new Error(data.message);
+  if (!res.ok) {
+    const errorData: TError = await res.json();
+    throw new Error(errorData.error);
   }
 
-  return data;
+  return (await res.json()) as TChallengeResult;
 }
 
 export async function getMyChallengeContents({
@@ -279,4 +274,25 @@ export async function getMyChallengeContents({
   }
 
   return (await res.json()) as TAllChallengeResult;
+}
+
+// 챌린지 정보 수정
+export async function editChallenge({
+  academyId,
+  totalDays,
+  points,
+  description,
+  challengeParticipationMethod,
+  studentIdList,
+  releasedChallengeId,
+}: TChallengeEditRequest) {
+  const res = await fetch(`/api/challenge?academyId=${academyId}&releasedChallengeId=${releasedChallengeId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ totalDays, points, challengeParticipationMethod, studentIdList, description }),
+  });
+
+  return (await res.json()) as CommonResponse<{ releasedChallengeId: number }>;
 }

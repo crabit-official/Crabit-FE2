@@ -8,7 +8,7 @@ import FramerScale from '@/shared/components/FramerScale';
 import Typography from '@/shared/components/Typography';
 
 interface IFallbackMessageProps {
-  content?: string;
+  content?: string | React.ReactNode;
   imageUrl: string;
   title: string;
 }

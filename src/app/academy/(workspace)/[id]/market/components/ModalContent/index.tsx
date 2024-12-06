@@ -23,53 +23,57 @@ function ModalContent({ challenge, teacher, academy, setRelease }: TContentProps
 
   return (
     <>
-      <button type="button" className="absolute right-4 top-4 cursor-pointer font-bold text-black hover:text-main-pink" onClick={() => router.back()}>
-        <GoX />
-      </button>
-      {challenge?.thumbnailImageUrl ? (
-        <Image
-          src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challenge.thumbnailImageUrl}`}
-          alt="thumbnail img"
-          width={480}
-          height={100}
-          className="h-64 w-full object-cover"
-        />
-      ) : (
-        <Image src="/images/test.jpeg" alt="default img" width={480} height={100} className="h-64 w-full object-cover" />
-      )}
+      <div className="relative w-full">
+        <button type="button" className="absolute right-4 top-4 cursor-pointer font-bold text-black hover:text-main-pink" onClick={() => router.back()}>
+          <GoX />
+        </button>
+        {challenge?.thumbnailImageUrl ? (
+          <Image
+            src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challenge.thumbnailImageUrl}`}
+            alt="thumbnail img"
+            width={480}
+            height={100}
+            className="h-64 w-full object-cover"
+          />
+        ) : (
+          <Image src="/images/test.jpeg" alt="default img" width={480} height={100} className="h-64 w-full object-cover" />
+        )}
+        <Flex row="start" className="absolute left-5 top-5 gap-1">
+          <StateLabel label={getChallengeType(challenge?.challengeType)} variant={getVariantByStatus(challenge?.challengeType)} />
+          <StateLabel label={getChallengeCategory(challenge?.challengeCategory)} variant={getVariantByStatus(challenge?.challengeCategory)} />
+        </Flex>
+      </div>
       <Flex column="between" className="h-full gap-4 p-6">
         <Flex column="start" className="gap-4">
-          <Flex row="between" className="items-center">
-            <Flex row="start" className="gap-2">
-              <StateLabel label={getChallengeType(challenge?.challengeType)} variant={getVariantByStatus(challenge?.challengeType)} />
-              <StateLabel label={getChallengeCategory(challenge?.challengeCategory)} variant={getVariantByStatus(challenge?.challengeCategory)} />
-            </Flex>
+          <Flex row="end" className="items-center">
             {teacher && academy && (
               <Typography size="h5" as="p" className="text-xs text-blue-950">
                 {academy?.academyName} • {teacher?.nickname}/{teacher?.name}
               </Typography>
             )}
           </Flex>
-          <BoxContainer variant="border" className="gap-1">
-            <Typography size="h4" className="break-keep">
-              {challenge?.title}
-            </Typography>
-            <Typography size="h5" as="p" className="overflow-hidden whitespace-normal break-all text-sm opacity-60">
-              {challenge?.content}
-            </Typography>
+          <BoxContainer variant="border" className="max-h-52 gap-1 overflow-y-auto">
+            <div>
+              <Typography size="h4" className="break-keep">
+                {challenge?.title}
+              </Typography>
+              <Typography size="h5" as="p" className="overflow-hidden whitespace-normal break-all text-sm opacity-60">
+                {challenge?.content}
+              </Typography>
+            </div>
           </BoxContainer>
         </Flex>
         <Flex row="start">
-          <Typography size="h5" className="px-1 text-sm opacity-80">
-            {challenge?.fileUrl ? (
-              <Flex row="start" className="gap-2">
+          {challenge?.fileUrl ? (
+            <Flex row="start" className="gap-2">
+              <Typography size="h6" className="w-28 px-1 text-sm opacity-80 sm:w-fit">
                 첨부파일 :
-                <Link target="_blank" href={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challenge?.fileUrl}`} download className="text-blue-500 underline">
-                  {challenge?.fileUrl.split('_').slice(1).join('_')}
-                </Link>
-              </Flex>
-            ) : null}
-          </Typography>
+              </Typography>
+              <Link target="_blank" href={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challenge?.fileUrl}`} download className="text-blue-500 underline">
+                {challenge?.fileUrl.split('_').slice(1).join('_')}
+              </Link>
+            </Flex>
+          ) : null}
         </Flex>
         <Button onClick={() => setRelease(true)} className="mt-4 bg-main-deep-pink font-medium text-white" disabled={challenge?.alreadyReleasedInAcademy}>
           {challenge?.alreadyReleasedInAcademy ? '이미 학원에 배포된 챌린지입니다.' : '우리 학원에 배포'}

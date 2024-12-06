@@ -56,7 +56,7 @@ export default async function RootLayout({
           <AuthProvider>
             <MSWProvider>
               <QueryProvider>
-                <Flex column="center" className="min-h-screen">
+                <Flex column="center" className="min-h-screen overflow-x-hidden">
                   <Navbar />
                   <main className="flex-1 py-20">{children}</main>
                   <LoginModal />

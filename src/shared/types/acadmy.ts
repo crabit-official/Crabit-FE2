@@ -503,3 +503,13 @@ export type TAcademyInstructorDetailResponse = CommonResponse<{
     profileImageUrl: string | null;
   };
 }>;
+
+export type TChallengeEditRequest = {
+  academyId: number;
+  challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
+  description: string;
+  points: number;
+  releasedChallengeId: number;
+  studentIdList: number[];
+  totalDays: number;
+};

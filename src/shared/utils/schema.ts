@@ -23,6 +23,7 @@ const profileImageUrl = z.string();
 const introduction = z.string().max(500);
 const nickname = z.string();
 const school = z.string();
+const description = z.string();
 
 const loginSchema = z.object({
   email,
@@ -78,7 +79,10 @@ const institutionProfileSchema = z.object({
   introduction,
 });
 
+const challengeEditSchema = marketSchema.merge(z.object({ description }));
+
 export {
+  challengeEditSchema,
   challengeSchema,
   challengeTwoSchema,
   emailSchema,
