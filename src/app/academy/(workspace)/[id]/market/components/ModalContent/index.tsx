@@ -54,7 +54,7 @@ function ModalContent({ challenge, teacher, academy, setRelease }: TContentProps
             <Typography size="h4" className="break-keep">
               {challenge?.title}
             </Typography>
-            <Typography size="h5" as="p" className="break-keep text-sm opacity-60">
+            <Typography size="h5" as="p" className="overflow-hidden whitespace-normal break-all text-sm opacity-60">
               {challenge?.content}
             </Typography>
           </BoxContainer>

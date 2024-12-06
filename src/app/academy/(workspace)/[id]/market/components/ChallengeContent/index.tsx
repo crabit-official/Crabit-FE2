@@ -47,7 +47,7 @@ function ChallengeContent({ challenge, teacher, academy, setRelease }: TChalleng
         )}
         <BoxContainer variant="border" className="px-4 py-5">
           <Typography size="h3">챌린지 설명</Typography>
-          <Typography size="h5" className="w-full text-start font-normal opacity-80" as="p">
+          <Typography size="h5" className="w-full overflow-hidden whitespace-normal break-all text-start font-normal opacity-80" as="p">
             {challenge?.content}
           </Typography>
           {challenge?.description && (
@@ -56,7 +56,7 @@ function ChallengeContent({ challenge, teacher, academy, setRelease }: TChalleng
               <Typography size="h5" as="p" className="text-sm">
                 챌린지 추가 설명
               </Typography>
-              <Typography size="h5" className="w-full text-start font-normal opacity-80" as="p">
+              <Typography size="h5" className="w-full overflow-hidden whitespace-normal break-all text-start font-normal opacity-80" as="p">
                 {challenge.description}
               </Typography>
             </>
