@@ -85,10 +85,10 @@ function CreateChallengeForm({ challengeData, academyId, studentChallengeId }: I
         <Flex as="figure" column="center" className="mt-2 gap-2">
           <label
             htmlFor="file"
-            className="flex h-52 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border border-solid border-gray-100 bg-neutral-50"
+            className="flex h-[400px] w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border border-solid border-gray-100 bg-neutral-50"
           >
             {filePreview ? (
-              <Image src={filePreview} width={200} height={200} className="h-52 w-full overflow-hidden rounded-xl object-contain" alt="img" />
+              <Image src={filePreview} width={200} height={400} className="h-[400px] w-full overflow-hidden rounded-xl object-fill" alt="img" />
             ) : (
               <IoMdPhotos size={30} />
             )}

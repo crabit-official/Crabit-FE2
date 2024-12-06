@@ -70,7 +70,12 @@ function StudentCardList({ academyId, releasedChallengeId }: IStudentCardListPro
           />
         )),
       )}
-      <div ref={ref} className="h-14" />
+      <div ref={ref} className="h-2" />
+      {isFetching
+        ? Array(10)
+            .fill('')
+            .map((_, i) => <StudentCard.Skeleton key={i} />)
+        : null}
     </Flex>
   );
 }

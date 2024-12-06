@@ -9,6 +9,7 @@ import StateLabel from '@/features/academy/(workspace)/components/state-label';
 import { getStatusName, getVariantByStatus } from '@/features/academy/(workspace)/utils/challengeState';
 import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
+import Skeleton from '@/shared/components/Skeleton/Skeleton';
 import Typography from '@/shared/components/Typography';
 import { CHALLENGE_LOG_APPROVAL_STATUS } from '@/shared/enums/challenge';
 import useApprovalChallenge from '@/shared/hooks/challenge/useApprovalChallenge';
@@ -19,7 +20,6 @@ interface IStudentCardProps extends IChallengeParticipant {
   releasedChallengeId: number;
 }
 
-// TODO: 학교명 수정
 function StudentCard({ studentChallenge, academyId, studentProfile, releasedChallengeId }: IStudentCardProps) {
   const router = useRouter();
   const { mutate } = useApprovalChallenge({ academyId, releasedChallengeId });
@@ -47,7 +47,7 @@ function StudentCard({ studentChallenge, academyId, studentProfile, releasedChal
           />
           <Typography size="h5" as="p" className="flex items-center gap-2 text-sm font-normal sm:text-base">
             <IoSchool />
-            학교명 • {studentProfile.nickname}
+            {studentProfile.school} • {studentProfile.nickname}
           </Typography>
         </Flex>
         <IoIosArrowForward />
@@ -70,4 +70,16 @@ function StudentCard({ studentChallenge, academyId, studentProfile, releasedChal
     </Flex>
   );
 }
+
+function StudentCardSkeleton() {
+  return (
+    <Flex row="between" className="w-full gap-2">
+      <Skeleton height={68} className="rounded-lg" />
+      <Skeleton height={68} width={75} className="rounded-lg" />
+    </Flex>
+  );
+}
+
+StudentCard.Skeleton = StudentCardSkeleton;
+
 export default StudentCard;
