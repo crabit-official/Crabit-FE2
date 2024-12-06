@@ -207,33 +207,33 @@ const TermsHTML = `
 `;
 
 function ServiceModal() {
-  const serviceModal = useServiceModal();
+    const serviceModal = useServiceModal();
 
-  const bodyContent = (
-    <div>
-      <Heading title="서비스 약관 동의" />
-      <ReactMarkdown className="max-h-[600px] overflow-y-auto text-sm leading-relaxed text-gray-700">{TermsHTML}</ReactMarkdown>
-    </div>
-  );
+    const bodyContent = (
+        <div>
+            <Heading title="서비스 약관 동의" />
+            <ReactMarkdown className="max-h-[600px] overflow-y-auto text-sm leading-relaxed text-gray-700">{TermsHTML}</ReactMarkdown>
+        </div>
+    );
 
-  const footerContent = (
-    <div>
-      <hr />
-      <div className="flex flex-row items-center justify-center gap-2" />
-    </div>
-  );
+    const footerContent = (
+        <div>
+            <hr />
+            <div className="flex flex-row items-center justify-center gap-2" />
+        </div>
+    );
 
-  return (
-    <Modal
-      onClose={serviceModal.onClose}
-      onSubmit={() => serviceModal.onClose()}
-      actionLabel="확인"
-      isOpen={serviceModal.isOpen}
-      title=""
-      body={bodyContent}
-      footer={footerContent}
-    />
-  );
+    return (
+        <Modal
+            onClose={serviceModal.onClose}
+            onSubmit={() => serviceModal.onClose()}
+            actionLabel="확인"
+            isOpen={serviceModal.isOpen}
+            title=""
+            body={bodyContent}
+            footer={footerContent}
+        />
+    );
 }
 
 export default ServiceModal;
