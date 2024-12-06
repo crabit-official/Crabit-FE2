@@ -56,7 +56,7 @@ function StudentChallengeContent({ challengeLog, studentProfile, academyId }: IC
           )}
           <Flex column="start" className="gap-2">
             <Flex column="start">
-              <Typography size="h5" as="p" className="text-sm font-normal opacity-80">
+              <Typography size="h5" as="p" className="overflow-hidden whitespace-normal break-all text-sm font-normal opacity-80">
                 {challengeLog.content}
               </Typography>
             </Flex>

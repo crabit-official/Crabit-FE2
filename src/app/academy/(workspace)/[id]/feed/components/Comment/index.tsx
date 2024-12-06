@@ -113,7 +113,7 @@ function Comment({ comment, academyMember, academyId, releasedChallengeId, stude
       <Flex column="start" className="ml-5 gap-2">
         <Typography
           size="h7"
-          className={`w-fit rounded-xl bg-main-deep-pink/20 px-4 py-2 font-normal ${
+          className={`w-fit overflow-hidden whitespace-normal break-all rounded-xl bg-main-deep-pink/20 px-4 py-2 font-normal ${
             comment?.commentStatus === COMMENT_STATUS.ACTIVE ? 'bg-main-deep-pink/20' : 'bg-gray-100'
           }`}
         >
