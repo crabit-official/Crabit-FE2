@@ -6,6 +6,10 @@ import type { FieldValues, SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import useMarketingModal from '../../hooks/use-marketing-modal';
+import useServiceModal from '../../hooks/use-service-modal';
+import useTermModal from '../../hooks/use-term-modal';
+
 import useLoginModal from '@/features/main/hooks/use-login-modal';
 import useRegisterModal from '@/features/main/hooks/use-register-modal';
 import CheckBox from '@/shared/components/CheckBox';
@@ -22,6 +26,9 @@ import { signUpSchema } from '@/shared/utils/schema';
 function RegisterModal() {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
+  const termModal = useTermModal();
+  const marketingModal = useMarketingModal();
+  const serviceModal = useServiceModal();
   const [isLoading, setIsLoading] = useState(false);
   const [isShownVerifyInput, setIsShownVerifyInput] = useState(false);
   const [verifyCode, setVerifyCode] = useState('');
@@ -165,9 +172,32 @@ function RegisterModal() {
         />
       )}
       <Input id="password" type="password" label="비밀번호" disabled={isLoading} register={register} errors={errors} required />
-      <CheckBox label="개인정보 처리 방침 동의" id="privacyPolicyAllowed" disabled={isLoading} register={register} errors={errors} required />
-      <CheckBox label="서비스 약관 동의" id="termsOfServiceAllowed" disabled={isLoading} register={register} errors={errors} required />
-      <CheckBox label="마케팅 약관 동의" id="marketingEmailAllowed" disabled={isLoading} register={register} errors={errors} />
+      <CheckBox
+        label="개인정보 처리 방침 동의"
+        onClickLabel={() => termModal.onOpen()}
+        id="privacyPolicyAllowed"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required
+      />
+      <CheckBox
+        label="서비스 약관 동의"
+        onClickLabel={() => serviceModal.onOpen()}
+        id="termsOfServiceAllowed"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required
+      />
+      <CheckBox
+        label="마케팅 약관 동의"
+        onClickLabel={() => marketingModal.onOpen()}
+        id="marketingEmailAllowed"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+      />
     </div>
   );
 

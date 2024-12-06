@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 import StudentCard from '@/app/academy/(workspace)/[id]/dashboard/components/StudentCard';
 import Flex from '@/shared/components/Flex';
-import Framer from '@/shared/components/Framer';
+import FramerScale from '@/shared/components/FramerScale';
 import Typography from '@/shared/components/Typography';
 import useGetInfiniteStudentChallengeProgressList from '@/shared/hooks/challenge/useGetInfiniteStudentChallengeProgressList';
 
@@ -42,7 +42,7 @@ function StudentCardList({ academyId, releasedChallengeId }: IStudentCardListPro
 
   if (isEmpty) {
     return (
-      <Framer className="flex w-full items-center justify-center gap-10 py-10">
+      <FramerScale className="flex w-full items-center justify-center gap-10 py-10">
         <Flex column="start" className="relative rounded-2xl bg-gray-200 px-5 py-4">
           <div className="absolute right-[-6px] top-1/3 size-6 rotate-45 bg-gray-200" />
           <Typography size="h4" as="p" className="break-keep text-sm font-semibold opacity-80 sm:text-base">
@@ -53,7 +53,7 @@ function StudentCardList({ academyId, releasedChallengeId }: IStudentCardListPro
           </Typography>
         </Flex>
         <Image src="/images/icons/icon_speaker.webp" alt="speaker img" width={150} height={150} className="size-20 sm:size-40 md:size-[150px]" />
-      </Framer>
+      </FramerScale>
     );
   }
 
@@ -70,7 +70,12 @@ function StudentCardList({ academyId, releasedChallengeId }: IStudentCardListPro
           />
         )),
       )}
-      <div ref={ref} className="h-14" />
+      <div ref={ref} className="h-2" />
+      {isFetching
+        ? Array(10)
+            .fill('')
+            .map((_, i) => <StudentCard.Skeleton key={i} />)
+        : null}
     </Flex>
   );
 }

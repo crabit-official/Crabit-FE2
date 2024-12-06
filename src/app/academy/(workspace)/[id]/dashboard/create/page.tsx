@@ -3,11 +3,11 @@
 import { useEffect } from 'react';
 
 import First from '@/app/academy/(workspace)/[id]/dashboard/create/components/First';
-import LastStep from '@/app/academy/(workspace)/[id]/dashboard/create/components/Last';
 import MultiStepProgress from '@/app/academy/(workspace)/[id]/dashboard/create/components/MultiStepProgress';
 import Second from '@/app/academy/(workspace)/[id]/dashboard/create/components/Second';
 import Third from '@/app/academy/(workspace)/[id]/dashboard/create/components/Third';
 import useCreateChallenges from '@/features/academy/(workspace)/hooks/challenges/use-create-challenges';
+import FallbackMessage from '@/shared/components/FallbackMessage';
 import Flex from '@/shared/components/Flex';
 import { CHALLENGE_CATEGORY, CHALLENGE_PARTICIPATION_METHODS, MARKET_VISIBILITY_CATEGORIES } from '@/shared/enums/challenge';
 import useHandleStepChallenge from '@/shared/hooks/useHandleStepChallenge';
@@ -58,7 +58,9 @@ function ChallengeCreatePage({ params }: { params: { id: string } }) {
           {step.currentProgress === 1 && <First onNext={(data) => handleNext({ ...data })} />}
           {step.currentProgress === 2 && <Second onNext={(data) => handleNext({ ...data })} onBack={handleBack} />}
           {step.currentProgress === 3 && <Third onNext={(data) => handleNext({ ...data })} onBack={handleBack} academyId={Number(params.id)} />}
-          {step.currentProgress === 4 && <LastStep />}
+          {step.currentProgress === 4 && (
+            <FallbackMessage imageUrl="/images/icons/icon_happy.webp" title="챌린지를 생성중 입니다" content="잠시만 기다려주세요" />
+          )}
         </MultiStepProgress>
       </Flex>
     </Flex>

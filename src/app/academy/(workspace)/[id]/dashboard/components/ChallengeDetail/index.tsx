@@ -1,14 +1,17 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { AiTwotoneEdit } from 'react-icons/ai';
 import { BsTrash3Fill } from 'react-icons/bs';
+import { FaFile } from 'react-icons/fa';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import Toggle from '@/app/academy/(workspace)/[id]/dashboard/components/Toggle';
 import { getChallengeCategory, getChallengeType } from '@/features/academy/(workspace)/utils/challengeState';
 import BoxContainer from '@/shared/components/BoxContainer';
 import Flex from '@/shared/components/Flex';
+import SmallModal from '@/shared/components/SmallModal';
 import Typography from '@/shared/components/Typography';
 import useDeleteChallenge from '@/shared/hooks/challenge/useDeleteChallenge';
 import type { TDetailChallengeResult } from '@/shared/types/acadmy';
@@ -20,6 +23,7 @@ type TChallengeDetailProps = Omit<TDetailChallengeResult['result'], 'challengeSt
 
 function ChallengeDetail({ academyId, releasedChallengeId, releasedChallenge }: TChallengeDetailProps) {
   const { mutate } = useDeleteChallenge({ academyId });
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleDelete = () => {
     mutate({ academyId, releasedChallengeId });
@@ -27,12 +31,29 @@ function ChallengeDetail({ academyId, releasedChallengeId, releasedChallenge }: 
 
   return (
     <Flex className="w-full">
+      {isOpen && (
+        <SmallModal
+          actionLabel="삭제하기"
+          onClose={() => setIsOpen((prev) => !prev)}
+          onSubmit={handleDelete}
+          title="챌린지 삭제하기"
+          secondaryActionLabel="취소하기"
+          secondaryAction={() => setIsOpen((prev) => !prev)}
+          body={
+            <Typography size="h7" className="text-center font-normal text-gray-500">
+              학생이 이미 참여한 경우에는 <br />
+              챌린지를 삭제할 수 없습니다 (관리자 문의) <br />
+              ⚠️ 한번 삭제한 챌린지는 되돌릴 수 없습니다 ⚠️
+            </Typography>
+          }
+        />
+      )}
       <Flex column="center" className="relative w-full gap-5 px-2 sm:px-0">
         <Flex column="center" className="absolute right-[-16px] top-[100px] mx-2 gap-4 rounded-xl bg-gray-100 p-4 sm:mx-0">
           <button type="button">
             <AiTwotoneEdit className="hover:text-main-deep-pink" />
           </button>
-          <button type="button" onClick={handleDelete}>
+          <button type="button" onClick={() => setIsOpen((prev) => !prev)}>
             <BsTrash3Fill className="hover:text-main-deep-pink" />
           </button>
         </Flex>
@@ -63,16 +84,17 @@ function ChallengeDetail({ academyId, releasedChallengeId, releasedChallenge }: 
         )}
         <Flex column="start" className="gap-2 p-2">
           <Typography size="h3">챌린지 설명</Typography>
-          <Typography size="h5" className="w-full text-start font-normal opacity-80" as="p">
+          <Typography size="h5" className="overflow-hidden whitespace-normal break-all text-start font-normal opacity-80" as="p">
             {releasedChallenge?.content}
           </Typography>
+
           {releasedChallenge?.description && (
             <>
               <hr className="my-4 h-1 w-full" />
               <Typography size="h5" as="p">
                 추가 설명
               </Typography>
-              <Typography size="h5" className="w-full text-start font-normal opacity-80" as="p">
+              <Typography size="h5" className="overflow-hidden whitespace-normal break-all text-start font-normal opacity-80" as="p">
                 {releasedChallenge.description}
               </Typography>
             </>
@@ -82,13 +104,12 @@ function ChallengeDetail({ academyId, releasedChallengeId, releasedChallenge }: 
           <Toggle
             content={
               releasedChallenge?.fileUrl ? (
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${releasedChallenge.fileUrl}`}
-                  alt="file"
-                  width={400}
-                  height={400}
-                  className="size-full h-96 rounded-2xl border border-solid border-gray-200 bg-gray-50/50 object-contain"
-                />
+                <Flex row="start">
+                  <FaFile className="mr-2" />
+                  <Link target="_blank" href={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${releasedChallenge.fileUrl}`} download className="text-blue-500 underline">
+                    {releasedChallenge.fileUrl.split('_').slice(1).join('_')}
+                  </Link>
+                </Flex>
               ) : (
                 '첨부파일이 없습니다.'
               )

@@ -3,11 +3,10 @@
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useRouter } from 'next/navigation';
-import { toast } from 'sonner';
 
 import AnimateCard from '@/app/academy/(workspace)/[id]/dashboard/components/AnimateCard';
-import PlusChallengeCard from '@/app/academy/(workspace)/[id]/dashboard/components/PlusChallengeCard';
 import { getChallengeCategory } from '@/features/academy/(workspace)/utils/challengeState';
+import FallbackMessage from '@/shared/components/FallbackMessage';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import { PUBLIC_CATEGORY_NAME } from '@/shared/constants/tab-menu';
@@ -47,9 +46,7 @@ function PublicCardList({ academyId, category }: IPublicCardListProps) {
 
   if (isEmpty) {
     return (
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-        <PlusChallengeCard onClick={() => toast.message('준비중 입니다.')} content="준비중..." />
-      </div>
+      <FallbackMessage imageUrl="/images/icons/icon_cry.webp" title="공개챌린지가 없습니다" content="기관에 공개 챌린지가 생성될 때까지 조금만 기다려주세요" />
     );
   }
 
