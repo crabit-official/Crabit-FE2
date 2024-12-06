@@ -68,6 +68,7 @@ export default async function RootLayout({
                   <Toaster richColors />
                 </Flex>
                 <Footer />
+                <div id="modal-root" />
               </QueryProvider>
             </MSWProvider>
           </AuthProvider>
