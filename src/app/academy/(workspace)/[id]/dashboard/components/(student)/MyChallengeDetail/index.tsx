@@ -43,7 +43,7 @@ function MyChallengeDetail({ challengeData, studentChallengeId, academyId }: IMy
                 <Typography size="h7" className="break-keep font-medium text-main-deep-pink" as="p">
                   DAY {challengeData.releasedChallenge.totalDays} • Ⓟ {formatNumberWithCommas(challengeData.releasedChallenge.points)}
                 </Typography>
-                <Typography size="h6" className="break-keep font-normal opacity-80" as="p">
+                <Typography size="h6" className="overflow-hidden whitespace-normal break-all font-normal opacity-80" as="p">
                   {challengeData.releasedChallenge.content}
                 </Typography>
                 {challengeData?.releasedChallenge.description && (
@@ -51,7 +51,7 @@ function MyChallengeDetail({ challengeData, studentChallengeId, academyId }: IMy
                     <Typography size="h5" as="p" className="mt-4 text-xs opacity-60">
                       챌린지 추가 설명
                     </Typography>
-                    <Typography size="h6" className="break-keep font-normal opacity-80" as="p">
+                    <Typography size="h6" className="overflow-hidden whitespace-normal break-all font-normal opacity-80" as="p">
                       {challengeData.releasedChallenge.description}
                     </Typography>
                   </>
