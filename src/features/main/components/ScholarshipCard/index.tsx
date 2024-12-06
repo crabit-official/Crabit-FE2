@@ -1,7 +1,6 @@
 'use client';
 
 import { BiSolidRightArrow } from 'react-icons/bi';
-import { IoIosArrowForward } from 'react-icons/io';
 import { motion } from 'framer-motion';
 
 import Flex from '@/shared/components/Flex';
@@ -44,12 +43,12 @@ function ScholarshipCard({ title, contents, position = 'left' }: IScholarshipCar
             ))}
           </Flex>
         </Flex>
-        <Flex className="items-center justify-start gap-1">
-          <Typography as="p" size="h5" className="text-xs text-neutral-200 sm:text-sm md:text-base">
-            더 알아보기
-          </Typography>
-          <IoIosArrowForward className="text-neutral-200" />
-        </Flex>
+        {/* <Flex className="items-center justify-start gap-1"> */}
+        {/*  <Typography as="p" size="h5" className="text-xs text-neutral-200 sm:text-sm md:text-base"> */}
+        {/*    더 알아보기 */}
+        {/*  </Typography> */}
+        {/*  <IoIosArrowForward className="text-neutral-200" /> */}
+        {/* </Flex> */}
       </Flex>
     </motion.div>
   );
