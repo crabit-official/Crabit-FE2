@@ -71,7 +71,12 @@ function StudentChallengeContents({ academyId, releasedChallengeId, studentChall
               />
             )),
           )}
-          <div ref={ref} className="h-14" />
+          {isFetching
+            ? Array(6)
+                .fill('')
+                .map((_, i) => <StudentChallengeContent.Skeleton key={i} />)
+            : null}
+          <div ref={ref} className="h-5" />
         </Flex>
         <Flex />
       </Flex>
