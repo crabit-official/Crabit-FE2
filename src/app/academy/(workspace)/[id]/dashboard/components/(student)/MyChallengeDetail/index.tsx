@@ -1,7 +1,9 @@
 'use client';
 
 import React from 'react';
+import { FaFile } from 'react-icons/fa';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import CreateChallengeForm from '@/app/academy/(workspace)/[id]/dashboard/components/(student)/CreateChallengeForm';
 import Toggle from '@/app/academy/(workspace)/[id]/dashboard/components/Toggle';
@@ -60,7 +62,25 @@ function MyChallengeDetail({ challengeData, studentChallengeId, academyId }: IMy
         />
       </div>
       <div className="grid w-full grid-cols-1 gap-4">
-        {/* TODO: 파일 뷰어 제작 */}
+        {/* TODO: 챌린지 올린 사람이, 올린 파일을 볼 수 있는 자리. */}
+        {challengeData.releasedChallenge.fileUrl && (
+          <>
+            <Typography size="h6" className="break-keep font-bold opacity-80" as="p">
+              첨부 파일
+            </Typography>
+            <Flex row="start">
+              <FaFile className="mr-2" />
+              <Link
+                target="_blank"
+                href={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challengeData.releasedChallenge.fileUrl}`}
+                download
+                className="text-blue-500 underline"
+              >
+                {challengeData.releasedChallenge.fileUrl.split('_').slice(1).join('_')}
+              </Link>
+            </Flex>
+          </>
+        )}
         {/* <Flex column="start" className="gap-4 rounded-xl border border-solid border-gray-100 bg-neutral-50 p-5 shadow-custom">
           파일뷰어 자리입니당... <br /> 아직 미완성 ..
         </Flex> */}
