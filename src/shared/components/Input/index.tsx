@@ -9,18 +9,21 @@ import Button from '../Button';
 
 import cn from '@/shared/utils/style';
 
-const InputVariants = cva(' peer w-full rounded-md p-4 pt-7 font-light outline-none transition disabled:cursor-not-allowed disabled:opacity-70', {
-  variants: {
-    variant: {
-      main: 'border-2 bg-main-white border-neutral-300 focus:border-main-pink',
-      secondary: 'bg-gray-50 border border-solid border-gray-200 focus:border-gray-300',
+const InputVariants = cva(
+  'focus:border-main-pink peer w-full rounded-md p-4 pt-7 font-light outline-none transition disabled:cursor-not-allowed disabled:opacity-70',
+  {
+    variants: {
+      variant: {
+        main: 'border-2 bg-main-white border-neutral-300',
+        secondary: 'bg-gray-50 border border-solid border-gray-200 ',
+      },
+    },
+
+    defaultVariants: {
+      variant: 'main',
     },
   },
-
-  defaultVariants: {
-    variant: 'main',
-  },
-});
+);
 
 interface IInputProps<T extends FieldValues> extends VariantProps<typeof InputVariants> {
   actionButton?: React.ReactNode;

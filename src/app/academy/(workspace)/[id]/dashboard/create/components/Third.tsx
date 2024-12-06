@@ -72,13 +72,13 @@ function Third({ onBack, onNext, academyId }: IThirdProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex w-full flex-col gap-5">
-      <BoxContainer>
+      <BoxContainer className="group transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink">
         <Flex column="start" className="gap-1">
           <Typography size="h3">챌린지 종류</Typography>
         </Flex>
         <SelectDropdown id="challengeCategory" label="챌린지 종류" register={register} errors={errors} options={CHALLENGE_CATEGORIES} />
       </BoxContainer>
-      <BoxContainer>
+      <BoxContainer className="group transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink">
         <Flex column="start" className="gap-1">
           <Typography size="h3">챌린지 마켓 업로드 여부</Typography>
           <Typography size="h5" as="p" className="text-xs opacity-60">
@@ -87,7 +87,7 @@ function Third({ onBack, onNext, academyId }: IThirdProps) {
         </Flex>
         <SelectDropdown id="challengeMarketVisibility" label="챌린지 마켓 업로드 여부" register={register} errors={errors} options={VISIBILITY_CATEGORIES} />
       </BoxContainer>
-      <BoxContainer>
+      <BoxContainer className="group transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink">
         <Flex column="start" className="gap-1">
           <Typography size="h3">챌린지 참여 방식</Typography>
           <Typography size="h5" as="p" className="text-xs opacity-60">
