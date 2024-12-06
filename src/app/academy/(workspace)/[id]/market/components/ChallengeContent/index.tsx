@@ -1,5 +1,7 @@
 import React from 'react';
+import { FaFile } from 'react-icons/fa';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import Toggle from '@/app/academy/(workspace)/[id]/dashboard/components/Toggle';
 import { getChallengeCategory, getChallengeType } from '@/features/academy/(workspace)/utils/challengeState';
@@ -64,13 +66,12 @@ function ChallengeContent({ challenge, teacher, academy, setRelease }: TChalleng
           <Toggle
             content={
               challenge?.fileUrl ? (
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challenge.fileUrl}`}
-                  alt="file"
-                  width={400}
-                  height={400}
-                  className="size-full h-96 rounded-2xl border border-solid border-gray-200 bg-gray-50/50 object-contain"
-                />
+                <Flex row="start">
+                  <FaFile className="mr-2" />
+                  <Link target="_blank" href={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challenge?.fileUrl}`} download className="text-blue-500 underline">
+                    {challenge?.fileUrl.split('_').slice(1).join('_')}
+                  </Link>
+                </Flex>
               ) : (
                 '첨부파일이 없습니다.'
               )
