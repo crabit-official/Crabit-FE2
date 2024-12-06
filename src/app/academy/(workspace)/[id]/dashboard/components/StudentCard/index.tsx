@@ -9,6 +9,7 @@ import StateLabel from '@/features/academy/(workspace)/components/state-label';
 import { getStatusName, getVariantByStatus } from '@/features/academy/(workspace)/utils/challengeState';
 import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
+import Skeleton from '@/shared/components/Skeleton/Skeleton';
 import Typography from '@/shared/components/Typography';
 import { CHALLENGE_LOG_APPROVAL_STATUS } from '@/shared/enums/challenge';
 import useApprovalChallenge from '@/shared/hooks/challenge/useApprovalChallenge';
@@ -69,4 +70,16 @@ function StudentCard({ studentChallenge, academyId, studentProfile, releasedChal
     </Flex>
   );
 }
+
+function StudentCardSkeleton() {
+  return (
+    <Flex row="between" className="w-full gap-2">
+      <Skeleton height={68} className="rounded-lg" />
+      <Skeleton height={68} width={75} className="rounded-lg" />
+    </Flex>
+  );
+}
+
+StudentCard.Skeleton = StudentCardSkeleton;
+
 export default StudentCard;
