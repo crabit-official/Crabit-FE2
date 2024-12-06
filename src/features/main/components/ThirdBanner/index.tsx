@@ -5,8 +5,14 @@ import Typography from '@/shared/components/Typography';
 
 function ThirdBanner() {
   return (
-    <Flex className="relative size-full min-h-[256px] overflow-hidden bg-gray-50 p-8 pr-0 sm:pl-16">
-      <Image src="/images/logo_nsc.webp" alt="nsc logo" width={500} height={500} className="absolute right-[-120px] top-0 h-full object-contain" />
+    <Flex className="relative size-full min-h-[200px] overflow-hidden bg-[#F8F8F8] p-8 pr-0 sm:pl-16 md:min-h-[256px]">
+      <Image
+        src="/images/logo_nsc.webp"
+        alt="nsc logo"
+        width={500}
+        height={500}
+        className="absolute right-[-50px] top-0 hidden h-full w-fit object-fill sm:block"
+      />
       <Flex column="start" className="z-10 w-full gap-16">
         <Flex column="center" className="gap-2">
           <Typography size="h5" className="text-sm font-medium text-blue-200 sm:text-base sm:font-bold">
