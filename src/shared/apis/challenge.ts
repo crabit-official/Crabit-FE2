@@ -245,13 +245,12 @@ export async function deleteChallenge({ academyId, releasedChallengeId }: { acad
     method: 'DELETE',
   });
 
-  const data = (await res.json()) as TChallengeResult;
-
-  if (!data.isSuccess) {
-    throw new Error(data.message);
+  if (!res.ok) {
+    const errorData: TError = await res.json();
+    throw new Error(errorData.error);
   }
 
-  return data;
+  return (await res.json()) as TChallengeResult;
 }
 
 export async function getMyChallengeContents({
