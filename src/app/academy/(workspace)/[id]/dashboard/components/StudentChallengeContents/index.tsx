@@ -2,12 +2,11 @@
 
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import Image from 'next/image';
 
 import StudentChallengeContent from '../StudentChallengeContent';
 
+import FallbackMessage from '@/shared/components/FallbackMessage';
 import Flex from '@/shared/components/Flex';
-import FramerScale from '@/shared/components/FramerScale';
 import Typography from '@/shared/components/Typography';
 import useGetInfiniteStudentChallengeContents from '@/shared/hooks/challenge/useGetInfiniteStudentChallengeContents';
 
@@ -50,17 +49,11 @@ function StudentChallengeContents({ academyId, releasedChallengeId, studentChall
 
   if (isEmpty) {
     return (
-      <FramerScale className="flex w-full flex-col items-center justify-center gap-10 py-10">
-        <Image src="/images/icons/icon_cry.webp" alt="bell img" width={200} height={200} />
-        <Flex column="start" className="w-80 rounded-2xl border border-solid border-gray-200 bg-gray-100 px-5 py-4">
-          <Typography size="h4" as="p" className="opacity-80">
-            아직 인증글을 작성하지 않았어요 !
-          </Typography>
-          <Typography size="h7" as="p" className="whitespace-pre-wrap font-normal opacity-60">
-            {`해당 학생이 챌린지 인증글을 작성할 때까지 \n조금만 기다려주세요.`}
-          </Typography>
-        </Flex>
-      </FramerScale>
+      <FallbackMessage
+        imageUrl="/images/icons/icon_cry.webp"
+        title="아직 인증글을 작성하지 않았어요 !"
+        content="해당 학생이 챌린지 인증글을 작성할 때까지 조금만 기다려주세요."
+      />
     );
   }
 

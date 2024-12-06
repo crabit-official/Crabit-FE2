@@ -32,7 +32,6 @@ function MarketPage({ params, searchParams }: IMarketPageProps) {
         </Flex>
       </Flex>
       <DetailTab academyId={Number(params.id)} type="market" menu={MARKET_TAB_MENU} />
-      <div className="absolute top-[550px] flex h-[800px] w-full items-center justify-center rounded-t-[100px] bg-gradient-to-b from-main-deep-pink sm:rounded-t-[130px] lg:rounded-t-[260px]" />
       <Flex rowColumn="center" className="w-full">
         {(searchParams.tab === 'crabit' || !searchParams.tab) && <ChallengeCardList academyId={Number(params.id)} challengeType={CHALLENGE_TYPE.CRABIT} />}
         {searchParams.tab === 'academy' && <ChallengeCardList academyId={Number(params.id)} challengeType={CHALLENGE_TYPE.ACADEMY} />}

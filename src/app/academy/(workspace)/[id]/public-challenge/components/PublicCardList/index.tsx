@@ -2,13 +2,12 @@
 
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import AnimateCard from '@/app/academy/(workspace)/[id]/dashboard/components/AnimateCard';
 import { getChallengeCategory } from '@/features/academy/(workspace)/utils/challengeState';
+import FallbackMessage from '@/shared/components/FallbackMessage';
 import Flex from '@/shared/components/Flex';
-import FramerScale from '@/shared/components/FramerScale';
 import Typography from '@/shared/components/Typography';
 import { PUBLIC_CATEGORY_NAME } from '@/shared/constants/tab-menu';
 import useGetInfinitePublicChallenge from '@/shared/hooks/public/useGetInfinitePublicChallenge';
@@ -47,15 +46,7 @@ function PublicCardList({ academyId, category }: IPublicCardListProps) {
 
   if (isEmpty) {
     return (
-      <FramerScale className="flex flex-col items-center justify-center gap-4">
-        <Image src="/images/icons/icon_cry.webp" alt="icons" width={130} height={130} />
-        <Flex rowColumn="center" className="gap-1">
-          <Typography size="h3">공개챌린지가 없습니다.</Typography>
-          <Typography size="h6" className="font-normal opacity-60">
-            기관에 공개 챌린지가 생성될 때까지 조금만 기다려주세요.
-          </Typography>
-        </Flex>
-      </FramerScale>
+      <FallbackMessage imageUrl="/images/icons/icon_cry.webp" title="공개챌린지가 없습니다" content="기관에 공개 챌린지가 생성될 때까지 조금만 기다려주세요" />
     );
   }
 
