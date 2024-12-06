@@ -1,18 +1,14 @@
 import React from 'react';
 
-import { fetchData } from '@/shared/apis/fetch-data';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import type { TDetailChallengeResult } from '@/shared/types/acadmy';
 
 interface IChallengeStatisticsProps {
-  academyId: number;
-  releasedChallengeId: number;
+  challengeData: TDetailChallengeResult;
 }
 
-async function ChallengeStatistics({ academyId, releasedChallengeId }: IChallengeStatisticsProps) {
-  const challengeData = await fetchData<TDetailChallengeResult>(`/api/v1/academies/${academyId}/challenges/teachers/${releasedChallengeId}`, 'GET');
-
+function ChallengeStatistics({ challengeData }: IChallengeStatisticsProps) {
   return (
     <Flex column="center" className="w-full gap-4">
       <Flex className="w-full flex-col gap-4 md:flex-row">

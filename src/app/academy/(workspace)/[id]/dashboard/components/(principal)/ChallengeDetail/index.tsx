@@ -41,7 +41,7 @@ async function PrincipalChallengeDetail({ tabName, academyId, releasedChallengeI
           </HydrationBoundary>
         </Suspense>
       )}
-      {tabName === 'statistics' && <ChallengeStatistics academyId={academyId} releasedChallengeId={releasedChallengeId} />}
+      {tabName === 'statistics' && <ChallengeStatistics challengeData={challengeData} />}
     </Flex>
   );
 }

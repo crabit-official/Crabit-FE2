@@ -262,6 +262,7 @@ export interface IStudentProfileDTO {
   academyMemberId: number;
   nickname: string;
   profileImageUrl: string;
+  school: string;
 }
 
 export type IChallengeParticipateResult = CommonResponse<{
@@ -308,6 +309,7 @@ export type TMyChallengeProgressResult = CommonResponse<{
     challengeType: CHALLENGE_TYPE;
     content: string;
     description: string;
+    fileUrl: string | null;
     points: number;
     releasedChallengeId: number;
     thumbnailImageUrl: string;
