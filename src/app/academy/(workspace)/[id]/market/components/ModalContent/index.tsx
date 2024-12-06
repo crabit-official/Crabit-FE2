@@ -3,6 +3,7 @@
 import React from 'react';
 import { GoX } from 'react-icons/go';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import StateLabel from '@/features/academy/(workspace)/components/state-label';
@@ -53,14 +54,21 @@ function ModalContent({ challenge, teacher, academy, setRelease }: TContentProps
             <Typography size="h4" className="break-keep">
               {challenge?.title}
             </Typography>
-            <Typography size="h5" as="p" className="break-keep text-sm opacity-60">
+            <Typography size="h5" as="p" className="overflow-hidden whitespace-normal break-all text-sm opacity-60">
               {challenge?.content}
             </Typography>
           </BoxContainer>
         </Flex>
         <Flex row="start">
           <Typography size="h5" className="px-1 text-sm opacity-80">
-            첨부파일 : {challenge?.fileUrl ? '첨부파일이 존재하는 챌린지 입니다.' : '첨부파일이 존재하지 않습니다.'}
+            {challenge?.fileUrl ? (
+              <Flex row="start" className="gap-2">
+                첨부파일 :
+                <Link target="_blank" href={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challenge?.fileUrl}`} download className="text-blue-500 underline">
+                  {challenge?.fileUrl.split('_').slice(1).join('_')}
+                </Link>
+              </Flex>
+            ) : null}
           </Typography>
         </Flex>
         <Button onClick={() => setRelease(true)} className="mt-4 bg-main-deep-pink font-medium text-white" disabled={challenge?.alreadyReleasedInAcademy}>

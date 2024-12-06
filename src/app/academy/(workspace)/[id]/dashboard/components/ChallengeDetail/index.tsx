@@ -3,7 +3,9 @@
 import React, { useState } from 'react';
 import { AiTwotoneEdit } from 'react-icons/ai';
 import { BsTrash3Fill } from 'react-icons/bs';
+import { FaFile } from 'react-icons/fa';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import Toggle from '@/app/academy/(workspace)/[id]/dashboard/components/Toggle';
 import { getChallengeCategory, getChallengeType } from '@/features/academy/(workspace)/utils/challengeState';
@@ -82,16 +84,17 @@ function ChallengeDetail({ academyId, releasedChallengeId, releasedChallenge }: 
         )}
         <Flex column="start" className="gap-2 p-2">
           <Typography size="h3">챌린지 설명</Typography>
-          <Typography size="h5" className="w-full text-start font-normal opacity-80" as="p">
+          <Typography size="h5" className="overflow-hidden whitespace-normal break-all text-start font-normal opacity-80" as="p">
             {releasedChallenge?.content}
           </Typography>
+
           {releasedChallenge?.description && (
             <>
               <hr className="my-4 h-1 w-full" />
               <Typography size="h5" as="p">
                 추가 설명
               </Typography>
-              <Typography size="h5" className="w-full text-start font-normal opacity-80" as="p">
+              <Typography size="h5" className="overflow-hidden whitespace-normal break-all text-start font-normal opacity-80" as="p">
                 {releasedChallenge.description}
               </Typography>
             </>
@@ -101,13 +104,12 @@ function ChallengeDetail({ academyId, releasedChallengeId, releasedChallenge }: 
           <Toggle
             content={
               releasedChallenge?.fileUrl ? (
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${releasedChallenge.fileUrl}`}
-                  alt="file"
-                  width={400}
-                  height={400}
-                  className="size-full h-96 rounded-2xl border border-solid border-gray-200 bg-gray-50/50 object-contain"
-                />
+                <Flex row="start">
+                  <FaFile className="mr-2" />
+                  <Link target="_blank" href={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${releasedChallenge.fileUrl}`} download className="text-blue-500 underline">
+                    {releasedChallenge.fileUrl.split('_').slice(1).join('_')}
+                  </Link>
+                </Flex>
               ) : (
                 '첨부파일이 없습니다.'
               )

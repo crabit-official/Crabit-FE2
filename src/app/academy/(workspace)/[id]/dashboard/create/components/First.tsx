@@ -72,7 +72,7 @@ function First({ onNext }: IFirstProps) {
           </Flex>
         </Flex>
       </BoxContainer>
-      <BoxContainer>
+      <BoxContainer className="group transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink">
         <Flex column="start" className="gap-1">
           <Typography size="h3">제목</Typography>
           <Typography size="h5" as="p" className="text-xs opacity-60">
@@ -81,7 +81,7 @@ function First({ onNext }: IFirstProps) {
         </Flex>
         <Input id="title" label="챌린지 제목" register={register} errors={errors} required />
       </BoxContainer>
-      <BoxContainer>
+      <BoxContainer className="group transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink">
         <Flex column="start" className="gap-1">
           <Typography size="h3" className="opacity-80">
             챌린지 내용

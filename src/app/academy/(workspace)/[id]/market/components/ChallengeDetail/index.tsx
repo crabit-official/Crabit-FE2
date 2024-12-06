@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from 'react';
 
-import LastStep from '@/app/academy/(workspace)/[id]/dashboard/create/components/Last';
 import MultiStepProgress from '@/app/academy/(workspace)/[id]/dashboard/create/components/MultiStepProgress';
 import ChallengeContent from '@/app/academy/(workspace)/[id]/market/components/ChallengeContent';
 import FirstStep from '@/app/academy/(workspace)/[id]/market/components/Release/First';
 import SecondStep from '@/app/academy/(workspace)/[id]/market/components/Release/Second';
+import FallbackMessage from '@/shared/components/FallbackMessage';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import { CHALLENGE_PARTICIPATION_METHODS } from '@/shared/enums/challenge';
@@ -59,7 +59,9 @@ function ChallengeDetail({ challenge, teacher, academy, academyId, challengeCore
             <Flex rowColumn="center" className="w-full">
               {step.currentProgress === 1 && <FirstStep academyId={academyId} onNext={(data) => handleNext({ ...data })} />}
               {step.currentProgress === 2 && <SecondStep content={challenge.content} onNext={(data) => handleNext({ ...data })} onBack={handleBack} />}
-              {step.currentProgress === 3 && <LastStep />}
+              {step.currentProgress === 3 && (
+                <FallbackMessage imageUrl="/images/icons/icon_happy.webp" title="챌린지를 배포중 입니다" content="잠시만 기다려주세요" />
+              )}
             </Flex>
           </Flex>
         </MultiStepProgress>

@@ -37,7 +37,7 @@ function DeleteForm() {
       <Typography size="h6" className="break-keep font-normal opacity-60">
         탈퇴 진행을 위해 자신의 이메일을 입력해주세요
       </Typography>
-      <Input register={register} errors={errors} required label="이메일" id="email" />
+      <Input variant="secondary" register={register} errors={errors} required label="이메일" id="email" />
     </div>
   );
 

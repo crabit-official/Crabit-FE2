@@ -61,14 +61,14 @@ function Second({ onNext, onBack }: ISecondProps) {
           </Flex>
         </Flex>
       </BoxContainer>
-      <BoxContainer>
+      <BoxContainer className="group transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink">
         <Flex column="start" className="gap-1">
           <Typography size="h3">포인트</Typography>
         </Flex>
         <Input id="points" type="number" label="포인트" register={register} errors={errors} required valueAsNumber />
       </BoxContainer>
 
-      <BoxContainer>
+      <BoxContainer className="group transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink">
         <Flex column="start" className="gap-1">
           <Typography size="h3" className="opacity-80">
             총 챌린지 기간

@@ -44,7 +44,7 @@ async function ContentDetail({ params, searchParams }: IContentDetailProps) {
 
   return (
     <Flex className="w-full">
-      <Flex column="start" className="min-h-[550px] w-full lg:w-2/3">
+      <Flex column="start" className="w-full lg:w-2/3">
         {content}
       </Flex>
     </Flex>
