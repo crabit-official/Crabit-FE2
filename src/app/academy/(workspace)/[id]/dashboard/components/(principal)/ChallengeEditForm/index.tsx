@@ -102,6 +102,9 @@ function ChallengeEditForm({ points, title, totalDays, content, description, cha
         queryClient.invalidateQueries({
           queryKey: [queryKeys.CHALLENGE_DETAIL, academyId, releasedChallengeId],
         });
+        queryClient.invalidateQueries({
+          queryKey: [queryKeys.CHALLENGE_STUDENT_PROGRESS_LIST, { academyId }, { releasedChallengeId }],
+        });
       },
       onSettled: () => {
         setIsEdit((prev) => !prev);
