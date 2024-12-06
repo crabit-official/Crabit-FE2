@@ -69,7 +69,7 @@ function ModalContent({ challenge, teacher, academy, setRelease }: TContentProps
               <Typography size="h6" className="w-28 px-1 text-sm opacity-80 sm:w-fit">
                 첨부파일 :
               </Typography>
-              <Link target="_blank" href={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challenge?.fileUrl}`} download className="text-blue-500 underline">
+              <Link target="_blank" href={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challenge?.fileUrl}`} download className="text-sm text-blue-500 underline">
                 {challenge?.fileUrl.split('_').slice(1).join('_')}
               </Link>
             </Flex>
