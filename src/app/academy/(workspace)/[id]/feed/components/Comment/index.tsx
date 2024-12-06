@@ -123,9 +123,9 @@ function Comment({ comment, academyMember, academyId, releasedChallengeId, stude
           {comment?.commentStatus === COMMENT_STATUS.REPORTED && '신고된 댓글입니다.'}
         </Typography>
         <Flex row="start" className="gap-2">
-          {academyMember && profile?.result.academyMemberId !== academyMember?.academyMemberId && (
+          {profile?.result.academyMemberId !== academyMember?.academyMemberId && (
             <>
-              <CommentIcon icon={AiFillAlert} onClick={() => setOpen(true)} />
+              {academyMember && <CommentIcon icon={AiFillAlert} onClick={() => setOpen(true)} />}
               <CommentIcon icon={MdOutlineBlock} onClick={handleBlock} />
             </>
           )}
