@@ -19,7 +19,6 @@ interface IStudentCardProps extends IChallengeParticipant {
   releasedChallengeId: number;
 }
 
-// TODO: 학교명 수정
 function StudentCard({ studentChallenge, academyId, studentProfile, releasedChallengeId }: IStudentCardProps) {
   const router = useRouter();
   const { mutate } = useApprovalChallenge({ academyId, releasedChallengeId });
@@ -47,7 +46,7 @@ function StudentCard({ studentChallenge, academyId, studentProfile, releasedChal
           />
           <Typography size="h5" as="p" className="flex items-center gap-2 text-sm font-normal sm:text-base">
             <IoSchool />
-            학교명 • {studentProfile.nickname}
+            {studentProfile.school} • {studentProfile.nickname}
           </Typography>
         </Flex>
         <IoIosArrowForward />
