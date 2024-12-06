@@ -308,7 +308,7 @@ export type TMyChallengeProgressResult = CommonResponse<{
     challengeType: CHALLENGE_TYPE;
     content: string;
     description: string;
-    fileUrl: string;
+    fileUrl: string | null;
     points: number;
     releasedChallengeId: number;
     thumbnailImageUrl: string;
