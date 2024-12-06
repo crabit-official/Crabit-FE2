@@ -82,16 +82,17 @@ function ChallengeDetail({ academyId, releasedChallengeId, releasedChallenge }: 
         )}
         <Flex column="start" className="gap-2 p-2">
           <Typography size="h3">챌린지 설명</Typography>
-          <Typography size="h5" className="w-full text-start font-normal opacity-80" as="p">
+          <Typography size="h5" className="overflow-hidden whitespace-normal break-all text-start font-normal opacity-80" as="p">
             {releasedChallenge?.content}
           </Typography>
+
           {releasedChallenge?.description && (
             <>
               <hr className="my-4 h-1 w-full" />
               <Typography size="h5" as="p">
                 추가 설명
               </Typography>
-              <Typography size="h5" className="w-full text-start font-normal opacity-80" as="p">
+              <Typography size="h5" className="overflow-hidden whitespace-normal break-all text-start font-normal opacity-80" as="p">
                 {releasedChallenge.description}
               </Typography>
             </>
