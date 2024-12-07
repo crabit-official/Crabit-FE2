@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 import AnimateCard from '@/app/academy/(workspace)/[id]/dashboard/components/AnimateCard';
 import { getChallengeCategory } from '@/features/academy/(workspace)/utils/challengeState';
 import FallbackMessage from '@/shared/components/FallbackMessage';
-import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import type { CHALLENGE_TYPE } from '@/shared/enums/challenge';
 import useGetInfiniteMarketChallenge from '@/shared/hooks/market/useGetInfiniteMarketChallenges';
@@ -19,7 +18,7 @@ interface IChallengeCardListProps {
 
 function ChallengeCardList({ academyId, challengeType }: IChallengeCardListProps) {
   const router = useRouter();
-  const { data: challenges, isFetching, hasNextPage, fetchNextPage, isError } = useGetInfiniteMarketChallenge(academyId, challengeType);
+  const { data: challenges, isFetching, hasNextPage, fetchNextPage } = useGetInfiniteMarketChallenge(academyId, challengeType);
   const isEmpty = challenges?.pages.every((page) => page.result.challengeList.length === 0);
 
   const { ref, inView } = useInView({
@@ -34,14 +33,6 @@ function ChallengeCardList({ academyId, challengeType }: IChallengeCardListProps
       }
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
-
-  if (isError) {
-    return (
-      <Flex>
-        <Typography size="h5">에러가 발생했습니다.</Typography>
-      </Flex>
-    );
-  }
 
   if (isEmpty) {
     return (

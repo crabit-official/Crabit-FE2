@@ -13,6 +13,7 @@ function useGetInfiniteFeedChallengeContents(
     queryKey: [queryKeys.CHALLENGE_FEED_LIST, { academyId }],
     initialPageParam: 0,
     getNextPageParam: (lastPage) => (lastPage.result.hasNext ? lastPage.result.nextCursor : undefined),
+    throwOnError: true,
     ...queryOptions,
   });
 }

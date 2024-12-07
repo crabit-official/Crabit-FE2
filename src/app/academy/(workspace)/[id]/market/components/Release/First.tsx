@@ -26,7 +26,7 @@ interface IFirstStep {
 }
 
 function FirstStep({ academyId, onNext }: IFirstStep) {
-  const { data: studentData, isFetching, hasNextPage, fetchNextPage, isError } = useGetInfiniteAcademyMemberDetailList(10, academyId);
+  const { data: studentData, isFetching, hasNextPage, fetchNextPage } = useGetInfiniteAcademyMemberDetailList(10, academyId);
   const [selectedStudentIdList, setSelectedStudentIdList] = useState<number[]>([]);
   const { ref, inView } = useInView({
     threshold: 0,
@@ -73,14 +73,6 @@ function FirstStep({ academyId, onNext }: IFirstStep) {
       }
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
-
-  if (isError) {
-    return (
-      <Flex>
-        <Typography size="h5">에러가 발생했습니다.</Typography>
-      </Flex>
-    );
-  }
 
   return (
     <form onSubmit={handleSubmit(handleRelease)} className="flex w-11/12 flex-col justify-center gap-10">

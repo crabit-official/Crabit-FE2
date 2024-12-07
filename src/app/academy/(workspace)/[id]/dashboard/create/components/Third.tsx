@@ -32,7 +32,7 @@ function Third({ onBack, onNext, academyId }: IThirdProps) {
   } = useForm<FieldValues>({
     resolver: zodResolver(challengeSchema),
   });
-  const { data: studentData, isFetching, hasNextPage, fetchNextPage, isError } = useGetInfiniteAcademyMemberDetailList(10, academyId);
+  const { data: studentData, isFetching, hasNextPage, fetchNextPage } = useGetInfiniteAcademyMemberDetailList(10, academyId);
 
   const [selectedStudentIdList, setSelectedStudentIdList] = useState<number[]>([]);
   const watchCategory = watch('challengeParticipationMethod');
@@ -48,10 +48,6 @@ function Third({ onBack, onNext, academyId }: IThirdProps) {
       }
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
-
-  if (isError) {
-    return <div>에러가 발생했습니다. 다시 시도해주세요.</div>;
-  }
 
   const onSubmit = (data: FieldValues) => {
     if (data.challengeParticipationMethod === CHALLENGE_PARTICIPATION_METHODS.SELF_PARTICIPATING) {

@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 import AnimateCard from '@/app/academy/(workspace)/[id]/dashboard/components/AnimateCard';
 import { getChallengeCategory } from '@/features/academy/(workspace)/utils/challengeState';
 import FallbackMessage from '@/shared/components/FallbackMessage';
-import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import { PUBLIC_CATEGORY_NAME } from '@/shared/constants/tab-menu';
 import useGetInfinitePublicChallenge from '@/shared/hooks/public/useGetInfinitePublicChallenge';
@@ -20,7 +19,7 @@ interface IPublicCardListProps {
 function PublicCardList({ academyId, category }: IPublicCardListProps) {
   const router = useRouter();
   const selectedCategory = PUBLIC_CATEGORY_NAME[category] ?? undefined;
-  const { data: challenge, isFetching, hasNextPage, fetchNextPage, isError } = useGetInfinitePublicChallenge(academyId, selectedCategory);
+  const { data: challenge, isFetching, hasNextPage, fetchNextPage } = useGetInfinitePublicChallenge(academyId, selectedCategory);
   const isEmpty = challenge?.pages.every((page) => page.result.academyPublicChallengeList.length === 0);
 
   const { ref, inView } = useInView({
@@ -35,14 +34,6 @@ function PublicCardList({ academyId, category }: IPublicCardListProps) {
       }
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
-
-  if (isError) {
-    return (
-      <Flex>
-        <Typography size="h5">에러가 발생했습니다.</Typography>
-      </Flex>
-    );
-  }
 
   if (isEmpty) {
     return (

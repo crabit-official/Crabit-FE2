@@ -27,6 +27,7 @@ function useGetInfinitePublicChallenge(
     queryKey: [queryKeys.PUBLIC_CHALLENGE_LIST, { academyId }, categoryKey],
     initialPageParam: 0,
     getNextPageParam: (lastPage) => (lastPage.result.hasNext ? lastPage.result.nextCursor : undefined),
+    throwOnError: true,
     ...queryOptions,
   });
 }

@@ -7,7 +7,6 @@ import StudentChallengeContent from '../StudentChallengeContent';
 
 import FallbackMessage from '@/shared/components/FallbackMessage';
 import Flex from '@/shared/components/Flex';
-import Typography from '@/shared/components/Typography';
 import useGetInfiniteStudentChallengeContents from '@/shared/hooks/challenge/useGetInfiniteStudentChallengeContents';
 
 interface IStudentChallengeContents {
@@ -17,13 +16,7 @@ interface IStudentChallengeContents {
 }
 
 function StudentChallengeContents({ academyId, releasedChallengeId, studentChallengeId }: IStudentChallengeContents) {
-  const {
-    data: contents,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isError,
-  } = useGetInfiniteStudentChallengeContents(academyId, releasedChallengeId, studentChallengeId);
+  const { data: contents, fetchNextPage, hasNextPage, isFetching } = useGetInfiniteStudentChallengeContents(academyId, releasedChallengeId, studentChallengeId);
   const isEmpty = contents?.pages.every((page) => page.result.challengeLogList.length === 0);
 
   const { ref, inView } = useInView({
@@ -38,14 +31,6 @@ function StudentChallengeContents({ academyId, releasedChallengeId, studentChall
       }
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
-
-  if (isError) {
-    return (
-      <Flex>
-        <Typography size="h5">에러가 발생했습니다.</Typography>
-      </Flex>
-    );
-  }
 
   if (isEmpty) {
     return (
