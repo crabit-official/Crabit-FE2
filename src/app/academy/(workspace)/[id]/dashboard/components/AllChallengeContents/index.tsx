@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 import AnimateCard from '@/app/academy/(workspace)/[id]/dashboard/components/AnimateCard';
 import PlusChallengeCard from '@/app/academy/(workspace)/[id]/dashboard/components/PlusChallengeCard';
 import { getChallengeCategory } from '@/features/academy/(workspace)/utils/challengeState';
-import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import { PUBLIC_CATEGORY_NAME } from '@/shared/constants/tab-menu';
 import useGetInfiniteTeacherChallengeList from '@/shared/hooks/challenge/useGetInfiniteTeacherChallengeList';
@@ -22,7 +21,7 @@ interface IAllChallengeContentsProps {
 function AllChallengeContents({ academyId, category, search }: IAllChallengeContentsProps) {
   const router = useRouter();
   const selectedCategory = PUBLIC_CATEGORY_NAME[category] ?? undefined;
-  const { data: challenge, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteTeacherChallengeList(academyId, selectedCategory, search);
+  const { data: challenge, fetchNextPage, hasNextPage, isFetching } = useGetInfiniteTeacherChallengeList(academyId, selectedCategory, search);
 
   const { ref, inView } = useInView({
     threshold: 0,
@@ -36,14 +35,6 @@ function AllChallengeContents({ academyId, category, search }: IAllChallengeCont
       }
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
-
-  if (isError) {
-    return (
-      <Flex>
-        <Typography size="h5">에러가 발생했습니다.</Typography>
-      </Flex>
-    );
-  }
 
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">

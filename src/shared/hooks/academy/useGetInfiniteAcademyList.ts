@@ -13,6 +13,7 @@ function useGetInfiniteAcademyList(
     queryKey: [queryKeys.ACADEMY_LIST],
     initialPageParam: 0,
     getNextPageParam: (lastPage) => (lastPage.result.hasNext ? lastPage.result.nextCursor : undefined),
+    throwOnError: true,
     ...queryOptions,
   });
 }

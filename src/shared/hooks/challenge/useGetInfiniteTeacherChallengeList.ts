@@ -20,6 +20,7 @@ function useGetInfiniteTeacherChallengeList(
     queryKey: [queryKeys.CHALLENGE_LIST, { academyId }, categoryKey, searchKey],
     initialPageParam: 0,
     getNextPageParam: (lastPage) => (lastPage.result.hasNext ? lastPage.result.nextCursor : undefined),
+    throwOnError: true,
     ...queryOptions,
   });
 }

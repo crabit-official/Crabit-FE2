@@ -56,7 +56,7 @@ function ChallengeEditForm({ points, title, totalDays, content, description, cha
   const queryClient = useQueryClient();
   const params = useParams();
   const { mutate } = useEditChallenge();
-  const { data: studentData, isFetching, hasNextPage, fetchNextPage, isError } = useGetInfiniteAcademyMemberDetailList(10, Number(params.id));
+  const { data: studentData, isFetching, hasNextPage, fetchNextPage } = useGetInfiniteAcademyMemberDetailList(10, Number(params.id));
 
   const [selectedStudentIdList, setSelectedStudentIdList] = useState<number[]>([]);
   const watchCategory = watch('challengeParticipationMethod');
@@ -72,10 +72,6 @@ function ChallengeEditForm({ points, title, totalDays, content, description, cha
       }
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
-
-  if (isError) {
-    return <div>에러가 발생했습니다. 다시 시도해주세요.</div>;
-  }
 
   const onSubmit = (data: FormValues) => {
     console.log(data);

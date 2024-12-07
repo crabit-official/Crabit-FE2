@@ -16,7 +16,7 @@ interface IFeedProps {
 }
 
 function ChallengeFeed({ academyId }: IFeedProps) {
-  const { data: contents, isFetching, hasNextPage, fetchNextPage, isError } = useGetInfiniteFeedChallengeContents(academyId);
+  const { data: contents, isFetching, hasNextPage, fetchNextPage } = useGetInfiniteFeedChallengeContents(academyId);
   const isEmpty = contents?.pages.every((page) => page.result.challengeLogList.length === 0);
 
   console.log(contents);
@@ -33,14 +33,6 @@ function ChallengeFeed({ academyId }: IFeedProps) {
       }
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
-
-  if (isError) {
-    return (
-      <Flex>
-        <Typography size="h5">에러가 발생했습니다.</Typography>
-      </Flex>
-    );
-  }
 
   if (isEmpty) {
     return (

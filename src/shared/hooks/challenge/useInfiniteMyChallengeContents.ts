@@ -21,6 +21,7 @@ function useInfiniteMyChallengeContents(
     queryKey: [queryKeys.MY_CHALLENGE_CONTENTS, { academyId }, { studentChallengeId }],
     initialPageParam: 0,
     getNextPageParam: (lastPage) => (lastPage.result.hasNext ? lastPage.result.nextCursor : undefined),
+    throwOnError: true,
     ...queryOptions,
   });
 }

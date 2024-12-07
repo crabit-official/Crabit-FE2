@@ -16,7 +16,7 @@ interface IStudentCardListProps {
 }
 
 function StudentCardList({ academyId, releasedChallengeId }: IStudentCardListProps) {
-  const { data: students, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteStudentChallengeProgressList(academyId, releasedChallengeId);
+  const { data: students, fetchNextPage, hasNextPage, isFetching } = useGetInfiniteStudentChallengeProgressList(academyId, releasedChallengeId);
   const isEmpty = students?.pages.every((page) => page.result.challengeParticipantList.length === 0);
 
   const { ref, inView } = useInView({
@@ -31,14 +31,6 @@ function StudentCardList({ academyId, releasedChallengeId }: IStudentCardListPro
       }
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
-
-  if (isError) {
-    return (
-      <Flex>
-        <Typography size="h5">에러 발생 !</Typography>
-      </Flex>
-    );
-  }
 
   if (isEmpty) {
     return (
