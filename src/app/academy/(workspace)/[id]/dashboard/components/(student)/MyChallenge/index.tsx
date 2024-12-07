@@ -17,7 +17,7 @@ interface IMyChallengeProps {
 }
 
 function MyChallenge({ academyId, studentChallengeId }: IMyChallengeProps) {
-  const { data: contents, isError, isFetching, hasNextPage, fetchNextPage } = useInfiniteMyChallengeContents(academyId, studentChallengeId);
+  const { data: contents, isFetching, hasNextPage, fetchNextPage } = useInfiniteMyChallengeContents(academyId, studentChallengeId);
   const isEmpty = contents?.pages.every((page) => page.result.challengeLogList.length === 0);
 
   const { ref, inView } = useInView({
@@ -32,14 +32,6 @@ function MyChallenge({ academyId, studentChallengeId }: IMyChallengeProps) {
       }
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
-
-  if (isError) {
-    return (
-      <Flex>
-        <Typography size="h5">에러가 발생했습니다.</Typography>
-      </Flex>
-    );
-  }
 
   if (isEmpty) {
     return (

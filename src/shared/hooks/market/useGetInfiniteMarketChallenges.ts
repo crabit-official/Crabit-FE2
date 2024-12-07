@@ -23,6 +23,7 @@ function useGetInfiniteMarketChallenge(
     queryKey: [queryKeys.CHALLENGE_MARKET, { academyId }, { challengeType }],
     initialPageParam: 0,
     getNextPageParam: (lastPage) => (lastPage.result.hasNext ? lastPage.result.nextCursor : undefined),
+    throwOnError: true,
     ...queryOptions,
   });
 }

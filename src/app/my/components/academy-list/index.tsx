@@ -8,7 +8,6 @@ import useInvitationModal from '../../hooks/use-invitation-modal';
 
 import AnimateCard from '@/app/academy/(workspace)/[id]/dashboard/components/AnimateCard';
 import PlusChallengeCard from '@/app/academy/(workspace)/[id]/dashboard/components/PlusChallengeCard';
-import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import useGetInfiniteAcademyList from '@/shared/hooks/academy/useGetInfiniteAcademyList';
 import { getRoleName } from '@/shared/utils/academyRole';
@@ -16,7 +15,7 @@ import { getRoleName } from '@/shared/utils/academyRole';
 function AcademyList() {
   const router = useRouter();
   const invitationModal = useInvitationModal();
-  const { data: academies, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteAcademyList();
+  const { data: academies, fetchNextPage, hasNextPage, isFetching } = useGetInfiniteAcademyList();
 
   const { ref, inView } = useInView({
     threshold: 0,
@@ -30,14 +29,6 @@ function AcademyList() {
       }
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
-
-  if (isError) {
-    return (
-      <Flex>
-        <Typography size="h5">에러가 발생했습니다.</Typography>
-      </Flex>
-    );
-  }
 
   return (
     <div className="grid h-full grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">

@@ -23,6 +23,7 @@ function useGetInfiniteAcademyMemberDetailList(
     queryKey: [queryKeys.ACADEMY_STUDENT_DETAIL_LIST],
     initialPageParam: 0,
     getNextPageParam: (lastPage) => (lastPage.result.hasNext ? lastPage.result.nextCursor : undefined),
+    throwOnError: true,
     ...queryOptions,
   });
 }

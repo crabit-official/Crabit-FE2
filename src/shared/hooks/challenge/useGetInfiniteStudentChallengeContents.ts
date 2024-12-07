@@ -23,6 +23,7 @@ function useGetInfiniteStudentChallengeContents(
     queryKey: [queryKeys.CHALLENGE_STUDENT_CONTENTS, academyId, releasedChallengeId, studentChallengeId],
     initialPageParam: 0,
     getNextPageParam: (lastPage) => (lastPage.result.hasNext ? lastPage.result.nextCursor : undefined),
+    throwOnError: true,
     ...queryOptions,
   });
 }

@@ -5,7 +5,6 @@ import { useInView } from 'react-intersection-observer';
 
 import Comment from '@/app/academy/(workspace)/[id]/feed/components/Comment';
 import Flex from '@/shared/components/Flex';
-import Typography from '@/shared/components/Typography';
 import useGetInfiniteComments from '@/shared/hooks/comments/useGetInfiniteComments';
 
 interface ICommentBoxProps {
@@ -22,7 +21,6 @@ function CommentList({ academyId, releasedChallengeId, studentChallengeLogId }: 
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-    isError,
   } = useGetInfiniteComments(academyId, releasedChallengeId, studentChallengeLogId);
   const { ref, inView } = useInView({
     threshold: 0,
@@ -37,13 +35,6 @@ function CommentList({ academyId, releasedChallengeId, studentChallengeLogId }: 
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
-  if (isError) {
-    return (
-      <Flex>
-        <Typography size="h5">에러가 발생했습니다.</Typography>
-      </Flex>
-    );
-  }
   return (
     <Flex column="start" className="gap-3">
       {commentList?.pages.map((page) =>
