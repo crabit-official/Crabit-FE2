@@ -99,7 +99,7 @@ function UserMenu() {
                     setIsOpen(false);
                     router.push('/my/academy');
                   }}
-                  label="내 학원"
+                  label="내 기관"
                 />
                 <MenuItem
                   onClick={() => {
