@@ -22,11 +22,12 @@ import usePostCheckVerifyCode from '@/shared/hooks/auth/queries/usePostCheckVeri
 import usePostSendVerifyCode from '@/shared/hooks/auth/queries/usePostSendVerifyCode';
 
 const FREEMIUM_TIER = [
-  { value: 'STARTER', label: '스타터' },
-  { value: 'BASIC', label: '베이직' },
-  { value: 'STANDARD', label: '스탠다드' },
-  { value: 'PREMIUM', label: '프리미엄' },
-  { value: 'ENTERPRISE', label: '엔터프라이즈' },
+  { value: 'BETA', label: '베타 서비스 (무료)' },
+  { value: 'STARTER', label: '스타터 (~25명)' },
+  { value: 'BASIC', label: '베이직 (~100명)' },
+  { value: 'STANDARD', label: '스탠다드 (~200명)' },
+  { value: 'PREMIUM', label: '프리미엄 (~300명' },
+  { value: 'ENTERPRISE', label: '엔터프라이즈 (맞춤 견적)' },
 ];
 
 function Form() {

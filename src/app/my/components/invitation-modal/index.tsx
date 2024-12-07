@@ -27,6 +27,7 @@ function InvitationModal() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FieldValues>({
     defaultValues: {
       joinCode: '',
@@ -49,6 +50,8 @@ function InvitationModal() {
     });
 
     setIsLoading(false);
+    reset();
+    invitationModal.onClose();
   };
 
   const bodyContent = (
