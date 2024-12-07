@@ -21,7 +21,7 @@ function CommentForm({ releasedChallengeId, studentChallengeLogId, academyId, pa
   const { data: profile } = useGetAcademyProfile(academyId);
 
   const [content, setContent] = useState<string>('');
-  const { mutate } = useCreateComment({ academyId, releasedChallengeId, studentChallengeLogId });
+  const { mutate, isPending } = useCreateComment({ academyId, releasedChallengeId, studentChallengeLogId });
 
   const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,6 +52,7 @@ function CommentForm({ releasedChallengeId, studentChallengeLogId, academyId, pa
         <Flex row="between" className="w-full gap-2 rounded-xl bg-gray-100/90 px-4 py-2">
           <input className="w-full bg-transparent text-xs focus:outline-none" value={content} onChange={(e) => setContent(e.target.value)} required />
           <button
+            disabled={isPending}
             type="submit"
             className="rounded-full border border-solid border-gray-200 bg-white p-1 transition duration-200 ease-in-out hover:border-main-deep-pink hover:shadow-hover-pink"
           >
