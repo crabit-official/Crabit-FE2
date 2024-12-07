@@ -4,7 +4,7 @@ import Avatar from '@/shared/components/Avatar';
 import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import type { TChallengeDetailResult } from '@/shared/types/acadmy';
-import formatDate from '@/shared/utils/date';
+import timeForToday from '@/shared/utils/timeForToday';
 
 function ChallengeDetail({ studentAcademyProfile, studentChallengeLog }: TChallengeDetailResult['result']) {
   return (
@@ -23,7 +23,7 @@ function ChallengeDetail({ studentAcademyProfile, studentChallengeLog }: TChalle
         )}
         <Flex row="between" className="w-full px-2">
           <Typography size="h7" className="font-normal">
-            <strong className="font-semibold">{studentAcademyProfile.nickname}</strong> 님의 챌린지 • {formatDate(studentChallengeLog.createdAt)}
+            <strong className="font-semibold">{studentAcademyProfile.nickname}</strong> 님의 챌린지 • {timeForToday(studentChallengeLog.createdAt)}
           </Typography>
         </Flex>
       </Flex>
