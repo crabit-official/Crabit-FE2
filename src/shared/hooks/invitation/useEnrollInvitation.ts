@@ -13,7 +13,7 @@ function useEnrollInvitation() {
     mutationFn: enrollInvitation,
     onSuccess: () => {
       toast.success('초대 코드를 성공적으로 입력했습니다.');
-      router.push('/academy/my');
+      router.push('/my/academy');
       queryClient.invalidateQueries({ queryKey: [queryKeys.ACADEMY_LIST] });
     },
     onError: (error) => {
