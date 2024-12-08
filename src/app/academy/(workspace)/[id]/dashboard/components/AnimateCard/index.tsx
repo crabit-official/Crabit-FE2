@@ -1,4 +1,5 @@
 import React from 'react';
+import DOMPurify from 'dompurify';
 import Image from 'next/image';
 
 import Flex from '@/shared/components/Flex';
@@ -20,6 +21,7 @@ interface IAnimateCard {
   title: string;
 }
 function AnimateCard({ imageUrl, onClick, subTitle, title, leftLabel }: IAnimateCard) {
+  const sanitizeSubTitle = DOMPurify.sanitize(subTitle);
   return (
     <Framer
       onClick={onClick}
@@ -40,9 +42,7 @@ function AnimateCard({ imageUrl, onClick, subTitle, title, leftLabel }: IAnimate
         <Typography size="h5" className="break-keep">
           {title}
         </Typography>
-        <Typography size="h5" as="p" className="text-overflow-3 break-keep text-xs opacity-60">
-          {subTitle}
-        </Typography>
+        <Typography size="h5" as="p" className="text-overflow-3 break-keep text-xs opacity-60" dangerouslySetInnerHTML={{ __html: sanitizeSubTitle }} />
       </Flex>
     </Framer>
   );
