@@ -8,12 +8,14 @@ import { useParams } from 'next/navigation';
 import { toast } from 'sonner';
 
 import { getInvitationCode, postInvitationCode } from '@/shared/apis/invitation';
+import BoxContainer from '@/shared/components/BoxContainer';
 import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
 import FramerScale from '@/shared/components/FramerScale';
 import Spacing from '@/shared/components/Spacing/spacing';
 import Typography from '@/shared/components/Typography';
 import { queryKeys } from '@/shared/constants/query-keys';
+import useGetAcademyMember from '@/shared/hooks/academy/useGetAcademyMember';
 
 function InvitationTab() {
   const [tab, setTab] = useState<'INSTRUCTOR' | 'STUDENT'>('STUDENT');
@@ -28,6 +30,13 @@ function InvitationTab() {
       }),
     queryKey: [queryKeys.INVITATION_CODE, tab],
   });
+
+  const { data: memberCount, refetch } = useGetAcademyMember({
+    academyId: Number(params.id),
+    academyRole: tab,
+  });
+
+  console.log(memberCount);
 
   const { mutate } = useMutation({
     mutationFn: postInvitationCode,
@@ -71,33 +80,52 @@ function InvitationTab() {
         </Typography>
       </Flex>
       <Spacing direction="vertical" size={16} />
-      <div className="rounded-3xl bg-gray-200 p-5">
-        <Flex row="between">
-          <Flex className="items-center justify-center gap-5">
-            <Typography size="h4" color="neutral-500">
-              코드
+      {memberCount?.result.count === memberCount?.result.maxCount ? (
+        <BoxContainer>
+          <Flex row="between">
+            <Typography size="h5-2" color="main-pink" className="font-bold">
+              가입 가능한 인원수를 초과하였습니다.
             </Typography>
-            <Typography size="h4">{data?.result.joinCode}</Typography>
-          </Flex>
-          <div className="flex gap-2">
-            <button type="button" className="hover:rounded-2xl hover:bg-slate-300" onClick={handleCopy}>
-              <IoCopyOutline size={20} />
-            </button>
             <button
               type="button"
               className="hover:rounded-2xl hover:bg-slate-300"
               onClick={() => {
-                mutate({
-                  academyId: Number(params.id),
-                  academyRole: tab,
-                });
+                refetch();
               }}
             >
               <RiRefreshLine size={20} />
             </button>
-          </div>
-        </Flex>
-      </div>
+          </Flex>
+        </BoxContainer>
+      ) : (
+        <div className="rounded-3xl bg-gray-200 p-5">
+          <Flex row="between">
+            <Flex className="items-center justify-center gap-5">
+              <Typography size="h4" color="neutral-500">
+                코드
+              </Typography>
+              <Typography size="h4">{data?.result.joinCode}</Typography>
+            </Flex>
+            <div className="flex gap-2">
+              <button type="button" className="hover:rounded-2xl hover:bg-slate-300" onClick={handleCopy}>
+                <IoCopyOutline size={20} />
+              </button>
+              <button
+                type="button"
+                className="hover:rounded-2xl hover:bg-slate-300"
+                onClick={() => {
+                  mutate({
+                    academyId: Number(params.id),
+                    academyRole: tab,
+                  });
+                }}
+              >
+                <RiRefreshLine size={20} />
+              </button>
+            </div>
+          </Flex>
+        </div>
+      )}
     </FramerScale>
   );
 }

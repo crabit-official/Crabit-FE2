@@ -27,6 +27,8 @@ import type {
   TAcademyMemberEditProfileRequest,
   TAcademyMemberProfileRequest,
   TAcademyMemberProfileResponse,
+  TAcademyMemberRequest,
+  TAcademyMemberResponse,
   TAcademyStudentDetailResponse,
   TError,
 } from '@/shared/types/acadmy';
@@ -262,4 +264,11 @@ export async function getAcademyInstructorDetail({ academyId, academyMemberId }:
   });
 
   return (await res.json()) as TAcademyInstructorDetailResponse;
+}
+
+// [원장 선생님] 학원 멤버 수 조회
+export async function getAcademyMemberCount({ academyId, academyRole }: TAcademyMemberRequest) {
+  const res = await fetch(`/api/academy/member/count?academyId=${academyId}&academyRole=${academyRole}`);
+
+  return (await res.json()) as TAcademyMemberResponse;
 }

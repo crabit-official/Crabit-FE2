@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { GoX } from 'react-icons/go';
+import DOMPurify from 'dompurify';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -20,6 +21,7 @@ type TContentProps = TChallengeDetail['result'] & {
 
 function ModalContent({ challenge, teacher, academy, setRelease }: TContentProps) {
   const router = useRouter();
+  const sanitizeContent = DOMPurify.sanitize(challenge.content);
 
   return (
     <>
@@ -57,9 +59,12 @@ function ModalContent({ challenge, teacher, academy, setRelease }: TContentProps
               <Typography size="h4" className="break-keep">
                 {challenge?.title}
               </Typography>
-              <Typography size="h5" as="p" className="overflow-hidden whitespace-normal break-all text-sm opacity-60">
-                {challenge?.content}
-              </Typography>
+              <Typography
+                size="h5"
+                as="p"
+                className="overflow-hidden whitespace-normal break-all text-sm opacity-60"
+                dangerouslySetInnerHTML={{ __html: sanitizeContent }}
+              />
             </div>
           </BoxContainer>
         </Flex>

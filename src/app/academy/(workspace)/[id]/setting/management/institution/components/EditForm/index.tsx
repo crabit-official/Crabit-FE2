@@ -21,6 +21,7 @@ import Input from '@/shared/components/Input';
 import { queryKeys } from '@/shared/constants/query-keys';
 import useManageAcademy from '@/shared/hooks/academy/useManageAcademy';
 import useGetPresignedUrl from '@/shared/hooks/images/use-get-presigned-url';
+import { S3_FOLDER_NAME } from '@/shared/types/image';
 import { institutionSchema } from '@/shared/utils/schema';
 
 type FormValues = z.infer<typeof institutionSchema>;
@@ -37,7 +38,10 @@ interface IEditFormProps {
 function EditForm({ academyName, mainImageUrl, address, addressDetail, contactNumber, setIsEditing }: IEditFormProps) {
   const { updateAcademyInfo } = useManageAcademy();
   const { filePreview, handleChangeFile, file, handleImageUpload } = useImage();
-  const { data: image, isSuccess } = useGetPresignedUrl(file?.name as string);
+  const { data: image, isSuccess } = useGetPresignedUrl({
+    fileName: file?.name as string,
+    s3Folder: S3_FOLDER_NAME.ACADEMY_IMAGE,
+  });
   const queryClient = useQueryClient();
   const params = useParams();
   const academyId = Number(params.id);

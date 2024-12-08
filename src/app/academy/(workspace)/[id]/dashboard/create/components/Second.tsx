@@ -10,6 +10,7 @@ import Input from '@/shared/components/Input';
 import Typography from '@/shared/components/Typography';
 import useGetPresignedUrl from '@/shared/hooks/images/use-get-presigned-url';
 import type { IAcademyChallenges } from '@/shared/types/acadmy';
+import { S3_FOLDER_NAME } from '@/shared/types/image';
 import { challengeTwoSchema } from '@/shared/utils/schema';
 
 interface ISecondProps {
@@ -26,7 +27,10 @@ function Second({ onNext, onBack }: ISecondProps) {
     resolver: zodResolver(challengeTwoSchema),
   });
   const { handleChangeFile, file } = useImage();
-  const { data: fileUrl } = useGetPresignedUrl(file?.name as string);
+  const { data: fileUrl } = useGetPresignedUrl({
+    fileName: file?.name as string,
+    s3Folder: S3_FOLDER_NAME.CHALLENGE_CORE_FILE,
+  });
 
   const onSubmit = async (data: FieldValues) => {
     if (fileUrl) {
