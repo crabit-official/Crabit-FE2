@@ -87,7 +87,7 @@ function InvitationModal() {
               <Input disabled={isLoading} id="joinCode" label="초대 코드" register={register} errors={errors} required />
               <Input disabled={isLoading} id="nickname" label="닉네임" register={register} errors={errors} required />
               <TextArea disabled={isLoading} id="introduction" label="소개" register={register} errors={errors} required />
-              <Input disabled={isLoading} id="school" label="학교" register={register} errors={errors} required />
+              {/* <Input disabled={isLoading} id="school" label="학교" register={register} errors={errors} required /> */}
             </Flex>
           </Tabs.TabPanel>
         )}
