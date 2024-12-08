@@ -16,6 +16,7 @@ import Typography from '@/shared/components/Typography';
 import useGetPresignedUrl from '@/shared/hooks/images/use-get-presigned-url';
 import useGetProfile from '@/shared/hooks/main/useGetProfile';
 import useEditProfile from '@/shared/hooks/profile/useEditProfile';
+import { S3_FOLDER_NAME } from '@/shared/types/image';
 
 function ProfileEditForm() {
   let profileContent;
@@ -23,7 +24,10 @@ function ProfileEditForm() {
   const [edit, setEdit] = useState<boolean>(false);
   const { filePreview, handleChangeFile, file } = useImage();
   const { data: profile } = useGetProfile();
-  const { data: image, isSuccess } = useGetPresignedUrl(file?.name as string);
+  const { data: image, isSuccess } = useGetPresignedUrl({
+    fileName: file?.name as string,
+    s3Folder: S3_FOLDER_NAME.PROFILE_IMAGE,
+  });
   const { mutate, isPending } = useEditProfile();
   const { register, handleSubmit } = useForm<FieldValues>({
     defaultValues: {

@@ -22,6 +22,7 @@ import { queryKeys } from '@/shared/constants/query-keys';
 import { ACADEMY_ROLE } from '@/shared/enums/academy';
 import useManageAcademy from '@/shared/hooks/academy/useManageAcademy';
 import useGetPresignedUrl from '@/shared/hooks/images/use-get-presigned-url';
+import { S3_FOLDER_NAME } from '@/shared/types/image';
 import { getRoleName } from '@/shared/utils/academyRole';
 import { institutionProfileSchema } from '@/shared/utils/schema';
 
@@ -38,7 +39,10 @@ interface IProfileFormProps {
 
 function InstitutionProfileForm({ setIsEditing, profileImageUrl, nickname, academyRole, school, introduction }: IProfileFormProps) {
   const { filePreview, handleChangeFile, file, handleImageUpload } = useImage();
-  const { data: image, isSuccess } = useGetPresignedUrl(file?.name as string);
+  const { data: image, isSuccess } = useGetPresignedUrl({
+    fileName: file?.name as string,
+    s3Folder: S3_FOLDER_NAME.PROFILE_IMAGE,
+  });
   const { editAcademyMemberProfile } = useManageAcademy();
   const queryClient = useQueryClient();
   const params = useParams();

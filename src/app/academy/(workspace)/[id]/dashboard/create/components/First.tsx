@@ -13,6 +13,7 @@ import TextArea from '@/shared/components/Textarea';
 import Typography from '@/shared/components/Typography';
 import useGetPresignedUrl from '@/shared/hooks/images/use-get-presigned-url';
 import type { IAcademyChallenges } from '@/shared/types/acadmy';
+import { S3_FOLDER_NAME } from '@/shared/types/image';
 
 interface IFirstProps {
   onNext: (data: Partial<IAcademyChallenges>) => void;
@@ -25,7 +26,10 @@ function First({ onNext }: IFirstProps) {
     formState: { errors },
   } = useForm<FieldValues>({});
   const { filePreview, handleChangeFile, file } = useImage();
-  const { data: image, isSuccess } = useGetPresignedUrl(file?.name as string);
+  const { data: image, isSuccess } = useGetPresignedUrl({
+    fileName: file?.name as string,
+    s3Folder: S3_FOLDER_NAME.CHALLENGE_CORE_THUMBNAIL_IMAGE,
+  });
 
   const onSubmit = async (data: FieldValues) => {
     if (image) {

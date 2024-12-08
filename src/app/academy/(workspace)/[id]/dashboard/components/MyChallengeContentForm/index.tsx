@@ -12,6 +12,7 @@ import TextArea from '@/shared/components/Textarea';
 import Typography from '@/shared/components/Typography';
 import useCreateChallengeContent from '@/shared/hooks/challenge/useCreateChallengeContent';
 import useGetPresignedUrl from '@/shared/hooks/images/use-get-presigned-url';
+import { S3_FOLDER_NAME } from '@/shared/types/image';
 
 interface IMyChallengeContentFormProps {
   academyId: number;
@@ -33,7 +34,10 @@ function MyChallengeContentForm({ academyId, studentChallengeId }: IMyChallengeC
 
   const { mutate } = useCreateChallengeContent({ academyId, studentChallengeId });
   const { filePreview, handleChangeFile, file, setFile } = useImage();
-  const { data: image } = useGetPresignedUrl(file?.name as string);
+  const { data: image } = useGetPresignedUrl({
+    fileName: file?.name as string,
+    s3Folder: S3_FOLDER_NAME.CHALLENGE_CORE_FILE,
+  });
 
   const createContent: SubmitHandler<FieldValues> = async (data: FieldValues) => {
     if (image) {
