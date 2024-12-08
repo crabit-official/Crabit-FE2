@@ -49,7 +49,7 @@ function AnimateCard({ imageUrl, onClick, subTitle, title, leftLabel }: IAnimate
 }
 function AnimateCardSkeleton() {
   return (
-    <Framer className="relative flex h-fit min-h-80 w-[300px] flex-col items-center justify-between overflow-hidden rounded-lg border border-solid border-gray-100 bg-white shadow-custom sm:w-64">
+    <Framer className="relative flex h-fit min-h-80 w-64 flex-col items-center justify-between overflow-hidden rounded-lg border border-solid border-gray-100 bg-white shadow-custom sm:w-64">
       <Skeleton height={160} />
       <Flex column="start" className="size-full min-h-32 gap-2 px-6">
         <Skeleton height={20} className="rounded-md" />
