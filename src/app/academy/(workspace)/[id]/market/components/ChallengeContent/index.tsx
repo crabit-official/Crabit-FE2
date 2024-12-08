@@ -62,7 +62,7 @@ function ChallengeContent({ challenge, teacher, academy, setRelease }: TChalleng
             </>
           )}
         </BoxContainer>
-        <div className="px-2">
+        <BoxContainer className="px-4 py-5">
           <Toggle
             content={
               challenge?.fileUrl ? (
@@ -78,7 +78,7 @@ function ChallengeContent({ challenge, teacher, academy, setRelease }: TChalleng
             }
             title="첨부파일"
           />
-        </div>
+        </BoxContainer>
       </Flex>
       <Button onClick={() => setRelease(true)} className="mt-4 bg-main-deep-pink font-medium text-white" disabled={challenge?.alreadyReleasedInAcademy}>
         {challenge?.alreadyReleasedInAcademy ? '이미 학원에 배포된 챌린지입니다.' : '우리 학원에 배포'}

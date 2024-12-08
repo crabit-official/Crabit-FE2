@@ -152,7 +152,7 @@ function ChallengeDetail({ academyId, releasedChallengeId }: TChallengeDetailPro
               </>
             )}
           </Flex>
-          <div className="px-2">
+          <BoxContainer variant="border" className="px-4 py-5">
             <Toggle
               content={
                 challengeData?.result.releasedChallenge?.fileUrl ? (
@@ -173,7 +173,7 @@ function ChallengeDetail({ academyId, releasedChallengeId }: TChallengeDetailPro
               }
               title="첨부파일"
             />
-          </div>
+          </BoxContainer>
           <Flex className="gap-4">
             <BoxContainer variant="border" className="flex w-full flex-col items-center px-4 py-5">
               <Typography size="h3" className="w-full text-start">
