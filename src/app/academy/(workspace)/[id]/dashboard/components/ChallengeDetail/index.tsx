@@ -45,7 +45,7 @@ function ChallengeDetail({ academyId, releasedChallengeId }: TChallengeDetailPro
           <Skeleton height={21} width={100} className="rounded-md" />
           <Skeleton height={45} width={200} className="rounded-md" />
         </Flex>
-        <Skeleton height={256} className="rounded-lg" />
+        <Skeleton height={400} className="rounded-lg" />
         <Skeleton height={100} className="rounded-lg" />
         <Flex className="gap-4">
           <Skeleton height={100} className="rounded-lg" />
@@ -123,7 +123,7 @@ function ChallengeDetail({ academyId, releasedChallengeId }: TChallengeDetailPro
               alt="test"
               width={500}
               height={500}
-              className="h-64 w-full rounded-2xl border border-solid border-gray-100 object-contain shadow-custom"
+              className="h-100 w-full rounded-2xl border border-solid border-gray-100 object-cover shadow-custom"
             />
           ) : (
             <Image
@@ -131,7 +131,7 @@ function ChallengeDetail({ academyId, releasedChallengeId }: TChallengeDetailPro
               alt="test"
               width={500}
               height={500}
-              className="h-64 w-full rounded-2xl border border-solid border-gray-100 object-cover shadow-custom"
+              className="h-100 w-full rounded-2xl border border-solid border-gray-100 object-cover shadow-custom"
             />
           )}
           <Flex column="start" className="gap-2 p-2">

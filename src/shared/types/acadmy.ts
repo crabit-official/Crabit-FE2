@@ -513,3 +513,16 @@ export type TChallengeEditRequest = {
   studentIdList: number[];
   totalDays: number;
 };
+
+// [원장 선생님] 학원 멤버 수 조회
+export type TAcademyMemberRequest = {
+  academyId: number;
+  academyRole: 'PRINCIPAL' | 'INSTRUCTOR' | 'STUDENT';
+};
+
+export type TAcademyMemberResponse = CommonResponse<{
+  academyId: number;
+  academyRole: 'PRINCIPAL' | 'INSTRUCTOR' | 'STUDENT';
+  count: number;
+  maxCount: number;
+}>;

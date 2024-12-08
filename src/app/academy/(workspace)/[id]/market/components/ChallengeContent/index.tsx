@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaFile } from 'react-icons/fa';
+import DOMPurify from 'dompurify';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -16,6 +17,7 @@ type TChallengeContentProps = TChallengeDetail['result'] & {
 };
 
 function ChallengeContent({ challenge, teacher, academy, setRelease }: TChallengeContentProps) {
+  const sanitizeContent = DOMPurify.sanitize(challenge.content);
   return (
     <>
       <Flex column="center" className="w-full gap-1">
@@ -47,9 +49,12 @@ function ChallengeContent({ challenge, teacher, academy, setRelease }: TChalleng
         )}
         <BoxContainer variant="border" className="px-4 py-5">
           <Typography size="h3">챌린지 설명</Typography>
-          <Typography size="h5" className="w-full overflow-hidden whitespace-normal break-all text-start font-normal opacity-80" as="p">
-            {challenge?.content}
-          </Typography>
+          <Typography
+            size="h5"
+            className="w-full overflow-hidden whitespace-normal break-all text-start font-normal opacity-80"
+            as="p"
+            dangerouslySetInnerHTML={{ __html: sanitizeContent }}
+          />
           {challenge?.description && (
             <>
               <hr className="my-4 h-1 w-full" />
