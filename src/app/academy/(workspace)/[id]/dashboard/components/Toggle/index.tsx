@@ -12,7 +12,7 @@ interface IToggleProps {
 }
 
 function Toggle({ title, content }: IToggleProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const toggleOpen = () => setIsOpen(!isOpen);
   return (
