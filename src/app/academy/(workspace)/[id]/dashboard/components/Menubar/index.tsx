@@ -68,14 +68,14 @@ function Menubar({ academyId, activeTab, role }: IMenubarProps) {
                 type="button"
                 onClick={() => setChallengeFilter('CREATED_BY_ME')}
               >
-                내가 가져온 챌린지
+                내가 생성한 챌린지
               </button>
               <button
                 className={challengeFilter === 'RELEASED_FROM_MARKET' ? 'font-bold text-main-deep-pink' : ''}
                 type="button"
                 onClick={() => setChallengeFilter('RELEASED_FROM_MARKET')}
               >
-                내가 생성한 챌린지
+                내가 가져온 챌린지
               </button>
             </div>
           </div>
