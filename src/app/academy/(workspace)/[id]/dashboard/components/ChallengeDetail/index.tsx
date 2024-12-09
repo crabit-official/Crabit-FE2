@@ -16,6 +16,7 @@ import Flex from '@/shared/components/Flex';
 import Skeleton from '@/shared/components/Skeleton/Skeleton';
 import SmallModal from '@/shared/components/SmallModal';
 import Typography from '@/shared/components/Typography';
+import useManageAcademy from '@/shared/hooks/academy/useManageAcademy';
 import useDeleteChallenge from '@/shared/hooks/challenge/useDeleteChallenge';
 import useGetChallengeDetail from '@/shared/hooks/challenge/useGetChallengeDetail';
 import { formatNumberWithCommas } from '@/shared/utils/number';
@@ -27,6 +28,8 @@ type TChallengeDetailProps = {
 
 function ChallengeDetail({ academyId, releasedChallengeId }: TChallengeDetailProps) {
   const { data: challengeData, isPending } = useGetChallengeDetail(academyId, releasedChallengeId);
+  const { useGetAcademyMemberProfile } = useManageAcademy();
+  const { data: profile } = useGetAcademyMemberProfile({ academyId });
   const { mutate } = useDeleteChallenge({ academyId });
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isEdit, setIsEdit] = useState<boolean>(false);
@@ -102,14 +105,16 @@ function ChallengeDetail({ academyId, releasedChallengeId }: TChallengeDetailPro
           />
         )}
         <Flex column="center" className="relative w-full gap-5 px-2 sm:px-0">
-          <Flex column="center" className="absolute right-[-16px] top-[100px] mx-2 gap-4 rounded-xl bg-gray-100 p-4 sm:mx-0">
-            <button type="button" onClick={() => setIsEdit((prev) => !prev)}>
-              <AiTwotoneEdit className="hover:text-main-deep-pink" />
-            </button>
-            <button type="button" onClick={() => setIsOpen((prev) => !prev)}>
-              <BsTrash3Fill className="hover:text-main-deep-pink" />
-            </button>
-          </Flex>
+          {challengeData.result.teacher.memberId === profile?.result.memberId && (
+            <Flex column="center" className="absolute right-[-16px] top-[100px] mx-2 gap-4 rounded-xl bg-gray-100 p-4 sm:mx-0">
+              <button type="button" onClick={() => setIsEdit((prev) => !prev)}>
+                <AiTwotoneEdit className="hover:text-main-deep-pink" />
+              </button>
+              <button type="button" onClick={() => setIsOpen((prev) => !prev)}>
+                <BsTrash3Fill className="hover:text-main-deep-pink" />
+              </button>
+            </Flex>
+          )}
           <Flex column="center" className="gap-1">
             <Typography size="h5" className="break-keep text-main-deep-pink">
               {getChallengeType(challengeData?.result.releasedChallenge.challengeType)} •{' '}
