@@ -68,7 +68,7 @@ export function getChallengeType(type: CHALLENGE_TYPE) {
     case CHALLENGE_TYPE.CRABIT:
       return '크래빗 공식 챌린지';
     case CHALLENGE_TYPE.ACADEMY:
-      return '학원 챌린지';
+      return '기관 챌린지';
     default:
       return '크래빗 공식 챌린지';
   }

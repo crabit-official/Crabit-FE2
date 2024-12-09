@@ -87,7 +87,7 @@ function Third({ onBack, onNext, academyId }: IThirdProps) {
           onSubmit={handleSubmit(onSubmit)}
           body={
             <Typography size="h6" className="text-center font-normal opacity-80">
-              ️공개 챌린지로 설정한 경우에 모든 학원에 공개됩니다
+              ️공개 챌린지로 설정한 경우에 모든 기관에 공개됩니다
             </Typography>
           }
         />
@@ -102,7 +102,7 @@ function Third({ onBack, onNext, academyId }: IThirdProps) {
         <Flex column="start" className="gap-1">
           <Typography size="h3">챌린지 마켓 업로드 여부</Typography>
           <Typography size="h5" as="p" className="text-xs opacity-60">
-            tip ) 공개 챌린지의 경우 모든 학원에 공개됩니다
+            tip ) 공개 챌린지의 경우 모든 기관에 공개됩니다
           </Typography>
         </Flex>
         <SelectDropdown id="challengeMarketVisibility" label="챌린지 마켓 업로드 여부" register={register} errors={errors} options={VISIBILITY_CATEGORIES} />

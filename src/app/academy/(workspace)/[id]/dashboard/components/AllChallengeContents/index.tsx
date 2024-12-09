@@ -41,7 +41,7 @@ function AllChallengeContents({ academyId, category, search, releasedByMe }: IAl
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
       <PlusChallengeCard onClick={() => router.push('dashboard/create')} content={'새로운\n챌린지 추가하기'} />
       {challenge?.pages?.map((page) =>
-        page.result.releasedChallengeList.map((item) => (
+        page?.result?.releasedChallengeList?.map((item) => (
           <AnimateCard
             leftLabel={
               <Typography as="p" size="h7" className="text-xs" color="main-white">
