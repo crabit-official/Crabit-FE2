@@ -2,12 +2,10 @@
 
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import Image from 'next/image';
 
 import StudentCard from '@/app/academy/(workspace)/[id]/dashboard/components/StudentCard';
+import FallbackMessage from '@/shared/components/FallbackMessage';
 import Flex from '@/shared/components/Flex';
-import FramerScale from '@/shared/components/FramerScale';
-import Typography from '@/shared/components/Typography';
 import useGetInfiniteStudentChallengeProgressList from '@/shared/hooks/challenge/useGetInfiniteStudentChallengeProgressList';
 
 interface IStudentCardListProps {
@@ -34,18 +32,11 @@ function StudentCardList({ academyId, releasedChallengeId }: IStudentCardListPro
 
   if (isEmpty) {
     return (
-      <FramerScale className="flex w-full items-center justify-center gap-10 py-10">
-        <Flex column="start" className="relative rounded-2xl bg-gray-200 px-5 py-4">
-          <div className="absolute right-[-6px] top-1/3 size-6 rotate-45 bg-gray-200" />
-          <Typography size="h4" as="p" className="break-keep text-sm font-semibold opacity-80 sm:text-base">
-            아직 참여중인 학생이 없습니다.
-          </Typography>
-          <Typography size="h7" as="p" className="break-keep font-normal opacity-60">
-            참여형 챌린지의 경우, 학생들의 참여를 기다려주세요 !
-          </Typography>
-        </Flex>
-        <Image src="/images/icons/icon_speaker.webp" alt="speaker img" width={150} height={150} className="size-20 sm:size-40 md:size-[150px]" />
-      </FramerScale>
+      <FallbackMessage
+        imageUrl="/images/animation/no_content.gif"
+        title="아직 참여중인 학생이 없습니다"
+        content="참여형 챌린지의 경우, 학생들의 참여를 기다려주세요 !"
+      />
     );
   }
 
@@ -64,7 +55,7 @@ function StudentCardList({ academyId, releasedChallengeId }: IStudentCardListPro
       )}
       <div ref={ref} className="h-2" />
       {isFetching
-        ? Array(10)
+        ? Array(7)
             .fill('')
             .map((_, i) => <StudentCard.Skeleton key={i} />)
         : null}

@@ -10,7 +10,7 @@ function useApprovalChallenge({ academyId, releasedChallengeId }: { academyId: n
     mutationFn: approvalStudentChallengeResult,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: [queryKeys.CHALLENGE_STUDENT_PROGRESS_LIST, { academyId }, { releasedChallengeId }] });
-      toast.success('승인 변경 완료');
+      toast.success('챌린지 승인 여부가 변경되었습니다');
     },
     onError: (error) => {
       toast.error(error.message);
