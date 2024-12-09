@@ -4,9 +4,9 @@ import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useRouter } from 'next/navigation';
 
+import FallbackMessage from '@/shared/components/FallbackMessage';
 import Flex from '@/shared/components/Flex';
 import ProfileCard from '@/shared/components/ProfileCard';
-import Typography from '@/shared/components/Typography';
 import useGetInfiniteAcademyMemberDetailList from '@/shared/hooks/academy/useGetInfiniteAcademyMemberDetailList';
 
 interface IStudentListProps {
@@ -15,7 +15,8 @@ interface IStudentListProps {
 
 function StudentList({ academyId }: IStudentListProps) {
   const router = useRouter();
-  const { data: studentList, isFetching, hasNextPage, fetchNextPage, isError } = useGetInfiniteAcademyMemberDetailList(9, academyId);
+  const { data: studentList, isFetching, hasNextPage, fetchNextPage } = useGetInfiniteAcademyMemberDetailList(9, academyId);
+  const isEmpty = studentList?.pages.every((page) => page.result.studentList.length === 0);
 
   const { ref, inView } = useInView({
     threshold: 0,
@@ -30,16 +31,16 @@ function StudentList({ academyId }: IStudentListProps) {
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
-  if (isError) {
+  if (isEmpty) {
     return (
-      <Flex>
-        <Typography size="h5">에러가 발생했습니다.</Typography>
+      <Flex column="start" className="h-fit">
+        <FallbackMessage imageUrl="/images/animation/no_content.gif" title="학생이 없습니다" content="기관에 학생을 초대해주세요" />
       </Flex>
     );
   }
 
   return (
-    <div className="grid w-full grid-cols-1 gap-5 pl-0 md:pl-10 lg:grid-cols-2 xl:grid-cols-3">
+    <div className="grid w-full grid-cols-1 gap-5 pl-0 md:pl-10 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
       {studentList?.pages.map((page) =>
         page.result.studentList.map((student) => (
           <ProfileCard

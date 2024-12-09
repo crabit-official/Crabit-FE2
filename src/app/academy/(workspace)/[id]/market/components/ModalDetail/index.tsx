@@ -3,10 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-import LastStep from '@/app/academy/(workspace)/[id]/dashboard/create/components/Last';
 import ModalContent from '@/app/academy/(workspace)/[id]/market/components/ModalContent';
 import FirstStep from '@/app/academy/(workspace)/[id]/market/components/Release/First';
 import SecondStep from '@/app/academy/(workspace)/[id]/market/components/Release/Second';
+import FallbackMessage from '@/shared/components/FallbackMessage';
 import Flex from '@/shared/components/Flex';
 import ProgressBar from '@/shared/components/ProgressBar';
 import Typography from '@/shared/components/Typography';
@@ -54,13 +54,17 @@ function ModalDetail({ challenge, teacher, academy, academyId, challengeCoreId }
     content = (
       <Flex column="between" className="size-full gap-10 px-4 py-6">
         <ProgressBar progress={step.currentProgress / MAX_STEP} />
-        <Flex column="start" className="gap-4">
-          <Typography size="h2" className="px-2 opacity-80">
-            우리 학원에 배포
+        <Flex column="start" className="scrollbar-hide w-full gap-4 overflow-y-auto">
+          <Typography size="h2" className="px-5">
+            우리 기관에 배포
           </Typography>
-          {step.currentProgress === 1 && <FirstStep academyId={academyId} onNext={(data) => handleNext({ ...data })} />}
-          {step.currentProgress === 2 && <SecondStep content={challenge.content} onNext={(data) => handleNext({ ...data })} onBack={handleBack} />}
-          {step.currentProgress === 3 && <LastStep />}
+          <Flex rowColumn="center" className="w-full">
+            {step.currentProgress === 1 && <FirstStep academyId={academyId} onNext={(data) => handleNext({ ...data })} />}
+            {step.currentProgress === 2 && <SecondStep content={challenge.content} onNext={(data) => handleNext({ ...data })} onBack={handleBack} />}
+            {step.currentProgress === 3 && (
+              <FallbackMessage imageUrl="/images/animation/loading.gif" title="챌린지를 배포중 입니다" content="잠시만 기다려주세요" />
+            )}
+          </Flex>
         </Flex>
       </Flex>
     );

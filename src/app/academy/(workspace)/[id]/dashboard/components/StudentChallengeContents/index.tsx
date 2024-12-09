@@ -1,12 +1,14 @@
 'use client';
 
 import React, { useEffect } from 'react';
+import { FaRegCalendarCheck } from 'react-icons/fa6';
 import { useInView } from 'react-intersection-observer';
-import Image from 'next/image';
 
 import StudentChallengeContent from '../StudentChallengeContent';
 
+import FallbackMessage from '@/shared/components/FallbackMessage';
 import Flex from '@/shared/components/Flex';
+import Skeleton from '@/shared/components/Skeleton/Skeleton';
 import Typography from '@/shared/components/Typography';
 import useGetInfiniteStudentChallengeContents from '@/shared/hooks/challenge/useGetInfiniteStudentChallengeContents';
 
@@ -17,13 +19,8 @@ interface IStudentChallengeContents {
 }
 
 function StudentChallengeContents({ academyId, releasedChallengeId, studentChallengeId }: IStudentChallengeContents) {
-  const {
-    data: contents,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isError,
-  } = useGetInfiniteStudentChallengeContents(academyId, releasedChallengeId, studentChallengeId);
+  const { data: contents, fetchNextPage, hasNextPage, isFetching } = useGetInfiniteStudentChallengeContents(academyId, releasedChallengeId, studentChallengeId);
+  const isEmpty = contents?.pages.every((page) => page.result.challengeLogList.length === 0);
 
   const { ref, inView } = useInView({
     threshold: 0,
@@ -38,38 +35,44 @@ function StudentChallengeContents({ academyId, releasedChallengeId, studentChall
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
-  if (isError) {
+  if (isEmpty) {
     return (
-      <Flex>
-        <Typography size="h5">에러가 발생했습니다.</Typography>
-      </Flex>
+      <FallbackMessage
+        imageUrl="/images/animation/no_content.gif"
+        title="아직 인증글을 작성하지 않았어요 !"
+        content="해당 학생이 챌린지 인증글을 작성할 때까지 조금만 기다려주세요."
+      />
     );
   }
+
   return (
     <Flex className="min-h-[600px] w-full">
       <Flex column="start" className="relative w-full gap-4 lg:w-3/5">
-        <Image src="/images/icons/icon_book.webp" alt="img" width={300} height={300} className="absolute right-[-50px] top-0 hidden opacity-40 md:block" />
-        <Flex row="start" className="gap-5">
-          <Flex column="start">
-            <Typography size="h2">챌린지 현황</Typography>
-          </Flex>
-        </Flex>
         <Flex rowColumn="center" className="z-10 gap-6 pt-10">
           {contents?.pages.map((page) =>
-            page?.result.challengeLogList.length !== 0 ? (
-              page.result.challengeLogList.map((content) => (
-                <StudentChallengeContent
-                  academyId={academyId}
-                  key={content.challengeLog.studentChallengeLogId}
-                  challengeLog={content.challengeLog}
-                  studentProfile={content.studentProfile}
-                />
-              ))
-            ) : (
-              <div key={0}>학생이 글을 작성하지 않았습니다</div>
-            ),
+            page.result.challengeLogList.map((content) => (
+              <Flex key={content.challengeLog.studentChallengeLogId} className="w-full flex-col sm:flex-row">
+                <Flex className="w-fit gap-1 py-2 opacity-60 sm:w-20">
+                  <FaRegCalendarCheck size={13} />
+                  <Typography size="h7" as="p" className="text-xs font-normal">
+                    {content.challengeLog.day}일차
+                  </Typography>
+                </Flex>
+                <StudentChallengeContent academyId={academyId} challengeLog={content.challengeLog} studentProfile={content.studentProfile} />
+              </Flex>
+            )),
           )}
-          <div ref={ref} className="h-14" />
+          {isFetching
+            ? Array(6)
+                .fill('')
+                .map((_, i) => (
+                  <Flex key={i} className="w-full flex-col gap-2 sm:flex-row">
+                    <Skeleton height={15} width={45} className="my-2 rounded-md sm:mx-3" />
+                    <StudentChallengeContent.Skeleton />
+                  </Flex>
+                ))
+            : null}
+          <div ref={ref} className="h-5" />
         </Flex>
         <Flex />
       </Flex>

@@ -7,9 +7,12 @@ import localFont from 'next/font/local';
 import { Toaster } from 'sonner';
 
 import LoginModal from '@/features/main/components/LoginModal';
+import MarketingModal from '@/features/main/components/MarketingModal';
 import Navbar from '@/features/main/components/Navbar';
 import PasswordChangeModal from '@/features/main/components/PasswordChangeModal';
 import RegisterModal from '@/features/main/components/RegisterModal';
+import ServiceModal from '@/features/main/components/ServiceModal';
+import TermModal from '@/features/main/components/TermModal';
 import Flex from '@/shared/components/Flex';
 import Footer from '@/shared/components/Footer';
 import { MSWProvider } from '@/shared/components/MSWProvider';
@@ -53,15 +56,19 @@ export default async function RootLayout({
           <AuthProvider>
             <MSWProvider>
               <QueryProvider>
-                <Flex column="center" className="min-h-screen">
+                <Flex column="center" className="min-h-screen overflow-x-hidden">
                   <Navbar />
                   <main className="flex-1 py-20">{children}</main>
                   <LoginModal />
                   <RegisterModal />
                   <PasswordChangeModal />
+                  <TermModal />
+                  <ServiceModal />
+                  <MarketingModal />
                   <Toaster richColors />
                 </Flex>
                 <Footer />
+                <div id="modal-root" />
               </QueryProvider>
             </MSWProvider>
           </AuthProvider>

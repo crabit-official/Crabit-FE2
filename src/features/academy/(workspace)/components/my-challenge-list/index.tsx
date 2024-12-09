@@ -6,7 +6,6 @@ import { useInView } from 'react-intersection-observer';
 import ChallengeCard from '@/features/academy/(workspace)/components/challenge-card';
 import MyChallengeCard from '@/features/academy/(workspace)/components/my-challenge-card';
 import Flex from '@/shared/components/Flex';
-import Typography from '@/shared/components/Typography';
 import useGetInfiniteStudentChallengeList from '@/shared/hooks/challenge/useGetInfiniteStudentChallengeList';
 
 interface IMyChallengeListProps {
@@ -14,7 +13,7 @@ interface IMyChallengeListProps {
 }
 
 function MyChallengeList({ academyId }: IMyChallengeListProps) {
-  const { data: challenge, fetchNextPage, hasNextPage, isFetching, isError } = useGetInfiniteStudentChallengeList(academyId);
+  const { data: challenge, fetchNextPage, hasNextPage, isFetching } = useGetInfiniteStudentChallengeList(academyId);
 
   const { ref, inView } = useInView({
     threshold: 0,
@@ -28,14 +27,6 @@ function MyChallengeList({ academyId }: IMyChallengeListProps) {
       }
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
-
-  if (isError) {
-    return (
-      <Flex>
-        <Typography size="h5">에러가 발생했습니다.</Typography>
-      </Flex>
-    );
-  }
 
   return (
     <Flex column="center" className="size-full items-center gap-4 overflow-y-auto">

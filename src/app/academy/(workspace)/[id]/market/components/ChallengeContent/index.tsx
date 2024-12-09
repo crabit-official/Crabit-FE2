@@ -1,5 +1,8 @@
 import React from 'react';
+import { FaFile } from 'react-icons/fa';
+import DOMPurify from 'dompurify';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import Toggle from '@/app/academy/(workspace)/[id]/dashboard/components/Toggle';
 import { getChallengeCategory, getChallengeType } from '@/features/academy/(workspace)/utils/challengeState';
@@ -14,6 +17,7 @@ type TChallengeContentProps = TChallengeDetail['result'] & {
 };
 
 function ChallengeContent({ challenge, teacher, academy, setRelease }: TChallengeContentProps) {
+  const sanitizeContent = DOMPurify.sanitize(challenge.content);
   return (
     <>
       <Flex column="center" className="w-full gap-1">
@@ -45,42 +49,44 @@ function ChallengeContent({ challenge, teacher, academy, setRelease }: TChalleng
         )}
         <BoxContainer variant="border" className="px-4 py-5">
           <Typography size="h3">챌린지 설명</Typography>
-          <Typography size="h5" className="w-full text-start font-normal opacity-80" as="p">
-            {challenge?.content}
-          </Typography>
+          <Typography
+            size="h5"
+            className="w-full overflow-hidden whitespace-normal break-all text-start font-normal opacity-80"
+            as="p"
+            dangerouslySetInnerHTML={{ __html: sanitizeContent }}
+          />
           {challenge?.description && (
             <>
               <hr className="my-4 h-1 w-full" />
               <Typography size="h5" as="p" className="text-sm">
                 챌린지 추가 설명
               </Typography>
-              <Typography size="h5" className="w-full text-start font-normal opacity-80" as="p">
+              <Typography size="h5" className="w-full overflow-hidden whitespace-normal break-all text-start font-normal opacity-80" as="p">
                 {challenge.description}
               </Typography>
             </>
           )}
         </BoxContainer>
-        <div className="px-2">
+        <BoxContainer className="px-4 py-5">
           <Toggle
             content={
               challenge?.fileUrl ? (
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challenge.fileUrl}`}
-                  alt="file"
-                  width={400}
-                  height={400}
-                  className="size-full h-96 rounded-2xl border border-solid border-gray-200 bg-gray-50/50 object-contain"
-                />
+                <Flex row="start">
+                  <FaFile className="mr-2" />
+                  <Link target="_blank" href={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challenge?.fileUrl}`} download className="text-blue-500 underline">
+                    {challenge?.fileUrl.split('_').slice(1).join('_')}
+                  </Link>
+                </Flex>
               ) : (
                 '첨부파일이 없습니다.'
               )
             }
             title="첨부파일"
           />
-        </div>
+        </BoxContainer>
       </Flex>
       <Button onClick={() => setRelease(true)} className="mt-4 bg-main-deep-pink font-medium text-white" disabled={challenge?.alreadyReleasedInAcademy}>
-        {challenge?.alreadyReleasedInAcademy ? '이미 학원에 배포된 챌린지입니다.' : '우리 학원에 배포'}
+        {challenge?.alreadyReleasedInAcademy ? '이미 가져온 챌린지입니다' : '우리 기관에 가져오기'}
       </Button>
     </>
   );

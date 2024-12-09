@@ -12,6 +12,7 @@ import Typography from '@/shared/components/Typography';
 import useCreateChallengeContent from '@/shared/hooks/challenge/useCreateChallengeContent';
 import useGetPresignedUrl from '@/shared/hooks/images/use-get-presigned-url';
 import type { TMyChallengeProgressResult } from '@/shared/types/acadmy';
+import { S3_FOLDER_NAME } from '@/shared/types/image';
 
 interface ICreateChallengeFormProps {
   academyId: number;
@@ -21,7 +22,7 @@ interface ICreateChallengeFormProps {
 
 function CreateChallengeForm({ challengeData, academyId, studentChallengeId }: ICreateChallengeFormProps) {
   const { filePreview, handleChangeFile, file, setFile, setFilePreview } = useImage();
-  const { data: image, isSuccess } = useGetPresignedUrl(file?.name as string);
+  const { data: image, isSuccess } = useGetPresignedUrl({ fileName: file?.name as string, s3Folder: S3_FOLDER_NAME.GENERAL_STUDENT_CHALLENGE_LOG_FILE });
   const { mutate, isPending } = useCreateChallengeContent({ academyId, studentChallengeId });
 
   const {
@@ -85,10 +86,10 @@ function CreateChallengeForm({ challengeData, academyId, studentChallengeId }: I
         <Flex as="figure" column="center" className="mt-2 gap-2">
           <label
             htmlFor="file"
-            className="flex h-52 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border border-solid border-gray-100 bg-neutral-50"
+            className="flex h-[400px] w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border border-solid border-gray-100 bg-neutral-50"
           >
             {filePreview ? (
-              <Image src={filePreview} width={200} height={200} className="h-52 w-full overflow-hidden rounded-xl object-contain" alt="img" />
+              <Image src={filePreview} width={200} height={400} className="h-[400px] w-full overflow-hidden rounded-xl object-fill" alt="img" />
             ) : (
               <IoMdPhotos size={30} />
             )}

@@ -14,6 +14,16 @@ const visibility = z.enum(['PUBLIC', 'PROTECTED']);
 const booleanAgreement = z.boolean().refine((e) => e, {
   message: '필수 동의 사항입니다.',
 });
+const academyName = z.string();
+const address = z.string();
+const addressDetail = z.string();
+const mainImageUrl = z.string();
+const contactNumber = z.string();
+const profileImageUrl = z.string().nullable();
+const introduction = z.string().max(500);
+const nickname = z.string();
+const school = z.string();
+const description = z.string();
 
 const loginSchema = z.object({
   email,
@@ -40,10 +50,9 @@ const challengeTwoSchema = z.object({
   totalDays: days,
 });
 
-const marketSchema = challengeSchema.merge(
+const marketSchema = challengeTwoSchema.merge(
   z.object({
-    points,
-    totalDays: days,
+    challengeParticipationMethod: participationMethod,
   }),
 );
 
@@ -55,4 +64,37 @@ const passwordSchema = z.object({
   password,
 });
 
-export { challengeSchema, challengeTwoSchema, emailSchema, loginSchema, marketSchema, passwordSchema, signUpSchema };
+const institutionSchema = z.object({
+  academyName,
+  address,
+  addressDetail,
+  mainImageUrl,
+  contactNumber,
+});
+
+const institutionProfileSchema = z.object({
+  profileImageUrl,
+  school,
+  nickname,
+  introduction,
+});
+
+const challengeEditSchema = marketSchema.merge(z.object({ description }));
+const profileSchema = z.object({
+  name,
+  profileImageUrl,
+});
+
+export {
+  challengeEditSchema,
+  challengeSchema,
+  challengeTwoSchema,
+  emailSchema,
+  institutionProfileSchema,
+  institutionSchema,
+  loginSchema,
+  marketSchema,
+  passwordSchema,
+  profileSchema,
+  signUpSchema,
+};

@@ -81,24 +81,6 @@ function InstructorDetail({ academyId, academyMemberId }: IInstructorDetailProps
     router.replace(`/academy/${academyId}/setting/management/instructor`);
   };
 
-  if (open) {
-    return (
-      <SmallModal
-        title="관리자 강퇴"
-        actionLabel="관리자 강퇴"
-        onClose={() => setOpen((prev) => !prev)}
-        onSubmit={handleRevoke}
-        secondaryAction={() => setOpen((prev) => !prev)}
-        secondaryActionLabel="취소하기"
-        body={
-          <Typography size="h7" className="text-center font-normal text-gray-500">
-            ⚠️ 관리자를 강퇴시킬 경우 관리자는 기관에 접근할 수 없게 됩니다.
-          </Typography>
-        }
-      />
-    );
-  }
-
   if (profileLoading) {
     return (
       <Flex column="start" className="w-full gap-5 p-8">
@@ -116,6 +98,21 @@ function InstructorDetail({ academyId, academyMemberId }: IInstructorDetailProps
 
   return (
     <FramerScale className="grid gap-2">
+      {open && (
+        <SmallModal
+          title="관리자 강퇴"
+          actionLabel="관리자 강퇴"
+          onClose={() => setOpen((prev) => !prev)}
+          onSubmit={handleRevoke}
+          secondaryAction={() => setOpen((prev) => !prev)}
+          secondaryActionLabel="취소하기"
+          body={
+            <Typography size="h7" className="text-center font-normal text-gray-500">
+              ⚠️ 관리자를 강퇴시킬 경우 관리자는 기관에 접근할 수 없게 됩니다.
+            </Typography>
+          }
+        />
+      )}
       <BoxContainer className="w-full items-center gap-10 py-10">
         <Flex rowColumn="center" className="gap-6">
           <Flex className="relative">

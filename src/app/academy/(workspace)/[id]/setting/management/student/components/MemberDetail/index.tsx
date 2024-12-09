@@ -76,24 +76,6 @@ function MemberDetail({ academyId, academyMemberId }: IMemberDetailProps) {
     router.replace(`/academy/${academyId}/setting/management/student`);
   };
 
-  if (open) {
-    return (
-      <SmallModal
-        title="학생 강퇴"
-        actionLabel="학생강퇴"
-        onClose={() => setOpen((prev) => !prev)}
-        onSubmit={handleRevoke}
-        secondaryAction={() => setOpen((prev) => !prev)}
-        secondaryActionLabel="취소하기"
-        body={
-          <Typography size="h7" className="text-center font-normal text-gray-500">
-            ⚠️ 학생을 강퇴시킬 경우 학생은 학원에 접근할 수 없게 됩니다.
-          </Typography>
-        }
-      />
-    );
-  }
-
   if (profileLoading) {
     return (
       <Flex column="start" className="w-full gap-5 p-8">
@@ -111,6 +93,21 @@ function MemberDetail({ academyId, academyMemberId }: IMemberDetailProps) {
 
   return (
     <FramerScale className="grid place-items-center gap-2">
+      {open && (
+        <SmallModal
+          title="학생 강퇴"
+          actionLabel="학생강퇴"
+          onClose={() => setOpen((prev) => !prev)}
+          onSubmit={handleRevoke}
+          secondaryAction={() => setOpen((prev) => !prev)}
+          secondaryActionLabel="취소하기"
+          body={
+            <Typography size="h7" className="text-center font-normal text-gray-500">
+              ⚠️ 학생을 강퇴시킬 경우 학생은 기관에 접근할 수 없게 됩니다.
+            </Typography>
+          }
+        />
+      )}
       <BoxContainer className="w-full items-center gap-10 py-10">
         <Flex rowColumn="center" className="gap-6">
           <Flex className="relative">

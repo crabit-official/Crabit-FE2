@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { type FieldValues, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useInView } from 'react-intersection-observer';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'sonner';
+import type { z } from 'zod';
 
 import Students from '@/features/academy/(workspace)/components/dashboard/Students';
 import BoxContainer from '@/shared/components/BoxContainer';
@@ -16,13 +18,15 @@ import useGetInfiniteAcademyMemberDetailList from '@/shared/hooks/academy/useGet
 import type { IReleaseChallengeDTO } from '@/shared/types/market';
 import { marketSchema } from '@/shared/utils/schema';
 
+type FormValues = z.infer<typeof marketSchema>;
+
 interface IFirstStep {
   academyId: number;
   onNext: (data: Partial<IReleaseChallengeDTO>) => void;
 }
 
 function FirstStep({ academyId, onNext }: IFirstStep) {
-  const { data: studentData, isFetching, hasNextPage, fetchNextPage, isError } = useGetInfiniteAcademyMemberDetailList(10, academyId);
+  const { data: studentData, isFetching, hasNextPage, fetchNextPage } = useGetInfiniteAcademyMemberDetailList(10, academyId);
   const [selectedStudentIdList, setSelectedStudentIdList] = useState<number[]>([]);
   const { ref, inView } = useInView({
     threshold: 0,
@@ -34,7 +38,7 @@ function FirstStep({ academyId, onNext }: IFirstStep) {
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<FieldValues>({
+  } = useForm<FormValues>({
     resolver: zodResolver(marketSchema),
     mode: 'onBlur',
     defaultValues: {
@@ -43,16 +47,20 @@ function FirstStep({ academyId, onNext }: IFirstStep) {
   });
   const watchCategory = watch('challengeParticipationMethod');
 
-  const handleRelease = (data: FieldValues) => {
+  const handleRelease = (data: FormValues) => {
     const challengeData: Partial<IReleaseChallengeDTO> = {
       totalDays: data.totalDays,
-      challengeParticipationMethod: data.challengeParticipationMethod,
+      challengeParticipationMethod: data.challengeParticipationMethod as CHALLENGE_PARTICIPATION_METHODS,
       studentIdList: [],
       points: data.points,
     };
 
     if (data.challengeParticipationMethod === CHALLENGE_PARTICIPATION_METHODS.ASSIGNED) {
-      challengeData.studentIdList = selectedStudentIdList;
+      if (selectedStudentIdList.length !== 0) challengeData.studentIdList = selectedStudentIdList;
+      else {
+        toast.error('배정형의 경우 학생을 선택해주세요');
+        return;
+      }
     }
 
     onNext({ ...challengeData });
@@ -66,27 +74,28 @@ function FirstStep({ academyId, onNext }: IFirstStep) {
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
-  if (isError) {
-    return (
-      <Flex>
-        <Typography size="h5">에러가 발생했습니다.</Typography>
-      </Flex>
-    );
-  }
-
   return (
-    <form onSubmit={handleSubmit(handleRelease)} className="flex flex-col justify-center gap-10">
+    <form onSubmit={handleSubmit(handleRelease)} className="flex w-11/12 flex-col justify-center gap-10">
       <Flex column="start" className="gap-4">
-        <BoxContainer variant="border">
+        <BoxContainer
+          variant="border"
+          className="group shadow-hover-gray transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink"
+        >
           <Input id="totalDays" type="number" label="챌린지 기간" register={register} errors={errors} required valueAsNumber />
           <Typography size="h5" as="p" className="px-1 text-xs opacity-60">
             tip ) 챌린지 진행 기간은 최소 3일에서 최대 31일까지 설정할 수 있습니다.
           </Typography>
         </BoxContainer>
-        <BoxContainer variant="border">
+        <BoxContainer
+          variant="border"
+          className="group shadow-hover-gray transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink"
+        >
           <Input id="points" type="number" label="포인트" register={register} errors={errors} required valueAsNumber />
         </BoxContainer>
-        <BoxContainer variant="border">
+        <BoxContainer
+          variant="border"
+          className="group shadow-hover-gray transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink"
+        >
           <SelectDropdown id="challengeParticipationMethod" label="챌린지 참여 방식" register={register} errors={errors} options={METHOD_CATEGORIES} />
           <Typography size="h5" as="p" className="px-1 text-xs opacity-60">
             tip ) 배정형의 경우 참여 학생을 선택합니다.

@@ -1,5 +1,6 @@
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 export const useImage = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -14,11 +15,37 @@ export const useImage = () => {
     }
   };
 
+  const handleImageUpload = async (imageUrl: string, file: File) => {
+    try {
+      const res = await fetch(imageUrl, {
+        method: 'PUT',
+        body: file,
+      });
+
+      if (!res.ok) {
+        toast.error('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
+        return false;
+      }
+
+      return true;
+    } catch {
+      toast.error('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
+      return false;
+    }
+  };
+
+  const handleRemove = () => {
+    setFilePreview(null);
+    setFile(null);
+  };
+
   return {
     file,
     filePreview,
     handleChangeFile,
     setFile,
     setFilePreview,
+    handleImageUpload,
+    handleRemove,
   };
 };

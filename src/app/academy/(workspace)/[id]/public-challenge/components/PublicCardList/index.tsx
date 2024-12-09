@@ -3,12 +3,10 @@
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useRouter } from 'next/navigation';
-import { toast } from 'sonner';
 
 import AnimateCard from '@/app/academy/(workspace)/[id]/dashboard/components/AnimateCard';
-import PlusChallengeCard from '@/app/academy/(workspace)/[id]/dashboard/components/PlusChallengeCard';
 import { getChallengeCategory } from '@/features/academy/(workspace)/utils/challengeState';
-import Flex from '@/shared/components/Flex';
+import FallbackMessage from '@/shared/components/FallbackMessage';
 import Typography from '@/shared/components/Typography';
 import { PUBLIC_CATEGORY_NAME } from '@/shared/constants/tab-menu';
 import useGetInfinitePublicChallenge from '@/shared/hooks/public/useGetInfinitePublicChallenge';
@@ -21,7 +19,7 @@ interface IPublicCardListProps {
 function PublicCardList({ academyId, category }: IPublicCardListProps) {
   const router = useRouter();
   const selectedCategory = PUBLIC_CATEGORY_NAME[category] ?? undefined;
-  const { data: challenge, isFetching, hasNextPage, fetchNextPage, isError } = useGetInfinitePublicChallenge(academyId, selectedCategory);
+  const { data: challenge, isFetching, hasNextPage, fetchNextPage } = useGetInfinitePublicChallenge(academyId, selectedCategory);
   const isEmpty = challenge?.pages.every((page) => page.result.academyPublicChallengeList.length === 0);
 
   const { ref, inView } = useInView({
@@ -37,19 +35,13 @@ function PublicCardList({ academyId, category }: IPublicCardListProps) {
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
-  if (isError) {
-    return (
-      <Flex>
-        <Typography size="h5">에러가 발생했습니다.</Typography>
-      </Flex>
-    );
-  }
-
   if (isEmpty) {
     return (
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-        <PlusChallengeCard onClick={() => toast.message('준비중 입니다.')} content="준비중..." />
-      </div>
+      <FallbackMessage
+        imageUrl="/images/animation/no_content.gif"
+        title="공개챌린지가 없습니다"
+        content="기관에 공개 챌린지가 생성될 때까지 조금만 기다려주세요"
+      />
     );
   }
 

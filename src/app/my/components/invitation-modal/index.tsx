@@ -27,6 +27,7 @@ function InvitationModal() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FieldValues>({
     defaultValues: {
       joinCode: '',
@@ -40,15 +41,22 @@ function InvitationModal() {
   const onSubmit: SubmitHandler<FieldValues> = async (data: FieldValues) => {
     setIsLoading(true);
 
-    await mutateAsync({
-      joinCode: data.joinCode,
-      academyRole: activeTab === 0 ? 'STUDENT' : 'INSTRUCTOR',
-      nickname: data.nickname,
-      introduction: data.introduction,
-      school: data.school,
-    });
-
-    setIsLoading(false);
+    await mutateAsync(
+      {
+        joinCode: data.joinCode,
+        academyRole: activeTab === 0 ? 'STUDENT' : 'INSTRUCTOR',
+        nickname: data.nickname,
+        introduction: data.introduction,
+        school: data.school,
+      },
+      {
+        onSettled: () => setIsLoading(false),
+        onSuccess: () => {
+          invitationModal.onClose();
+          reset();
+        },
+      },
+    );
   };
 
   const bodyContent = (
@@ -79,7 +87,7 @@ function InvitationModal() {
               <Input disabled={isLoading} id="joinCode" label="초대 코드" register={register} errors={errors} required />
               <Input disabled={isLoading} id="nickname" label="닉네임" register={register} errors={errors} required />
               <TextArea disabled={isLoading} id="introduction" label="소개" register={register} errors={errors} required />
-              <Input disabled={isLoading} id="school" label="학교" register={register} errors={errors} required />
+              {/* <Input disabled={isLoading} id="school" label="학교" register={register} errors={errors} required /> */}
             </Flex>
           </Tabs.TabPanel>
         )}

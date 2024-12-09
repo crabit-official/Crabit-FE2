@@ -10,9 +10,10 @@ import BoxContainer from '@/shared/components/BoxContainer';
 import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
 import SelectDropdown from '@/shared/components/SelectDropdown';
+import SmallModal from '@/shared/components/SmallModal';
 import Typography from '@/shared/components/Typography';
 import { CHALLENGE_CATEGORIES, METHOD_CATEGORIES, VISIBILITY_CATEGORIES } from '@/shared/constants/challenge-cataegrories';
-import { CHALLENGE_PARTICIPATION_METHODS } from '@/shared/enums/challenge';
+import { CHALLENGE_PARTICIPATION_METHODS, MARKET_VISIBILITY_CATEGORIES } from '@/shared/enums/challenge';
 import useGetInfiniteAcademyMemberDetailList from '@/shared/hooks/academy/useGetInfiniteAcademyStudentList';
 import type { IAcademyChallenges } from '@/shared/types/acadmy';
 import { challengeSchema } from '@/shared/utils/schema';
@@ -32,8 +33,8 @@ function Third({ onBack, onNext, academyId }: IThirdProps) {
   } = useForm<FieldValues>({
     resolver: zodResolver(challengeSchema),
   });
-  const { data: studentData, isFetching, hasNextPage, fetchNextPage, isError } = useGetInfiniteAcademyMemberDetailList(10, academyId);
-
+  const { data: studentData, isFetching, hasNextPage, fetchNextPage } = useGetInfiniteAcademyMemberDetailList(10, academyId);
+  const [publicMarkekOk, setPublicMarketOk] = useState<boolean>(false);
   const [selectedStudentIdList, setSelectedStudentIdList] = useState<number[]>([]);
   const watchCategory = watch('challengeParticipationMethod');
   const { ref, inView } = useInView({
@@ -48,10 +49,6 @@ function Third({ onBack, onNext, academyId }: IThirdProps) {
       }
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
-
-  if (isError) {
-    return <div>에러가 발생했습니다. 다시 시도해주세요.</div>;
-  }
 
   const onSubmit = (data: FieldValues) => {
     if (data.challengeParticipationMethod === CHALLENGE_PARTICIPATION_METHODS.SELF_PARTICIPATING) {
@@ -70,24 +67,47 @@ function Third({ onBack, onNext, academyId }: IThirdProps) {
     }
   };
 
+  const handleNext = (data: FieldValues) => {
+    if (data.challengeMarketVisibility === MARKET_VISIBILITY_CATEGORIES.PUBLIC) {
+      setPublicMarketOk((prev) => !prev);
+    } else {
+      onSubmit(data);
+    }
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex w-full flex-col gap-5">
-      <BoxContainer>
+    <form onSubmit={handleSubmit(handleNext)} className="flex w-full flex-col gap-5">
+      {publicMarkekOk && (
+        <SmallModal
+          title="알림"
+          actionLabel="확인"
+          secondaryAction={() => setPublicMarketOk((prev) => !prev)}
+          secondaryActionLabel="변경하기"
+          onClose={() => setPublicMarketOk((prev) => !prev)}
+          onSubmit={handleSubmit(onSubmit)}
+          body={
+            <Typography size="h6" className="text-center font-normal opacity-80">
+              ️공개 챌린지로 설정한 경우에 모든 기관에 공개됩니다
+            </Typography>
+          }
+        />
+      )}
+      <BoxContainer className="group transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink">
         <Flex column="start" className="gap-1">
           <Typography size="h3">챌린지 종류</Typography>
         </Flex>
         <SelectDropdown id="challengeCategory" label="챌린지 종류" register={register} errors={errors} options={CHALLENGE_CATEGORIES} />
       </BoxContainer>
-      <BoxContainer>
+      <BoxContainer className="group transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink">
         <Flex column="start" className="gap-1">
           <Typography size="h3">챌린지 마켓 업로드 여부</Typography>
           <Typography size="h5" as="p" className="text-xs opacity-60">
-            tip ) 챌린지 마켓 업로드 여부
+            tip ) 공개 챌린지의 경우 모든 기관에 공개됩니다
           </Typography>
         </Flex>
         <SelectDropdown id="challengeMarketVisibility" label="챌린지 마켓 업로드 여부" register={register} errors={errors} options={VISIBILITY_CATEGORIES} />
       </BoxContainer>
-      <BoxContainer>
+      <BoxContainer className="group transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink">
         <Flex column="start" className="gap-1">
           <Typography size="h3">챌린지 참여 방식</Typography>
           <Typography size="h5" as="p" className="text-xs opacity-60">
@@ -96,7 +116,6 @@ function Third({ onBack, onNext, academyId }: IThirdProps) {
         </Flex>
         <Flex column="center" className="w-full gap-4">
           <SelectDropdown id="challengeParticipationMethod" label="챌린지 참여 방식" register={register} errors={errors} options={METHOD_CATEGORIES} />
-
           {watchCategory === CHALLENGE_PARTICIPATION_METHODS.ASSIGNED && (
             <>
               <Typography size="h5" className="mt-2 border-t border-solid border-gray-100 pt-4 text-sm font-normal opacity-80">

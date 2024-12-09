@@ -11,7 +11,7 @@ function useReleaseChallenge(academyId: number) {
   return useMutation({
     mutationFn: releaseChallenge,
     onSuccess: async () => {
-      toast.success('우리학원에 챌린지를 배포하였습니다!');
+      toast.success('우리기관에 챌린지를 배포하였습니다!');
       await queryClient.invalidateQueries({ queryKey: [queryKeys.CHALLENGE_LIST] });
       router.replace(`/academy/${academyId}/dashboard`);
     },

@@ -1,5 +1,6 @@
 import React from 'react';
 import { type FieldValues, useForm } from 'react-hook-form';
+import { FaFileImport } from 'react-icons/fa6';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useImage } from '@/features/academy/(workspace)/hooks/use-image';
@@ -10,6 +11,7 @@ import Input from '@/shared/components/Input';
 import Typography from '@/shared/components/Typography';
 import useGetPresignedUrl from '@/shared/hooks/images/use-get-presigned-url';
 import type { IAcademyChallenges } from '@/shared/types/acadmy';
+import { S3_FOLDER_NAME } from '@/shared/types/image';
 import { challengeTwoSchema } from '@/shared/utils/schema';
 
 interface ISecondProps {
@@ -25,8 +27,11 @@ function Second({ onNext, onBack }: ISecondProps) {
   } = useForm<FieldValues>({
     resolver: zodResolver(challengeTwoSchema),
   });
-  const { handleChangeFile, file } = useImage();
-  const { data: fileUrl } = useGetPresignedUrl(file?.name as string);
+  const { handleChangeFile, file, handleRemove } = useImage();
+  const { data: fileUrl } = useGetPresignedUrl({
+    fileName: file?.name as string,
+    s3Folder: S3_FOLDER_NAME.CHALLENGE_CORE_FILE,
+  });
 
   const onSubmit = async (data: FieldValues) => {
     if (fileUrl) {
@@ -48,27 +53,41 @@ function Second({ onNext, onBack }: ISecondProps) {
       <BoxContainer>
         <Flex column="start" className="gap-1">
           <Typography size="h3" className="opacity-80">
-            파일
+            첨부파일
           </Typography>
           <Typography size="h5" as="p" className="text-xs opacity-60">
             tip ) 챌린지 관련 파일을 올려주세요.
           </Typography>
-          <Flex as="figure" row="start" className="mt-4">
+          <Flex as="figure" column="start">
+            {file && (
+              <button onClick={handleRemove} type="button" className="flex justify-end text-xs text-gray-600 hover:text-main-deep-pink">
+                첨부파일 삭제
+              </button>
+            )}
             <label htmlFor="file" className="flex w-full cursor-pointer items-center justify-start gap-2 py-2 font-medium opacity-80">
-              {file ? file.name : '클릭하여 파일을 선택해주세요.'}
+              <BoxContainer variant="border" className="relative w-full flex-row items-center gap-2">
+                {file ? (
+                  file.name
+                ) : (
+                  <>
+                    <FaFileImport />
+                    <Typography size="h5">첨부파일 업로드</Typography>
+                  </>
+                )}
+              </BoxContainer>
             </label>
             <input type="file" id="file" {...register('file')} onChange={handleChangeFile} className="hidden" />
           </Flex>
         </Flex>
       </BoxContainer>
-      <BoxContainer>
+      <BoxContainer className="group transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink">
         <Flex column="start" className="gap-1">
           <Typography size="h3">포인트</Typography>
         </Flex>
         <Input id="points" type="number" label="포인트" register={register} errors={errors} required valueAsNumber />
       </BoxContainer>
 
-      <BoxContainer>
+      <BoxContainer className="group transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink">
         <Flex column="start" className="gap-1">
           <Typography size="h3" className="opacity-80">
             총 챌린지 기간

@@ -10,10 +10,13 @@ function Footer() {
         <Image src="/images/logo_dark.png" alt="logo" width={50} height={20} />
         <Flex column="start" className="gap-1">
           <Typography size="h5" as="p" className="break-keep text-xs text-white">
-            대표자 : 김현지 | 소재지: 서울특별시 금천구 독산동 331-28
+            대표자 : 김현지 | 소재지: 서울특별시 금천구 범안로15길 22-5 (독산동) 금천청년꿈터 503호
           </Typography>
           <Typography size="h5" as="p" className="text-xs text-white">
             주식회사 크래빗 | 사업자 등록번호: 747-86-03279
+          </Typography>
+          <Typography size="h5" as="p" className="text-xs text-white">
+            유선번호 : 010-8791-2483
           </Typography>
         </Flex>
         {/* <Typography size="h5" as="p" className="text-xs text-white">
