@@ -68,7 +68,7 @@ export async function getAcademyMemberDetailList({ cursor, take, academyId, nick
   });
 
   if (!res.ok) {
-    throw new Error('학원의 선생님 목록을 가져오는데 에러가 발생했습니다!');
+    throw new Error('기관의 관리자 목록을 가져오는데 에러가 발생했습니다!');
   }
 
   const data: IAcademyMemberListResult = await res.json();
@@ -89,7 +89,7 @@ export async function getAcademyInstructorList({ cursor, take, academyId, nickna
   });
 
   if (!res.ok) {
-    throw new Error('학원의 선생님 목록을 가져오는데 에러가 발생했습니다!');
+    throw new Error('기관의 관리자 목록을 가져오는데 에러가 발생했습니다!');
   }
 
   const data: IAcademyInstructorListResult = await res.json();

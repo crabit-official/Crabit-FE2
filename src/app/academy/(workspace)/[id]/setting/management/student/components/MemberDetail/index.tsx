@@ -103,7 +103,7 @@ function MemberDetail({ academyId, academyMemberId }: IMemberDetailProps) {
           secondaryActionLabel="취소하기"
           body={
             <Typography size="h7" className="text-center font-normal text-gray-500">
-              ⚠️ 학생을 강퇴시킬 경우 학생은 학원에 접근할 수 없게 됩니다.
+              ⚠️ 학생을 강퇴시킬 경우 학생은 기관에 접근할 수 없게 됩니다.
             </Typography>
           }
         />

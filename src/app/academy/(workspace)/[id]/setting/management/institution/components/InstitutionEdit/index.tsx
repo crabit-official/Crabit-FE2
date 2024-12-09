@@ -95,7 +95,7 @@ function InstitutionEdit({ academyId }: IAcademyEditFormProps) {
                   현재 <strong className="font-extrabold text-main-deep-pink">{academyInfo?.result.academy.freemiumTier}</strong> 요금제를 선택중입니다
                 </Typography>
                 <Typography size="h7" className="break-keep font-normal opacity-60">
-                  학원의 요금제를 변경하시려면 관리자에게 문의해주세요
+                  기관의 요금제를 변경하시려면 관리자에게 문의해주세요
                 </Typography>
               </Flex>
               <Flex column="start">

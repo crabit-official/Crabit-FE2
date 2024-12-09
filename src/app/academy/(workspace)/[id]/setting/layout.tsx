@@ -28,7 +28,7 @@ async function Layout({ params, children }: ILayoutProps) {
   const profile = (await res.json()) as CommonResponse<IAcademyProfile>;
 
   if (!profile.result.academyRole) {
-    return <Error label="학원에 대한 접근 권한이 없습니다." className="pt-20" />;
+    return <Error label="기관에 대한 접근 권한이 없습니다." className="pt-20" />;
   }
 
   return (

@@ -81,7 +81,7 @@ function ModalContent({ challenge, teacher, academy, setRelease }: TContentProps
           ) : null}
         </Flex>
         <Button onClick={() => setRelease(true)} className="mt-4 bg-main-deep-pink font-medium text-white" disabled={challenge?.alreadyReleasedInAcademy}>
-          {challenge?.alreadyReleasedInAcademy ? '이미 학원에 배포된 챌린지입니다.' : '우리 학원에 배포'}
+          {challenge?.alreadyReleasedInAcademy ? '이미 가져온 챌린지입니다' : '우리 기관에 가져오기'}
         </Button>
       </Flex>
     </>
