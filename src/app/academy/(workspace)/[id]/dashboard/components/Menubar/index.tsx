@@ -75,7 +75,7 @@ function Menubar({ academyId, activeTab, role }: IMenubarProps) {
                 type="button"
                 onClick={() => setChallengeFilter('RELEASED_FROM_MARKET')}
               >
-                내가 배포한 챌린지
+                내가 생성한 챌린지
               </button>
             </div>
           </div>
