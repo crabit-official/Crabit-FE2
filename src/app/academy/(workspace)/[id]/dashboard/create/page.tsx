@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import First from '@/app/academy/(workspace)/[id]/dashboard/create/components/First';
 import MultiStepProgress from '@/app/academy/(workspace)/[id]/dashboard/create/components/MultiStepProgress';
@@ -59,7 +59,7 @@ function ChallengeCreatePage({ params }: { params: { id: string } }) {
           {step.currentProgress === 2 && <Second onNext={(data) => handleNext({ ...data })} onBack={handleBack} />}
           {step.currentProgress === 3 && <Third onNext={(data) => handleNext({ ...data })} onBack={handleBack} academyId={Number(params.id)} />}
           {step.currentProgress === 4 && (
-            <FallbackMessage imageUrl="/images/icons/icon_happy.webp" title="챌린지를 생성중 입니다" content="잠시만 기다려주세요" />
+            <FallbackMessage imageUrl="/images/animation/loading.gif" title="챌린지를 생성중 입니다" content="잠시만 기다려주세요" />
           )}
         </MultiStepProgress>
       </Flex>

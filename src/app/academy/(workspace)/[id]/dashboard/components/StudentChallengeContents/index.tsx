@@ -38,7 +38,7 @@ function StudentChallengeContents({ academyId, releasedChallengeId, studentChall
   if (isEmpty) {
     return (
       <FallbackMessage
-        imageUrl="/images/icons/icon_cry.webp"
+        imageUrl="/images/animation/no_content.gif"
         title="아직 인증글을 작성하지 않았어요 !"
         content="해당 학생이 챌린지 인증글을 작성할 때까지 조금만 기다려주세요."
       />

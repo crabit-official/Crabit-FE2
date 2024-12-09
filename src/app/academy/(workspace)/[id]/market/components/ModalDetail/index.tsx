@@ -62,7 +62,7 @@ function ModalDetail({ challenge, teacher, academy, academyId, challengeCoreId }
             {step.currentProgress === 1 && <FirstStep academyId={academyId} onNext={(data) => handleNext({ ...data })} />}
             {step.currentProgress === 2 && <SecondStep content={challenge.content} onNext={(data) => handleNext({ ...data })} onBack={handleBack} />}
             {step.currentProgress === 3 && (
-              <FallbackMessage imageUrl="/images/icons/icon_happy.webp" title="챌린지를 배포중 입니다" content="잠시만 기다려주세요" />
+              <FallbackMessage imageUrl="/images/animation/loading.gif" title="챌린지를 배포중 입니다" content="잠시만 기다려주세요" />
             )}
           </Flex>
         </Flex>
