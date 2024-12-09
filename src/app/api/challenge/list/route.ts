@@ -13,12 +13,8 @@ export async function GET(req: NextRequest) {
 
   let url = `/api/v1/academies/${academyId}/challenges?challengeFilter=${challengeFilter}&cursor=${cursor}&take=${take}`;
 
-  console.log(url);
-
   if (challengeCategory) url += `&challengeCategory=${challengeCategory}`;
   if (title) url += `&title=${title}`;
-
-  console.log(url);
 
   try {
     const data = await fetchData<TGetMyAcademyChallengeListResponse>(url, 'GET');
