@@ -80,6 +80,10 @@ const institutionProfileSchema = z.object({
 });
 
 const challengeEditSchema = marketSchema.merge(z.object({ description }));
+const profileSchema = z.object({
+  name,
+  profileImageUrl,
+});
 
 export {
   challengeEditSchema,
@@ -91,5 +95,6 @@ export {
   loginSchema,
   marketSchema,
   passwordSchema,
+  profileSchema,
   signUpSchema,
 };
