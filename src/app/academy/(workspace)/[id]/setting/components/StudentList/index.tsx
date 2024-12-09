@@ -31,7 +31,7 @@ function StudentList({ academyId }: IStudentListProps) {
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
-  if (!isEmpty) {
+  if (isEmpty) {
     return (
       <Flex column="start" className="h-fit">
         <FallbackMessage imageUrl="/images/animation/no_content.gif" title="학생이 없습니다" content="기관에 학생을 초대해주세요" />
