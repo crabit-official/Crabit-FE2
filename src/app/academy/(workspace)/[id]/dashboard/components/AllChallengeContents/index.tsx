@@ -14,16 +14,15 @@ import useGetInfiniteMyAcademyChallenge from '@/shared/hooks/challenge/useGetInf
 interface IAllChallengeContentsProps {
   academyId: number;
   category: string;
+  releasedByMe: 'ALL' | 'SELF';
   search: string;
 }
 
 // 원장/강사 대시보드 챌린지
-function AllChallengeContents({ academyId, category, search }: IAllChallengeContentsProps) {
+function AllChallengeContents({ academyId, category, search, releasedByMe }: IAllChallengeContentsProps) {
   const router = useRouter();
   const selectedCategory = PUBLIC_CATEGORY_NAME[category] ?? undefined;
-  const { data: challenge, fetchNextPage, hasNextPage, isFetching } = useGetInfiniteMyAcademyChallenge(academyId, selectedCategory, search, 'ALL', 6);
-
-  console.log(challenge);
+  const { data: challenge, fetchNextPage, hasNextPage, isFetching } = useGetInfiniteMyAcademyChallenge(academyId, selectedCategory, search, releasedByMe, 6);
 
   const { ref, inView } = useInView({
     threshold: 0,

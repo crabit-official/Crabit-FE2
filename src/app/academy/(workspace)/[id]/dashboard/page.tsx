@@ -14,6 +14,7 @@ interface IAcademyDashBoardProps {
     id: string;
   };
   searchParams: {
+    releasedByMe: 'ALL' | 'SELF';
     search: string;
     tab: string;
   };
@@ -67,7 +68,12 @@ async function AcademyDashBoardPage({ params, searchParams }: IAcademyDashBoardP
           <StudentDashBoardUI academyId={Number(params.id)} search={searchParams.search} category={searchParams.tab} />
         ) : (
           /* @ts-expect-error Async Server Component */
-          <PrincipalDashBoardUIl academyId={Number(params.id)} category={searchParams.tab} search={searchParams.search} />
+          <PrincipalDashBoardUIl
+            academyId={Number(params.id)}
+            category={searchParams.tab}
+            search={searchParams.search}
+            releasedByMe={searchParams.releasedByMe}
+          />
         )}
       </div>
     </Flex>
