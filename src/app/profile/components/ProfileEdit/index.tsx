@@ -23,10 +23,10 @@ function ProfileEdit() {
           <Skeleton height={25} width={100} className="rounded-md" />
           <Skeleton height={15} width={200} className="rounded-md" />
         </Flex>
-        <Flex className="w-full pb-14">
+        <Flex className="w-full">
           <Skeleton height={80} width={80} className="rounded-full" />
         </Flex>
-        <Skeleton height={100} className="w-full rounded-md" />
+        <Skeleton height={80} className="w-full rounded-md" />
       </Flex>
     );
   }

@@ -13,7 +13,7 @@ function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <Flex column="start" as="aside" className="size-full gap-4 rounded-xl border border-solid border-gray-200 bg-white py-10 lg:w-64">
+    <Flex column="start" as="aside" className="size-full gap-4 bg-white py-10 lg:w-64">
       <ProfileBox />
       <Flex column="start" className="py-5">
         <div className="bg-main-deep-pink/5 p-5 font-medium text-gray-600">계정</div>
