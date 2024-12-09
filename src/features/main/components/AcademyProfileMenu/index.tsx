@@ -40,10 +40,10 @@ function AcademyProfileMenu() {
     >
       <AiOutlineMenu />
       <div className="hidden md:flex md:items-center md:gap-2">
-        {profile?.result.profileImageUrl ? (
+        {profile?.result?.profileImageUrl ? (
           <Image
             alt="profile"
-            src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${profile?.result.profileImageUrl}`}
+            src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${profile.result.profileImageUrl}`}
             width={100}
             height={100}
             className="size-[30px] rounded-full border border-solid border-gray-100 object-cover"
@@ -53,7 +53,7 @@ function AcademyProfileMenu() {
         )}
         {profile ? (
           <Typography size="h5" as="p" className="text-xs">
-            {profile?.result.nickname}
+            {profile?.result?.nickname}
           </Typography>
         ) : null}
       </div>

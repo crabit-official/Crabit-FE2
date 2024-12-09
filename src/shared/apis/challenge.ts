@@ -135,6 +135,11 @@ export async function getStudentsChallengeProgress({ releasedChallengeId, academ
     method: 'GET',
   });
 
+  if (!res.ok) {
+    const errorData: TError = await res.json();
+    throw new Error(errorData.error);
+  }
+
   return (await res.json()) as IChallengeParticipateResult;
 }
 
