@@ -39,7 +39,7 @@ function AllChallengeContents({ academyId, category, search, challengeFilter }: 
 
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-      <PlusChallengeCard onClick={() => router.push('dashboard/create')} content={'새로운\n챌린지 추가하기'} />
+      <PlusChallengeCard onClick={() => router.push('dashboard/create')} content={'새로운\n챌린지 생성하기'} />
       {challenge?.pages?.map((page) =>
         page?.result?.releasedChallengeList?.map((item) => (
           <AnimateCard
