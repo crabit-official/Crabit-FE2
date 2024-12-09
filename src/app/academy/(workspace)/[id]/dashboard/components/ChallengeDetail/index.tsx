@@ -18,7 +18,6 @@ import SmallModal from '@/shared/components/SmallModal';
 import Typography from '@/shared/components/Typography';
 import useDeleteChallenge from '@/shared/hooks/challenge/useDeleteChallenge';
 import useGetChallengeDetail from '@/shared/hooks/challenge/useGetChallengeDetail';
-import useGetInfiniteStudentChallengeProgressList from '@/shared/hooks/challenge/useGetInfiniteStudentChallengeProgressList';
 import { formatNumberWithCommas } from '@/shared/utils/number';
 
 type TChallengeDetailProps = {
@@ -27,12 +26,13 @@ type TChallengeDetailProps = {
 };
 
 function ChallengeDetail({ academyId, releasedChallengeId }: TChallengeDetailProps) {
-  const { data: students } = useGetInfiniteStudentChallengeProgressList(academyId, releasedChallengeId);
-  const isEmpty = students?.pages.every((page) => page.result.challengeParticipantList.length === 0);
   const { data: challengeData, isPending } = useGetChallengeDetail(academyId, releasedChallengeId);
   const { mutate } = useDeleteChallenge({ academyId });
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isEdit, setIsEdit] = useState<boolean>(false);
+  const editPossible =
+    challengeData?.result?.challengeStatusCounts?.totalParticipants === 0 ||
+    challengeData?.result?.challengeStatusCounts?.notStartedStudents === challengeData?.result?.challengeStatusCounts?.totalParticipants;
 
   const handleDelete = () => {
     mutate({ academyId, releasedChallengeId });
@@ -55,14 +55,14 @@ function ChallengeDetail({ academyId, releasedChallengeId }: TChallengeDetailPro
     );
   }
 
-  if (isEdit && challengeData && isEmpty) {
+  if (isEdit && challengeData && editPossible) {
     return <ChallengeEditForm {...challengeData.result.releasedChallenge} setIsEdit={setIsEdit} />;
   }
 
   if (challengeData)
     return (
       <Flex className="w-full">
-        {isEdit && !isEmpty && (
+        {isEdit && !editPossible && (
           <SmallModal
             actionLabel="뒤로가기"
             onClose={() => setIsEdit((prev) => !prev)}
