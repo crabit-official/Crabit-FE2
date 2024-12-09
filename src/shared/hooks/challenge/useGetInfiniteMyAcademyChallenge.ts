@@ -27,7 +27,7 @@ function useGetInfiniteMyAcademyChallenge(
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {
       console.log(lastPage);
-      return lastPage.result.hasNext ? lastPage.result.nextCursor : undefined;
+      return lastPage?.result?.hasNext ? lastPage?.result?.nextCursor : undefined;
     },
     throwOnError: true,
     ...queryOptions,
