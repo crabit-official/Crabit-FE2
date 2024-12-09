@@ -92,8 +92,10 @@ function ChallengeDetail({ academyId, releasedChallengeId }: TChallengeDetailPro
             secondaryAction={() => setIsOpen((prev) => !prev)}
             body={
               <Typography size="h7" className="text-center font-normal text-gray-500">
-                학생이 이미 참여한 경우에는 <br />
-                챌린지를 삭제할 수 없습니다 (관리자 문의) <br />
+                이미 진행 중인 학생이 있는 경우 챌린지를 삭제할 수 없습니다.
+                <br />
+                삭제를 원할 경우 관리자에게 문의 바랍니다.
+                <br />
                 ⚠️ 한번 삭제한 챌린지는 되돌릴 수 없습니다 ⚠️
               </Typography>
             }

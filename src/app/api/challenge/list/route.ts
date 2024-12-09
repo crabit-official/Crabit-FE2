@@ -7,13 +7,11 @@ export async function GET(req: NextRequest) {
   const academyId = req.nextUrl.searchParams.get('academyId') || '';
   const challengeCategory = req.nextUrl.searchParams.get('challengeCategory') || '';
   const title = req.nextUrl.searchParams.get('title') || '';
-  const releasedBy = req.nextUrl.searchParams.get('releasedBy') || '';
+  const challengeFilter = req.nextUrl.searchParams.get('challengeFilter') || '';
   const cursor = req.nextUrl.searchParams.get('cursor') || '';
   const take = req.nextUrl.searchParams.get('take') || '';
 
-  console.log('파라미터', academyId, challengeCategory, title, releasedBy, cursor, take);
-
-  let url = `/api/v1/academies/${academyId}/challenges?releasedBy=${releasedBy}&cursor=${cursor}&take=${take}`;
+  let url = `/api/v1/academies/${academyId}/challenges?challengeFilter=${challengeFilter}&cursor=${cursor}&take=${take}`;
 
   console.log(url);
 

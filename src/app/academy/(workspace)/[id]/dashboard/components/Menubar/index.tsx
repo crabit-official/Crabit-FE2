@@ -23,7 +23,7 @@ function Menubar({ academyId, activeTab, role }: IMenubarProps) {
 
   const [search, setSearch] = useState<string>('');
   const debounceSearch = useDebounce(search.trim(), 500);
-  const [releasedBy, setReleasedBy] = useState<'ALL' | 'SELF'>('ALL');
+  const [challengeFilter, setChallengeFilter] = useState<'ALL' | 'CREATED_BY_ME' | 'RELEASED_FROM_MARKET'>('ALL');
 
   const updateQueryParams = useCallback(() => {
     const params = new URLSearchParams(searchParams?.toString());
@@ -36,10 +36,10 @@ function Menubar({ academyId, activeTab, role }: IMenubarProps) {
       params.delete('search');
     }
 
-    params.set('releasedByMe', releasedBy);
+    params.set('challengeFilter', challengeFilter);
 
     router.push(`/academy/${academyId}/dashboard?${params.toString()}`);
-  }, [searchParams, activeTab, debounceSearch, releasedBy, router, academyId]);
+  }, [searchParams, activeTab, debounceSearch, challengeFilter, router, academyId]);
 
   React.useMemo(() => updateQueryParams(), [updateQueryParams]);
 
@@ -47,16 +47,38 @@ function Menubar({ academyId, activeTab, role }: IMenubarProps) {
     <Flex column="start" className="w-full gap-4">
       {role !== ACADEMY_ROLE.STUDENT && (
         <div className="flex flex-col items-start gap-2">
-          <button type="button" onClick={() => setReleasedBy('ALL')}>
-            <Typography className={releasedBy === 'ALL' ? 'font-bold text-main-deep-pink' : ''} size="body2">
-              기관 모든 챌린지
+          <button
+            type="button"
+            onClick={() => {
+              setChallengeFilter('ALL');
+            }}
+          >
+            <Typography className={challengeFilter === 'ALL' ? 'font-bold text-main-deep-pink' : ''} size="body2">
+              챌린지 전체보기
             </Typography>
           </button>
-          <button type="button" onClick={() => setReleasedBy('SELF')}>
-            <Typography className={releasedBy === 'SELF' ? 'font-bold text-main-deep-pink' : ''} size="body2">
-              내가 배포한 챌린지
+          <div>
+            <Typography className={challengeFilter !== 'ALL' ? 'font-bold text-main-deep-pink' : ''} size="body2">
+              My 챌린지
             </Typography>
-          </button>
+
+            <div className="ml-5 mt-3 flex flex-col gap-3">
+              <button
+                className={challengeFilter === 'CREATED_BY_ME' ? 'font-bold text-main-deep-pink' : ''}
+                type="button"
+                onClick={() => setChallengeFilter('CREATED_BY_ME')}
+              >
+                내가 가져온 챌린지
+              </button>
+              <button
+                className={challengeFilter === 'RELEASED_FROM_MARKET' ? 'font-bold text-main-deep-pink' : ''}
+                type="button"
+                onClick={() => setChallengeFilter('RELEASED_FROM_MARKET')}
+              >
+                내가 배포한 챌린지
+              </button>
+            </div>
+          </div>
         </div>
       )}
       <ul>

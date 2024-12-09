@@ -10,7 +10,7 @@ function useGetInfiniteMyAcademyChallenge(
   academyId: number,
   challengeCategory: CHALLENGE_CATEGORY,
   title: string,
-  releasedBy: 'ALL' | 'SELF',
+  challengeFilter: 'ALL' | 'CREATED_BY_ME' | 'RELEASED_FROM_MARKET',
   take: number,
   queryOptions?: UseInfiniteQueryOptions<
     TGetMyAcademyChallengeListResponse,
@@ -22,8 +22,8 @@ function useGetInfiniteMyAcademyChallenge(
   >,
 ) {
   return useInfiniteQuery({
-    queryFn: ({ pageParam }) => getMyAcademyChallengeList({ cursor: pageParam, take, academyId, challengeCategory, releasedBy, title }),
-    queryKey: [queryKeys.CHALLENGE_LIST, { academyId }, challengeCategory, releasedBy, title],
+    queryFn: ({ pageParam }) => getMyAcademyChallengeList({ cursor: pageParam, take, academyId, challengeCategory, challengeFilter, title }),
+    queryKey: [queryKeys.CHALLENGE_LIST, { academyId }, challengeCategory, challengeFilter, title],
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {
       console.log(lastPage);
