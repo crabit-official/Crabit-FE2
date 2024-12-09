@@ -552,8 +552,8 @@ export type TReleasedChallengeList = {
 export type TGetMyAcademyChallengeListRequest = {
   academyId: number;
   challengeCategory?: CHALLENGE_CATEGORY;
+  challengeFilter: 'ALL' | 'CREATED_BY_ME' | 'RELEASED_FROM_MARKET';
   cursor: number;
-  releasedBy: 'ALL' | 'SELF';
   take: number;
   title?: string;
 };

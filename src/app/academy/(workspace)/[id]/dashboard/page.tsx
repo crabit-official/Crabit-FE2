@@ -14,7 +14,7 @@ interface IAcademyDashBoardProps {
     id: string;
   };
   searchParams: {
-    releasedByMe: 'ALL' | 'SELF';
+    challengeFilter: 'ALL' | 'CREATED_BY_ME' | 'RELEASED_FROM_MARKET';
     search: string;
     tab: string;
   };
@@ -72,7 +72,7 @@ async function AcademyDashBoardPage({ params, searchParams }: IAcademyDashBoardP
             academyId={Number(params.id)}
             category={searchParams.tab}
             search={searchParams.search}
-            releasedByMe={searchParams.releasedByMe}
+            challengeFilter={searchParams.challengeFilter}
           />
         )}
       </div>

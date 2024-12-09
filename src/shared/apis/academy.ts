@@ -278,13 +278,13 @@ export async function getAcademyMemberCount({ academyId, academyRole }: TAcademy
 // 우리 학원 배포 챌린지 리스트 조회
 export async function getMyAcademyChallengeList({
   academyId,
-  releasedBy,
+  challengeFilter,
   challengeCategory,
   title,
   cursor,
   take,
 }: TGetMyAcademyChallengeListRequest): Promise<TGetMyAcademyChallengeListResponse> {
-  let url = `/api/challenge/list?cursor=${cursor}&take=${take}&academyId=${academyId}&releasedBy=${releasedBy}`;
+  let url = `/api/challenge/list?cursor=${cursor}&take=${take}&academyId=${academyId}&challengeFilter=${challengeFilter}`;
 
   if (challengeCategory) {
     url += `&challengeCategory=${challengeCategory}`;
