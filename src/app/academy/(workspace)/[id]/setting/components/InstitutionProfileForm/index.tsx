@@ -1,6 +1,6 @@
 'use client';
 
-import React, { type Dispatch, type SetStateAction } from 'react';
+import React, { type Dispatch, type SetStateAction, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaPencil } from 'react-icons/fa6';
 import { PiUserSquareFill } from 'react-icons/pi';
@@ -37,8 +37,9 @@ interface IProfileFormProps {
   setIsEditing: Dispatch<SetStateAction<boolean>>;
 }
 
-function InstitutionProfileForm({ setIsEditing, profileImageUrl, nickname, academyRole, school, introduction }: IProfileFormProps) {
-  const { filePreview, handleChangeFile, file, handleImageUpload } = useImage();
+function InstitutionProfileForm({ setIsEditing, profileImageUrl: initProfile, nickname, academyRole, school, introduction }: IProfileFormProps) {
+  const { filePreview, handleChangeFile, file, handleImageUpload, handleRemove } = useImage();
+  const [profileImg, setProfileImg] = useState<string | null>(initProfile);
   const { data: image, isSuccess } = useGetPresignedUrl({
     fileName: file?.name as string,
     s3Folder: S3_FOLDER_NAME.PROFILE_IMAGE,
@@ -52,11 +53,12 @@ function InstitutionProfileForm({ setIsEditing, profileImageUrl, nickname, acade
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<FormValues>({
     defaultValues: {
       nickname: nickname || '',
       school: school || '',
-      profileImageUrl: profileImageUrl || '',
+      profileImageUrl: initProfile || '',
       introduction: introduction || '',
     },
     resolver: zodResolver(institutionProfileSchema),
@@ -93,6 +95,14 @@ function InstitutionProfileForm({ setIsEditing, profileImageUrl, nickname, acade
     }
   };
 
+  const handleProfileRemove = () => {
+    if (filePreview) handleRemove();
+    else {
+      setProfileImg(null);
+      setValue('profileImageUrl', null);
+    }
+  };
+
   return (
     <FramerScale className="flex w-full flex-col justify-start gap-5">
       <section className="relative flex flex-col gap-4">
@@ -115,9 +125,9 @@ function InstitutionProfileForm({ setIsEditing, profileImageUrl, nickname, acade
               </div>
               {filePreview ? (
                 <Image src={filePreview} width={200} height={200} className="size-20 rounded-full object-cover" alt="img" />
-              ) : profileImageUrl ? (
+              ) : profileImg ? (
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${profileImageUrl}`}
+                  src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${profileImg}`}
                   width={100}
                   height={100}
                   className="size-20 rounded-full border border-solid border-gray-200 object-cover"
@@ -127,6 +137,9 @@ function InstitutionProfileForm({ setIsEditing, profileImageUrl, nickname, acade
                 <PiUserSquareFill size={15} />
               )}
             </label>
+            <button type="button" className="py-2 text-xs text-gray-500 hover:text-main-deep-pink" onClick={handleProfileRemove}>
+              프로필 삭제
+            </button>
             <input type="file" id="file" onChange={handleChangeFile} className="hidden" />
           </Flex>
           <Typography size="h7" as="p" className="w-full text-center font-normal">

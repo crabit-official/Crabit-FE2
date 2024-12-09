@@ -69,7 +69,7 @@ function ChallengeDetail({ academyId, releasedChallengeId }: TChallengeDetailPro
             onSubmit={() => setIsEdit((prev) => !prev)}
             body={
               <FallbackMessage
-                imageUrl="/images/icons/icon_cry.webp"
+                imageUrl="/images/animation/alert.gif"
                 title="챌린지를 수정할 수 없어요"
                 content={
                   <Typography as="p" size="h6" className="font-normal opacity-90">

@@ -37,7 +37,7 @@ function ChallengeCardList({ academyId, challengeType }: IChallengeCardListProps
   if (isEmpty) {
     return (
       <FallbackMessage
-        imageUrl="/images/icons/icon_cry.webp"
+        imageUrl="/images/animation/no_content.gif"
         title="챌린지가 없습니다"
         content="마켓에 다양한 챌린지들이 추가될 때까지 잠시만 기다려주세요 !"
       />
