@@ -9,7 +9,7 @@ import PlusChallengeCard from '@/app/academy/(workspace)/[id]/dashboard/componen
 import { getChallengeCategory } from '@/features/academy/(workspace)/utils/challengeState';
 import Typography from '@/shared/components/Typography';
 import { PUBLIC_CATEGORY_NAME } from '@/shared/constants/tab-menu';
-import useGetInfiniteTeacherChallengeList from '@/shared/hooks/challenge/useGetInfiniteTeacherChallengeList';
+import useGetInfiniteMyAcademyChallenge from '@/shared/hooks/challenge/useGetInfiniteMyAcademyChallenge';
 
 interface IAllChallengeContentsProps {
   academyId: number;
@@ -21,7 +21,9 @@ interface IAllChallengeContentsProps {
 function AllChallengeContents({ academyId, category, search }: IAllChallengeContentsProps) {
   const router = useRouter();
   const selectedCategory = PUBLIC_CATEGORY_NAME[category] ?? undefined;
-  const { data: challenge, fetchNextPage, hasNextPage, isFetching } = useGetInfiniteTeacherChallengeList(academyId, selectedCategory, search);
+  const { data: challenge, fetchNextPage, hasNextPage, isFetching } = useGetInfiniteMyAcademyChallenge(academyId, selectedCategory, search, 'ALL', 6);
+
+  console.log(challenge);
 
   const { ref, inView } = useInView({
     threshold: 0,
@@ -40,18 +42,18 @@ function AllChallengeContents({ academyId, category, search }: IAllChallengeCont
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
       <PlusChallengeCard onClick={() => router.push('dashboard/create')} content={'새로운\n챌린지 추가하기'} />
       {challenge?.pages?.map((page) =>
-        page.result.challengeList.map((item) => (
+        page.result.releasedChallengeList.map((item) => (
           <AnimateCard
             leftLabel={
               <Typography as="p" size="h7" className="text-xs" color="main-white">
-                {getChallengeCategory(item.challengeCategory)}
+                {getChallengeCategory(item.releasedChallenge.challengeCategory)}
               </Typography>
             }
-            imageUrl={item.thumbnailImageUrl}
-            key={item.releasedChallengeId}
-            onClick={() => router.push(`dashboard/${item.releasedChallengeId}`)}
-            title={item.title}
-            subTitle={item.content}
+            imageUrl={item.releasedChallenge.thumbnailImageUrl}
+            key={item.releasedChallenge.releasedChallengeId}
+            onClick={() => router.push(`dashboard/${item.releasedChallenge.releasedChallengeId}`)}
+            title={item.releasedChallenge.title}
+            subTitle={item.releasedChallenge.content}
           />
         )),
       )}

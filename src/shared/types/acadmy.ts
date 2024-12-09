@@ -526,3 +526,40 @@ export type TAcademyMemberResponse = CommonResponse<{
   count: number;
   maxCount: number;
 }>;
+
+// 우리 학원 배포 챌린지 리스트 조회
+export type TReleasedChallenge = {
+  challengeCategory: CHALLENGE_CATEGORY;
+  content: string;
+  createdAt: Date;
+  description: string;
+  releasedChallengeId: number;
+  thumbnailImageUrl: string;
+  title: string;
+};
+
+export type TTeacher = {
+  academyMemberId: number;
+  nickname: string;
+  profileImageUrl: string;
+};
+
+export type TReleasedChallengeList = {
+  releasedChallenge: TReleasedChallenge;
+  teacher: TTeacher;
+};
+
+export type TGetMyAcademyChallengeListRequest = {
+  academyId: number;
+  challengeCategory?: CHALLENGE_CATEGORY;
+  cursor: number;
+  releasedBy: 'ALL' | 'SELF';
+  take: number;
+  title?: string;
+};
+
+export type TGetMyAcademyChallengeListResponse = CommonResponse<{
+  hasNext: boolean;
+  nextCursor: number;
+  releasedChallengeList: TReleasedChallengeList[];
+}>;

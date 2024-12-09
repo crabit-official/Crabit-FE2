@@ -6,7 +6,6 @@ import type {
   IAcademyStudentListResult,
   IChallengeApprovalResults,
   IChallengeParticipateResult,
-  IChallengeResult,
   IGetAcademyMemberDetailList,
   IStudentChallengeContentsResults,
   IStudentChallengeResult,
@@ -31,28 +30,6 @@ interface IGetChallengeList {
 interface IGetChallengeDetails {
   academyId: number;
   releasedChallengeId: number;
-}
-
-// 원장/강사가 배포한 챌린지 목록 전체 조회
-export async function getTeachersChallengeList({ cursor, take, academyId, category, search }: IGetChallengeList) {
-  let url = `/api/challenge/list?cursor=${cursor}&take=${take}&academyId=${academyId}`;
-
-  if (category) {
-    url += `&challengeCategory=${category}`;
-  }
-
-  if (search) {
-    url += `&title=${search}`;
-  }
-  const res = await fetch(url, {
-    method: 'GET',
-  });
-
-  if (!res.ok) {
-    throw new Error('챌린지를 불러오지 못했습니다.');
-  }
-
-  return (await res.json()) as IChallengeResult;
 }
 
 // 학생이 참여하는 챌린지 목록 전체 조회
