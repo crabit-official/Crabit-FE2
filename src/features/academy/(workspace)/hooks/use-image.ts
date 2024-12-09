@@ -34,6 +34,11 @@ export const useImage = () => {
     }
   };
 
+  const handleRemove = () => {
+    setFilePreview(null);
+    setFile(null);
+  };
+
   return {
     file,
     filePreview,
@@ -41,5 +46,6 @@ export const useImage = () => {
     setFile,
     setFilePreview,
     handleImageUpload,
+    handleRemove,
   };
 };
