@@ -24,8 +24,6 @@ function AllChallengeContents({ academyId, category, search, releasedByMe }: IAl
   const selectedCategory = PUBLIC_CATEGORY_NAME[category] ?? undefined;
   const { data: challenge, fetchNextPage, hasNextPage, isFetching } = useGetInfiniteMyAcademyChallenge(academyId, selectedCategory, search, releasedByMe, 6);
 
-  console.log(challenge);
-
   const { ref, inView } = useInView({
     threshold: 0,
     delay: 0,

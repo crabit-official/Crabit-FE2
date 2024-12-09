@@ -45,18 +45,20 @@ function Menubar({ academyId, activeTab, role }: IMenubarProps) {
 
   return (
     <Flex column="start" className="w-full gap-4">
-      <div className="flex flex-col items-start gap-2">
-        <button type="button" onClick={() => setReleasedBy('ALL')}>
-          <Typography className={releasedBy === 'ALL' ? 'font-bold text-main-deep-pink' : ''} size="body2">
-            기관 모든 챌린지
-          </Typography>
-        </button>
-        <button type="button" onClick={() => setReleasedBy('SELF')}>
-          <Typography className={releasedBy === 'SELF' ? 'font-bold text-main-deep-pink' : ''} size="body2">
-            내가 배포한 챌린지
-          </Typography>
-        </button>
-      </div>
+      {role !== ACADEMY_ROLE.STUDENT && (
+        <div className="flex flex-col items-start gap-2">
+          <button type="button" onClick={() => setReleasedBy('ALL')}>
+            <Typography className={releasedBy === 'ALL' ? 'font-bold text-main-deep-pink' : ''} size="body2">
+              기관 모든 챌린지
+            </Typography>
+          </button>
+          <button type="button" onClick={() => setReleasedBy('SELF')}>
+            <Typography className={releasedBy === 'SELF' ? 'font-bold text-main-deep-pink' : ''} size="body2">
+              내가 배포한 챌린지
+            </Typography>
+          </button>
+        </div>
+      )}
       <ul>
         {role === ACADEMY_ROLE.STUDENT ? (
           <MenuItem title="챌린지 상태" content={SUBMISSION_STATU_MENU} academyId={academyId} activeTab={activeTab} />
