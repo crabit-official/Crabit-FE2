@@ -18,7 +18,7 @@ const STUDENT_TAB_MENU = [
 
 const MARKET_TAB_MENU = [
   { tab: 'crabit', text: '크래빗 공식' },
-  { tab: 'academy', text: '학원 챌린지' },
+  { tab: 'academy', text: '기관 챌린지' },
 ];
 
 const SUBMISSION_STATU_MENU = [
