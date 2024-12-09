@@ -29,7 +29,7 @@ type TChallengeDetailProps = {
 function ChallengeDetail({ academyId, releasedChallengeId }: TChallengeDetailProps) {
   const { data: students } = useGetInfiniteStudentChallengeProgressList(academyId, releasedChallengeId);
   const isEmpty = students?.pages.every((page) => page.result.challengeParticipantList.length === 0);
-  const { data: challengeData, isFetching } = useGetChallengeDetail(academyId, releasedChallengeId);
+  const { data: challengeData, isPending } = useGetChallengeDetail(academyId, releasedChallengeId);
   const { mutate } = useDeleteChallenge({ academyId });
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isEdit, setIsEdit] = useState<boolean>(false);
@@ -38,14 +38,14 @@ function ChallengeDetail({ academyId, releasedChallengeId }: TChallengeDetailPro
     mutate({ academyId, releasedChallengeId });
   };
 
-  if (isFetching) {
+  if (isPending) {
     return (
       <Flex column="start" className="w-full gap-8">
         <Flex column="start" className="gap-2">
           <Skeleton height={21} width={100} className="rounded-md" />
           <Skeleton height={45} width={200} className="rounded-md" />
         </Flex>
-        <Skeleton height={400} className="rounded-lg" />
+        <Skeleton height={1000} className="rounded-lg" />
         <Skeleton height={100} className="rounded-lg" />
         <Flex className="gap-4">
           <Skeleton height={100} className="rounded-lg" />
