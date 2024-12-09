@@ -16,7 +16,7 @@ interface IFallbackMessageProps {
 function FallbackMessage({ imageUrl, content, title }: IFallbackMessageProps) {
   return (
     <FramerScale className="flex flex-col items-center justify-center gap-4 py-10">
-      <Image src={imageUrl} alt="icons" width={130} height={130} />
+      <Image src={imageUrl} alt="icons" width={200} height={200} />
       <Flex rowColumn="center" className="gap-1">
         <Typography size="h3">{title}</Typography>
         <Typography size="h6" className="break-keep px-10 text-center font-normal opacity-60">
