@@ -31,6 +31,8 @@ import type {
   TAcademyMemberResponse,
   TAcademyStudentDetailResponse,
   TError,
+  TGetMyAcademyChallengeListRequest,
+  TGetMyAcademyChallengeListResponse,
 } from '@/shared/types/acadmy';
 
 interface IGetAcademyList {
@@ -271,4 +273,30 @@ export async function getAcademyMemberCount({ academyId, academyRole }: TAcademy
   const res = await fetch(`/api/academy/member/count?academyId=${academyId}&academyRole=${academyRole}`);
 
   return (await res.json()) as TAcademyMemberResponse;
+}
+
+// 우리 학원 배포 챌린지 리스트 조회
+export async function getMyAcademyChallengeList({
+  academyId,
+  releasedBy,
+  challengeCategory,
+  title,
+  cursor,
+  take,
+}: TGetMyAcademyChallengeListRequest): Promise<TGetMyAcademyChallengeListResponse> {
+  let url = `/api/challenge/list?cursor=${cursor}&take=${take}&academyId=${academyId}&releasedBy=${releasedBy}`;
+
+  if (challengeCategory) {
+    url += `&challengeCategory=${challengeCategory}`;
+  }
+
+  if (title) {
+    url += `&title=${title}`;
+  }
+
+  const res = await fetch(url);
+
+  console.log(res);
+
+  return (await res.json()) as TGetMyAcademyChallengeListResponse;
 }
