@@ -23,7 +23,7 @@ function useGetInfiniteMyAcademyChallenge(
 ) {
   return useInfiniteQuery({
     queryFn: ({ pageParam }) => getMyAcademyChallengeList({ cursor: pageParam, take, academyId, challengeCategory, releasedBy, title }),
-    queryKey: [queryKeys.CHALLENGE_LIST, { academyId }, challengeCategory, title],
+    queryKey: [queryKeys.CHALLENGE_LIST, { academyId }, challengeCategory, releasedBy, title],
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {
       console.log(lastPage);

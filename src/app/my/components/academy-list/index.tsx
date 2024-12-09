@@ -43,7 +43,7 @@ function AcademyList() {
           <AnimateCard
             key={academy.academyId}
             onClick={() => {
-              router.push(`/academy/${academy.academyId}/dashboard`);
+              router.push(`/academy/${academy.academyId}/dashboard?tab=all&releasedByMe=ALL`);
             }}
             title={academy.academyName}
             subTitle={academy.nickname}
