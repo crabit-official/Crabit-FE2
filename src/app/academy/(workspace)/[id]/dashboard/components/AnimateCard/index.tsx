@@ -39,7 +39,7 @@ function AnimateCard({ imageUrl, onClick, subTitle, title, leftLabel }: IAnimate
         </Flex>
       )}
       <Flex column="start" className="size-full min-h-32 gap-2 px-6">
-        <Typography size="h5" className="break-keep">
+        <Typography size="h5" className="w-full truncate">
           {title}
         </Typography>
         <Typography size="h5" as="p" className="text-overflow-3 break-keep text-xs opacity-60" dangerouslySetInnerHTML={{ __html: sanitizeSubTitle }} />

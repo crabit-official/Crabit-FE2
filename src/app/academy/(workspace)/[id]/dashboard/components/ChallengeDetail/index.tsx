@@ -105,42 +105,44 @@ function ChallengeDetail({ academyId, releasedChallengeId }: TChallengeDetailPro
           />
         )}
         <Flex column="center" className="relative w-full gap-5 px-2 sm:px-0">
-          {challengeData.result.teacher.memberId === profile?.result.memberId && (
-            <Flex column="center" className="absolute right-[-16px] top-[100px] mx-2 gap-4 rounded-xl bg-gray-100 p-4 sm:mx-0">
-              <button type="button" onClick={() => setIsEdit((prev) => !prev)}>
-                <AiTwotoneEdit className="hover:text-main-deep-pink" />
-              </button>
-              <button type="button" onClick={() => setIsOpen((prev) => !prev)}>
-                <BsTrash3Fill className="hover:text-main-deep-pink" />
-              </button>
-            </Flex>
-          )}
           <Flex column="center" className="gap-1">
             <Typography size="h5" className="break-keep text-main-deep-pink">
               {getChallengeType(challengeData?.result.releasedChallenge.challengeType)} •{' '}
               {getChallengeCategory(challengeData?.result.releasedChallenge?.challengeCategory)}
             </Typography>
-            <Typography size="h1" className="break-keep text-3xl font-bold md:text-4xl">
+            <Typography size="h1" className="overflow-hidden whitespace-normal break-all text-3xl font-bold md:text-4xl">
               {challengeData?.result.releasedChallenge?.title}
             </Typography>
           </Flex>
-          {challengeData?.result.releasedChallenge?.thumbnailImageUrl ? (
-            <Image
-              src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challengeData.result.releasedChallenge?.thumbnailImageUrl}`}
-              alt="test"
-              width={500}
-              height={500}
-              className="h-100 w-full rounded-2xl border border-solid border-gray-100 object-cover shadow-custom"
-            />
-          ) : (
-            <Image
-              src="/images/test.jpeg"
-              alt="test"
-              width={500}
-              height={500}
-              className="h-100 w-full rounded-2xl border border-solid border-gray-100 object-cover shadow-custom"
-            />
-          )}
+          <div className="relative">
+            {challengeData?.result.releasedChallenge?.thumbnailImageUrl ? (
+              <Image
+                src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${challengeData.result.releasedChallenge?.thumbnailImageUrl}`}
+                alt="test"
+                width={500}
+                height={500}
+                className="h-100 w-full rounded-2xl border border-solid border-gray-100 object-cover shadow-custom"
+              />
+            ) : (
+              <Image
+                src="/images/test.jpeg"
+                alt="test"
+                width={500}
+                height={500}
+                className="h-100 w-full rounded-2xl border border-solid border-gray-100 object-cover shadow-custom"
+              />
+            )}
+            {challengeData.result.teacher.memberId === profile?.result.memberId && (
+              <Flex column="center" className="absolute right-[-20px] top-[20px] mx-2 gap-4 rounded-xl bg-gray-100 p-4 sm:mx-0">
+                <button type="button" onClick={() => setIsEdit((prev) => !prev)}>
+                  <AiTwotoneEdit className="hover:text-main-deep-pink" />
+                </button>
+                <button type="button" onClick={() => setIsOpen((prev) => !prev)}>
+                  <BsTrash3Fill className="hover:text-main-deep-pink" />
+                </button>
+              </Flex>
+            )}
+          </div>
           <Flex column="start" className="gap-2 p-2">
             <Typography size="h3">챌린지 설명</Typography>
             <Typography size="h5" className="overflow-hidden whitespace-normal break-all text-start font-normal opacity-80" as="p">
