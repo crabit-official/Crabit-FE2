@@ -33,7 +33,7 @@ function MarketPage({ params, searchParams }: IMarketPageProps) {
       </Flex>
       <Flex rowColumn="center" as="section" className="w-full gap-10">
         <DetailTab academyId={Number(params.id)} type="market" menu={MARKET_TAB_MENU} />
-        <Flex rowColumn="center" className="w-full">
+        <Flex column="start" className="min-h-[800px] w-full items-center">
           {(searchParams.tab === 'crabit' || !searchParams.tab) && <ChallengeCardList academyId={Number(params.id)} challengeType={CHALLENGE_TYPE.CRABIT} />}
           {searchParams.tab === 'academy' && <ChallengeCardList academyId={Number(params.id)} challengeType={CHALLENGE_TYPE.ACADEMY} />}
         </Flex>

@@ -56,7 +56,7 @@ function ModalContent({ challenge, teacher, academy, setRelease }: TContentProps
           </Flex>
           <BoxContainer variant="border" className="max-h-52 gap-1 overflow-y-auto">
             <div>
-              <Typography size="h4" className="break-keep">
+              <Typography size="h4" className="overflow-hidden whitespace-normal break-all">
                 {challenge?.title}
               </Typography>
               <Typography

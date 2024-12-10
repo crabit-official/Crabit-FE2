@@ -39,7 +39,7 @@ function PublicDetail({ challengeData, academyId, releasedChallengeId }: IPublic
             by. {challengeData.releaseInstructorProfile.nickname}
           </Typography>
         </Flex>
-        <Typography size="h1" className="break-keep text-3xl font-bold md:text-4xl">
+        <Typography size="h1" className="overflow-hidden whitespace-normal break-all text-3xl font-bold md:text-4xl">
           {challengeData?.academyPublicChallenge.title}
         </Typography>
       </Flex>
