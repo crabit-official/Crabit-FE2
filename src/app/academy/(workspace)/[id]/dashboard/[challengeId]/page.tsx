@@ -40,7 +40,8 @@ async function ContentDetail({ params, searchParams }: IContentDetailProps) {
 
   const challengeDetail = (await res.json()) as TDetailChallengeResult;
   const academyProfile = (await res2.json()) as TAcademyMemberProfileResponse;
-  const myChallenge = academyProfile.result.memberId === challengeDetail.result.teacher.memberId;
+  const isChallengeAuthorized =
+    academyProfile.result.memberId === challengeDetail.result.teacher.memberId || academyProfile.result.academyRole === ACADEMY_ROLE.PRINCIPAL;
 
   let content;
 
@@ -56,7 +57,7 @@ async function ContentDetail({ params, searchParams }: IContentDetailProps) {
     content = (
       <>
         <DetailTab
-          menu={myChallenge ? PRINCIPAL_TAB_MENU : ALL_TAB}
+          menu={isChallengeAuthorized ? PRINCIPAL_TAB_MENU : ALL_TAB}
           academyId={Number(params.id)}
           releasedChallengeId={Number(params.challengeId)}
           type="dashboard"
