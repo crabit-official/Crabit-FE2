@@ -1,13 +1,13 @@
 import React from 'react';
+import { cookies } from 'next/headers';
 
 import PrincipalChallengeDetail from '@/app/academy/(workspace)/[id]/dashboard/components/(principal)/ChallengeDetail';
 import StudentChallengeDetail from '@/app/academy/(workspace)/[id]/dashboard/components/(student)/ChallengeDetail';
 import DetailTab from '@/app/academy/(workspace)/[id]/dashboard/components/DetailTab';
-import { fetchData } from '@/shared/apis/fetch-data';
 import Flex from '@/shared/components/Flex';
-import { PRINCIPAL_TAB_MENU, STUDENT_TAB_MENU } from '@/shared/constants/tab-menu';
+import { ALL_TAB, PRINCIPAL_TAB_MENU, STUDENT_TAB_MENU } from '@/shared/constants/tab-menu';
 import { ACADEMY_ROLE } from '@/shared/enums/academy';
-import type { IAcademyProfile, IAcademyResponse } from '@/shared/types/acadmy';
+import type { TAcademyMemberProfileResponse, TDetailChallengeResult } from '@/shared/types/acadmy';
 
 interface IContentDetailProps {
   params: {
@@ -20,7 +20,27 @@ interface IContentDetailProps {
 }
 
 async function ContentDetail({ params, searchParams }: IContentDetailProps) {
-  const academyProfile = await fetchData<IAcademyResponse<IAcademyProfile>>(`/api/v1/academies/${Number(params.id)}`, 'GET');
+  const cookieStore = cookies();
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${Number(params.id)}/challenges/teachers/${Number(params.challengeId)}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Cookie': `accessToken=${cookieStore.get('accessToken')?.value}`,
+    },
+  });
+
+  const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${Number(params.id)}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Cookie': `accessToken=${cookieStore.get('accessToken')?.value}`,
+    },
+  });
+
+  const challengeDetail = (await res.json()) as TDetailChallengeResult;
+  const academyProfile = (await res2.json()) as TAcademyMemberProfileResponse;
+  const myChallenge = academyProfile.result.memberId === challengeDetail.result.teacher.memberId;
 
   let content;
 
@@ -35,7 +55,12 @@ async function ContentDetail({ params, searchParams }: IContentDetailProps) {
   } else {
     content = (
       <>
-        <DetailTab menu={PRINCIPAL_TAB_MENU} academyId={Number(params.id)} releasedChallengeId={Number(params.challengeId)} type="dashboard" />
+        <DetailTab
+          menu={myChallenge ? PRINCIPAL_TAB_MENU : ALL_TAB}
+          academyId={Number(params.id)}
+          releasedChallengeId={Number(params.challengeId)}
+          type="dashboard"
+        />
         {/* @ts-expect-error Async Server Component */}
         <PrincipalChallengeDetail tabName={searchParams.tab} releasedChallengeId={Number(params.challengeId)} academyId={Number(params.id)} />
       </>

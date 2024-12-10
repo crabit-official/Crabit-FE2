@@ -11,6 +11,8 @@ const PRINCIPAL_TAB_MENU = [
   { tab: 'statistics', text: '통계' },
 ];
 
+const ALL_TAB = [{ tab: 'challenge', text: '챌린지' }];
+
 const STUDENT_TAB_MENU = [
   { tab: 'create', text: '챌린지' },
   { tab: 'my-challenge', text: 'MY 챌린지' },
@@ -102,4 +104,4 @@ const LOG_SUBMISSION_NAME: Record<string, CHALLENGE_LOG_SUBMISSION_STATUS> = {
   'failed': CHALLENGE_LOG_SUBMISSION_STATUS.SUBMISSION_FAILED,
 };
 
-export { LOG_SUBMISSION_NAME, MARKET_TAB_MENU, PRINCIPAL_TAB_MENU, PUBLIC_CATEGORY_NAME, PUBLIC_MENU, STUDENT_TAB_MENU, SUBMISSION_STATU_MENU };
+export { ALL_TAB, LOG_SUBMISSION_NAME, MARKET_TAB_MENU, PRINCIPAL_TAB_MENU, PUBLIC_CATEGORY_NAME, PUBLIC_MENU, STUDENT_TAB_MENU, SUBMISSION_STATU_MENU };
