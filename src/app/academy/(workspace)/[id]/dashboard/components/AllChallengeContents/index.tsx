@@ -39,25 +39,22 @@ function AllChallengeContents({ academyId, category, search, challengeFilter }: 
 
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-      <PlusChallengeCard onClick={() => router.push('dashboard/create')} content={'새로운\n챌린지 추가하기'} />
+      <PlusChallengeCard onClick={() => router.push('dashboard/create')} content={'새로운\n챌린지 생성하기'} />
       {challenge?.pages?.map((page) =>
-        page?.result?.releasedChallengeList?.map((item) => {
-          console.log(encodeURIComponent(item.releasedChallenge.thumbnailImageUrl));
-          return (
-            <AnimateCard
-              leftLabel={
-                <Typography as="p" size="h7" className="text-xs" color="main-white">
-                  {getChallengeCategory(item.releasedChallenge.challengeCategory)}
-                </Typography>
-              }
-              imageUrl={item.releasedChallenge.thumbnailImageUrl}
-              key={item.releasedChallenge.releasedChallengeId}
-              onClick={() => router.push(`dashboard/${item.releasedChallenge.releasedChallengeId}`)}
-              title={item.releasedChallenge.title}
-              subTitle={item.releasedChallenge.content}
-            />
-          );
-        }),
+        page?.result?.releasedChallengeList?.map((item) => (
+          <AnimateCard
+            leftLabel={
+              <Typography as="p" size="h7" className="text-xs" color="main-white">
+                {getChallengeCategory(item.releasedChallenge.challengeCategory)}
+              </Typography>
+            }
+            imageUrl={item.releasedChallenge.thumbnailImageUrl}
+            key={item.releasedChallenge.releasedChallengeId}
+            onClick={() => router.push(`dashboard/${item.releasedChallenge.releasedChallengeId}`)}
+            title={item.releasedChallenge.title}
+            subTitle={item.releasedChallenge.content}
+          />
+        )),
       )}
       {isFetching
         ? Array(6)

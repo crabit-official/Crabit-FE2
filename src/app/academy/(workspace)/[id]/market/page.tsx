@@ -31,10 +31,12 @@ function MarketPage({ params, searchParams }: IMarketPageProps) {
           </Typography>
         </Flex>
       </Flex>
-      <DetailTab academyId={Number(params.id)} type="market" menu={MARKET_TAB_MENU} />
-      <Flex rowColumn="center" className="w-full">
-        {(searchParams.tab === 'crabit' || !searchParams.tab) && <ChallengeCardList academyId={Number(params.id)} challengeType={CHALLENGE_TYPE.CRABIT} />}
-        {searchParams.tab === 'academy' && <ChallengeCardList academyId={Number(params.id)} challengeType={CHALLENGE_TYPE.ACADEMY} />}
+      <Flex rowColumn="center" as="section" className="w-full gap-10">
+        <DetailTab academyId={Number(params.id)} type="market" menu={MARKET_TAB_MENU} />
+        <Flex rowColumn="center" className="w-full">
+          {(searchParams.tab === 'crabit' || !searchParams.tab) && <ChallengeCardList academyId={Number(params.id)} challengeType={CHALLENGE_TYPE.CRABIT} />}
+          {searchParams.tab === 'academy' && <ChallengeCardList academyId={Number(params.id)} challengeType={CHALLENGE_TYPE.ACADEMY} />}
+        </Flex>
       </Flex>
     </Flex>
   );
