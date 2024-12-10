@@ -22,14 +22,6 @@ interface IContentDetailProps {
 async function ContentDetail({ params, searchParams }: IContentDetailProps) {
   const cookieStore = cookies();
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${Number(params.id)}/challenges/teachers/${Number(params.challengeId)}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Cookie': `accessToken=${cookieStore.get('accessToken')?.value}`,
-    },
-  });
-
   const res2 = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${Number(params.id)}`, {
     method: 'GET',
     headers: {
@@ -38,10 +30,7 @@ async function ContentDetail({ params, searchParams }: IContentDetailProps) {
     },
   });
 
-  const challengeDetail = (await res.json()) as TDetailChallengeResult;
   const academyProfile = (await res2.json()) as TAcademyMemberProfileResponse;
-  const isChallengeAuthorized =
-    academyProfile.result.memberId === challengeDetail.result.teacher.memberId || academyProfile.result.academyRole === ACADEMY_ROLE.PRINCIPAL;
 
   let content;
 
@@ -54,6 +43,19 @@ async function ContentDetail({ params, searchParams }: IContentDetailProps) {
       </>
     );
   } else {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/academies/${Number(params.id)}/challenges/teachers/${Number(params.challengeId)}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cookie': `accessToken=${cookieStore.get('accessToken')?.value}`,
+      },
+    });
+
+    const challengeDetail = (await res.json()) as TDetailChallengeResult;
+
+    const isChallengeAuthorized =
+      academyProfile.result.memberId === challengeDetail?.result?.teacher.memberId || academyProfile?.result?.academyRole === ACADEMY_ROLE.PRINCIPAL;
+
     content = (
       <>
         <DetailTab
