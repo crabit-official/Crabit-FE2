@@ -31,7 +31,7 @@ function ChallengeContent({ challenge, teacher, academy, setRelease }: TChalleng
             </Typography>
           )}
         </Flex>
-        <Typography size="h1" className="break-keep text-3xl font-bold md:text-4xl">
+        <Typography size="h1" className="break-al overflow-hidden whitespace-normal text-3xl font-bold md:text-4xl">
           {challenge?.title}
         </Typography>
       </Flex>

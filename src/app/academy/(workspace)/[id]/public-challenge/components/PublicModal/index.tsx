@@ -68,7 +68,7 @@ function PublicModal({ challengeData, academyId, releasedChallengeId }: IModalPr
             <Flex column="between" className="size-full">
               <BoxContainer variant="border" className="max-h-52 overflow-y-auto">
                 <div>
-                  <Typography size="h4" as="p" className="break-keep opacity-80">
+                  <Typography size="h4" as="p" className="overflow-hidden whitespace-normal break-all opacity-80">
                     {challengeData.academyPublicChallenge.title}
                   </Typography>
                   <Typography size="h7" as="p" className="overflow-hidden whitespace-normal break-all font-normal opacity-60">
