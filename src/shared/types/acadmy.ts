@@ -243,6 +243,12 @@ export type TDetailChallengeResult = CommonResponse<{
     title: string;
     totalDays: number;
   };
+  teacher: {
+    academyMemberId: number;
+    memberId: number;
+    name: string;
+    nickname: string;
+  };
 }>;
 
 // 학생 챌린지 참여 정보 리스트

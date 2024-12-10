@@ -47,7 +47,7 @@ function ChallengeCardList({ academyId, challengeType }: IChallengeCardListProps
   return (
     <>
       <div className="absolute top-[550px] flex h-[800px] w-full items-center justify-center rounded-t-[100px] bg-gradient-to-b from-main-deep-pink sm:rounded-t-[130px] lg:rounded-t-[260px]" />
-      <div className="s w-6/7 relative grid min-h-[800px] grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="w-6/7 relative grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {challenges?.pages?.map((page) =>
           page.result.challengeList.map((challenge) => (
             <AnimateCard

@@ -16,9 +16,9 @@ import Flex from '@/shared/components/Flex';
 import Skeleton from '@/shared/components/Skeleton/Skeleton';
 import SmallModal from '@/shared/components/SmallModal';
 import Typography from '@/shared/components/Typography';
+import useManageAcademy from '@/shared/hooks/academy/useManageAcademy';
 import useDeleteChallenge from '@/shared/hooks/challenge/useDeleteChallenge';
 import useGetChallengeDetail from '@/shared/hooks/challenge/useGetChallengeDetail';
-import useGetInfiniteStudentChallengeProgressList from '@/shared/hooks/challenge/useGetInfiniteStudentChallengeProgressList';
 import { formatNumberWithCommas } from '@/shared/utils/number';
 
 type TChallengeDetailProps = {
@@ -27,12 +27,15 @@ type TChallengeDetailProps = {
 };
 
 function ChallengeDetail({ academyId, releasedChallengeId }: TChallengeDetailProps) {
-  const { data: students } = useGetInfiniteStudentChallengeProgressList(academyId, releasedChallengeId);
-  const isEmpty = students?.pages.every((page) => page.result.challengeParticipantList.length === 0);
   const { data: challengeData, isPending } = useGetChallengeDetail(academyId, releasedChallengeId);
+  const { useGetAcademyMemberProfile } = useManageAcademy();
+  const { data: profile } = useGetAcademyMemberProfile({ academyId });
   const { mutate } = useDeleteChallenge({ academyId });
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isEdit, setIsEdit] = useState<boolean>(false);
+  const editPossible =
+    challengeData?.result?.challengeStatusCounts?.totalParticipants === 0 ||
+    challengeData?.result?.challengeStatusCounts?.notStartedStudents === challengeData?.result?.challengeStatusCounts?.totalParticipants;
 
   const handleDelete = () => {
     mutate({ academyId, releasedChallengeId });
@@ -55,14 +58,14 @@ function ChallengeDetail({ academyId, releasedChallengeId }: TChallengeDetailPro
     );
   }
 
-  if (isEdit && challengeData && isEmpty) {
+  if (isEdit && challengeData && editPossible) {
     return <ChallengeEditForm {...challengeData.result.releasedChallenge} setIsEdit={setIsEdit} />;
   }
 
   if (challengeData)
     return (
       <Flex className="w-full">
-        {isEdit && !isEmpty && (
+        {isEdit && !editPossible && (
           <SmallModal
             actionLabel="뒤로가기"
             onClose={() => setIsEdit((prev) => !prev)}
@@ -102,14 +105,16 @@ function ChallengeDetail({ academyId, releasedChallengeId }: TChallengeDetailPro
           />
         )}
         <Flex column="center" className="relative w-full gap-5 px-2 sm:px-0">
-          <Flex column="center" className="absolute right-[-16px] top-[100px] mx-2 gap-4 rounded-xl bg-gray-100 p-4 sm:mx-0">
-            <button type="button" onClick={() => setIsEdit((prev) => !prev)}>
-              <AiTwotoneEdit className="hover:text-main-deep-pink" />
-            </button>
-            <button type="button" onClick={() => setIsOpen((prev) => !prev)}>
-              <BsTrash3Fill className="hover:text-main-deep-pink" />
-            </button>
-          </Flex>
+          {challengeData.result.teacher.memberId === profile?.result.memberId && (
+            <Flex column="center" className="absolute right-[-16px] top-[100px] mx-2 gap-4 rounded-xl bg-gray-100 p-4 sm:mx-0">
+              <button type="button" onClick={() => setIsEdit((prev) => !prev)}>
+                <AiTwotoneEdit className="hover:text-main-deep-pink" />
+              </button>
+              <button type="button" onClick={() => setIsOpen((prev) => !prev)}>
+                <BsTrash3Fill className="hover:text-main-deep-pink" />
+              </button>
+            </Flex>
+          )}
           <Flex column="center" className="gap-1">
             <Typography size="h5" className="break-keep text-main-deep-pink">
               {getChallengeType(challengeData?.result.releasedChallenge.challengeType)} •{' '}
