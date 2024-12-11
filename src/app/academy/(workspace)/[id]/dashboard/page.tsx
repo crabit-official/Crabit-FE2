@@ -64,10 +64,8 @@ async function AcademyDashBoardPage({ params, searchParams }: IAcademyDashBoardP
       <div className="flex w-full flex-col items-center justify-center gap-20 px-10 lg:grid lg:grid-cols-[180px,1fr] lg:items-start lg:gap-10 lg:px-0 xl:gap-32 xl:px-20">
         <Menubar academyId={Number(params.id)} activeTab={searchParams.tab} role={AcademyProfile.result?.academyRole} />
         {AcademyProfile.result?.academyRole === ACADEMY_ROLE.STUDENT ? (
-          /* @ts-expect-error Async Server Component */
           <StudentDashBoardUI academyId={Number(params.id)} search={searchParams.search} category={searchParams.tab} />
         ) : (
-          /* @ts-expect-error Async Server Component */
           <PrincipalDashBoardUIl
             academyId={Number(params.id)}
             category={searchParams.tab}
