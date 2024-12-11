@@ -37,21 +37,40 @@ function UserMenu() {
 
   return (
     <div className="relative">
-      <div className="flex flex-row items-center gap-3">
+      <div className="flex flex-row items-center gap-1">
+        <div
+          onClick={() => router.push('/pricing')}
+          className="hidden cursor-pointer rounded-full px-4 py-3 text-sm font-semibold transition hover:bg-neutral-100 md:block"
+        >
+          Pricing
+        </div>
         <div
           onClick={() => router.push('/space/enroll')}
           className="hidden cursor-pointer rounded-full px-4 py-3 text-sm font-semibold transition hover:bg-neutral-100 md:block"
         >
           기관 등록하기
         </div>
-        <div
-          onClick={() => {
-            router.push('/my/academy');
-          }}
-          className="hidden cursor-pointer rounded-full px-4 py-3 text-sm font-semibold transition hover:bg-neutral-100 md:block"
-        >
-          내 기관
-        </div>
+        {!profile && (
+          <div
+            onClick={() => {
+              loginModal.onOpen();
+              setIsOpen(false);
+            }}
+            className="hidden cursor-pointer rounded-full px-4 py-3 text-sm font-semibold transition hover:bg-neutral-100 md:block"
+          >
+            로그인
+          </div>
+        )}
+        {profile && (
+          <div
+            onClick={() => {
+              router.push('/my/academy');
+            }}
+            className="hidden cursor-pointer rounded-full px-4 py-3 text-sm font-semibold transition hover:bg-neutral-100 md:block"
+          >
+            내 기관
+          </div>
+        )}
         <div
           onClick={toggleOpen}
           className="flex cursor-pointer flex-row items-center gap-3 rounded-full border border-neutral-200 p-4 transition hover:shadow-custom md:px-2 md:py-1"
@@ -83,24 +102,32 @@ function UserMenu() {
           className="absolute right-0 top-12 w-[40vw] overflow-hidden rounded-xl bg-white text-sm shadow-custom md:w-3/4"
         >
           <div className="flex cursor-pointer flex-col">
+            <MenuItem
+              className="block md:hidden"
+              onClick={() => {
+                setIsOpen(false);
+                router.push('/pricing');
+              }}
+              label="Pricing"
+            />
+            <MenuItem
+              className="block md:hidden"
+              onClick={() => {
+                setIsOpen(false);
+                router.push('/space/enroll');
+              }}
+              label="기관 등록하기"
+            />
+            <MenuItem
+              className="block md:hidden"
+              onClick={() => {
+                setIsOpen(false);
+                router.push('/my/academy');
+              }}
+              label="내 기관"
+            />
             {!profile ? (
               <>
-                <MenuItem
-                  className="block md:hidden"
-                  onClick={() => {
-                    setIsOpen(false);
-                    router.push('/space/enroll');
-                  }}
-                  label="기관 등록하기"
-                />
-                <MenuItem
-                  className="block md:hidden"
-                  onClick={() => {
-                    setIsOpen(false);
-                    router.push('/my/academy');
-                  }}
-                  label="내 기관"
-                />
                 <MenuItem
                   onClick={() => {
                     loginModal.onOpen();
@@ -118,22 +145,6 @@ function UserMenu() {
               </>
             ) : (
               <>
-                <MenuItem
-                  className="block md:hidden"
-                  onClick={() => {
-                    setIsOpen(false);
-                    router.push('/space/enroll');
-                  }}
-                  label="기관 등록하기"
-                />
-                <MenuItem
-                  className="block md:hidden"
-                  onClick={() => {
-                    setIsOpen(false);
-                    router.push('/my/academy');
-                  }}
-                  label="내 기관"
-                />
                 <MenuItem
                   onClick={() => {
                     setIsOpen(false);

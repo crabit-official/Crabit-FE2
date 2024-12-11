@@ -267,13 +267,32 @@ export async function editChallenge({
   challengeParticipationMethod,
   studentIdList,
   releasedChallengeId,
+  challengeSource,
+  title,
+  content,
+  thumbnailImageUrl,
+  fileUrl,
+  challengeCategory,
+  challengeMarketVisibility,
 }: TChallengeEditRequest) {
-  const res = await fetch(`/api/challenge?academyId=${academyId}&releasedChallengeId=${releasedChallengeId}`, {
+  const res = await fetch(`/api/challenge?academyId=${academyId}&releasedChallengeId=${releasedChallengeId}&challengeSource=${challengeSource}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ totalDays, points, challengeParticipationMethod, studentIdList, description }),
+    body: JSON.stringify({
+      totalDays,
+      points,
+      challengeParticipationMethod,
+      studentIdList,
+      description,
+      title,
+      content,
+      thumbnailImageUrl,
+      fileUrl,
+      challengeCategory,
+      challengeMarketVisibility,
+    }),
   });
 
   return (await res.json()) as CommonResponse<{ releasedChallengeId: number }>;

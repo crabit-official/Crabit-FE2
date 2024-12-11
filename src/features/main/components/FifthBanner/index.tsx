@@ -17,7 +17,7 @@ function FifthBanner() {
         </Typography>
         <Flex column="center">
           <Typography size="h0" className="whitespace-pre-wrap px-1 text-center text-base font-bold sm:px-0 sm:text-lg md:text-2xl">
-            현재 200개 이상의 학원, 학교 및 교육기관에서
+            현재 300개 이상의 학원, 학교 및 교육기관에서
           </Typography>
           <Typography size="h0" className="whitespace-pre-wrap px-1 text-center text-base font-bold sm:px-0 sm:text-lg md:text-2xl">
             학생 습관형성을 위해 크래빗을 도입하고 계십니다.
