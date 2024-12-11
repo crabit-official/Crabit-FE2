@@ -32,9 +32,9 @@ import useEditChallenge from '@/shared/hooks/challenge/useEditChallenge';
 import useGetPresignedUrl from '@/shared/hooks/images/use-get-presigned-url';
 import type { TChallengeEditRequest } from '@/shared/types/acadmy';
 import { S3_FOLDER_NAME } from '@/shared/types/image';
-import { challengeEditSchema } from '@/shared/utils/schema';
+import { challengeCoreEditSchema } from '@/shared/utils/schema';
 
-type FormValues = z.infer<typeof challengeEditSchema>;
+type FormValues = z.infer<typeof challengeCoreEditSchema>;
 
 interface IEditProps {
   challengeCategory: CHALLENGE_CATEGORY;
@@ -75,7 +75,7 @@ function ChallengeCoreEditForm({
     defaultValues: {
       points: points || 0,
       totalDays: totalDays || 0,
-      description: description || '',
+      description: description || null,
       challengeParticipationMethod: challengeParticipationMethod || CHALLENGE_PARTICIPATION_METHODS.SELF_PARTICIPATING,
       title: title || '',
       content: content || '',
@@ -84,7 +84,7 @@ function ChallengeCoreEditForm({
       thumbnailImageUrl: thumbnailImageUrl || null,
       fileUrl: fileUrl || null,
     },
-    resolver: zodResolver(challengeEditSchema),
+    resolver: zodResolver(challengeCoreEditSchema),
   });
   const queryClient = useQueryClient();
   const params = useParams();

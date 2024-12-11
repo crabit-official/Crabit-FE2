@@ -40,7 +40,7 @@ interface IEditProps {
   totalDays: number;
 }
 
-function ChallengeEditForm({ points, title, totalDays, content, description, challengeParticipationMethod, setIsEdit, challengeSource }: IEditProps) {
+function ChallengeEditForm({ points, title, totalDays, content, description, challengeSource, challengeParticipationMethod, setIsEdit }: IEditProps) {
   const {
     register,
     handleSubmit,
@@ -76,19 +76,24 @@ function ChallengeEditForm({ points, title, totalDays, content, description, cha
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
   const onSubmit = (data: FormValues) => {
-    console.log(data);
     const academyId = Number(params.id);
     const releasedChallengeId = Number(params.challengeId);
 
     const challengeData: TChallengeEditRequest = {
+      challengeSource,
       academyId,
       releasedChallengeId,
       challengeParticipationMethod: data.challengeParticipationMethod as CHALLENGE_PARTICIPATION_METHODS,
       totalDays: data.totalDays || 0,
       studentIdList: selectedStudentIdList.length > 0 ? selectedStudentIdList : [],
       points: data.points || 0,
-      challengeSource,
       description: data.description || '',
+      fileUrl: null,
+      thumbnailImageUrl: null,
+      challengeMarketVisibility: null,
+      content: null,
+      title: null,
+      challengeCategory: null,
     };
 
     if (data.challengeParticipationMethod === CHALLENGE_PARTICIPATION_METHODS.ASSIGNED && selectedStudentIdList.length === 0) {
@@ -117,6 +122,7 @@ function ChallengeEditForm({ points, title, totalDays, content, description, cha
         <FaRegEdit />
         {title} 수정
       </Typography>
+
       <Flex column="start" className="w-full gap-4">
         <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
           <BoxContainer className="group justify-between transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink">

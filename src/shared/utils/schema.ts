@@ -24,6 +24,7 @@ const introduction = z.string().max(500);
 const nickname = z.string();
 const school = z.string();
 const description = z.string();
+const title = z.string();
 
 const loginSchema = z.object({
   email,
@@ -81,21 +82,28 @@ const institutionProfileSchema = z.object({
 
 const challengeEditSchema = marketSchema.merge(
   z.object({
-    description,
-    title: z.string().nullable(),
-    content: z.string().nullable(),
-    challengeCategory: z.enum(['STUDYING', 'EXERCISE', 'READING', 'NEWSPAPER', 'COPYING', 'DIARY_WRITING', 'LIFESTYLE_HABITS', 'ETC']).nullable(),
-    challengeMarketVisibility: z.enum(['PUBLIC', 'PROTECTED']).nullable(),
-    thumbnailImageUrl: z.string().nullable(),
-    fileUrl: z.string().nullable(),
+    description: description.nullable(),
   }),
 );
+
+const challengeCoreEditSchema = challengeEditSchema.merge(
+  z.object({
+    title,
+    content: description,
+    challengeCategory,
+    challengeMarketVisibility: visibility,
+    thumbnailImageUrl: mainImageUrl.nullable(),
+    fileUrl: mainImageUrl.nullable(),
+  }),
+);
+
 const profileSchema = z.object({
   name,
   profileImageUrl,
 });
 
 export {
+  challengeCoreEditSchema,
   challengeEditSchema,
   challengeSchema,
   challengeTwoSchema,
