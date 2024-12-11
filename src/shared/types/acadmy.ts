@@ -231,6 +231,7 @@ export type TDetailChallengeResult = CommonResponse<{
   releasedChallenge: {
     challengeCategory: CHALLENGE_CATEGORY;
     challengeCoreCreatorAcademyName: string;
+    challengeMarketVisibility: MARKET_VISIBILITY_CATEGORIES;
     challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
     challengeSource: CHALLENGE_SOURCE_TYPE;
     challengeType: CHALLENGE_TYPE;
@@ -239,6 +240,7 @@ export type TDetailChallengeResult = CommonResponse<{
     fileUrl: string;
     points: number;
     releasedChallengeId: number;
+    releasedInOthers: boolean | null;
     thumbnailImageUrl: string;
     title: string;
     totalDays: number;
@@ -512,11 +514,18 @@ export type TAcademyInstructorDetailResponse = CommonResponse<{
 
 export type TChallengeEditRequest = {
   academyId: number;
+  challengeCategory?: CHALLENGE_CATEGORY | null;
+  challengeMarketVisibility?: MARKET_VISIBILITY_CATEGORIES | null;
   challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
+  challengeSource: CHALLENGE_SOURCE_TYPE;
+  content?: string | null;
   description: string;
+  fileUrl?: string | null;
   points: number;
   releasedChallengeId: number;
   studentIdList: number[];
+  thumbnailImageUrl?: string | null;
+  title?: string | null;
   totalDays: number;
 };
 

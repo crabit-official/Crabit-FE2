@@ -20,6 +20,7 @@ import Textarea from '@/shared/components/Textarea';
 import Typography from '@/shared/components/Typography';
 import { METHOD_CATEGORIES } from '@/shared/constants/challenge-cataegrories';
 import { queryKeys } from '@/shared/constants/query-keys';
+import type { CHALLENGE_SOURCE_TYPE } from '@/shared/enums/challenge';
 import { CHALLENGE_PARTICIPATION_METHODS } from '@/shared/enums/challenge';
 import useGetInfiniteAcademyMemberDetailList from '@/shared/hooks/academy/useGetInfiniteAcademyStudentList';
 import useEditChallenge from '@/shared/hooks/challenge/useEditChallenge';
@@ -30,6 +31,7 @@ type FormValues = z.infer<typeof challengeEditSchema>;
 
 interface IEditProps {
   challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
+  challengeSource: CHALLENGE_SOURCE_TYPE;
   content: string;
   description: string;
   points: number;
@@ -38,7 +40,7 @@ interface IEditProps {
   totalDays: number;
 }
 
-function ChallengeEditForm({ points, title, totalDays, content, description, challengeParticipationMethod, setIsEdit }: IEditProps) {
+function ChallengeEditForm({ points, title, totalDays, content, description, challengeSource, challengeParticipationMethod, setIsEdit }: IEditProps) {
   const {
     register,
     handleSubmit,
@@ -74,11 +76,11 @@ function ChallengeEditForm({ points, title, totalDays, content, description, cha
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
   const onSubmit = (data: FormValues) => {
-    console.log(data);
     const academyId = Number(params.id);
     const releasedChallengeId = Number(params.challengeId);
 
     const challengeData: TChallengeEditRequest = {
+      challengeSource,
       academyId,
       releasedChallengeId,
       challengeParticipationMethod: data.challengeParticipationMethod as CHALLENGE_PARTICIPATION_METHODS,
@@ -86,6 +88,12 @@ function ChallengeEditForm({ points, title, totalDays, content, description, cha
       studentIdList: selectedStudentIdList.length > 0 ? selectedStudentIdList : [],
       points: data.points || 0,
       description: data.description || '',
+      fileUrl: null,
+      thumbnailImageUrl: null,
+      challengeMarketVisibility: null,
+      content: null,
+      title: null,
+      challengeCategory: null,
     };
 
     if (data.challengeParticipationMethod === CHALLENGE_PARTICIPATION_METHODS.ASSIGNED && selectedStudentIdList.length === 0) {
