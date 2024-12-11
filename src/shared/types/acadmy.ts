@@ -239,6 +239,7 @@ export type TDetailChallengeResult = CommonResponse<{
     fileUrl: string;
     points: number;
     releasedChallengeId: number;
+    releasedInOthers: boolean;
     thumbnailImageUrl: string;
     title: string;
     totalDays: number;
