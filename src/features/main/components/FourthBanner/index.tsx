@@ -21,7 +21,7 @@ function FourthBanner() {
                 크래빗 장학카드는 학생 동기부여에 매우 효과적인 장학 시스템입니다.
               </Typography>
               <Typography size="h5" as="p" className="w-full break-keep text-xs text-neutral-500 md:text-base">
-                {`현재 200개가 넘는 교육기관에서 크래빗 장학카드를 통한 "우리만의 장학 시스템"을 도입하고 계십니다.`}
+                {`현재 300개가 넘는 교육기관에서 크래빗 장학카드를 통한 "우리만의 장학 시스템"을 도입하고 계십니다.`}
               </Typography>
             </Flex>
           </Flex>
