@@ -2,20 +2,15 @@
 
 import React, { type Dispatch, type SetStateAction, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { FaFile, FaRegEdit } from 'react-icons/fa';
-import { FaFileImport } from 'react-icons/fa6';
-import { IoMdPhotos } from 'react-icons/io';
+import { FaRegEdit } from 'react-icons/fa';
 import { useInView } from 'react-intersection-observer';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
-import Image from 'next/image';
-import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { toast } from 'sonner';
 import type { z } from 'zod';
 
 import Students from '@/features/academy/(workspace)/components/dashboard/Students';
-import { useImage } from '@/features/academy/(workspace)/hooks/use-image';
 import BoxContainer from '@/shared/components/BoxContainer';
 import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
@@ -23,71 +18,40 @@ import Input from '@/shared/components/Input';
 import SelectDropdown from '@/shared/components/SelectDropdown';
 import Textarea from '@/shared/components/Textarea';
 import Typography from '@/shared/components/Typography';
-import { CHALLENGE_CATEGORIES, METHOD_CATEGORIES, VISIBILITY_CATEGORIES } from '@/shared/constants/challenge-cataegrories';
+import { METHOD_CATEGORIES } from '@/shared/constants/challenge-cataegrories';
 import { queryKeys } from '@/shared/constants/query-keys';
-import type { CHALLENGE_CATEGORY, MARKET_VISIBILITY_CATEGORIES } from '@/shared/enums/challenge';
-import { CHALLENGE_PARTICIPATION_METHODS, CHALLENGE_SOURCE_TYPE } from '@/shared/enums/challenge';
+import type { CHALLENGE_SOURCE_TYPE } from '@/shared/enums/challenge';
+import { CHALLENGE_PARTICIPATION_METHODS } from '@/shared/enums/challenge';
 import useGetInfiniteAcademyMemberDetailList from '@/shared/hooks/academy/useGetInfiniteAcademyStudentList';
 import useEditChallenge from '@/shared/hooks/challenge/useEditChallenge';
-import useGetPresignedUrl from '@/shared/hooks/images/use-get-presigned-url';
 import type { TChallengeEditRequest } from '@/shared/types/acadmy';
-import { S3_FOLDER_NAME } from '@/shared/types/image';
 import { challengeEditSchema } from '@/shared/utils/schema';
 
 type FormValues = z.infer<typeof challengeEditSchema>;
 
 interface IEditProps {
-  challengeCategory: CHALLENGE_CATEGORY;
-  challengeMarketVisibility: MARKET_VISIBILITY_CATEGORIES;
   challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
   challengeSource: CHALLENGE_SOURCE_TYPE;
   content: string;
   description: string;
-  fileUrl: string;
   points: number;
-  releasedInOthers: null | boolean;
   setIsEdit: Dispatch<SetStateAction<boolean>>;
-  thumbnailImageUrl: string;
   title: string;
   totalDays: number;
 }
 
-function ChallengeEditForm({
-  points,
-  title,
-  totalDays,
-  content,
-  description,
-  challengeParticipationMethod,
-  setIsEdit,
-  challengeSource,
-  releasedInOthers,
-  challengeCategory,
-  thumbnailImageUrl,
-  fileUrl,
-  challengeMarketVisibility,
-}: IEditProps) {
-  let original;
-  const originEdit = !releasedInOthers && challengeSource === CHALLENGE_SOURCE_TYPE.ORIGINAL;
-
+function ChallengeEditForm({ points, title, totalDays, content, description, challengeParticipationMethod, setIsEdit, challengeSource }: IEditProps) {
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-    setValue,
   } = useForm<FormValues>({
     defaultValues: {
       points: points || 0,
       totalDays: totalDays || 0,
       description: description || '',
       challengeParticipationMethod: challengeParticipationMethod || CHALLENGE_PARTICIPATION_METHODS.SELF_PARTICIPATING,
-      title: originEdit ? title : null,
-      content: originEdit ? content : null,
-      challengeCategory: originEdit ? challengeCategory : null,
-      challengeMarketVisibility: originEdit ? challengeMarketVisibility : null,
-      thumbnailImageUrl: originEdit ? thumbnailImageUrl : null,
-      fileUrl: originEdit ? fileUrl : null,
     },
     resolver: zodResolver(challengeEditSchema),
   });
@@ -95,20 +59,7 @@ function ChallengeEditForm({
   const params = useParams();
   const { mutate } = useEditChallenge();
   const { data: studentData, isFetching, hasNextPage, fetchNextPage } = useGetInfiniteAcademyMemberDetailList(10, Number(params.id));
-  const { handleChangeFile, file, handleImageUpload, handleRemove } = useImage();
-  const { filePreview: imagePreview, handleChangeFile: imageChange, file: image, handleRemove: removeImage } = useImage();
 
-  const { data: fileKeyname, isSuccess } = useGetPresignedUrl({
-    fileName: file?.name as string,
-    s3Folder: S3_FOLDER_NAME.CHALLENGE_CORE_FILE,
-  });
-  const { data: imageKeyname, isSuccess: imageSuccess } = useGetPresignedUrl({
-    fileName: image?.name as string,
-    s3Folder: S3_FOLDER_NAME.CHALLENGE_CORE_THUMBNAIL_IMAGE,
-  });
-
-  const [thumbnail, setThumbnail] = useState<string | null>(thumbnailImageUrl);
-  const [attachedFile, setAttachedFile] = useState<string | null>(fileUrl);
   const [selectedStudentIdList, setSelectedStudentIdList] = useState<number[]>([]);
   const watchCategory = watch('challengeParticipationMethod');
   const { ref, inView } = useInView({
@@ -124,7 +75,8 @@ function ChallengeEditForm({
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
-  const handleEdit = ({ data, imageKeyName, fileKeyName }: { data: FormValues; fileKeyName?: string; imageKeyName?: string }) => {
+  const onSubmit = (data: FormValues) => {
+    console.log(data);
     const academyId = Number(params.id);
     const releasedChallengeId = Number(params.challengeId);
 
@@ -133,19 +85,13 @@ function ChallengeEditForm({
       releasedChallengeId,
       challengeParticipationMethod: data.challengeParticipationMethod as CHALLENGE_PARTICIPATION_METHODS,
       totalDays: data.totalDays || 0,
-      studentIdList: selectedStudentIdList.length ? selectedStudentIdList : [],
+      studentIdList: selectedStudentIdList.length > 0 ? selectedStudentIdList : [],
       points: data.points || 0,
-      description: data.description || '',
-      title: data.title,
-      content: data.content,
       challengeSource,
-      thumbnailImageUrl: imageKeyName ?? data.thumbnailImageUrl,
-      fileUrl: fileKeyName ?? data.fileUrl,
-      challengeCategory: data.challengeCategory as CHALLENGE_CATEGORY,
-      challengeMarketVisibility: data.challengeMarketVisibility as MARKET_VISIBILITY_CATEGORIES,
+      description: data.description || '',
     };
 
-    if (data.challengeParticipationMethod === CHALLENGE_PARTICIPATION_METHODS.ASSIGNED && !selectedStudentIdList.length) {
+    if (data.challengeParticipationMethod === CHALLENGE_PARTICIPATION_METHODS.ASSIGNED && selectedStudentIdList.length === 0) {
       toast.error('배정형의 경우 학생을 선택해주세요');
       return;
     }
@@ -165,137 +111,6 @@ function ChallengeEditForm({
     });
   };
 
-  const onSubmit = async (data: FormValues) => {
-    let fileKeyName;
-    let imageKeyName;
-
-    if (file && isSuccess) {
-      const fileUploaded = await handleImageUpload(fileKeyname.result.url, file);
-      if (fileUploaded) fileKeyName = fileKeyname.result.keyName;
-    }
-
-    if (image && imageSuccess) {
-      const imageUploaded = await handleImageUpload(imageKeyname.result.url, image);
-      if (imageUploaded) imageKeyName = imageKeyname.result.keyName;
-    }
-
-    handleEdit({ data, fileKeyName, imageKeyName });
-  };
-
-  const handleRemoveImage = () => {
-    if (image) removeImage();
-    else {
-      setThumbnail(null);
-      setValue('thumbnailImageUrl', null);
-    }
-  };
-
-  const handleRemoveFile = () => {
-    if (file) handleRemove();
-    else {
-      setAttachedFile(null);
-      setValue('fileUrl', null);
-    }
-  };
-
-  if (originEdit) {
-    original = (
-      <>
-        <BoxContainer>
-          <Flex column="start" className="gap-1">
-            <Typography size="h3" className="opacity-80">
-              챌린지 이미지
-            </Typography>
-            <Flex as="figure" row="start" className="mt-4">
-              <label
-                htmlFor="thumbnailImageUrl"
-                className="flex h-52 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg bg-neutral-100"
-              >
-                {imagePreview ? (
-                  <Image src={imagePreview} width={200} height={200} className="h-52 w-full overflow-hidden rounded-xl object-cover" alt="img" />
-                ) : thumbnail ? (
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${thumbnail}`}
-                    width={200}
-                    height={200}
-                    className="h-52 w-full overflow-hidden rounded-xl object-cover"
-                    alt="img"
-                  />
-                ) : (
-                  <IoMdPhotos size={30} />
-                )}
-              </label>
-              <input type="file" id="thumbnailImageUrl" {...register('thumbnailImageUrl')} onChange={imageChange} className="hidden" />
-            </Flex>
-            <div className="flex w-full justify-end px-1">
-              <button type="button" className="w-fit text-xs text-gray-500 hover:text-main-deep-pink" onClick={handleRemoveImage}>
-                챌린지 썸네일 삭제
-              </button>
-            </div>
-          </Flex>
-        </BoxContainer>
-        <BoxContainer>
-          <Flex column="start" className="gap-1">
-            <Typography size="h3" className="opacity-80">
-              첨부파일
-            </Typography>
-            <Flex as="figure" column="start">
-              <label htmlFor="fileUrl" className="flex w-full cursor-pointer items-center justify-start gap-2 py-2 font-medium opacity-80">
-                <BoxContainer variant="border" className="relative w-full flex-row items-center gap-2">
-                  {file ? (
-                    file.name
-                  ) : attachedFile ? (
-                    <Flex row="start">
-                      <FaFile className="mr-2" />
-                      <Link target="_blank" href={`${process.env.NEXT_PUBLIC_S3_IMAGES}/${attachedFile}`} download className="text-blue-500 underline">
-                        {attachedFile.split('_').slice(1).join('_')}
-                      </Link>
-                    </Flex>
-                  ) : (
-                    <>
-                      <FaFileImport />
-                      <Typography size="h5">첨부파일 업로드</Typography>
-                    </>
-                  )}
-                </BoxContainer>
-              </label>
-              <button type="button" className="flex justify-end text-xs text-gray-600 hover:text-main-deep-pink" onClick={handleRemoveFile}>
-                첨부파일 삭제
-              </button>
-              <input type="file" id="fileUrl" {...register('fileUrl')} onChange={handleChangeFile} className="hidden" />
-            </Flex>
-          </Flex>
-        </BoxContainer>
-        <BoxContainer className="group justify-between transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink">
-          <Flex column="start" className="gap-1">
-            <Typography size="h3">제목</Typography>
-          </Flex>
-          <Input id="title" type="text" label="제목" register={register} errors={errors} required />
-        </BoxContainer>
-        <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-          <BoxContainer className="group justify-between transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink">
-            <Flex column="start" className="gap-1">
-              <Typography size="h3">챌린지 종류</Typography>
-            </Flex>
-            <SelectDropdown id="challengeCategory" label="챌린지 종류" register={register} errors={errors} options={CHALLENGE_CATEGORIES} />
-          </BoxContainer>
-          <BoxContainer className="group justify-between transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink">
-            <Flex column="start" className="gap-1">
-              <Typography size="h3">챌린지 마켓 업로드 여부</Typography>
-            </Flex>
-            <SelectDropdown
-              id="challengeMarketVisibility"
-              label="챌린지 마켓 업로드 여부"
-              register={register}
-              errors={errors}
-              options={VISIBILITY_CATEGORIES}
-            />
-          </BoxContainer>
-        </div>
-      </>
-    );
-  }
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex w-full flex-col justify-start gap-5">
       <Typography size="h1" className="flex items-center gap-2 px-1">
@@ -303,7 +118,6 @@ function ChallengeEditForm({
         {title} 수정
       </Typography>
       <Flex column="start" className="w-full gap-4">
-        {original}
         <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
           <BoxContainer className="group justify-between transition-colors duration-300 focus-within:border-main-deep-pink focus-within:shadow-hover-pink">
             <Flex column="start" className="gap-1">
@@ -328,13 +142,9 @@ function ChallengeEditForm({
             <Typography size="h3" className="opacity-80">
               원본 챌린지 설명
             </Typography>
-            {!releasedInOthers && challengeSource === CHALLENGE_SOURCE_TYPE.ORIGINAL ? (
-              <Textarea errors={errors} id="content" label="원본 챌린지 설명" register={register} className="my-2" />
-            ) : (
-              <Typography size="h6" className="overflow-hidden whitespace-normal break-all font-normal opacity-80">
-                {content}
-              </Typography>
-            )}
+            <Typography size="h6" className="overflow-hidden whitespace-normal break-all font-normal opacity-80">
+              {content}
+            </Typography>
           </Flex>
           <Flex column="start" className="gap-1">
             <Typography size="h3" className="opacity-80">
@@ -356,6 +166,7 @@ function ChallengeEditForm({
           </Flex>
           <Flex column="center" className="w-full gap-4">
             <SelectDropdown id="challengeParticipationMethod" label="챌린지 참여 방식" register={register} errors={errors} options={METHOD_CATEGORIES} />
+
             {watchCategory === CHALLENGE_PARTICIPATION_METHODS.ASSIGNED && (
               <>
                 <Typography size="h5" className="mt-2 border-t border-solid border-gray-100 pt-4 text-sm font-normal opacity-80">

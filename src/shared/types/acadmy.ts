@@ -514,18 +514,18 @@ export type TAcademyInstructorDetailResponse = CommonResponse<{
 
 export type TChallengeEditRequest = {
   academyId: number;
-  challengeCategory: CHALLENGE_CATEGORY | null;
-  challengeMarketVisibility: MARKET_VISIBILITY_CATEGORIES | null;
+  challengeCategory?: CHALLENGE_CATEGORY | null;
+  challengeMarketVisibility?: MARKET_VISIBILITY_CATEGORIES | null;
   challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
   challengeSource: CHALLENGE_SOURCE_TYPE;
-  content: string | null;
+  content?: string | null;
   description: string;
-  fileUrl: string | null;
+  fileUrl?: string | null;
   points: number;
   releasedChallengeId: number;
   studentIdList: number[];
-  thumbnailImageUrl: string | null;
-  title: string | null;
+  thumbnailImageUrl?: string | null;
+  title?: string | null;
   totalDays: number;
 };
 

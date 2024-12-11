@@ -7,6 +7,7 @@ import { FaFile } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import ChallengeCoreEditForm from '@/app/academy/(workspace)/[id]/dashboard/components/(principal)/ChallengeCoreEditForm';
 import ChallengeEditForm from '@/app/academy/(workspace)/[id]/dashboard/components/(principal)/ChallengeEditForm';
 import Toggle from '@/app/academy/(workspace)/[id]/dashboard/components/Toggle';
 import { getChallengeCategory, getChallengeType } from '@/features/academy/(workspace)/utils/challengeState';
@@ -16,6 +17,7 @@ import Flex from '@/shared/components/Flex';
 import Skeleton from '@/shared/components/Skeleton/Skeleton';
 import SmallModal from '@/shared/components/SmallModal';
 import Typography from '@/shared/components/Typography';
+import { CHALLENGE_SOURCE_TYPE } from '@/shared/enums/challenge';
 import useManageAcademy from '@/shared/hooks/academy/useManageAcademy';
 import useDeleteChallenge from '@/shared/hooks/challenge/useDeleteChallenge';
 import useGetChallengeDetail from '@/shared/hooks/challenge/useGetChallengeDetail';
@@ -36,6 +38,8 @@ function ChallengeDetail({ academyId, releasedChallengeId }: TChallengeDetailPro
   const editPossible =
     challengeData?.result?.challengeStatusCounts?.totalParticipants === 0 ||
     challengeData?.result?.challengeStatusCounts?.notStartedStudents === challengeData?.result?.challengeStatusCounts?.totalParticipants;
+  const isCoreEdit =
+    challengeData?.result.releasedChallenge.challengeSource === CHALLENGE_SOURCE_TYPE.ORIGINAL && !challengeData?.result.releasedChallenge.releasedInOthers;
 
   const handleDelete = () => {
     mutate({ academyId, releasedChallengeId });
@@ -59,6 +63,7 @@ function ChallengeDetail({ academyId, releasedChallengeId }: TChallengeDetailPro
   }
 
   if (isEdit && challengeData && editPossible) {
+    if (isCoreEdit) return <ChallengeCoreEditForm {...challengeData.result.releasedChallenge} setIsEdit={setIsEdit} />;
     return <ChallengeEditForm {...challengeData.result.releasedChallenge} setIsEdit={setIsEdit} />;
   }
 
