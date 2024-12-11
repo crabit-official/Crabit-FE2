@@ -231,6 +231,7 @@ export type TDetailChallengeResult = CommonResponse<{
   releasedChallenge: {
     challengeCategory: CHALLENGE_CATEGORY;
     challengeCoreCreatorAcademyName: string;
+    challengeMarketVisibility: MARKET_VISIBILITY_CATEGORIES;
     challengeParticipationMethod: CHALLENGE_PARTICIPATION_METHODS;
     challengeSource: CHALLENGE_SOURCE_TYPE;
     challengeType: CHALLENGE_TYPE;
