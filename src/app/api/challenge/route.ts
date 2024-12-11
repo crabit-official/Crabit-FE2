@@ -8,11 +8,12 @@ import type { TChallengeEditRequest } from '@/shared/types/acadmy';
 export async function PUT(req: NextRequest) {
   const academyId = req.nextUrl.searchParams.get('academyId') || '';
   const releasedChallengeId = req.nextUrl.searchParams.get('releasedChallengeId') || '';
+  const challengeSource = req.nextUrl.searchParams.get('challengeSource') || '';
   const body = (await req.json()) as Promise<TChallengeEditRequest>;
 
   try {
     const data = await fetchData<CommonResponse<{ releasedChallengeId: number }>>(
-      `/api/v1/academies/${academyId}/challenges/${releasedChallengeId}`,
+      `/api/v1/academies/${academyId}/challenges/${releasedChallengeId}?challengeSource=${challengeSource}`,
       'PUT',
       body,
     );

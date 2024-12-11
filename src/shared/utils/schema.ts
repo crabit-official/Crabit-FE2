@@ -79,7 +79,17 @@ const institutionProfileSchema = z.object({
   introduction,
 });
 
-const challengeEditSchema = marketSchema.merge(z.object({ description }));
+const challengeEditSchema = marketSchema.merge(
+  z.object({
+    description,
+    title: z.string().nullable(),
+    content: z.string().nullable(),
+    challengeCategory: z.enum(['STUDYING', 'EXERCISE', 'READING', 'NEWSPAPER', 'COPYING', 'DIARY_WRITING', 'LIFESTYLE_HABITS', 'ETC']).nullable(),
+    challengeMarketVisibility: z.enum(['PUBLIC', 'PROTECTED']).nullable(),
+    thumbnailImageUrl: z.string().nullable(),
+    fileUrl: z.string().nullable(),
+  }),
+);
 const profileSchema = z.object({
   name,
   profileImageUrl,
