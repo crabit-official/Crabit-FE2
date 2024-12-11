@@ -5,6 +5,7 @@ import type { FieldValues, SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 import usePasswordChangeModal from '../../hooks/use-password-change-modal';
@@ -18,6 +19,7 @@ import { queryKeys } from '@/shared/constants/query-keys';
 import { loginSchema } from '@/shared/utils/schema';
 
 function LoginModal() {
+  const router = useRouter();
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
   const passwordChangeModal = usePasswordChangeModal();
@@ -55,6 +57,7 @@ function LoginModal() {
       await queryClient.invalidateQueries({ queryKey: [queryKeys.PROFILE] });
       loginModal.onClose();
       reset();
+      router.refresh();
     } else {
       toast.error('로그인에 실패하였습니다.');
     }

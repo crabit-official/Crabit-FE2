@@ -50,14 +50,27 @@ function UserMenu() {
         >
           기관 등록하기
         </div>
-        <div
-          onClick={() => {
-            router.push('/my/academy');
-          }}
-          className="hidden cursor-pointer rounded-full px-4 py-3 text-sm font-semibold transition hover:bg-neutral-100 md:block"
-        >
-          내 기관
-        </div>
+        {!profile && (
+          <div
+            onClick={() => {
+              loginModal.onOpen();
+              setIsOpen(false);
+            }}
+            className="hidden cursor-pointer rounded-full px-4 py-3 text-sm font-semibold transition hover:bg-neutral-100 md:block"
+          >
+            로그인
+          </div>
+        )}
+        {profile && (
+          <div
+            onClick={() => {
+              router.push('/my/academy');
+            }}
+            className="hidden cursor-pointer rounded-full px-4 py-3 text-sm font-semibold transition hover:bg-neutral-100 md:block"
+          >
+            내 기관
+          </div>
+        )}
         <div
           onClick={toggleOpen}
           className="flex cursor-pointer flex-row items-center gap-3 rounded-full border border-neutral-200 p-4 transition hover:shadow-custom md:px-2 md:py-1"
