@@ -14,10 +14,7 @@ function PricingPage() {
           <Typography size="h2">크래빗 챌린지 요금제</Typography>
         </Flex>
         <Flex column="start" className="w-full gap-5 rounded-2xl border border-solid border-gray-200 bg-[#fafafa] p-10 text-sm md:text-base">
-          <p className="break-keep">
-            아직 베타 테스트 진행중에 있어, 요금제는 추후 업데이트 예정입니다. <br />
-            베타 버전을 통해 무료로 사용해보고 싶으시다면, 채널톡, 카카오톡 채널 또는 인스타그램으로 문의해주세요.
-          </p>
+          <p className="break-keep">아직 베타 테스트 진행중에 있어, 요금제는 추후 업데이트 예정입니다.</p>
         </Flex>
       </Framer>
 
