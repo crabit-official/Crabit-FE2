@@ -3,7 +3,7 @@ const CHALLENGE_CARDS = [
     id: 1,
     title: '성취감',
     content: '챌린지 기능을 통해 매일 소소한 성취감을 선물합니다.',
-    image: '/images/logo_accomplishment.webp',
+    image: '/images/logo/logo_accomplishment.webp',
   },
   {
     id: 2,
