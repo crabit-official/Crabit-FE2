@@ -149,7 +149,7 @@ const config: Config = {
       },
       colors: {
         main: {
-          'black': '#000000',
+          'black': '#121212',
           'white': '#ffffff',
           'pink': '#E36B88',
           'deep-pink': '#F06480',
