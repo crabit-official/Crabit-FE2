@@ -1,24 +1,31 @@
+'use client';
+
 import Image from 'next/image';
 
 import StateLabel from '@/features/academy/(workspace)/components/state-label';
+import PricingBox from '@/features/pricing/component/PricingBox';
 import Flex from '@/shared/components/Flex';
 import Framer from '@/shared/components/Framer';
+import FramerScale from '@/shared/components/FramerScale';
 import Typography from '@/shared/components/Typography';
+import { PRICING } from '@/shared/constants/pricing';
 
 function PricingPage() {
   return (
     <Flex column="start" className="min-h-[800px] w-full gap-24 px-10 py-20 sm:px-20 lg:px-40">
-      <Framer className="flex flex-col gap-4">
+      <FramerScale className="flex flex-col gap-8">
         <Flex column="start" className="gap-1">
           <StateLabel label="챌린지" className="w-fit" variant="red" />
           <Typography size="h2">크래빗 챌린지 요금제</Typography>
+          <p className="break-keep text-sm font-medium opacity-60 md:text-base">아직 베타 테스트 중에 있어, 요금제는 추후 업데이트 될 예정입니다</p>
         </Flex>
-        <Flex column="start" className="w-full gap-5 rounded-2xl border border-solid border-gray-200 bg-[#fafafa] p-10 text-sm md:text-base">
-          <p className="break-keep">아직 베타 테스트 진행중에 있어, 요금제는 추후 업데이트 예정입니다.</p>
+        <Flex className="w-full flex-wrap gap-4 px-10 2xl:px-0">
+          {PRICING.map((item) => (
+            <PricingBox key={item.id} {...item} />
+          ))}
         </Flex>
-      </Framer>
-
-      <Framer duration={0.6} className="flex flex-col gap-5">
+      </FramerScale>
+      <Framer duration={0.6} className="flex flex-col gap-8">
         <Flex column="start" className="gap-1">
           <StateLabel label="장학카드" className="w-fit" variant="red" />
           <Typography size="h2">크래빗 장학카드 요금제</Typography>
@@ -49,7 +56,7 @@ function PricingPage() {
               </Typography>
             </Framer>
           </Flex>
-          <Framer className="flex w-full flex-col gap-8 rounded-2xl border border-solid border-gray-200 bg-[#fafafa] p-10 text-sm md:text-base">
+          <Framer className="flex w-full flex-col gap-8 rounded-2xl border border-solid border-gray-200 bg-[#F9FAFB] p-10 text-sm md:text-base">
             <Typography size="h1" className="pb-2 text-center font-bold">
               참고사항
             </Typography>

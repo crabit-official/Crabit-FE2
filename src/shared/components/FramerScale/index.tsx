@@ -6,6 +6,7 @@ import cn from '@/shared/utils/style';
 function FramerScale({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <motion.div
+      viewport={{ once: true }}
       className={cn(className, 'size-full')}
       whileInView={{ opacity: 1, scale: 1 }}
       initial={{
