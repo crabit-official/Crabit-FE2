@@ -48,7 +48,7 @@ function UserMenu() {
           onClick={() => router.push('/card')}
           className="hidden cursor-pointer rounded-full px-4 py-3 text-sm font-semibold transition hover:bg-neutral-100 md:block"
         >
-          크래빗 장학카드
+          장학카드
         </div>
         <div
           onClick={() => router.push('/pricing')}

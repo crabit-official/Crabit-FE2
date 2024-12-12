@@ -1,0 +1,57 @@
+import Image from 'next/image';
+
+import ChallengeBox from '@/features/challenge/components/ChallengeBox';
+import Flex from '@/shared/components/Flex';
+import Typography from '@/shared/components/Typography';
+import { CHALLENGE_LIST } from '@/shared/constants/challenge';
+
+function CrabitChallengePage() {
+  return (
+    <Flex column="start" className="min-h-[800px] w-full gap-24 py-20">
+      <Flex row="between" className="items-center gap-10 px-10 sm:px-20 xl:px-40">
+        <Flex column="start" className="gap-10">
+          <Flex column="start" className="gap-1">
+            <Typography size="h5" className="text-main-deep-pink">
+              매일 작은 성취를 통한 습관 형성
+            </Typography>
+            <Typography size="h1" className="text-5xl font-bold">
+              크래빗 챌린지
+            </Typography>
+          </Flex>
+          <Flex column="start" className="gap-8">
+            <Flex column="start" className="gap-1 rounded-xl border border-solid border-gray-200 bg-[#fafafa] p-5 md:border-none md:bg-transparent md:p-0">
+              <Typography size="h3" className="break-keep font-bold">
+                매일 소소한 습관 챌린지 부터, 교과연계 활동까지!
+              </Typography>
+              <Typography size="h5" className="break-keep font-normal text-gray-700">
+                입시라는 장기적인 목표가 아닌, 단기적인 목표 기반의 활동에 꾸준히 참여하며 <br /> 성취감을 더욱 자주 느끼도록 지원합니다.
+              </Typography>
+            </Flex>
+            <Flex column="start" className="gap-1 rounded-xl border border-solid border-gray-200 bg-[#fafafa] p-5 md:border-none md:bg-transparent md:p-0">
+              <Typography size="h3" className="break-keep font-bold">
+                건강하고 지속 가능한 습관 형성
+              </Typography>
+              <Typography size="h5" className="font-normal text-gray-700">
+                학생의 습관은 학생의 정체성과 연결됩니다.
+              </Typography>
+            </Flex>
+          </Flex>
+        </Flex>
+        <Image src="/images/logo/logo_challenge.webp" alt="logo" width={500} height={500} className="hidden object-contain md:block" />
+      </Flex>
+      <Flex rowColumn="center" className="min-h-[800px] w-full gap-10 bg-[#fafafa] px-10 py-20 md:px-20">
+        <Flex className="w-full max-w-screen-xl flex-wrap gap-4">
+          <Typography size="h1" className="w-full pb-10 text-start font-bold">
+            다음과 같은 챌린지를 제공해요
+          </Typography>
+          {CHALLENGE_LIST.map((item) => (
+            <ChallengeBox {...item} key={item.id} />
+          ))}
+        </Flex>
+
+        <Flex />
+      </Flex>
+    </Flex>
+  );
+}
+export default CrabitChallengePage;
