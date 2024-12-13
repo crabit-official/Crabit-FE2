@@ -1,4 +1,9 @@
+'use client';
+
+import { IoIosArrowForward } from 'react-icons/io';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import ChallengeBox from '@/features/challenge/components/ChallengeBox';
 import Flex from '@/shared/components/Flex';
@@ -7,14 +12,23 @@ import { CHALLENGE_LIST } from '@/shared/constants/challenge';
 
 function CrabitChallengePage() {
   return (
-    <Flex column="start" className="min-h-[800px] w-full gap-24 py-20">
-      <Flex row="between" className="items-center gap-10 px-10 sm:px-20 xl:px-40">
+    <Flex column="start" className="w-full gap-24 py-20">
+      <motion.div
+        viewport={{ once: true }}
+        whileInView={{ opacity: 1 }}
+        initial={{ opacity: 0 }}
+        transition={{
+          ease: 'easeOut',
+          duration: 1.5,
+        }}
+        className="flex items-center justify-between gap-10 px-10 md:justify-between md:px-20 xl:px-40"
+      >
         <Flex column="start" className="gap-10">
-          <Flex column="start" className="gap-1">
-            <Typography size="h5" className="text-main-deep-pink">
+          <Flex column="start" className="gap-2">
+            <Typography size="h4" className="text-main-deep-pink">
               매일 작은 성취를 통한 습관 형성
             </Typography>
-            <Typography size="h1" className="text-5xl font-bold">
+            <Typography size="h1" className="text-6xl font-bold">
               크래빗 챌린지
             </Typography>
           </Flex>
@@ -38,20 +52,26 @@ function CrabitChallengePage() {
           </Flex>
         </Flex>
         <Image src="/images/logo/logo_challenge.webp" alt="logo" width={500} height={500} className="hidden object-contain md:block" />
-      </Flex>
-      <Flex rowColumn="center" className="min-h-[800px] w-full gap-10 bg-[#fafafa] px-10 py-20 md:px-20">
+      </motion.div>
+      <Flex rowColumn="center" className="w-full gap-10 bg-[#fafafa] px-10 py-20 md:px-20">
         <Flex className="w-full max-w-screen-xl flex-wrap gap-4">
-          <Typography size="h1" className="w-full pb-10 text-start font-bold">
+          <Typography size="h2" className="w-full pb-5 text-start font-bold">
             다음과 같은 챌린지를 제공해요
           </Typography>
           {CHALLENGE_LIST.map((item) => (
             <ChallengeBox {...item} key={item.id} />
           ))}
         </Flex>
-
         <Flex />
+        <Flex row="end" className="w-full">
+          <div className="peer flex cursor-pointer items-center gap-1 text-gray-600 hover:text-main-deep-pink">
+            <Link href="/pricing">더 알아보기</Link>
+            <IoIosArrowForward />
+          </div>
+        </Flex>
       </Flex>
     </Flex>
   );
 }
+
 export default CrabitChallengePage;
