@@ -12,14 +12,14 @@ import { PRICING } from '@/shared/constants/pricing';
 
 function PricingPage() {
   return (
-    <Flex column="start" className="min-h-[800px] w-full gap-24 px-10 py-20 sm:px-20 lg:px-40">
+    <Flex column="start" className="min-h-[800px] w-full gap-24 px-5 py-20 sm:px-20 lg:px-40">
       <FramerScale className="flex flex-col gap-8">
         <Flex column="start" className="gap-1">
           <StateLabel label="챌린지" className="w-fit" variant="red" />
           <Typography size="h2">크래빗 챌린지 요금제</Typography>
           <p className="break-keep text-sm font-medium opacity-60 md:text-base">아직 베타 테스트 중에 있어, 요금제는 추후 업데이트 될 예정입니다</p>
         </Flex>
-        <Flex className="w-full flex-wrap gap-4 px-10 2xl:px-0">
+        <Flex className="w-full flex-wrap gap-4 px-4 sm:px-10 2xl:px-0">
           {PRICING.map((item) => (
             <PricingBox key={item.id} {...item} />
           ))}
