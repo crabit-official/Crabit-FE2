@@ -39,6 +39,18 @@ function UserMenu() {
     <div className="relative">
       <div className="flex flex-row items-center gap-1">
         <div
+          onClick={() => router.push('/challenge')}
+          className="hidden cursor-pointer rounded-full px-4 py-3 text-sm font-semibold transition hover:bg-neutral-100 md:block"
+        >
+          크래빗 챌린지
+        </div>
+        <div
+          onClick={() => router.push('/card')}
+          className="hidden cursor-pointer rounded-full px-4 py-3 text-sm font-semibold transition hover:bg-neutral-100 md:block"
+        >
+          장학카드
+        </div>
+        <div
           onClick={() => router.push('/pricing')}
           className="hidden cursor-pointer rounded-full px-4 py-3 text-sm font-semibold transition hover:bg-neutral-100 md:block"
         >
@@ -102,6 +114,22 @@ function UserMenu() {
           className="absolute right-0 top-12 w-[40vw] overflow-hidden rounded-xl bg-white text-sm shadow-custom md:w-3/4"
         >
           <div className="flex cursor-pointer flex-col">
+            <MenuItem
+              className="block md:hidden"
+              onClick={() => {
+                setIsOpen(false);
+                router.push('/challenge');
+              }}
+              label="크래빗 챌린지"
+            />
+            <MenuItem
+              className="block md:hidden"
+              onClick={() => {
+                setIsOpen(false);
+                router.push('/card');
+              }}
+              label="장학카드"
+            />
             <MenuItem
               className="block md:hidden"
               onClick={() => {
