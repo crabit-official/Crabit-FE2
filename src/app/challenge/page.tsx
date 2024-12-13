@@ -25,10 +25,10 @@ function CrabitChallengePage() {
       >
         <Flex column="start" className="gap-10">
           <Flex column="start" className="gap-2">
-            <Typography size="h4" className="text-main-deep-pink">
+            <Typography size="h4" className="text-h5 text-main-deep-pink sm:text-h4">
               매일 작은 성취를 통한 습관 형성
             </Typography>
-            <Typography size="h1" className="text-6xl font-bold">
+            <Typography size="h1" className="text-3xl font-bold sm:text-6xl">
               크래빗 챌린지
             </Typography>
           </Flex>
@@ -37,7 +37,7 @@ function CrabitChallengePage() {
               <Typography size="h3" className="break-keep font-bold">
                 매일 소소한 습관 챌린지 부터, 교과연계 활동까지!
               </Typography>
-              <Typography size="h5" className="break-keep font-normal text-gray-700">
+              <Typography size="h5" as="p" className="break-keep text-h6 font-normal text-gray-700 sm:text-h5">
                 입시라는 장기적인 목표가 아닌, 단기적인 목표 기반의 활동에 꾸준히 참여하며 <br /> 성취감을 더욱 자주 느끼도록 지원합니다.
               </Typography>
             </Flex>
@@ -45,7 +45,7 @@ function CrabitChallengePage() {
               <Typography size="h3" className="break-keep font-bold">
                 건강하고 지속 가능한 습관 형성
               </Typography>
-              <Typography size="h5" className="font-normal text-gray-700">
+              <Typography size="h5" as="p" className="text-h6 font-normal text-gray-700 sm:text-h5">
                 학생의 습관은 학생의 정체성과 연결됩니다.
               </Typography>
             </Flex>
