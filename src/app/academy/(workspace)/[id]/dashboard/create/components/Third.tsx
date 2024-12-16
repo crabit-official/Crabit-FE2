@@ -79,7 +79,7 @@ function Third({ onBack, onNext, academyId }: IThirdProps) {
     <form onSubmit={handleSubmit(handleNext)} className="flex w-full flex-col gap-5">
       {publicMarkekOk && (
         <SmallModal
-          title="알림"
+          title={`공개 챌린지로 설정한 경우,\n우리 기관 외에 다른 모든 기관에도 공개됩니다`}
           actionLabel="확인"
           secondaryAction={() => setPublicMarketOk((prev) => !prev)}
           secondaryActionLabel="변경하기"
@@ -87,7 +87,10 @@ function Third({ onBack, onNext, academyId }: IThirdProps) {
           onSubmit={handleSubmit(onSubmit)}
           body={
             <Typography size="h6" className="text-center font-normal opacity-80">
-              ️공개 챌린지로 설정한 경우에 모든 기관에 공개됩니다
+              ️다른 기관에서도
+              <br /> 내가 만든 챌린지를 활용해 볼 수 있도록 공개해 주세요 😊 <br />
+              만약 우리 기관만의 정보나 중요한 자료가 포함되어 있다면,
+              <br /> 비공개 챌린지로 올려주세요.
             </Typography>
           }
         />

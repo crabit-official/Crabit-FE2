@@ -57,7 +57,7 @@ function SmallModal({ isOpen = true, onClose, onSubmit, body, actionLabel, disab
           <Framer duration={0.5}>
             <Flex column="between" className="relative size-full gap-4 rounded-2xl bg-white py-2">
               <Flex column="center" className="gap-2 px-10 pt-10">
-                <Typography size="h3" className="text-center opacity-80">
+                <Typography size="h3" className="whitespace-pre-wrap text-center opacity-80">
                   {title}
                 </Typography>
                 {body}
