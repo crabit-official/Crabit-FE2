@@ -4,6 +4,11 @@ export type TCardInfo = {
   title: string;
 };
 
+export type TCardApply = {
+  content: string;
+  sub?: string;
+};
+
 const CARD_INFO: TCardInfo[] = [
   {
     id: 1,
@@ -33,4 +38,23 @@ const CARD_INFO: TCardInfo[] = [
   },
 ];
 
-export { CARD_INFO };
+const CARD_APPLY1: TCardApply[] = [
+  { content: '❶ 카드 디자인하기' },
+  { content: '❷ 디자인 파일, 사업자등록증 준비하여 신청폼 작성' },
+  { content: '❸ 주문한 수량에 알맞은 금액 입금' },
+  { content: '❹ 담당자 > 구매 대표자에게 연락' },
+  { content: '❺ 디자인 샘플 작업' },
+  { content: '❻ 구매 대표자의 컨펌 후 제작 진행' },
+];
+
+const CARD_APPLY2: TCardApply[] = [
+  {
+    content: '❽ 전자계약서 서명',
+    sub: '카드 관리용 어드민 페이지 계정에 발급되려면 전자 계약서가 필수 입니다. 계정 발금이 지연되지 않기 위해, 이메일로 전달되는 전자계약서 확인 후 서명 부탁드립니다.',
+  },
+  { content: '❾ 장학 카드 수령' },
+  { content: '❿ 어드민 사이트를 통해 카드 배포 및 예치금 충전 & 카드 충전' },
+  { content: '⓫ 학생들에게 배부' },
+];
+
+export { CARD_APPLY1, CARD_APPLY2, CARD_INFO };
