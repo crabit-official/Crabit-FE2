@@ -15,9 +15,11 @@ function CardApply() {
         <StateLabel label="카드 신청" className="w-fit" />
         <Typography size="h2">신청 & 주문 과정</Typography>
         <Flex rowColumn="center" className="mt-5 w-full gap-4">
-          <ul className="flex h-52 w-full flex-col justify-center gap-3 rounded-2xl border border-solid border-gray-100 bg-[#fafafa] p-5">
+          <ul className="flex h-60 w-full flex-col justify-center gap-3 rounded-2xl border border-solid border-gray-100 bg-[#fafafa] p-5">
             {CARD_APPLY1.map((item, idx) => (
-              <li key={idx}>{item.content}</li>
+              <li key={idx} className="text-sm md:text-base">
+                {item.content}
+              </li>
             ))}
           </ul>
           <Flex rowColumn="center" className="gap-3">
@@ -29,9 +31,9 @@ function CardApply() {
             </Flex>
             <FaArrowDownLong />
           </Flex>
-          <ul className="flex h-52 w-full flex-col justify-center gap-5 rounded-2xl border border-solid border-gray-100 bg-[#fafafa] p-5">
+          <ul className="flex h-60 w-full flex-col justify-center gap-5 rounded-2xl border border-solid border-gray-100 bg-[#fafafa] p-5">
             {CARD_APPLY2.map((item, idx) => (
-              <li key={idx} className="flex flex-col gap-1">
+              <li key={idx} className="flex flex-col gap-1 text-sm md:text-base">
                 <p>{item.content}</p>
                 {item?.sub && <p className="text-sm opacity-80">({item.sub})</p>}
               </li>
