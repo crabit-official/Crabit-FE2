@@ -57,7 +57,7 @@ function LoginModal() {
       await queryClient.invalidateQueries({ queryKey: [queryKeys.PROFILE] });
       loginModal.onClose();
       reset();
-      router.refresh();
+      router.replace('/my/academy');
     } else {
       toast.error('로그인에 실패하였습니다.');
     }
