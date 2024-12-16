@@ -1,4 +1,5 @@
 import { FaArrowDownLong } from 'react-icons/fa6';
+import { IoIosArrowForward } from 'react-icons/io';
 import Link from 'next/link';
 
 import StateLabel from '@/features/academy/(workspace)/components/state-label';
@@ -13,7 +14,7 @@ function CardApply() {
       <Flex column="start" className="w-full gap-2">
         <StateLabel label="카드 신청" className="w-fit" />
         <Typography size="h2">신청 & 주문 과정</Typography>
-        <Flex rowColumn="center" className="my-5 w-full gap-4">
+        <Flex rowColumn="center" className="mt-5 w-full gap-4">
           <ul className="flex h-52 w-full flex-col justify-center gap-3 rounded-2xl border border-solid border-gray-100 bg-[#fafafa] p-5">
             {CARD_APPLY1.map((item, idx) => (
               <li key={idx}>{item.content}</li>
@@ -38,6 +39,10 @@ function CardApply() {
           </ul>
         </Flex>
       </Flex>
+      <Link href="/pricing" className="flex w-full items-center justify-end gap-2 px-2 opacity-80 hover:text-main-deep-pink">
+        <p>가격 안내</p>
+        <IoIosArrowForward />
+      </Link>
       <Link
         href="https://smore.im/form/XRusYYBvZ8"
         target="_blank"
