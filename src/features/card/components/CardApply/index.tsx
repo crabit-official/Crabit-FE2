@@ -1,3 +1,4 @@
+import { forwardRef, type Ref } from 'react';
 import { FaArrowDownLong } from 'react-icons/fa6';
 import { IoIosArrowForward } from 'react-icons/io';
 import Link from 'next/link';
@@ -8,12 +9,16 @@ import Framer from '@/shared/components/Framer';
 import Typography from '@/shared/components/Typography';
 import { CARD_APPLY1, CARD_APPLY2 } from '@/shared/constants/card';
 
-function CardApply() {
+interface ICardApplyProps {
+  title: string;
+}
+
+function CardApply({ title }: ICardApplyProps, ref: Ref<HTMLDivElement>) {
   return (
     <Framer className="flex w-full flex-col items-center justify-between gap-10 px-10 md:justify-between md:px-20 xl:px-40">
-      <Flex column="start" className="w-full gap-2">
+      <div ref={ref} className="flex w-full flex-col justify-start gap-2">
         <StateLabel label="카드 신청" className="w-fit" />
-        <Typography size="h2">신청 & 주문 과정</Typography>
+        <Typography size="h2">{title}</Typography>
         <Flex rowColumn="center" className="mt-5 w-full gap-4">
           <ul className="flex h-64 w-full flex-col justify-center gap-3 rounded-2xl border border-solid border-gray-100 bg-[#fafafa] p-5">
             {CARD_APPLY1.map((item, idx) => (
@@ -40,7 +45,7 @@ function CardApply() {
             ))}
           </ul>
         </Flex>
-      </Flex>
+      </div>
       <Link href="/pricing" className="flex w-full items-center justify-end gap-2 px-2 opacity-80 hover:text-main-deep-pink">
         <p>가격 안내</p>
         <IoIosArrowForward />
@@ -55,5 +60,4 @@ function CardApply() {
     </Framer>
   );
 }
-
-export default CardApply;
+export default forwardRef<HTMLDivElement, ICardApplyProps>(CardApply);

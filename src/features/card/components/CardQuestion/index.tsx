@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import type { Ref } from 'react';
+import { forwardRef, useState } from 'react';
 import { AiFillQuestionCircle } from 'react-icons/ai';
 import Link from 'next/link';
 
@@ -10,7 +11,11 @@ import Framer from '@/shared/components/Framer';
 import Typography from '@/shared/components/Typography';
 import { QUESTIONS } from '@/shared/constants/question';
 
-function CardQuestion() {
+interface ICardQuestionProps {
+  title: string;
+}
+
+function CardQuestion({ title }: ICardQuestionProps, ref: Ref<HTMLDivElement>) {
   const [isClicked, setIsClicked] = useState<number>(0);
 
   const handleClick = (id: number) => {
@@ -19,11 +24,11 @@ function CardQuestion() {
 
   return (
     <Framer className="flex w-full flex-col items-center justify-between gap-10 px-10 md:justify-between md:px-20 xl:px-40">
-      <Flex rowColumn="center" className="w-full gap-10 xl:w-5/6">
-        <Flex row="start" className="w-full items-center gap-2">
+      <Flex rowColumn="center" className="w-full gap-10 2xl:w-5/6">
+        <div ref={ref} className="flex w-full items-center justify-start gap-2">
           <AiFillQuestionCircle size={25} />
-          <Typography size="h2">자주 묻는 질문</Typography>
-        </Flex>
+          <Typography size="h2">{title}</Typography>
+        </div>
 
         <Flex className="w-full flex-col gap-10 md:flex-row">
           <Flex
@@ -74,4 +79,4 @@ function CardQuestion() {
     </Framer>
   );
 }
-export default CardQuestion;
+export default forwardRef<HTMLDivElement, ICardQuestionProps>(CardQuestion);
