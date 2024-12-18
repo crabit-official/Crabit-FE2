@@ -4,6 +4,7 @@ import { IoIosArrowForward } from 'react-icons/io';
 import Link from 'next/link';
 
 import StateLabel from '@/features/academy/(workspace)/components/state-label';
+import CardStandard from '@/features/card/components/CardStandard';
 import Flex from '@/shared/components/Flex';
 import Framer from '@/shared/components/Framer';
 import Typography from '@/shared/components/Typography';
@@ -57,6 +58,7 @@ function CardApply({ title }: ICardApplyProps, ref: Ref<HTMLDivElement>) {
       >
         카드 신청하기
       </Link>
+      <CardStandard />
     </Framer>
   );
 }

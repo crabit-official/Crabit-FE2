@@ -23,8 +23,8 @@ function CardQuestion({ title }: ICardQuestionProps, ref: Ref<HTMLDivElement>) {
   };
 
   return (
-    <Framer className="flex w-full flex-col items-center justify-between gap-10 px-10 md:justify-between md:px-20 xl:px-40">
-      <Flex rowColumn="center" className="w-full gap-10 2xl:w-5/6">
+    <Framer className="flex w-full flex-col items-center justify-between gap-10 px-10 pb-10 md:justify-between md:px-20 xl:px-40">
+      <Flex rowColumn="center" className="w-full gap-10">
         <div ref={ref} className="flex w-full items-center justify-start gap-2">
           <AiFillQuestionCircle size={25} />
           <Typography size="h2">{title}</Typography>
@@ -47,7 +47,7 @@ function CardQuestion({ title }: ICardQuestionProps, ref: Ref<HTMLDivElement>) {
               </button>
             ))}
           </Flex>
-          <Flex column="start" className="w-full gap-3">
+          <Flex column="start" className="w-full max-w-[1300px] gap-3">
             {QUESTIONS.map(
               (q) =>
                 q.id === isClicked &&

@@ -69,7 +69,7 @@ function CrabitCardPage() {
   };
 
   return (
-    <Flex column="start" className="gap-10">
+    <Flex column="start" className="gap-32">
       <div className="group fixed right-8 top-40 z-10 cursor-pointer">
         <Flex column="start" className="items-end gap-3">
           {sectionRefs.map((item) => (
