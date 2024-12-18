@@ -29,8 +29,8 @@ function CardInfoBox({ title, contents, id }: TCardInfo) {
         <Flex as="ul" column="start" className="gap-2">
           {contents.map((item, idx) => (
             <li key={idx} className="flex items-center gap-2 text-gray-600">
-              <FaCheck />
-              <Typography size="h5" className="break-keep font-normal">
+              <FaCheck className="shrink-0" />
+              <Typography size="h5" className="break-keep text-h7 font-normal sm:text-h5 sm:font-normal">
                 {item.content}
               </Typography>
             </li>

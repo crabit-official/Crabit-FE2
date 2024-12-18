@@ -1,3 +1,5 @@
+import type { Ref } from 'react';
+import { forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
@@ -6,10 +8,15 @@ import Flex from '@/shared/components/Flex';
 import Typography from '@/shared/components/Typography';
 import { CARD_INFO } from '@/shared/constants/card';
 
-function CardInfo() {
+interface ICardInfoProps {
+  title: string;
+}
+
+function CardInfo({ title }: ICardInfoProps, ref: Ref<HTMLDivElement>) {
   return (
     <Flex column="start" className="w-full gap-24 py-20">
       <motion.div
+        ref={ref}
         viewport={{ once: true }}
         whileInView={{ opacity: 1 }}
         initial={{ opacity: 0 }}
@@ -19,12 +26,12 @@ function CardInfo() {
         }}
         className="relative flex items-center justify-between gap-10 px-10 md:justify-between md:px-20 xl:px-40"
       >
-        <Flex column="start" className="w-full gap-10 sm:w-fit">
+        <Flex column="start" className="w-full gap-5 sm:w-fit">
           <Typography size="h1" className="text-3xl font-bold text-main-deep-pink md:text-6xl">
-            크래빗 장학카드
+            {title}
           </Typography>
           <Flex column="start" className="gap-2 rounded-xl border border-solid border-gray-200 bg-[#fafafa] p-5 md:border-none md:bg-transparent md:p-0">
-            <Typography size="h2" className="text-h4 font-bold sm:break-keep sm:text-h2">
+            <Typography size="h2" className="text-h5 font-bold sm:break-keep sm:text-h2">
               우리 학원, 학교만의 장학카드를 제작하여 <br /> 학생들에게 동기를 부여해 주는 장학 시스템입니다.
             </Typography>
             <Typography size="h4" className="text-h6 font-normal text-gray-700 sm:text-h4">
@@ -53,7 +60,7 @@ function CardInfo() {
           allowFullScreen
         />
       </Flex>
-      <Flex column="start" className="gap-10 px-10 md:px-20 xl:px-40">
+      <div className="flex flex-col justify-start gap-5 px-10 md:px-20 xl:px-40">
         <Typography size="h2" className="break-keep font-bold">
           크래빗 장학카드, 이렇게 활용해요 !
         </Typography>
@@ -62,8 +69,8 @@ function CardInfo() {
             <CardInfoBox key={item.id} {...item} />
           ))}
         </Flex>
-      </Flex>
+      </div>
     </Flex>
   );
 }
-export default CardInfo;
+export default forwardRef<HTMLDivElement, ICardInfoProps>(CardInfo);
