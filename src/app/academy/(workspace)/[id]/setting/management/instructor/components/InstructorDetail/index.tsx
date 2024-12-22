@@ -158,7 +158,7 @@ function InstructorDetail({ academyId, academyMemberId }: IInstructorDetailProps
           <BoxContainer variant="border" className="size-full min-h-24 justify-between">
             <Flex column="start" className="gap-1">
               <Typography size="h5">추가 설명</Typography>
-              <Typography size="h7" className="font-normal opacity-80">
+              <Typography size="h7" className="whitespace-pre-wrap font-normal opacity-80">
                 {profile?.result.teacher.description ? profile?.result.teacher.description : '관리자에 대한 설명이 없습니다.'}
               </Typography>
             </Flex>

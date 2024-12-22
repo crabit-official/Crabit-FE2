@@ -153,7 +153,7 @@ function MemberDetail({ academyId, academyMemberId }: IMemberDetailProps) {
           <BoxContainer variant="border" className="size-full min-h-24 justify-between">
             <Flex column="start" className="gap-1">
               <Typography size="h5">추가 설명</Typography>
-              <Typography size="h7" className="font-normal opacity-80">
+              <Typography size="h7" className="whitespace-pre-wrap font-normal opacity-80">
                 {member?.result.student.description ? member?.result.student.description : '학생에 대한 설명이 없습니다.'}
               </Typography>
             </Flex>
