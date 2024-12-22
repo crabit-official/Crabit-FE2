@@ -154,9 +154,11 @@ function CommentSkeleton() {
     <Flex column="start" className="mt-10 w-full gap-2">
       <Flex row="start" className="items-center gap-2">
         <Skeleton height={30} width={30} className="rounded-full" />
-        <Skeleton height={20} width={150} className="rounded-xl" />
+        <Skeleton height={20} width={100} className="rounded-xl" />
       </Flex>
-      <Skeleton height={40} className="ml-5 rounded-xl" />
+      <Flex className="pl-5">
+        <Skeleton height={40} className="rounded-xl" />
+      </Flex>
     </Flex>
   );
 }
