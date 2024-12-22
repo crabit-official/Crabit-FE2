@@ -71,7 +71,7 @@ function PublicModal({ challengeData, academyId, releasedChallengeId }: IModalPr
                   <Typography size="h4" as="p" className="overflow-hidden whitespace-normal break-all opacity-80">
                     {challengeData.academyPublicChallenge.title}
                   </Typography>
-                  <Typography size="h7" as="p" className="overflow-hidden whitespace-normal break-all font-normal opacity-60">
+                  <Typography size="h7" as="p" className="overflow-hidden whitespace-pre-wrap break-all font-normal opacity-60">
                     {challengeData.academyPublicChallenge.content}
                   </Typography>
                 </div>

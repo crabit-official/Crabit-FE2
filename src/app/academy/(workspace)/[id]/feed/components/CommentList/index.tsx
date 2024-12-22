@@ -56,12 +56,14 @@ function CommentList({ academyId, releasedChallengeId, studentChallengeLogId }: 
           </Flex>
         )),
       )}
-      {isLoading || isFetchingNextPage
-        ? Array(5)
-            .fill('')
-            .map((_, i) => <Comment.Skeleton key={i} />)
-        : null}
-      <div ref={ref} className="h-3" />
+      <Flex column="start" className="">
+        {isLoading || isFetchingNextPage
+          ? Array(5)
+              .fill('')
+              .map((_, i) => <Comment.Skeleton key={i} />)
+          : null}
+      </Flex>
+      <div ref={ref} />
     </Flex>
   );
 }
