@@ -150,7 +150,7 @@ function ChallengeDetail({ academyId, releasedChallengeId }: TChallengeDetailPro
           </div>
           <Flex column="start" className="gap-2 p-2">
             <Typography size="h3">챌린지 설명</Typography>
-            <Typography size="h5" className="overflow-hidden whitespace-normal break-all text-start font-normal opacity-80" as="p">
+            <Typography size="h5" className="overflow-hidden whitespace-pre-wrap break-all text-start font-normal opacity-80" as="p">
               {challengeData?.result.releasedChallenge?.content}
             </Typography>
 
@@ -160,7 +160,7 @@ function ChallengeDetail({ academyId, releasedChallengeId }: TChallengeDetailPro
                 <Typography size="h5" as="p">
                   추가 설명
                 </Typography>
-                <Typography size="h5" className="overflow-hidden whitespace-normal break-all text-start font-normal opacity-80" as="p">
+                <Typography size="h5" className="overflow-hidden whitespace-pre-wrap break-all text-start font-normal opacity-80" as="p">
                   {challengeData?.result.releasedChallenge.description}
                 </Typography>
               </>

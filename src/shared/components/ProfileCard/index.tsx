@@ -52,7 +52,7 @@ function ProfileCard({ name, nickname, description, point, school, profileImageU
         <Typography size="h7" className="font-medium opacity-80">
           추가 설명
         </Typography>
-        <Typography size="h7" className="font-normal opacity-80">
+        <Typography size="h7" className="text-overflow-3 font-normal opacity-80">
           {description || '-'}
         </Typography>
       </BoxContainer>

@@ -51,7 +51,7 @@ function ChallengeContent({ challenge, teacher, academy, setRelease }: TChalleng
           <Typography size="h3">챌린지 설명</Typography>
           <Typography
             size="h5"
-            className="w-full overflow-hidden whitespace-normal break-all text-start font-normal opacity-80"
+            className="w-full overflow-hidden whitespace-pre-wrap break-all text-start font-normal opacity-80"
             as="p"
             dangerouslySetInnerHTML={{ __html: sanitizeContent }}
           />

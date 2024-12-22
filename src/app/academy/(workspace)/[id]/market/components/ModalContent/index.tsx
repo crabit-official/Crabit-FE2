@@ -62,7 +62,7 @@ function ModalContent({ challenge, teacher, academy, setRelease }: TContentProps
               <Typography
                 size="h5"
                 as="p"
-                className="overflow-hidden whitespace-normal break-all text-sm opacity-60"
+                className="overflow-hidden whitespace-pre-wrap break-all text-sm opacity-60"
                 dangerouslySetInnerHTML={{ __html: sanitizeContent }}
               />
             </div>
