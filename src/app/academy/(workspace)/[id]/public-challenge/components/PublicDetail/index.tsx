@@ -83,7 +83,7 @@ function PublicDetail({ challengeData, academyId, releasedChallengeId }: IPublic
         <Typography size="h7" as="p" className="break-keep font-normal opacity-60">
           챌린지 기간 {challengeData?.academyPublicChallenge.totalDays}일 • 포인트 {formatNumberWithCommas(challengeData?.academyPublicChallenge.points)}
         </Typography>
-        <Typography size="h5" as="p" className="overflow-hidden whitespace-normal break-all text-base opacity-80">
+        <Typography size="h5" as="p" className="overflow-hidden whitespace-pre-wrap break-all text-base opacity-80">
           {challengeData?.academyPublicChallenge.content}
         </Typography>
       </Flex>
