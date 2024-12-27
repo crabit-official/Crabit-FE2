@@ -78,7 +78,7 @@ function CreateChallengeForm({ challengeData, academyId, studentChallengeId }: I
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 rounded-xl border border-solid border-gray-100 p-5 shadow-custom">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 rounded-xl border border-solid border-gray-100 p-6 shadow-custom">
       <Flex column="start" className="gap-1">
         <Toggle
           buttonOpenLabel="설명 확인"
