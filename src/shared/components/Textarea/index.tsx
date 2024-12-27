@@ -7,7 +7,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import cn from '@/shared/utils/style';
 
 const TextAreaVariants = cva(
-  'size-full peer rounded-md p-4 pt-7 outline-none transition font-light disabled:cursor-not-allowed disabled:opacity-70 resize-none overflow-y-auto min-h-44',
+  'size-full peer rounded-md p-4 pt-7 outline-none leading-5 transition font-light disabled:cursor-not-allowed disabled:opacity-70 resize-none overflow-y-auto min-h-44',
   {
     variants: {
       variant: {

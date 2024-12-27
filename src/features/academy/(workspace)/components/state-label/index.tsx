@@ -4,7 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import Typography from '@/shared/components/Typography';
 import cn from '@/shared/utils/style';
 
-const StateLabelVariants = cva('flex  items-center px-2 py-1 text-white font-bold  border border-solid border-gray-100 text-xs', {
+const StateLabelVariants = cva('flex items-center px-2 py-1 text-white font-bold  border border-solid border-gray-100 text-xs', {
   variants: {
     variant: {
       blue: 'bg-blue-400',
