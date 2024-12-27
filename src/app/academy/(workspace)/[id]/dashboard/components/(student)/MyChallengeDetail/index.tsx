@@ -5,6 +5,7 @@ import { FaFile } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import ChallengeStatusBar from '@/app/academy/(workspace)/[id]/dashboard/components/(student)/ChallengeStatusBar/ChallengeStatusBar';
 import CreateChallengeForm from '@/app/academy/(workspace)/[id]/dashboard/components/(student)/CreateChallengeForm';
 import Toggle from '@/app/academy/(workspace)/[id]/dashboard/components/Toggle';
 import { getChallengeCategory, getChallengeType } from '@/features/academy/(workspace)/utils/challengeState';
@@ -20,9 +21,17 @@ interface IMyChallengeDetailProps {
 }
 
 function MyChallengeDetail({ challengeData, studentChallengeId, academyId }: IMyChallengeDetailProps) {
+  console.log(challengeData);
+
   return (
     <Flex rowColumn="center" className="w-full gap-10 px-4">
-      <div className="w-full">
+      <Flex column="start" className="w-full gap-3">
+        <ChallengeStatusBar
+          challengeLogSubmissionStatus={challengeData.studentChallenge.challengeLogSubmissionStatus}
+          totalDays={challengeData.releasedChallenge.totalDays}
+          hasTodayChallengeLog={challengeData.studentChallenge.hasTodayChallengeLog}
+          startedAt={challengeData.studentChallenge.startedAt}
+        />
         <Toggle
           title={challengeData.releasedChallenge.title}
           content={
@@ -60,7 +69,7 @@ function MyChallengeDetail({ challengeData, studentChallengeId, academyId }: IMy
             </Flex>
           }
         />
-      </div>
+      </Flex>
       <div className="grid w-full grid-cols-1 gap-4">
         {/* TODO: 챌린지 올린 사람이, 올린 파일을 볼 수 있는 자리. */}
         {challengeData.releasedChallenge.fileUrl && (
