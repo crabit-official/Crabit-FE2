@@ -21,7 +21,7 @@ function Toggle({ title, content, setOpen = true, buttonCloseLabel, buttonOpenLa
   const toggleOpen = () => setIsOpen(!isOpen);
   return (
     <motion.ul className="w-full border-b border-solid border-gray-300" layout onClick={toggleOpen}>
-      <motion.div layout className="flex w-full cursor-pointer items-center justify-between gap-10 py-4 text-lg font-bold">
+      <motion.div layout className="flex w-full cursor-pointer items-center justify-between gap-10 pb-4 text-lg font-bold">
         <Typography size="h3" className="text-h5 sm:text-h3">
           {title}
         </Typography>
