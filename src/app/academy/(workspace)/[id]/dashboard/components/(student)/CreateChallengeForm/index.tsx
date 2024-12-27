@@ -89,7 +89,7 @@ function CreateChallengeForm({ challengeData, academyId, studentChallengeId }: I
             className="flex h-[400px] w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border border-solid border-gray-100 bg-neutral-50"
           >
             {filePreview ? (
-              <Image src={filePreview} width={200} height={400} className="h-[400px] w-full overflow-hidden rounded-xl object-fill" alt="img" />
+              <Image src={filePreview} width={200} height={400} className="h-[400px] w-full overflow-hidden rounded-xl object-contain" alt="img" />
             ) : (
               <IoMdPhotos size={30} />
             )}
