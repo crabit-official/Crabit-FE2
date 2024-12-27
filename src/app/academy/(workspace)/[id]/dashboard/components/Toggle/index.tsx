@@ -4,15 +4,18 @@ import React, { useState } from 'react';
 import { GoTriangleDown } from 'react-icons/go';
 import { AnimatePresence, motion } from 'framer-motion';
 
+import Button from '@/shared/components/Button';
 import Typography from '@/shared/components/Typography';
 
 interface IToggleProps {
+  buttonCloseLabel?: string;
+  buttonOpenLabel?: string;
   content: React.ReactNode;
   setOpen?: boolean;
   title: string;
 }
 
-function Toggle({ title, content, setOpen = true }: IToggleProps) {
+function Toggle({ title, content, setOpen = true, buttonCloseLabel, buttonOpenLabel }: IToggleProps) {
   const [isOpen, setIsOpen] = useState(setOpen);
 
   const toggleOpen = () => setIsOpen(!isOpen);
@@ -22,7 +25,13 @@ function Toggle({ title, content, setOpen = true }: IToggleProps) {
         <Typography size="h3" className="text-h5 sm:text-h3">
           {title}
         </Typography>
-        <GoTriangleDown size={20} className={`${isOpen ? 'rotate-180' : 'rotate-0'} shrink-0 transition-transform duration-500`} />
+        {buttonOpenLabel && buttonCloseLabel ? (
+          <Button type="button" variant={`${isOpen ? 'secondary' : 'main'}`} className="w-fit px-2 py-1 text-sm" onClick={toggleOpen}>
+            {isOpen ? buttonCloseLabel : buttonOpenLabel}
+          </Button>
+        ) : (
+          <GoTriangleDown size={20} className={`${isOpen ? 'rotate-180' : 'rotate-0'} shrink-0 transition-transform duration-500`} />
+        )}
       </motion.div>
       <li>
         <AnimatePresence>
