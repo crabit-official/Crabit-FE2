@@ -78,11 +78,6 @@ function CreateChallengeForm({ challengeData, academyId, studentChallengeId }: I
         <Typography size="h3" className="opacity-80">
           챌린지 인증글 올리기
         </Typography>
-        {!challengeData.studentChallenge.hasTodayChallengeLog && (
-          <Typography size="h5" className="w-fit rounded-xl text-xs text-gray-500">
-            🧐 오늘의 인증글을 올리지 않았어요
-          </Typography>
-        )}
         <Flex as="figure" column="center" className="mt-2 gap-2">
           <label
             htmlFor="file"

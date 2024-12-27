@@ -57,10 +57,10 @@ function MyChallengeDetail({ challengeData, studentChallengeId, academyId }: IMy
                 </Typography>
                 {challengeData?.releasedChallenge.description && (
                   <>
-                    <Typography size="h5" as="p" className="mt-4 text-xs opacity-60">
+                    <Typography size="h6" as="p" className="mt-5">
                       챌린지 추가 설명
                     </Typography>
-                    <Typography size="h6" className="overflow-hidden whitespace-pre-wrap break-all font-normal opacity-80" as="p">
+                    <Typography size="h5" className="overflow-hidden whitespace-pre-wrap break-all font-normal opacity-80" as="p">
                       {challengeData.releasedChallenge.description}
                     </Typography>
                   </>
