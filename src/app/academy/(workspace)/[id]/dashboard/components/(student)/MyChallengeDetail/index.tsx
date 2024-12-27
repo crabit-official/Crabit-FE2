@@ -40,10 +40,10 @@ function MyChallengeDetail({ challengeData, studentChallengeId, academyId }: IMy
                 />
               ) : null}
               <Flex column="center" className="gap-2">
-                <Typography size="h7" className="break-keep font-medium text-main-deep-pink" as="p">
+                <Typography size="h6" className="break-keep font-medium text-main-deep-pink" as="p">
                   DAY {challengeData.releasedChallenge.totalDays} • Ⓟ {formatNumberWithCommas(challengeData.releasedChallenge.points)}
                 </Typography>
-                <Typography size="h6" className="overflow-hidden whitespace-pre-wrap break-all font-normal opacity-80" as="p">
+                <Typography size="h5" className="overflow-hidden whitespace-pre-wrap break-all font-normal opacity-80" as="p">
                   {challengeData.releasedChallenge.content}
                 </Typography>
                 {challengeData?.releasedChallenge.description && (
