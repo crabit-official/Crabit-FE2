@@ -133,3 +133,25 @@ export function getVisibilityType(category: MARKET_VISIBILITY_CATEGORIES) {
       return '공개하지 않음';
   }
 }
+
+export function getChallengeLogStatus(
+  hasTodayChallengeLog: boolean,
+  challengeLogSubmissionStatus: CHALLENGE_LOG_SUBMISSION_STATUS,
+): { label: string; variant: 'gray' | 'red' } {
+  const isCompleted = hasTodayChallengeLog || challengeLogSubmissionStatus === CHALLENGE_LOG_SUBMISSION_STATUS.ALL_LOGS_SUBMITTED;
+
+  if (isCompleted) {
+    return { label: '인증완료', variant: 'gray' };
+  }
+
+  switch (challengeLogSubmissionStatus) {
+    case CHALLENGE_LOG_SUBMISSION_STATUS.NOT_STARTED:
+      return { label: '인증 전', variant: 'red' };
+    case CHALLENGE_LOG_SUBMISSION_STATUS.IN_PROGRESS:
+      return { label: '인증 전', variant: 'red' };
+    case CHALLENGE_LOG_SUBMISSION_STATUS.SUBMISSION_FAILED:
+      return { label: '인증실패', variant: 'gray' };
+    default:
+      return { label: '인증 전', variant: 'red' };
+  }
+}
