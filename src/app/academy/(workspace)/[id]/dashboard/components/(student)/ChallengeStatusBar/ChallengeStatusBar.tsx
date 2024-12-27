@@ -25,7 +25,7 @@ export default function ChallengeStatusBar({ totalDays, challengeLogSubmissionSt
       <p>
         {hasTodayChallengeLog &&
           challengeLogSubmissionStatus === CHALLENGE_LOG_SUBMISSION_STATUS.IN_PROGRESS &&
-          `이미 ${calculateChallengeDay(startedAt)}일차 인증을 해주셨네요! ! 앞으로 ${totalDays - calculateChallengeDay(startedAt)}일만 더 힘내볼까요?`}
+          `이미 ${calculateChallengeDay(startedAt)}일차 인증을 해주셨네요! 앞으로 ${totalDays - calculateChallengeDay(startedAt)}일만 더 힘내볼까요?`}
 
         {!hasTodayChallengeLog &&
           challengeLogSubmissionStatus === CHALLENGE_LOG_SUBMISSION_STATUS.IN_PROGRESS &&
