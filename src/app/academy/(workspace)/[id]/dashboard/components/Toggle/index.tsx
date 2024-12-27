@@ -26,7 +26,7 @@ function Toggle({ title, content, setOpen = true, buttonCloseLabel, buttonOpenLa
           {title}
         </Typography>
         {buttonOpenLabel && buttonCloseLabel ? (
-          <Button type="button" variant={`${isOpen ? 'secondary' : 'main'}`} className="w-fit px-2 py-1 text-sm" onClick={toggleOpen}>
+          <Button type="button" variant={`${isOpen ? 'secondary' : 'main'}`} className="w-fit whitespace-nowrap px-2 py-1 text-sm" onClick={toggleOpen}>
             {isOpen ? buttonCloseLabel : buttonOpenLabel}
           </Button>
         ) : (

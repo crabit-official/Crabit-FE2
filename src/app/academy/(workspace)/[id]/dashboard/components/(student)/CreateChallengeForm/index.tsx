@@ -13,6 +13,7 @@ import Button from '@/shared/components/Button';
 import Flex from '@/shared/components/Flex';
 import TextArea from '@/shared/components/Textarea';
 import Typography from '@/shared/components/Typography';
+import { CHALLENGE_LOG_SUBMISSION_STATUS } from '@/shared/enums/challenge';
 import useCreateChallengeContent from '@/shared/hooks/challenge/useCreateChallengeContent';
 import useGetPresignedUrl from '@/shared/hooks/images/use-get-presigned-url';
 import type { TMyChallengeProgressResult } from '@/shared/types/acadmy';
@@ -152,7 +153,14 @@ function CreateChallengeForm({ challengeData, academyId, studentChallengeId }: I
           <input type="file" id="file" {...register('file')} onChange={handleChangeFile} className="hidden" />
           <TextArea id="content" label="챌린지 내용" register={register} errors={errors} required />
         </Flex>
-        <Button type="submit" className="break-keep font-medium text-white" disabled={challengeData?.studentChallenge.hasTodayChallengeLog}>
+        <Button
+          type="submit"
+          className="break-keep font-medium text-white"
+          disabled={
+            challengeData?.studentChallenge.hasTodayChallengeLog ||
+            challengeData?.studentChallenge.challengeLogSubmissionStatus === CHALLENGE_LOG_SUBMISSION_STATUS.SUBMISSION_FAILED
+          }
+        >
           {isPending ? '업로드 중...' : challengeData?.studentChallenge.hasTodayChallengeLog ? '오늘의 챌린지를 이미 제출 하였습니다' : '제출하기'}
         </Button>
       </Flex>
