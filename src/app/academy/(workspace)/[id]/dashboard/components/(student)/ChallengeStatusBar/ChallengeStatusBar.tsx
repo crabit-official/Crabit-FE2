@@ -19,7 +19,7 @@ export default function ChallengeStatusBar({ totalDays, challengeLogSubmissionSt
   return (
     <Flex
       row="between"
-      className={`w-full items-center gap-2 rounded-lg border border-solid p-2 ${hasTodayChallengeLog || challengeLogSubmissionStatus === CHALLENGE_LOG_SUBMISSION_STATUS.ALL_LOGS_SUBMITTED || challengeLogSubmissionStatus === CHALLENGE_LOG_SUBMISSION_STATUS.SUBMISSION_FAILED ? 'border-gray-400 text-gray-600' : 'border-main-deep-pink/60 text-main-deep-pink'} `}
+      className={`w-full items-center gap-2 rounded-lg border border-solid p-2 font-medium ${hasTodayChallengeLog || challengeLogSubmissionStatus === CHALLENGE_LOG_SUBMISSION_STATUS.ALL_LOGS_SUBMITTED || challengeLogSubmissionStatus === CHALLENGE_LOG_SUBMISSION_STATUS.SUBMISSION_FAILED ? 'border-none bg-gray-100 text-gray-500' : 'border-main-deep-pink/60 text-main-deep-pink'} `}
     >
       <StateLabel label={label} variant={variant} className="w-fit" />
       <p>
