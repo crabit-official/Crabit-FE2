@@ -15,7 +15,7 @@ import timeForToday from '@/shared/utils/timeForToday';
 interface IContentProps {
   academyId: number;
   challengeLog: IAllChallengeLogDTO;
-  releasedChallenge: IReleasedChallengeDTO;
+  releasedChallenge?: IReleasedChallengeDTO;
   studentProfile: IStudentProfileDTO;
 }
 
