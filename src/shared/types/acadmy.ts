@@ -412,9 +412,17 @@ export interface IAllChallengeLogDTO {
   studentChallengeLogId: number;
 }
 
+export interface IReleasedChallengeDTO {
+  challengeCategory: CHALLENGE_CATEGORY;
+  createdAt: Date;
+  releasedChallengeId: number;
+  title: string;
+}
+
 export type TAllChallengeResult = CommonResponse<{
   challengeLogList: {
     challengeLog: IAllChallengeLogDTO;
+    releasedChallenge: IReleasedChallengeDTO;
     studentProfile: IStudentProfileDTO;
   }[];
   hasNext: boolean;
