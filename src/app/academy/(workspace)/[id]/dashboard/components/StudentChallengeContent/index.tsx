@@ -9,15 +9,19 @@ import Avatar from '@/shared/components/Avatar';
 import Flex from '@/shared/components/Flex';
 import Skeleton from '@/shared/components/Skeleton/Skeleton';
 import Typography from '@/shared/components/Typography';
-import type { IStudentChallengeContents } from '@/shared/types/acadmy';
+import type { IAllChallengeLogDTO, IReleasedChallengeDTO, IStudentProfileDTO } from '@/shared/types/acadmy';
 import timeForToday from '@/shared/utils/timeForToday';
 
-interface IContentProps extends IStudentChallengeContents {
+interface IContentProps {
   academyId: number;
+  challengeLog: IAllChallengeLogDTO;
+  releasedChallenge?: IReleasedChallengeDTO;
+  studentProfile: IStudentProfileDTO;
 }
 
-function StudentChallengeContent({ challengeLog, studentProfile, academyId }: IContentProps) {
+function StudentChallengeContent({ challengeLog, studentProfile, academyId, releasedChallenge }: IContentProps) {
   const router = useRouter();
+
   return (
     <Flex row="start" className="w-full cursor-pointer gap-4">
       <Flex column="start" className="relative gap-2">
@@ -61,7 +65,13 @@ function StudentChallengeContent({ challengeLog, studentProfile, academyId }: IC
               </Typography>
             </Flex>
           </Flex>
-          <Flex row="end">
+          <Flex className={`${releasedChallenge ? 'justify-between' : 'justify-end'}`}>
+            {releasedChallenge && (
+              <Flex className="gap-2 text-xs">
+                <p className="max-w-[160px] truncate rounded-xl border border-solid border-gray-100 bg-gray-50 px-2 py-1"># {releasedChallenge.title}</p>
+                <p className="rounded-xl border border-solid border-gray-100 bg-gray-50 px-2 py-1"># DAY {challengeLog.day}</p>
+              </Flex>
+            )}
             <FaRegComment className="cursor-pointer opacity-50 group-hover:text-main-deep-pink" />
           </Flex>
         </Flex>

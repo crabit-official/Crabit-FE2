@@ -43,7 +43,7 @@ function ChallengeFeed({ academyId }: IFeedProps) {
             인증글을 작성해주세요 !
           </Typography>
           <Typography size="h7" as="p" className="whitespace-pre-wrap font-normal opacity-60">
-            {`챌린지를 시작한 상태인 챌린지에 대한\n인증 게시글만 조회 가능합니다.`}
+            {`시작한 상태인 챌린지에 대한\n인증 게시글만 조회 가능합니다.`}
           </Typography>
           <div className="mt-7">
             <Link href={`/academy/${academyId}/dashboard`} className="rounded-md bg-main-deep-pink px-4 py-2 text-sm font-semibold text-white hover:opacity-60">
@@ -64,6 +64,7 @@ function ChallengeFeed({ academyId }: IFeedProps) {
             key={content.challengeLog.studentChallengeLogId}
             challengeLog={content.challengeLog}
             studentProfile={content.studentProfile}
+            releasedChallenge={content.releasedChallenge}
           />
         )),
       )}
