@@ -294,6 +294,7 @@ export interface IStudentChallengeContents {
     academyMemberId: number;
     nickname: string;
     profileImageUrl: string;
+    school: string;
   };
 }
 
